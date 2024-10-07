@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Animate background */
+/* src/index.css */
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 5s ease infinite;
+}
+
+body {
+  font-size: 16px;
+}
+
+/* Theme CSS */
+/* Default body styling */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light Theme */
+body.light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Dark Theme */
+body.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Responsive breakpoints and devices to be targeted */
+
+/* Extra small devices (phones, 320px and up) */
+@media only screen and (max-width: 320px) {
+  /* Styles for very small phones */
+}
+
+/* Small devices (phones, 375px and up) */
+@media only screen and (max-width: 375px) {
+  /* Styles for regular mobile phones */
+}
+
+/* Medium devices (phones, 425px and up) */
+@media only screen and (max-width: 425px) {
+  /* Styles for larger phones */
+}
+
+/* Tablets (768px and up) */
+@media only screen and (max-width: 768px) {
+  /* Styles for tablets */
+}
+
+/* Small laptops (1024px and up) */
+@media only screen and (max-width: 1024px) {
+  /* Styles for small laptops */
+}
+
+/* Large laptops (1366px and up) */
+@media only screen and (max-width: 1366px) {
+  /* Styles for large laptops */
+}
+
+@media only screen and (max-width: 375px) {
+  body {
+    font-size: 18px;
+  }
+}
