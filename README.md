@@ -2,6 +2,7 @@
 
 Portfolio site built in react express and MongoDB
 
-##
+## Hello I will describe the project in details later.
 
-Hello I will describe the project in details later.
+. One
+. Two
