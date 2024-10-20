@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../../providers/AuthProvider";
 import { FaGoogle } from "react-icons/fa";
+import Swal from "sweetalert2";
 import { useContext } from "react";
 
 const SocialLogIn = () => {
@@ -26,6 +27,13 @@ const SocialLogIn = () => {
       })
         .then((response) => response.json())
         .then(() => {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Successfully logged in with Google!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           navigate(from, { replace: true });
         });
     });

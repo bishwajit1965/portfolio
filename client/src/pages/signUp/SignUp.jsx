@@ -1,13 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../../providers/AuthProvider";
+import { FaUserCircle } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import SocialLogIn from "../../components/shared/socialLogin/SocialLogin";
 import Swal from "sweetalert2";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-
-// import withReactContent from "sweetalert2-react-content";
 
 const SignUp = () => {
   const { createUser, updateUserProfile } = useContext(AuthContext);
@@ -18,33 +17,40 @@ const SignUp = () => {
     reset,
     formState: { errors },
   } = useForm();
+
   const onSubmit = (data) => {
+    console.log("Sign up data:", data);
     createUser(data.email, data.password)
-      .then((result) => {
-        const user = result.user;
-        console.log(user);
+      .then(() => {
         updateUserProfile(data.name, data.photoUrl)
           .then(() => {
-            const saveUser = { name: data.name, email: data.email };
-            fetch("http://localhost:5000/users", {
+            const saveUser = {
+              name: data.name,
+              photoUrl: data.photoUrl,
+              email: data.email,
+            };
+            console.log("Saving user data", saveUser);
+            console.log("Name:", data.name);
+            console.log("PhotoUrl", data.photoUrl);
+
+            fetch("http://localhost:5000/api/auth/register", {
               method: "POST",
               headers: { "content-type": "application/json" },
               body: JSON.stringify(saveUser),
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                if (data.insertedId) {
-                  reset();
-                  Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "User profile picture updated !",
-                    showConfirmButton: false,
-                    timer: 1500,
-                  });
-                  navigate("/");
-                }
-              });
+            });
+
+            console.log("Saving user to backend", saveUser);
+            reset();
+
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "User profile picture updated !",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+
+            navigate("/");
 
             console.log("User profile picture updated");
           })
@@ -98,7 +104,7 @@ const SignUp = () => {
                   <span className="label-text">Photo URL</span>
                 </label>
                 <input
-                  type="text"
+                  type="url"
                   {...register("photoUrl", { required: true })}
                   name="photoUrl"
                   placeholder="Photo url..."
@@ -117,10 +123,10 @@ const SignUp = () => {
                   <span className="label-text">Email</span>
                 </label>
                 <input
-                  type="text"
+                  type="email"
                   {...register("email", { required: true })}
                   name="email"
-                  placeholder="email"
+                  placeholder="Email..."
                   className="input input-bordered h-8"
                   aria-invalid={errors.name ? "true" : "false"}
                 />
@@ -142,7 +148,7 @@ const SignUp = () => {
                     minLength: 6,
                     maxLength: 20,
                   })}
-                  placeholder="password"
+                  placeholder="Password..."
                   className="input input-bordered h-8"
                   aria-invalid={errors.password ? "true" : "false"}
                 />
@@ -173,7 +179,7 @@ const SignUp = () => {
 
               <div className="form-control mt-6">
                 <button type="submit" className="btn btn-primary">
-                  Sign up{" "}
+                  <FaUserCircle /> Sign up{" "}
                 </button>
               </div>
             </form>

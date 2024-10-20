@@ -14,7 +14,10 @@ const ProjectsSection = () => {
     const fetchProjects = async () => {
       try {
         const response = await api.get("/projects");
-        setProjects(response.data);
+        const visibleProjects = response.data.filter(
+          (project) => project.visibility === "visible"
+        );
+        setProjects(visibleProjects);
       } catch (error) {
         console.error("Error in fetching data", error);
       }
@@ -22,18 +25,29 @@ const ProjectsSection = () => {
     fetchProjects();
   }, []);
 
-  const handleDelete = async (id) => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this project?"
-    );
-    if (confirmed) {
-      try {
-        await api.delete(`/projects/${id}`);
-        setProjects(projects.filter((project) => project._id !== id));
-        alert("Project deleted successfully!");
-      } catch (error) {
-        console.error("Encountered an error!", error);
-      }
+  const handleProjectVisibilityUpdate = async (
+    projectId,
+    currentVisibility
+  ) => {
+    try {
+      const newVisibility =
+        currentVisibility === "visible" ? "invisible" : "visible";
+
+      // Call the backend API to update visibility
+      await api.patch(`/projects/visibility/${projectId}`, {
+        visibility: newVisibility,
+      });
+
+      // Update the project in the state after the visibility is updated
+      setProjects((prevProjects) =>
+        prevProjects.map((project) =>
+          project._id === projectId
+            ? { ...project, visibility: newVisibility }
+            : project
+        )
+      );
+    } catch (error) {
+      console.error("Error in updating project visibility!", error);
     }
   };
 
@@ -57,7 +71,7 @@ const ProjectsSection = () => {
           <ProjectCard
             key={project._id}
             project={project}
-            handleDelete={handleDelete}
+            onVisibilityChange={handleProjectVisibilityUpdate}
           />
         ))}
       </div>

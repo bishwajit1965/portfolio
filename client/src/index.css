@@ -45,7 +45,12 @@ body.dark {
   background-color: #121212;
   color: #ffffff;
 }
-
+.swal2-confirm {
+  background-color: green;
+}
+.swal2-cancel {
+  background-color: #81c212;
+}
 /* Responsive breakpoints and devices to be targeted */
 
 /* Extra small devices (phones, 320px and up) */
@@ -80,6 +85,19 @@ body.dark {
 
 @media only screen and (max-width: 375px) {
   body {
-    font-size: 18px;
+    font-size: 16px;
   }
+}
+
+body,
+p {
+  font-family: "Roboto", Arial, sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Poppins", "Helvetica", sans-serif;
 }

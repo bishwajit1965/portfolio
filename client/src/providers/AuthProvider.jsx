@@ -27,7 +27,7 @@ const AuthProvider = ({ children }) => {
   const API_URL = "http://localhost:5000/api/auth"; //Adjust based on backend URI
 
   // Create user
-  const createUser = async (email, password, onSuccess) => {
+  const createUser = async (email, password) => {
     setLoading(true);
     try {
       // create user in Firebase
@@ -54,7 +54,7 @@ const AuthProvider = ({ children }) => {
       }
       setUser({ ...response.user, role: data.user.role });
 
-      if (onSuccess) onSuccess(data.user.role); // Pass role to handle navigate
+      // if (onSuccess) onSuccess(data.user.role); // Pass role to handle navigate
     } catch (error) {
       console.error("Error during user creation:", error);
     } finally {
@@ -67,7 +67,7 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-
+      const firebaseUser = response.user; //Firebase returns the user object here
       const firebaseToken = await response.user.getIdToken();
       // Send firebase token to backend (if you want to store it in local storage)
 
@@ -85,7 +85,13 @@ const AuthProvider = ({ children }) => {
       } else {
         console.log("No token received from backend");
       }
-      setUser({ ...response.user, role: data.user.role });
+      // Set the user object with the role retrieved from MongoDB
+
+      const userWithRole = { ...firebaseUser, role: data.user.role };
+      setUser(userWithRole); // Update the user in AuthContext
+
+      // Return the user with the role to handle redirection
+      return userWithRole;
     } catch (error) {
       console.error("Error during login:", error);
     } finally {
@@ -147,7 +153,9 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      setUser(currentUser);
       if (currentUser) {
+        setLoading(true);
         const token = await currentUser.getIdToken(); // Get Firebase ID token
 
         // Store the token in localStorage if it's not there (on page reload)
@@ -160,13 +168,11 @@ const AuthProvider = ({ children }) => {
           const response = await axios.get(`${API_URL}/currentUser`, {
             headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
           });
-          const userData = response.data.data;
 
           // Set user in state with role fetched from backend
-          setUser({ ...currentUser, role: userData.role });
+          setUser({ ...currentUser, role: response.data.role });
         } catch (error) {
           console.error("Error fetching user role:", error);
-          setUser(null);
         }
       } else {
         setUser(null); // Clear user if not logged in

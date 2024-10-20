@@ -27,46 +27,49 @@ const Login = () => {
     loadCaptchaEnginge(6);
   }, []);
 
-  const handleLogIn = (event) => {
+  const handleLogIn = async (event) => {
     event.preventDefault();
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
     console.log(email, password);
+    try {
+      const user = await signIn(email, password); //Await sign in and get result
 
-    signIn(email, password)
-      .then((result) => {
-        console.log("Result:", result);
-        const user = result.user;
-        if (user) {
+      if (user && user.role) {
+        // If the role is 'super-admin', navigate to the Super Admin Dashboard
+
+        if (user.role === "superAdmin") {
           MySwal.fire({
             position: "top-end",
             icon: "success",
-            title: "You are successfully logged in !",
+            title: "Welcome, Super Admin!",
             showConfirmButton: false,
             timer: 1500,
           });
-        }
-        navigate(from, { replace: true });
-        // Navigate based on user role
-        if (user.role === "super-admin") {
-          navigate("/super-admin-dashboard");
+          navigate("/super-admin/dashboard", { replace: true });
+          console.log("Logged in User", user);
         } else {
+          // Otherwise, navigate to the regular dashboard or home page
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Login successful!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           navigate(from, { replace: true });
         }
-      })
-      .catch((error) => {
-        console.log(error);
-        // Show an error message if login fails
-        // MySwal.fire({
-        //   position: "top-end",
-        //   icon: "error",
-        //   title: "Login failed!",
-        //   text: error.message || "Something went wrong.",
-        //   showConfirmButton: true,
-        //   timer: 1500,
-        // });
+        console.log("Logged in user:", user);
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Login failed! Please try again.",
       });
+      console.error("Login Error:", error);
+    }
   };
 
   const handleValidateCaptcha = (event) => {
@@ -171,6 +174,7 @@ const Login = () => {
                 </button>
               </div>
             </form>
+
             <SocialLogIn />
           </div>
         </div>
