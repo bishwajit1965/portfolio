@@ -8,6 +8,7 @@ class User {
   }
 
   async createUser(userData) {
+    console.log("User data before saving:", userData);
     try {
       const result = await this.collection.insertOne(userData);
       return { _id: result.insertedId, ...userData }; // Return the newly created user
@@ -34,6 +35,7 @@ class User {
     }
   }
 
+  // This function is not used at present
   async getAllUsers() {
     try {
       const users = await this.collection.find({}).toArray();
@@ -41,6 +43,17 @@ class User {
     } catch (error) {
       throw new Error("Error in finding users", error.message);
     }
+  }
+
+  // Get paginated users
+  async getAllUsersPaginated(page, limit) {
+    const skip = (page - 1) * limit;
+    return this.collection.find({}).skip(skip).limit(parseInt(limit)).toArray(); // Assuming you're using the native MongoDB driver
+  }
+
+  // Count the total number of users
+  async countUsers() {
+    return this.collection.countDocuments();
   }
 
   async updateUserRole(id, role) {
@@ -56,7 +69,7 @@ class User {
   }
 
   // Update user role or other fields
-  async updateUserRole(id, role) {
+  async setRoleForUser(id, role) {
     try {
       const result = await this.collection.updateOne(
         { _id: new ObjectId(id) },
@@ -68,7 +81,7 @@ class User {
     }
   }
 
-  async deleteUser(id) {
+  async deleteUserById(id) {
     try {
       const result = await this.collection.deleteOne({ _id: new ObjectId(id) });
       return result.deletedCount > 0; // Return true if deletion was successful

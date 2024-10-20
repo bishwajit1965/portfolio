@@ -29,7 +29,14 @@ const getCurrentUser = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
-  const { email, password, role = "user" } = req.body;
+  const { name, photoUrl, email, password, role = "user" } = req.body;
+  console.log("Received user data on backend:", {
+    name,
+    photoUrl,
+    email,
+    password,
+    role,
+  });
 
   if (!email || !password) {
     return res.status(400).json({ message: "Email and password are required" });
@@ -40,16 +47,19 @@ const registerUser = async (req, res) => {
     const existingUser = await userModel.findUserByEmail(email);
 
     if (existingUser) {
-      return res.status(400).json({ message: "User already exists" });
+      return res.status(400).json({ message: "User already exists!" });
     }
     // Hash the password before storing it
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await userModel.createUser({
+      name,
+      photoUrl,
       email,
       password: hashedPassword, // Store hashed password
       role,
     });
+    console.log("Created user:", newUser); // Log the new user
 
     const token = jwt.sign(
       { id: newUser._id, email: newUser.email, role: newUser.role },
@@ -118,21 +128,17 @@ const loginUser = async (req, res) => {
   try {
     const userModel = new User();
     const user = await userModel.findUserByEmail(email);
+    console.log("User", user);
 
-    if (!user || user.password !== password) {
+    if (!user) {
       return res.status(401).json({ message: "Invalid user credentials" });
     }
 
-    // Hash the password before storing it
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     // Compare hashed password
-    const isMatch = await bcrypt.compare(hashedPassword, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
       return res.status(401).json({ message: "Passwords do not match" });
-    } else {
-      hashedPassword = user.password;
     }
 
     const token = jwt.sign(
@@ -147,6 +153,7 @@ const loginUser = async (req, res) => {
         _id: user._id,
         email: user.email,
         role: user.role,
+        password: user.password,
       },
     });
   } catch (error) {

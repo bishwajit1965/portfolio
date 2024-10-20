@@ -23,7 +23,11 @@ const { connectDB, getDB } = require("./utils/database");
     const db = getDB(); //Gets the connected database instance
 
     // Import the routes here
-    const adminRoutes = require("./routes/adminRoutes");
+    const superAdminAuthRoutes = require("./routes/superAdminAuthRoutes");
+    const superAdminRoutes = require("./routes/superAdminRoutes");
+    const userRoutes = require("./routes/userRoutes");
+    const categoryRoutes = require("./routes/categoryRoutes");
+    // const adminRoutes = require("./routes/adminRoutes");
     const authRoutes = require("./routes/authRoutes");
     const projectRoutes = require("./routes/projectRoutes");
     const contactRoutes = require("./routes/contactRoutes");
@@ -40,7 +44,11 @@ const { connectDB, getDB } = require("./utils/database");
     const validateCopyrightMiddlewareRules = require("./routes/copyrightTextRoutes");
 
     // Initialize your routes here
-    app.use("/api/admin", adminRoutes);
+    app.use("/api/super-admin/auth", superAdminAuthRoutes);
+    app.use("/api/users", superAdminRoutes);
+    app.use("/api/users", userRoutes);
+    app.use("/api/categories", categoryRoutes);
+    // app.use("/api/admin", adminRoutes);
     app.use("/api/auth", authRoutes); // Authentication routes
     app.use("/api/projects", projectRoutes);
     app.use("/api/contacts", contactRoutes);
@@ -55,7 +63,6 @@ const { connectDB, getDB } = require("./utils/database");
     app.use("/api/featured-projects", featuredProjectRoutes);
     app.use("/api/journey-milestones", journeyMilestonesRoutes);
     app.use("/api/copyright", validateCopyrightMiddlewareRules);
-    app.use("/api/admin", adminRoutes); //Super admin routes
 
     // Simple route to test server
     app.get("/", (req, res) => {

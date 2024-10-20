@@ -1,4 +1,5 @@
 const admin = require("../config/firebaseAdmin");
+const User = require("../models/User");
 
 const verifyToken = async (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1]; // Extract token from Authorization header
@@ -10,7 +11,12 @@ const verifyToken = async (req, res, next) => {
   try {
     // Verify the token using Firebase Admin SDK
     const decodedToken = await admin.auth().verifyIdToken(token);
-    req.user = decodedToken; // Attach decoded token to the request object
+    const userModel = new User();
+    const user = await userModel.findUserByEmail(decodedToken.email);
+    if (!user) {
+      res.status(403).json({ message: "Unauthorized: user not found" });
+    }
+    req.user = { ...decodedToken, role: user.role }; // Attach decoded token to the request object
     next(); // Proceed to the next middleware or route handler
   } catch (error) {
     return res.status(403).json({ message: "Unauthorized" });

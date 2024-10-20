@@ -4,6 +4,7 @@ const {
   getProject,
   getProjects,
   updateProjectById,
+  updateProjectVisibility,
   deleteProjectById,
 } = require("../controllers/projectController");
 
@@ -15,14 +16,20 @@ const verifyToken = require("../middlewares/authMiddleware");
 const router = express.Router();
 
 router.post("/", upload.single("image"), validateProjectData, createProject);
+
 router.get("/:id", getProject);
+
 router.get("/", getProjects);
+
 router.patch(
   "/:id",
   upload.single("image"),
   validateProjectData,
   updateProjectById
 );
+
+router.patch("/visibility/:projectId", updateProjectVisibility);
+
 router.delete("/:id", deleteProjectById);
 
 module.exports = router;

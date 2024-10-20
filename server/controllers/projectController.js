@@ -3,6 +3,7 @@ const {
   getProjectById,
   getAllProjects,
   updateProject,
+  toggleProjectVisibility,
   deleteProject,
 } = require("../models/projectModel");
 
@@ -103,6 +104,36 @@ const updateProjectById = async (req, res) => {
   }
 };
 
+// Function to make project visible or hide if necessary
+const updateProjectVisibility = async (req, res) => {
+  try {
+    const { projectId } = req.params;
+    const { visibility } = req.body;
+
+    if (
+      !visibility ||
+      (visibility !== "visible" && visibility !== "invisible")
+    ) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Visibility status is required" });
+    }
+
+    console.log("Received projectId:", projectId); // Log projectId
+    console.log("Received visibilityStatus:", visibility);
+
+    const result = await toggleProjectVisibility(projectId, visibility);
+    if (result.success) {
+      return res.status(200).json({ success: true, message: result.message });
+    } else {
+      return res.status(400).json({ success: false, message: result.message });
+    }
+  } catch (error) {
+    console.error("Error while updating toggle visibility");
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
 const deleteProjectById = async (req, res) => {
   try {
     const result = await deleteProject(req.params.id);
@@ -121,5 +152,6 @@ module.exports = {
   getProject,
   getProjects,
   updateProjectById,
+  updateProjectVisibility,
   deleteProjectById,
 };

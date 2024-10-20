@@ -18,7 +18,7 @@ router.post("/login", loginUser);
 router.post("/google-login", googleLogin);
 
 //New route to get the current user's info
-router.get("/currentUser", verifyToken, (req, res) => {
+router.get("/currentUser", verifyToken, getCurrentUser, (req, res) => {
   // Return the authenticated user's data
   res.status(200).json({ email: req.user.email, role: req.user.role }); // Send back decoded token information
 });
