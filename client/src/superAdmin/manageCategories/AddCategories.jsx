@@ -1,4 +1,6 @@
-import { FaPlusCircle } from "react-icons/fa";
+import { FaHome, FaPlusCircle } from "react-icons/fa";
+
+import { NavLink } from "react-router-dom";
 import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import { useState } from "react";
 
@@ -59,7 +61,12 @@ const AddCategories = ({ onCategoryCreated }) => {
         decoratedText="Categories"
         subtitle="Super admin only!"
       />
-
+      <NavLink to="/super-admin/manage-categories" className="m-0">
+        <button className="btn btn-xs rounded-full text-white btn-success">
+          <FaHome />
+          Manage Categories
+        </button>
+      </NavLink>
       <div className="my-2 max-w-md mx-auto">
         <div className="">
           {/* Display error messages */}

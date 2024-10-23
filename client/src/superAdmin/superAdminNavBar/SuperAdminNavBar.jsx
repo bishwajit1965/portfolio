@@ -10,13 +10,9 @@ const SuperAdminNavBar = () => {
   console.log("User:", user);
 
   const handleLogOut = () => {
-    logoutSuperAdmin()
-      .then(() => {
-        navigate("/super-admin/login");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    logoutSuperAdmin();
+
+    navigate("/super-admin/login");
   };
 
   return (
