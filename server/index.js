@@ -22,8 +22,14 @@ const { connectDB, getDB } = require("./utils/database");
     await connectDB(); //Database connected first
     const db = getDB(); //Gets the connected database instance
 
-    // Import the routes here
+    /** Import the routes here
+     *==============================================**/
+
+    // Blog posts route
+    const blogPostRoutes = require("./routes/blogPostRoutes");
+    // Super admin auth route
     const superAdminAuthRoutes = require("./routes/superAdminAuthRoutes");
+    // Super admin route
     const superAdminRoutes = require("./routes/superAdminRoutes");
     const userRoutes = require("./routes/userRoutes");
     const categoryRoutes = require("./routes/categoryRoutes");
@@ -43,7 +49,11 @@ const { connectDB, getDB } = require("./utils/database");
     const journeyMilestonesRoutes = require("./routes/journeyMilestonesRoutes");
     const validateCopyrightMiddlewareRules = require("./routes/copyrightTextRoutes");
 
-    // Initialize your routes here
+    /**Initialize your routes here
+     *================================================= **/
+
+    // Initialized blog post route
+    app.use("/api/blogPosts", blogPostRoutes);
     app.use("/api/super-admin/auth", superAdminAuthRoutes);
     app.use("/api/users", superAdminRoutes);
     app.use("/api/users", userRoutes);

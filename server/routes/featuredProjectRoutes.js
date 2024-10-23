@@ -22,8 +22,11 @@ router.post(
   validate,
   createFeaturedProject
 );
+
 router.get("/:id", validateFeaturedProjectById, getFeaturedProject);
+
 router.get("/", getAllFeaturedProjects);
+
 router.patch(
   "/:id",
   validateFeaturedProjectById,
@@ -31,6 +34,7 @@ router.patch(
   validate,
   updateFeaturedProject
 );
+
 router.delete("/:id", validateFeaturedProjectById, deleteFeaturedProject);
 
 module.exports = router;

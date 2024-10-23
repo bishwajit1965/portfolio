@@ -1,10 +1,6 @@
 const validateProjectData = (req, res, next) => {
   const { name, type, description } = req.body;
 
-  // if (!name || !type || !description) {
-  //   return res.status(400).json({ message: "Missing required fields" });
-  // }
-
   // Check if name is present, is a string, and has a valid length
   if (
     !name ||
