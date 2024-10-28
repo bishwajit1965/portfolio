@@ -29,9 +29,6 @@ const SignUp = () => {
               photoUrl: data.photoUrl,
               email: data.email,
             };
-            console.log("Saving user data", saveUser);
-            console.log("Name:", data.name);
-            console.log("PhotoUrl", data.photoUrl);
 
             fetch("http://localhost:5000/api/auth/register", {
               method: "POST",
@@ -39,7 +36,6 @@ const SignUp = () => {
               body: JSON.stringify(saveUser),
             });
 
-            console.log("Saving user to backend", saveUser);
             reset();
 
             Swal.fire({
@@ -51,8 +47,6 @@ const SignUp = () => {
             });
 
             navigate("/");
-
-            console.log("User profile picture updated");
           })
           .catch((error) => {
             console.log(error);

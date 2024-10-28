@@ -27,7 +27,7 @@ const AuthProvider = ({ children }) => {
   const API_URL = "http://localhost:5000/api/auth"; //Adjust based on backend URI
 
   // Create user
-  const createUser = async (email, password) => {
+  const createUser = async (email, password, name, photoUrl) => {
     setLoading(true);
     try {
       // create user in Firebase
@@ -36,25 +36,23 @@ const AuthProvider = ({ children }) => {
         email,
         password
       );
-      const token = response.user.getIdToken(); // Firebase token
+
+      const token = await response.user.getIdToken(); // Firebase token
+
       // Send firebase token to backend (if you want to store it in local storage)
       const { data } = await axios.post(`${API_URL}/register`, {
         email,
         password,
+        uid: response.user.uid, // Fetch UID from Firebase response
+        name,
+        photoUrl,
         token,
       });
 
-      console.log("Response from backend:", data); // Check if the token is returned
       if (data.token) {
-        // Store JWT from the backend (if you want to store it in local storage)
         localStorage.setItem("jwt", data.token);
-        console.log("JWT saved in the local storage", data.token);
-      } else {
-        console.log("No token received from backend");
       }
       setUser({ ...response.user, role: data.user.role });
-
-      // if (onSuccess) onSuccess(data.user.role); // Pass role to handle navigate
     } catch (error) {
       console.error("Error during user creation:", error);
     } finally {
@@ -192,6 +190,7 @@ const AuthProvider = ({ children }) => {
     signInWithGoogle,
     handleSignOut,
     updateUserProfile,
+    isLoggedIn: !!user, // Adds a boolean indicating login status true by (!!) sign
   };
 
   return (

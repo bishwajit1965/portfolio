@@ -1,0 +1,20 @@
+/* Fade in effect */
+.lazy-image {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.lazy-image.loaded {
+  opacity: 1;
+}
+/* Blur effect */
+.lazy-image {
+  filter: blur(20px);
+  opacity: 0;
+  transition: filter 0.5s ease, opacity 0.5s ease;
+}
+
+.lazy-image.loaded {
+  filter: blur(0);
+  opacity: 1;
+}

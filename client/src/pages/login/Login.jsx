@@ -37,8 +37,10 @@ const Login = () => {
       const user = await signIn(email, password); //Await sign in and get result
 
       if (user && user.role) {
-        // If the role is 'super-admin', navigate to the Super Admin Dashboard
+        // Redirect url for comment on blog post
+        const redirectUrl = localStorage.getItem("redirectAfterLogin");
 
+        // If the role is 'super-admin', navigate to the Super Admin Dashboard
         if (user.role === "superAdmin") {
           MySwal.fire({
             position: "top-end",
@@ -61,6 +63,13 @@ const Login = () => {
           navigate(from, { replace: true });
         }
         console.log("Logged in user:", user);
+        // Redirect based on stored URL or fallback to default 'from' path
+        if (redirectUrl) {
+          navigate(redirectUrl, { replace: true });
+          localStorage.removeItem("redirectAfterLogin"); // Clean up storage
+        } else {
+          navigate(from, { replace: true });
+        }
       }
     } catch (error) {
       Swal.fire({

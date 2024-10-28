@@ -3,6 +3,7 @@ import AddBlogPost from "../superAdmin/manageBlog/AddBlogPost";
 import AddCategories from "../superAdmin/manageCategories/AddCategories";
 import AddProjectForm from "../superAdmin/manageProjects/AddProjectForm";
 import AdminDashboard from "../superAdmin/adminDashboard/AdminDashboard";
+import BlogPosts from "../components/blog/BlogPosts";
 import ContactMeForm from "../components/sections/contact/ContactMeForm";
 import ErrorPage from "../components/errorPage/ErrorPage";
 import Home from "../pages/home/Home";
@@ -19,6 +20,7 @@ import ProjectUpdateForm from "../superAdmin/manageProjects/ProjectUpdateForm";
 import RequireSuperAdmin from "../superAdmin/requireSuperAdmin/RequireSuperAdmin";
 import RootLayout from "../layout/RootLayout";
 import SignUp from "../pages/signUp/SignUp";
+import SingleBlogPost from "../components/blog/SingleBlogPost";
 import SuperAdminDashboard from "../superAdmin/superAdminDashboard/SuperAdminDashboard";
 import SuperAdminLayout from "../superAdmin/superAdminLayout/SuperAdminLayout";
 import SuperAdminLogin from "../superAdmin/pages/SuperAdminLogin";
@@ -34,6 +36,22 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/blog-posts",
+        element: <BlogPosts />,
+      },
+      {
+        path: "/single-blog-post/:postId",
+        element: <SingleBlogPost />,
+        loader: async ({ params }) => {
+          const postResponse = await fetch(
+            `http://localhost:5000/api/blogPosts/${params.postId}`
+          );
+          const post = await postResponse.json();
+
+          return { post };
+        },
       },
       {
         path: "/contact-me",
