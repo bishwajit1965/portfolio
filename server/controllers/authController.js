@@ -4,6 +4,8 @@ const User = require("../models/User");
 const admin = require("firebase-admin"); // Firebase Admin SDK for verifying Firebase token
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
 
+const { getDB } = require("../utils/database");
+
 const getCurrentUser = async (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
 
@@ -29,14 +31,7 @@ const getCurrentUser = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
-  const { name, photoUrl, email, password, role = "user" } = req.body;
-  console.log("Received user data on backend:", {
-    name,
-    photoUrl,
-    email,
-    password,
-    role,
-  });
+  const { email, password, uid, name, photoUrl, role, createdAt } = req.body;
 
   if (!email || !password) {
     return res.status(400).json({ message: "Email and password are required" });
@@ -52,13 +47,17 @@ const registerUser = async (req, res) => {
     // Hash the password before storing it
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = await userModel.createUser({
-      name,
-      photoUrl,
+    // User object
+    const userData = {
       email,
       password: hashedPassword, // Store hashed password
-      role,
-    });
+      uid,
+      name,
+      photoUrl,
+      role: "user" || role,
+      createdAt: new Date() || createdAt,
+    };
+    const newUser = await userModel.createUser(userData);
     console.log("Created user:", newUser); // Log the new user
 
     const token = jwt.sign(

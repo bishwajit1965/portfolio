@@ -29,6 +29,19 @@ const createBlogPost = async (blogPostData) => {
   }
 };
 
+// Get single blog post
+const getBlogPost = async (id) => {
+  try {
+    const db = getDB();
+    const post = await db
+      .collection("blogPosts")
+      .findOne({ _id: new ObjectId(id) });
+    return post;
+  } catch (error) {
+    throw new Error("No post found:" + error.message);
+  }
+};
+
 // Get all blog posts
 const getAllBlogPosts = async () => {
   try {
@@ -77,6 +90,7 @@ const deleteBlogPost = async (id) => {
 
 module.exports = {
   createBlogPost,
+  getBlogPost,
   getAllBlogPosts,
   updateBlogPost,
   deleteBlogPost,

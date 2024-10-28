@@ -4,6 +4,7 @@ const path = require("path");
 
 const {
   addBlogPost,
+  getSinglePost,
   fetchBlogPosts,
   editBlogPost,
   removeBlogPost,
@@ -24,6 +25,9 @@ router.post(
   upload.single("image"),
   addBlogPost
 );
+
+// Get a single blog post
+router.get("/:id", getSinglePost);
 
 // Get all blog posts
 router.get("/", fetchBlogPosts);

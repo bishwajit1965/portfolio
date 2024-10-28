@@ -25,6 +25,8 @@ const { connectDB, getDB } = require("./utils/database");
     /** Import the routes here
      *==============================================**/
 
+    // Comments route
+    const commentRoutes = require("./routes/commentRoutes");
     // Blog posts route
     const blogPostRoutes = require("./routes/blogPostRoutes");
     // Super admin auth route
@@ -51,7 +53,8 @@ const { connectDB, getDB } = require("./utils/database");
 
     /**Initialize your routes here
      *================================================= **/
-
+    // Initialize comments route
+    app.use("/api/comments", commentRoutes);
     // Initialized blog post route
     app.use("/api/blogPosts", blogPostRoutes);
     app.use("/api/super-admin/auth", superAdminAuthRoutes);

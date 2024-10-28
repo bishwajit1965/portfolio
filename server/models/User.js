@@ -7,11 +7,20 @@ class User {
     this.collection = this.db.collection("users");
   }
 
-  async createUser(userData) {
-    console.log("User data before saving:", userData);
+  async createUser({ email, password, uid, name, photoUrl, role, createdAt }) {
     try {
-      const result = await this.collection.insertOne(userData);
-      return { _id: result.insertedId, ...userData }; // Return the newly created user
+      const user = {
+        email,
+        password, // Will be hashed before passed to this method
+        uid,
+        name: "Testing",
+        photoUrl,
+        role: "user" || role, // default role as "user"
+        createdAt: new Date() || createdAt,
+      };
+
+      const result = await this.collection.insertOne(user);
+      return { _id: result.insertedId, ...user }; // Return the newly created user
     } catch (error) {
       throw new Error("Error creating user: " + error.message);
     }
@@ -29,6 +38,16 @@ class User {
   async findUserById(id) {
     try {
       const user = await this.collection.findOne({ _id: new ObjectId(id) });
+      return user;
+    } catch (error) {
+      throw new Error("Error finding user: " + error.message);
+    }
+  }
+
+  // Find user by uid (firebase uid) saved in users collection in MongoDB while sign up
+  async findUserByUid(uid) {
+    try {
+      const user = await this.collection.findOne({ _id: new ObjectId(uid) });
       return user;
     } catch (error) {
       throw new Error("Error finding user: " + error.message);

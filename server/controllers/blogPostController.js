@@ -1,6 +1,7 @@
 const { ObjectId } = require("mongodb");
 const {
   createBlogPost,
+  getBlogPost,
   getAllBlogPosts,
   updateBlogPost,
   deleteBlogPost,
@@ -24,6 +25,17 @@ const addBlogPost = async (req, res) => {
   }
 };
 
+// Get a single blog post
+const getSinglePost = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const singlePost = await getBlogPost(id);
+    res.status(200).json(singlePost);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
 // Fetch all blog Posts
 const fetchBlogPosts = async (req, res) => {
   try {
@@ -41,7 +53,7 @@ const editBlogPost = async (req, res) => {
   const { id } = req.params;
   const updatedData = req.body;
   try {
-    const result = await updateBlogPost({ id: new ObjectId(id), updatedData });
+    const result = await updateBlogPost({ _id: new ObjectId(id), updatedData });
     if (result.modifiedCount > 0) {
       res.status(200).json({ message: "Blog Post updated successfully." });
     } else {
@@ -72,4 +84,10 @@ const removeBlogPost = async (req, res) => {
   }
 };
 
-module.exports = { addBlogPost, fetchBlogPosts, editBlogPost, removeBlogPost };
+module.exports = {
+  addBlogPost,
+  getSinglePost,
+  fetchBlogPosts,
+  editBlogPost,
+  removeBlogPost,
+};
