@@ -11,7 +11,7 @@ const insertNewComment = async (commentData) => {
     return result;
   } catch (error) {
     console.error("Error inserting comment:", error.message);
-    throw new Error("Error in creating comment. " + error.message);
+    throw new Error("Error in creating comment." + error.message);
   }
 };
 

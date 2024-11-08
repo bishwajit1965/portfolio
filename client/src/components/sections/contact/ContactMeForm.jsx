@@ -1,6 +1,5 @@
 import CTAButton from "../../ctaButton/CTAButton";
 import { FaEnvelope } from "react-icons/fa";
-import { Helmet } from "react-helmet-async";
 import api from "../../../services/api";
 import { useState } from "react";
 
@@ -81,15 +80,7 @@ const ContactMeForm = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Web-tech-services || Contact Me</title>
-      </Helmet>
-
       <div className="lg:max-w-5xl mx-auto p-4 bg- rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-4 border-b border-slate-300 dark:border-b-slate-700 flex items-center animate-pulse pb-2 dark:text-slate-600">
-          <FaEnvelope className="mr-2" /> Contact Me
-        </h2>
-        {/* Display backend error */}
         {error && (
           <p className="text-red-500 p-1 border border-red-800 rounded-md text-sm">
             {error}

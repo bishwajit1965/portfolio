@@ -154,6 +154,7 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser);
       if (currentUser) {
         setLoading(true);
+
         const token = await currentUser.getIdToken(); // Get Firebase ID token
 
         // Store the token in localStorage if it's not there (on page reload)
@@ -168,7 +169,10 @@ const AuthProvider = ({ children }) => {
           });
 
           // Set user in state with role fetched from backend
-          setUser({ ...currentUser, role: response.data.role });
+          setUser({
+            ...currentUser,
+            role: response.data.role,
+          });
         } catch (error) {
           console.error("Error fetching user role:", error);
         }

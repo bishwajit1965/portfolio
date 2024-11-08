@@ -4,14 +4,6 @@ const Pagination = ({
   currentPage,
   setCurrentPage,
 }) => {
-  // const totalPages = Math.ceil(totalPosts / postsPerPage);
-
-  // const handlePageChange = (pageNumber) => {
-  //   if (pageNumber > 0 && pageNumber <= totalPages) {
-  //     setCurrentPage(pageNumber);
-  //   }
-  // };
-
   const pageNumbers = [];
 
   // Calculate total pages
@@ -81,29 +73,7 @@ const Pagination = ({
     }
   };
 
-  return (
-    <div className="flex justify-center mt-4">
-      {renderPageNumbers()}
-      {/* <nav>
-        <ul className="flex space-x-2">
-          {Array.from({ length: totalPages }, (_, index) => (
-            <li key={index + 1}>
-              <button
-                className={`px-4 py-2 rounded ${
-                  currentPage === index + 1
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200"
-                }`}
-                onClick={() => handlePageChange(index + 1)}
-              >
-                {index + 1}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav> */}
-    </div>
-  );
+  return <div className="flex justify-center mt-">{renderPageNumbers()}</div>;
 };
 
 export default Pagination;

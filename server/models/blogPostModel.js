@@ -6,9 +6,11 @@ const { ObjectId } = require("mongodb");
 const createBlogPost = async (blogPostData) => {
   try {
     const db = getDB();
-    const { title, content, author, imageUrl, category } = blogPostData;
+    const { title, content, author, imageUrl, category, tag, status } =
+      blogPostData;
     const parsedCategories =
       typeof category === "string" ? JSON.parse(category) : category;
+    const parsedTags = typeof tag === "string" ? JSON.parse(tag) : tag;
 
     const newPost = {
       title,
@@ -16,7 +18,8 @@ const createBlogPost = async (blogPostData) => {
       author,
       imageUrl,
       category: parsedCategories,
-      status: "draft", // Default status
+      tag: parsedTags,
+      status: status || "draft", // Default status
       createdAt: new Date(),
       updatedAt: new Date(),
     };

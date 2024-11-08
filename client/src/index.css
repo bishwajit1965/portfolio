@@ -51,6 +51,12 @@ body.dark {
 .swal2-cancel {
   background-color: #81c212;
 }
+
+/* CKEditor */
+.ck-editor__editable_inline {
+  min-height: 175px; /* or any height you want */
+}
+
 /* Responsive breakpoints and devices to be targeted */
 
 /* Extra small devices (phones, 320px and up) */

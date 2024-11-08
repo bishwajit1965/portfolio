@@ -2,9 +2,10 @@ import AboutMeSection from "../components/sections/about/AboutMeSection";
 import AddBlogPost from "../superAdmin/manageBlog/AddBlogPost";
 import AddCategories from "../superAdmin/manageCategories/AddCategories";
 import AddProjectForm from "../superAdmin/manageProjects/AddProjectForm";
+import AddTag from "../superAdmin/manageTags/AddTag";
 import AdminDashboard from "../superAdmin/adminDashboard/AdminDashboard";
 import BlogPosts from "../components/blog/BlogPosts";
-import ContactMeForm from "../components/sections/contact/ContactMeForm";
+import ContactMe from "../components/sections/contact/ContactMe";
 import ErrorPage from "../components/errorPage/ErrorPage";
 import Home from "../pages/home/Home";
 import Login from "../pages/login/Login";
@@ -13,6 +14,7 @@ import ManageCategories from "../superAdmin/manageCategories/ManageCategories";
 import ManageComments from "../superAdmin/manageComments/ManageComments";
 import ManageHobby from "../superAdmin/manageHobby/ManageHobby";
 import ManageProjects from "../superAdmin/manageProjects/ManageProjects";
+import ManageTags from "../superAdmin/manageTags/ManageTags";
 import ManageTestimonials from "../superAdmin/manageTestimonials/ManageTestimonials";
 import ManageUsers from "../superAdmin/manageUsers/ManageUsers";
 import ProjectDetails from "../components/projectDetails/ProjectDetails";
@@ -55,7 +57,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/contact-me",
-        element: <ContactMeForm />,
+        element: <ContactMe />,
       },
       {
         path: "/about-me",
@@ -141,6 +143,14 @@ const router = createBrowserRouter([
       {
         path: "manage-categories",
         element: <ManageCategories />,
+      },
+      {
+        path: "manage-tags",
+        element: <ManageTags />,
+      },
+      {
+        path: "add-tag",
+        element: <AddTag />,
       },
       {
         path: "manage-testimonials",

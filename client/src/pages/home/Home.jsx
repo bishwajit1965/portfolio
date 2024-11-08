@@ -10,13 +10,13 @@ import SectionTitle from "../../components/sectionTitle/SectionTitle";
 const Home = () => {
   return (
     <>
-      <Helmet>
-        <title>Web-tech-services || Home</title>
-      </Helmet>
-
-      <div className="lg:py-3">
+      <div className="lg:pt-10">
+        <Helmet>
+          <title>Web-tech-services || Home</title>
+        </Helmet>
         <SectionTitle
-          title="Welcome to My Portfolio Site"
+          title="Welcome to"
+          decoratedText="My Portfolio Site"
           subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
         />
 

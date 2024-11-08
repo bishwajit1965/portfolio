@@ -16,12 +16,15 @@ const ManageBlogPosts = () => {
           decoratedText="Blog Posts"
           subtitle="Super admin can only manage all blog posts"
         />
-        <NavLink to="/super-admin/add-blog-post" className="m-0">
-          <button className="btn btn-xs btn-primary">
-            <FaPlusCircle />
-            Add Blog Post
-          </button>
-        </NavLink>
+
+        <div className="flex lg:justify-start items-center justify-between lg:mb-4 bg-base-200 p-2 shadow-sm">
+          <NavLink to="/super-admin/add-blog-post" className="m-0">
+            <button className="btn btn-xs btn-primary">
+              <FaPlusCircle />
+              Add Blog Post
+            </button>
+          </NavLink>
+        </div>
       </div>
     </>
   );

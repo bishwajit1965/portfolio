@@ -42,7 +42,7 @@ const ManageCategories = () => {
     };
 
     fetchCategories();
-  }, []); // Empty dependency array to run only on mount
+  }, []);
 
   // Handlers for edit and delete actions (to be implemented)
   const handleEditCategory = (category) => {
@@ -145,20 +145,22 @@ const ManageCategories = () => {
         decoratedText="Categories"
         subtitle="Super admin only!"
       />
-      <NavLink to="/super-admin/add-categories">
-        <button className="btn btn-xs btn-primary">
-          <FaPlusCircle />
-          Add Category
-        </button>
-      </NavLink>
-
-      <div className="">
-        <h2 className="text-xl font-bold text-center">
+      <div className="flex lg:justify-start items-center justify-between lg:mb-4 bg-base-200 p-2 shadow-sm">
+        <NavLink to="/super-admin/add-categories" className="m-0">
+          <button className="btn btn-xs btn-primary">
+            <FaPlusCircle />
+            Add Category
+          </button>
+        </NavLink>
+        <h2 className="text-xl font-bold text-center lg:ml-72">
           Category List:{" "}
           {categories.length > 0
             ? categories.length
             : "No category uploaded yet"}
         </h2>
+      </div>
+
+      <div className="p-2">
         {/* Pass categories to CategoryTable */}
         <CategoryTable
           categories={categories}

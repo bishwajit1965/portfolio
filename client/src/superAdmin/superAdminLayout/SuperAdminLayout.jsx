@@ -23,7 +23,7 @@ const SuperAdminLayout = () => {
             </h2>
             <SideNav />
           </div>
-          <div className="lg:col-span-9 col-span-6 border-r">
+          <div className="lg:col-span-9 col-span-6 border border-b-rounded-md">
             <Outlet />
           </div>
         </div>

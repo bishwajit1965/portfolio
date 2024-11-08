@@ -61,12 +61,15 @@ const AddCategories = ({ onCategoryCreated }) => {
         decoratedText="Categories"
         subtitle="Super admin only!"
       />
-      <NavLink to="/super-admin/manage-categories" className="m-0">
-        <button className="btn btn-xs rounded-full text-white btn-success">
-          <FaHome />
-          Manage Categories
-        </button>
-      </NavLink>
+
+      <div className="flex lg:justify-start items-center justify-between lg:mb-4 bg-base-200 p-2 shadow-sm">
+        <NavLink to="/super-admin/manage-categories" className="m-0">
+          <button className="btn btn-xs rounded-full text-white btn-success">
+            <FaHome />
+            Manage Categories
+          </button>
+        </NavLink>
+      </div>
       <div className="my-2 max-w-md mx-auto">
         <div className="">
           {/* Display error messages */}

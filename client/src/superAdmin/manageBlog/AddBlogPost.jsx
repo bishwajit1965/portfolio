@@ -1,6 +1,7 @@
 import { FaBlogger, FaUpload } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 
+import CKEditorComponent from "../textEditor/CKEditorComponent";
 import { Helmet } from "react-helmet-async";
 import { NavLink } from "react-router-dom";
 import Select from "react-select";
@@ -8,13 +9,16 @@ import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import Swal from "sweetalert2";
 import categoryApi from "../utils/categoryApi";
 import fetchWithAuth from "../utils/fetchWithAuth";
+import tagApi from "../utils/tagApi";
 
 const AddBlogPost = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [content, setContent] = useState("");
   const [categories, setCategories] = useState([]); // To store fetched categories
+  const [tags, setTags] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]); // To handle selected categories
+  const [selectedTags, setSelectedTags] = useState([]); // To handle selected tags
   const [status, setStatus] = useState("draft");
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -45,6 +49,28 @@ const AddBlogPost = () => {
     fetchCategories();
   }, []);
 
+  // Fetching all tags
+  useEffect(() => {
+    const fetchAllTags = async () => {
+      try {
+        const response = await tagApi.getAllTags();
+        console.log("Fetched tags:", response);
+        if (response && Array.isArray(response)) {
+          const tagOptions = response.map((tag) => ({
+            value: tag._id,
+            label: tag.name,
+          }));
+          setTags(tagOptions);
+        } else {
+          console.log("Unexpected data format or no tags fetched.");
+        }
+      } catch (error) {
+        console.error("Error in fetching tags, ", error);
+      }
+    };
+    fetchAllTags();
+  }, []);
+
   // For clearing error messages
   useEffect(() => {
     if (errorMessages.length > 0) {
@@ -67,6 +93,9 @@ const AddBlogPost = () => {
 
   const handleCategoryChange = (selectedOptions) => {
     setSelectedCategories(selectedOptions);
+  };
+  const handleTagChange = (selectedOptions) => {
+    setSelectedTags(selectedOptions);
   };
 
   const handleSubmit = async (e) => {
@@ -103,6 +132,10 @@ const AddBlogPost = () => {
     if (selectedCategories.length === 0) {
       newErrors.push("At least one category must be selected.");
     }
+    // Categories validation
+    if (selectedTags.length === 0) {
+      newErrors.push("At least one tag must be selected.");
+    }
 
     // Status validation
     if (!status) {
@@ -132,6 +165,10 @@ const AddBlogPost = () => {
       "category",
       JSON.stringify(selectedCategories.map((cat) => cat.value))
     );
+    formData.append(
+      "tag",
+      JSON.stringify(selectedTags.map((tag) => tag.value))
+    );
     formData.append("status", status);
     if (image) formData.append("image", image); // Append image file
 
@@ -143,7 +180,7 @@ const AddBlogPost = () => {
           body: formData, // For multipart/form-data
         }
       );
-
+      console.log("Form data value", formData);
       // Assuming the response will always be JSON in a successful case
       if (response.ok) {
         Swal.fire("Success", "Blog post created successfully", "success");
@@ -151,6 +188,7 @@ const AddBlogPost = () => {
         setAuthor("");
         setContent("");
         setSelectedCategories([]);
+        setSelectedTags([]);
         setStatus("draft");
         setImage(null);
         fileInputRef.current.value = null; // Clear file input
@@ -181,15 +219,17 @@ const AddBlogPost = () => {
           subtitle="Super admin can only manage all blog posts"
         />
 
-        <NavLink to="/super-admin/manage-blogs" className="m-0">
-          <button className="btn btn-xs btn-primary">
-            <FaBlogger />
-            Manage Blog Post
-          </button>
-        </NavLink>
+        <div className="flex lg:justify-start items-center justify-between lg:mb-4 bg-base-200 p-2 shadow-sm">
+          <NavLink to="/super-admin/manage-blogs" className="m-0">
+            <button className="btn btn-xs btn-primary">
+              <FaBlogger />
+              Manage Blog Post
+            </button>
+          </NavLink>
+        </div>
 
         <div className="mt-4">
-          <div className="lg:max-w-xl mx-auto shadow-md">
+          <div className="lg:max-w-7xl mx-auto shadow-md">
             {errorMessages.length > 0 && (
               <div className="alert alert-error text-white text-sm">
                 <div className="">
@@ -210,7 +250,7 @@ const AddBlogPost = () => {
               </div>
             )}
           </div>
-          <div className="lg:max-w-xl w-full flex mx-auto border rounded-md p-4 shadow-sm">
+          <div className="lg:max-w-7xl w-full flex mx-auto border rounded-md p-4 shadow-sm">
             <form
               onSubmit={handleSubmit}
               className="w-full space-y-2"
@@ -241,16 +281,36 @@ const AddBlogPost = () => {
                   className="input input-sm input-bordered w-full"
                 />
               </div>
-              <div className="form-control">
-                <label htmlFor="title">Upload File:</label>
-                <input
-                  type="file"
-                  name="image"
-                  accept="image/*"
-                  onChange={handleImageChange} // Use the new handler
-                  ref={fileInputRef}
-                  className="file-input file-input-sm file-input-bordered w-full"
-                />
+
+              <div className="grid grid-cols-12 justify-between items-center gap-2">
+                <div className="lg:col-span-6 col-span-12">
+                  <div className="form-control">
+                    <label htmlFor="title">Upload File:</label>
+                    <input
+                      type="file"
+                      name="image"
+                      accept="image/*"
+                      onChange={handleImageChange} // Use the new handler
+                      ref={fileInputRef}
+                      className="file-input file-input-sm file-input-bordered w-full"
+                    />
+                  </div>
+                </div>
+                <div className="lg:col-span-6 col-span-12">
+                  <label htmlFor="status">Post Status</label>
+                  <Select
+                    name="status"
+                    value={{
+                      value: status,
+                      label: status.charAt(0).toUpperCase() + status.slice(1),
+                    }}
+                    onChange={(selected) => setStatus(selected.value)}
+                    options={[
+                      { value: "draft", label: "Draft" },
+                      { value: "published", label: "Published" },
+                    ]}
+                  />
+                </div>
               </div>
               <div className="form-control">
                 <label>Categories:</label>
@@ -268,17 +328,22 @@ const AddBlogPost = () => {
                   <p>Loading categories...</p>
                 )}
               </div>
+
               <div className="form-control">
-                <label htmlFor="status">Post Status</label>
-                <select
-                  className="select select-bordered select-sm w-full"
-                  value={status}
-                  name="status"
-                  onChange={(e) => setStatus(e.target.value)}
-                >
-                  <option value="draft">Draft</option>
-                  <option value="published">Published</option>
-                </select>
+                <label>Tags:</label>
+                {tags.length > 0 ? (
+                  <Select
+                    name="tag"
+                    options={tags}
+                    isMulti
+                    value={selectedTags}
+                    onChange={handleTagChange}
+                    placeholder="Select tags"
+                    noOptionsMessage={() => "No tags available"}
+                  />
+                ) : (
+                  <p>Loading tags...</p>
+                )}
               </div>
 
               <div className="my-">
@@ -286,13 +351,17 @@ const AddBlogPost = () => {
                   <div className="label">
                     <span className="label-text">Post Content:</span>
                   </div>
-                  <textarea
+                  {/* <textarea
                     className="textarea textarea-bordered h-24"
                     placeholder="Post content..."
+                    type="text"
                     name="content"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
-                  ></textarea>
+                  ></textarea> */}
+                  {/* <TextEditor value={content} onChange={setContent} /> */}
+
+                  <CKEditorComponent />
                 </label>
               </div>
               <div className="form-control pt-3">

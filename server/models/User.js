@@ -13,8 +13,9 @@ class User {
         email,
         password, // Will be hashed before passed to this method
         uid,
-        name: "Testing",
-        photoUrl,
+        name: "Bishwajit Paul" || name,
+        photoUrl:
+          "https://i.ibb.co.com/MgsDqCZ/FB-IMG-1678691214526.jpg" || photoUrl,
         role: "user" || role, // default role as "user"
         createdAt: new Date() || createdAt,
       };

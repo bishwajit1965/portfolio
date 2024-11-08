@@ -15,7 +15,7 @@ const ScrollTopButton = () => {
 
   // Checks if the user has scrolled down
   const checkScrollPosition = () => {
-    if (window.scrollY > 1080) {
+    if (window.scrollY > 800) {
       setShowButton(true); // Show the button if scrolled more thn 1080px
     } else {
       setShowButton(false); // Hide the button if scrolled less than 1080px
@@ -38,8 +38,8 @@ const ScrollTopButton = () => {
           onClick={scrollToTop}
           style={{
             position: "fixed",
-            bottom: "90px",
-            right: "118px",
+            bottom: "80px",
+            right: "125px",
             backgroundColor: "#007BFF",
             color: "white",
             border: "none",
@@ -47,7 +47,7 @@ const ScrollTopButton = () => {
             zIndex: 50,
           }}
         >
-          <FaArrowAltCircleUp className="text-3xl" />
+          <FaArrowAltCircleUp className="text-5xl p-[1px] text-white shadow-neutral-200" />
         </button>
       )}
     </div>

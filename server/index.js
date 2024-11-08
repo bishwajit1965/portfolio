@@ -24,7 +24,10 @@ const { connectDB, getDB } = require("./utils/database");
 
     /** Import the routes here
      *==============================================**/
-
+    // Likes route
+    const likesRoutes = require("./routes/likesRoutes");
+    // Tags route
+    const tagRoutes = require("./routes/tagRoutes");
     // Comments route
     const commentRoutes = require("./routes/commentRoutes");
     // Blog posts route
@@ -53,6 +56,10 @@ const { connectDB, getDB } = require("./utils/database");
 
     /**Initialize your routes here
      *================================================= **/
+    // Initialize likes route
+    app.use("/api/likes", likesRoutes);
+    // Initialize tags route
+    app.use("/api/tags", tagRoutes);
     // Initialize comments route
     app.use("/api/comments", commentRoutes);
     // Initialized blog post route

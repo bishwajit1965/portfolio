@@ -1,11 +1,13 @@
 import { FaUpload } from "react-icons/fa6";
+import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
 
 const CommentsForm = ({ postId, onSubmitComment }) => {
+  const { user } = useAuth();
   const [content, setContent] = useState("");
   const [parentId, setParentId] = useState(null);
   const [error, setError] = useState("");
-
+  console.log("User data in form:", user);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -18,7 +20,15 @@ const CommentsForm = ({ postId, onSubmitComment }) => {
     }
 
     // Trigger the submission function passed from the parent
-    await onSubmitComment({ postId, content, parentId });
+    await onSubmitComment({
+      postId,
+      content,
+      parentId,
+      authorId: user.uid,
+      authorEmail: user.email,
+      author: user.displayName,
+      photoUrl: user.photoURL,
+    });
 
     // Clear the input after submission
     setContent("");
@@ -32,20 +42,23 @@ const CommentsForm = ({ postId, onSubmitComment }) => {
           <textarea
             name="content"
             value={content}
-            onChange={(e) => setContent(e.target.value)}
+            onChange={(e) => {
+              setContent(e.target.value);
+              if (error) setError(""); // Reset error when user starts typing
+            }}
             placeholder="Add your comment..."
             id=""
-            rows="3"
+            rows="4"
             className="textarea textarea-bordered w-full dark:bg-slate-700"
           ></textarea>
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </div>
-        <div className="form-control">
+        <div className="form-control mt-4">
           <button
             type="submit"
-            className="btn btn-primary mt-2 btn-sm dark:btn-success"
+            className="btn btn-primary mt-2 btn-md dark:btn-success"
           >
-            <FaUpload /> Add comment
+            <FaUpload /> Add Comment
           </button>
         </div>
       </form>

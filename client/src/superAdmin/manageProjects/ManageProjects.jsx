@@ -67,12 +67,21 @@ const ManageProjects = () => {
           decoratedText="Projects"
           subtitle="Only super admin can manage projects!"
         />
-        <NavLink to="/super-admin/add-project" className="m-0">
-          <button className="btn btn-xs btn-primary">
-            <FaPlusCircle />
-            Add Project
-          </button>
-        </NavLink>
+
+        <div className="flex lg:justify-start justify-between items-center lg:mb-4 bg-base-200 p-2 shadow-sm">
+          <NavLink to="/super-admin/add-project" className="m-0">
+            <button className="btn btn-xs btn-primary">
+              <FaPlusCircle />
+              Add Project
+            </button>
+          </NavLink>
+
+          <h2 className="text-xl font-bold text-center lg:ml-72">
+            Total Projects:{" "}
+            {projects.length > 0 ? projects.length : "No tag uploaded yet"}
+          </h2>
+        </div>
+
         <div className="text-center">
           {loading && <span className="loading loading-ring loading-lg"></span>}
         </div>

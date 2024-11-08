@@ -6,10 +6,19 @@ const {
 
 const { ObjectId } = require("mongodb");
 
-// Controller to create new comment
+// Create new comment
 const handleCreateComment = async (req, res) => {
   try {
-    const { postId, content, parentId } = req.body;
+    const {
+      postId,
+      userId,
+      content,
+      authorId,
+      authorEmail,
+      author,
+      photoUrl,
+      parentId,
+    } = req.body;
     console.log("Request Body:", req.body);
     // Check if user ID is available
     if (!req.user || !req.user._id) {
@@ -17,8 +26,12 @@ const handleCreateComment = async (req, res) => {
     }
     const newComment = {
       postId: new ObjectId(postId),
-      userId: new ObjectId(req.user._id),
+      userId: new ObjectId(req.user._id) || userId,
       content,
+      authorId,
+      authorEmail,
+      author,
+      photoUrl,
       parentId: parentId ? new ObjectId(parentId) : null,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -27,14 +40,14 @@ const handleCreateComment = async (req, res) => {
     console.log("New Comment Data:", newComment);
 
     const comment = await insertNewComment(newComment);
-    res.status(201).json({ message: "Comment added.", comment });
+    res.status(201).json({ message: "Comment added successfully.", comment });
   } catch (error) {
-    console.error("Error in handleCreateComment:", error.message);
+    console.error("Error in creating comment:", error.message);
     res.status(500).json({ error: "Error in creating comment" });
   }
 };
 
-// Controller to fetch comment for a post
+// Fetch comment for a post
 const handleFetchComment = async (req, res) => {
   try {
     const { postId } = req.params;
@@ -45,7 +58,7 @@ const handleFetchComment = async (req, res) => {
   }
 };
 
-// Controller to delete a comment
+// Delete a comment
 const handleDeleteComment = async (req, res) => {
   try {
     const { id } = req.params;
