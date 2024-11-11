@@ -57,19 +57,59 @@ const getAllBlogPosts = async () => {
 };
 
 // Update blog post
-const updateBlogPost = async (id, updatedData) => {
+const updateBlogPost = async (postId, updatedData, newImage) => {
   try {
     const db = getDB();
-    const result = await db
-      .collection("blogPosts")
-      .updateOne(
-        { _id: new ObjectId(id) },
-        { $set: { ...updatedData, updatedAt: new Date() } }
-      );
-    if (result.matchedCount === 0) {
-      throw new Error("Blog post not found.");
+    const postsCollection = db.collection("blogPosts");
+
+    // Log the incoming postId and updatedData
+    console.log("Post ID to Update:", postId);
+    console.log("Updated Data:", updatedData);
+
+    // Find the existing post to get the already uploaded image path
+    const existingPost = await postsCollection.findOne({
+      _id: new ObjectId(postId),
+    });
+
+    console.log("Existing Post:", existingPost);
+
+    if (!existingPost) {
+      throw new Error("Post not found.");
     }
-    return result;
+
+    // Set the new image Url if provided
+    let imageUrl = existingPost.imageUrl;
+
+    if (newImage) {
+      // Update the image url with the new image
+      imageUrl = newImage.filename;
+      console.log("New Image URL:", imageUrl);
+    }
+    // Remove '_id' from the updatedData to avoid modifying the immutable field
+    const { _id, ...dataWithoutId } = updatedData;
+
+    // Update the post with new fields
+    const updatedPost = await postsCollection.updateOne(
+      { _id: new ObjectId(postId) },
+      {
+        $set: {
+          ...dataWithoutId,
+          imageUrl, // Update only if a new image was uploaded
+          updatedAt: new Date(),
+        },
+      }
+    );
+    console.log("Update Result:", updatedPost);
+
+    if (updatedPost.modifiedCount === 0) {
+      throw new Error("Blog post is not updated.");
+    }
+
+    // Fetch the updated post
+    const updateResult = await postsCollection.findOne({
+      _id: new ObjectId(postId),
+    });
+    return updateResult;
   } catch (error) {
     throw new Error("Error in updating blog post:" + error.message);
   }
@@ -77,15 +117,24 @@ const updateBlogPost = async (id, updatedData) => {
 
 // Delete blog post
 const deleteBlogPost = async (id) => {
+  const objectId = new ObjectId(id);
   try {
     const db = getDB();
-    const result = await db
-      .collection("blogPosts")
-      .deleteOne({ _id: new ObjectId(id) });
-    if (result.deletedCount > 0) {
+    const postCollection = db.collection("blogPosts");
+    // Find the the post to delete to get the old image path
+    const postToDelete = await postCollection.findOne({
+      _id: objectId,
+    });
+    if (!postToDelete) {
+      throw new Error("Post not found.");
+    }
+    // Delete the post from database
+    const result = await postCollection.deleteOne({
+      _id: objectId,
+    });
+    if (result.deletedCount === 0) {
       throw new Error("Blog post not deleted.");
     }
-    return result;
   } catch (error) {
     throw new Error("Blog post is not deleted:" + error.message);
   }

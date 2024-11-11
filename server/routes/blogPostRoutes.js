@@ -6,11 +6,12 @@ const {
   addBlogPost,
   getSinglePost,
   fetchBlogPosts,
-  editBlogPost,
+  editBloPost,
   removeBlogPost,
 } = require("../controllers/blogPostController");
 
 const { isAuthenticated } = require("../middlewares/isAuthenticated");
+
 const { isAuthorized } = require("../middlewares/isAuthorized");
 
 const upload = require("../middlewares/upload");
@@ -36,15 +37,16 @@ router.get("/", fetchBlogPosts);
 router.patch(
   "/:id",
   isAuthenticated,
-  isAuthorized("superAdmin", "admin", "editor"),
-  editBlogPost
+  isAuthorized("superAdmin"),
+  upload.single("image"),
+  editBloPost
 );
 
 // Delete blog post
 router.delete(
   "/:id",
   isAuthenticated,
-  isAuthorized("superAdmin", "admin"),
+  isAuthorized("superAdmin"),
   removeBlogPost
 );
 

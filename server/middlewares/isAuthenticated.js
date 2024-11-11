@@ -33,9 +33,7 @@ const isAuthenticated = (req, res, next) => {
 
     next();
   } catch (error) {
-    return response
-      .status(401)
-      .json({ message: "Unauthorized: Invalid token." });
+    return res.status(401).json({ message: "Unauthorized: Invalid token." });
   }
 };
 
