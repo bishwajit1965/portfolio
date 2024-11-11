@@ -8,8 +8,8 @@ import Swal from "sweetalert2";
 import UpdateCategoryModal from "./UpdateCategoryModal";
 
 const ManageCategories = () => {
+  const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -18,6 +18,7 @@ const ManageCategories = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
+        setLoading(true);
         const response = await fetch("http://localhost:5000/api/categories", {
           method: "GET",
           headers: {
@@ -136,8 +137,8 @@ const ManageCategories = () => {
     }
   };
 
-  if (loading) return <div>Loading categories...</div>;
-  if (errorMessage) return <div>{errorMessage}</div>;
+  if (errorMessage)
+    return <div className="text-center text-red-500">{errorMessage}</div>;
   return (
     <div>
       <SuperAdminPageTitle
@@ -162,11 +163,17 @@ const ManageCategories = () => {
 
       <div className="p-2">
         {/* Pass categories to CategoryTable */}
-        <CategoryTable
-          categories={categories}
-          onEdit={handleEditCategory}
-          onDelete={handleDeleteCategory}
-        />
+        {loading ? (
+          <div className="text-center">
+            <span className="loading loading-ring loading-lg"></span>
+          </div>
+        ) : (
+          <CategoryTable
+            categories={categories}
+            onEdit={handleEditCategory}
+            onDelete={handleDeleteCategory}
+          />
+        )}
 
         {showUpdateModal && selectedCategory && (
           <UpdateCategoryModal

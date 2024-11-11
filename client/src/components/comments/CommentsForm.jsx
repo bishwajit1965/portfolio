@@ -36,7 +36,7 @@ const CommentsForm = ({ postId, onSubmitComment }) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="lg:max-w-3xl w-full mx-auto lg:p-6 p-2">
       <form onSubmit={handleSubmit} className="w-full">
         <div className="form-control">
           <textarea
@@ -53,7 +53,7 @@ const CommentsForm = ({ postId, onSubmitComment }) => {
           ></textarea>
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </div>
-        <div className="form-control mt-4">
+        <div className="form-control mt-2">
           <button
             type="submit"
             className="btn btn-primary mt-2 btn-md dark:btn-success"

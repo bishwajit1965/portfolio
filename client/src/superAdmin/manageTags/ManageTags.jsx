@@ -9,7 +9,7 @@ import UpdateTagModal from "./UpdateTagModal";
 
 const ManageTags = () => {
   const [tags, setTags] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedTag, setSelectedTag] = useState(null);
@@ -18,6 +18,7 @@ const ManageTags = () => {
   useEffect(() => {
     const fetchTags = async () => {
       try {
+        setLoading(true);
         const response = await fetch("http://localhost:5000/api/tags", {
           method: "GET",
           headers: {
@@ -131,8 +132,8 @@ const ManageTags = () => {
     }
   };
 
-  if (loading) return <div>Loading categories...</div>;
-  if (errorMessage) return <div>{errorMessage}</div>;
+  if (errorMessage)
+    return <div className="text-center text-red-500">{errorMessage}</div>;
 
   return (
     <div>
@@ -156,11 +157,17 @@ const ManageTags = () => {
 
       <div className="p-2 shadow-sm">
         {/* Pass tags to TagTable */}
-        <TagTable
-          tags={tags}
-          onEdit={handleEditTag}
-          onDelete={handleDeleteTag}
-        />
+        {loading ? (
+          <div className="text-center">
+            <span className="loading loading-ring loading-lg"></span>
+          </div>
+        ) : (
+          <TagTable
+            tags={tags}
+            onEdit={handleEditTag}
+            onDelete={handleDeleteTag}
+          />
+        )}
 
         {showUpdateModal && selectedTag && (
           <UpdateTagModal

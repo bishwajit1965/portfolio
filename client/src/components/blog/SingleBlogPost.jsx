@@ -223,7 +223,6 @@ const SingleBlogPost = () => {
           )}
         </div>
         <div className="lg:col-span-12 col-span-12 lg:p-4 p-2 border-slate-200 lg:border rounded-md shadow-sm dark:border-slate-700">
-          {/* <p>SingleBlogPost {postId}</p> */}
           <h2 className="text-3xl font-bold text-slate-800 capitalize dark:text-base-200">
             {post.title}
           </h2>
@@ -304,18 +303,20 @@ const SingleBlogPost = () => {
             </Link>
           </div>
 
-          <div className="lg:mt-5 mt-2 w-full">
+          <div className="lg:mt-5 mt-2 w-full bg-base-200 rounded-md shadow-md">
             {/* Display message */}
-            {responseSuccessMessage && (
-              <div className="lg:mb-4 mb-2 text-blue-800 font-bold lg:text-xl animate-pulse">
-                {responseSuccessMessage}
-              </div>
-            )}{" "}
-            {responseErrorMessage && (
-              <div className="lg:mb-4 mb-2 text-red-800 font-bold lg:text-xl animate-pulse">
-                {responseErrorMessage}
-              </div>
-            )}
+            <div className="lg:max-w-3xl mx-auto lg:px-6">
+              {responseSuccessMessage && (
+                <div className="lg:mb-4 mb-2 text-blue-800 font-bold lg:text-xl animate-pulse">
+                  {responseSuccessMessage}
+                </div>
+              )}{" "}
+              {responseErrorMessage && (
+                <div className="lg:mb-4 mb-2 text-red-800 font-bold lg:text-xl animate-pulse">
+                  {responseErrorMessage}
+                </div>
+              )}
+            </div>
             {showCommentForm && (
               <CommentsForm
                 postId={postId}

@@ -1,7 +1,6 @@
 import { FaBlogger, FaUpload } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 
-import CKEditorComponent from "../textEditor/CKEditorComponent";
 import { Helmet } from "react-helmet-async";
 import { NavLink } from "react-router-dom";
 import Select from "react-select";
@@ -10,6 +9,8 @@ import Swal from "sweetalert2";
 import categoryApi from "../utils/categoryApi";
 import fetchWithAuth from "../utils/fetchWithAuth";
 import tagApi from "../utils/tagApi";
+
+// import CKEditorComponent from "../textEditor/CKEditorComponent";
 
 const AddBlogPost = () => {
   const [title, setTitle] = useState("");
@@ -351,17 +352,17 @@ const AddBlogPost = () => {
                   <div className="label">
                     <span className="label-text">Post Content:</span>
                   </div>
-                  {/* <textarea
+                  <textarea
                     className="textarea textarea-bordered h-24"
                     placeholder="Post content..."
                     type="text"
                     name="content"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
-                  ></textarea> */}
+                  ></textarea>
                   {/* <TextEditor value={content} onChange={setContent} /> */}
 
-                  <CKEditorComponent />
+                  {/* <CKEditorComponent /> */}
                 </label>
               </div>
               <div className="form-control pt-3">
