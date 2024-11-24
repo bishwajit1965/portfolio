@@ -123,75 +123,297 @@ const ManageBlogPosts = () => {
     setShowUpdateModal(true);
   };
 
-  const handleUpdateBlogPost = async (updatedBlogPost) => {
+  const handleUpdateBlogPost = async (formData) => {
     try {
-      console.log("Updating blog post ID:", updatedBlogPost._id); // Debugging
-      // Remove the _id field from the updatedBlogPost object
-      const { _id, ...dataWithoutId } = updatedBlogPost;
+      console.log("Updating blog post ID:", formData._id);
 
+      // Destructure formData and remove the _id
+      const { _id, imageUrl, ...dataWithoutId } = formData;
+
+      // Prepare filtered data for submission (excluding _id)
+      const filteredData = {
+        title: dataWithoutId.title,
+        content: dataWithoutId.content,
+        author: dataWithoutId.author,
+        category: dataWithoutId.category,
+        tag: dataWithoutId.tag,
+        status: dataWithoutId.status,
+      };
+
+      let requestData;
+
+      // If an image exists, prepare FormData
+      if (imageUrl && imageUrl instanceof File) {
+        const formDataWithImage = new FormData();
+
+        // Append image file and other fields
+        formDataWithImage.append("imageUrl", imageUrl);
+
+        // Handle arrays correctly (and ensure they're not empty)
+        for (const key in filteredData) {
+          if (Array.isArray(filteredData[key])) {
+            filteredData[key].forEach((item) =>
+              formDataWithImage.append(`${key}[]`, item)
+            );
+          } else {
+            formDataWithImage.append(key, filteredData[key]);
+          }
+        }
+
+        requestData = formDataWithImage;
+      } else {
+        // If no image, send regular data
+        requestData = filteredData;
+      }
+
+      // Prepare headers
+      const headers = {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      };
+
+      // If it's not FormData, set content type as JSON
+      if (!(requestData instanceof FormData)) {
+        headers["Content-Type"] = "application/json";
+      }
+
+      // Make the PATCH request
       const response = await fetch(
-        `http://localhost:5000/api/blogPosts/${updatedBlogPost._id}`,
+        `http://localhost:5000/api/blogPosts/${selectedBlogPost._id}`,
         {
           method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify(dataWithoutId),
+          headers,
+          body:
+            requestData instanceof FormData
+              ? requestData
+              : JSON.stringify(requestData),
         }
       );
-      const data = await response.json(); // Parse the JSON
-      console.log("Blog post response", data);
+
+      // Parse response
+      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error("Error updating blog post");
+        throw new Error(data.message || "Error updating blog post");
       }
 
-      if (response.ok) {
-        // Show a success message with Swal
-        Swal.fire({
-          title: "Success!",
-          text: "Blog post updated successfully.",
-          icon: "success",
-          confirmButtonText: "OK",
-        });
+      // Success message
+      Swal.fire({
+        title: "Success!",
+        text: "Blog post updated successfully.",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
 
-        setShowUpdateModal(false); // Close modal
+      setShowUpdateModal(false);
 
-        // Force fetch all blog posts again to update the UI
-        const fetchBlogPostsResponse = await fetch(
-          "http://localhost:5000/api/blogPosts",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-
-        if (fetchBlogPostsResponse.ok) {
-          const updatedBlogPosts = await fetchBlogPostsResponse.json();
-          setBlogPosts(updatedBlogPosts);
-        }
-      } else {
-        const errorResponse = await response.json();
-        Swal.fire({
-          title: "Error!",
-          text: `Error: ${errorResponse.message}`,
-          icon: "error",
-          confirmButtonText: "OK",
-        });
-      }
+      // Update local state for the updated blog post
+      setBlogPosts((prevPosts) =>
+        prevPosts.map((post) =>
+          post._id === _id ? { ...post, ...filteredData } : post
+        )
+      );
     } catch (error) {
       console.error("Error updating blog post:", error);
+
+      // Display error alert
       Swal.fire({
         title: "Error!",
-        text: "An error occurred while updating the blog post.",
+        text:
+          error.message || "An error occurred while updating the blog post.",
         icon: "error",
         confirmButtonText: "OK",
       });
     }
   };
+
+  // const handleUpdateBlogPost = async (formData) => {
+  //   try {
+  //     console.log("Updating blog post ID:", formData._id);
+
+  //     // Destructure formData and remove the _id
+  //     const { _id, imageUrl, ...dataWithoutId } = formData;
+
+  //     // Prepare filtered data for submission (excluding _id)
+  //     const filteredData = {
+  //       title: dataWithoutId.title,
+  //       content: dataWithoutId.content,
+  //       author: dataWithoutId.author,
+  //       category: dataWithoutId.category,
+  //       tag: dataWithoutId.tag,
+  //       status: dataWithoutId.status,
+  //     };
+
+  //     let requestData;
+
+  //     // If an image exists, prepare FormData
+  //     if (imageUrl instanceof File) {
+  //       const formDataWithImage = new FormData();
+
+  //       // Append image file and other fields
+  //       formDataWithImage.append("imageUrl", imageUrl);
+
+  //       // Handle arrays correctly
+  //       for (const key in filteredData) {
+  //         if (Array.isArray(filteredData[key])) {
+  //           filteredData[key].forEach((item) =>
+  //             formDataWithImage.append(`${key}[]`, item)
+  //           );
+  //         } else {
+  //           formDataWithImage.append(key, filteredData[key]);
+  //         }
+  //       }
+
+  //       requestData = formDataWithImage;
+  //     } else {
+  //       // If no image, send regular data
+  //       requestData = filteredData;
+  //     }
+
+  //     // Prepare headers
+  //     const headers = {
+  //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //     };
+
+  //     // If it's not FormData, set content type as JSON
+  //     if (!(requestData instanceof FormData)) {
+  //       headers["Content-Type"] = "application/json";
+  //     }
+
+  //     // Make the PATCH request
+  //     const response = await fetch(
+  //       `http://localhost:5000/api/blogPosts/${selectedBlogPost._id}`,
+  //       {
+  //         method: "PATCH",
+  //         headers,
+  //         body:
+  //           requestData instanceof FormData
+  //             ? requestData
+  //             : JSON.stringify(requestData),
+  //       }
+  //     );
+
+  //     // Parse response
+  //     const data = await response.json();
+
+  //     if (!response.ok) {
+  //       throw new Error(data.message || "Error updating blog post");
+  //     }
+
+  //     // Success message
+  //     Swal.fire({
+  //       title: "Success!",
+  //       text: "Blog post updated successfully.",
+  //       icon: "success",
+  //       confirmButtonText: "OK",
+  //     });
+
+  //     setShowUpdateModal(false);
+
+  //     // Update local state for the updated blog post
+  //     setBlogPosts((prevPosts) =>
+  //       prevPosts.map((post) =>
+  //         post._id === _id ? { ...post, ...filteredData } : post
+  //       )
+  //     );
+  //   } catch (error) {
+  //     console.error("Error updating blog post:", error);
+
+  //     // Display error alert
+  //     Swal.fire({
+  //       title: "Error!",
+  //       text:
+  //         error.message || "An error occurred while updating the blog post.",
+  //       icon: "error",
+  //       confirmButtonText: "OK",
+  //     });
+  //   }
+  // };
+
+  // const handleUpdateBlogPost = async (formData) => {
+  //   try {
+  //     console.log("Updating blog post ID:", formData._id);
+
+  //     const { _id, ...dataWithoutId } = formData;
+
+  //     const filteredData = {
+  //       title: dataWithoutId.title,
+  //       content: dataWithoutId.content,
+  //       author: dataWithoutId.author,
+  //       category: dataWithoutId.category,
+  //       tag: dataWithoutId.tag,
+  //       status: dataWithoutId.status,
+  //     };
+
+  //     let requestData;
+
+  //     const formDataWithImage = new FormData();
+
+  //     if (formData.imageUrl) {
+  //       formDataWithImage.append("imageUrl", formData.imageUrl);
+  //       for (const key in filteredData) {
+  //         if (Array.isArray(filteredData[key])) {
+  //           formDataWithImage.append(key, JSON.stringify(filteredData[key]));
+  //         } else {
+  //           formDataWithImage.append(key, filteredData[key]);
+  //         }
+  //       }
+  //       requestData = formDataWithImage;
+  //     } else {
+  //       requestData = filteredData;
+  //     }
+
+  //     const headers = {
+  //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //     };
+
+  //     if (!(requestData instanceof FormData)) {
+  //       headers["Content-Type"] = "application/json";
+  //     }
+
+  //     const response = await fetch(
+  //       `http://localhost:5000/api/blogPosts/${_id}`,
+  //       {
+  //         method: "PATCH",
+  //         headers,
+  //         body:
+  //           requestData instanceof FormData
+  //             ? requestData
+  //             : JSON.stringify(requestData),
+  //       }
+  //     );
+
+  //     const data = await response.json();
+
+  //     if (!response.ok) {
+  //       throw new Error(data.message || "Error updating blog post");
+  //     }
+
+  //     Swal.fire({
+  //       title: "Success!",
+  //       text: "Blog post updated successfully.",
+  //       icon: "success",
+  //       confirmButtonText: "OK",
+  //     });
+
+  //     setShowUpdateModal(false);
+
+  //     // Update local state instead of refetching all posts
+  //     setBlogPosts((prevPosts) =>
+  //       prevPosts.map((post) =>
+  //         post._id === _id ? { ...post, ...filteredData } : post
+  //       )
+  //     );
+  //   } catch (error) {
+  //     console.error("Error updating blog post:", error);
+  //     Swal.fire({
+  //       title: "Error!",
+  //       text:
+  //         error.message || "An error occurred while updating the blog post.",
+  //       icon: "error",
+  //       confirmButtonText: "OK",
+  //     });
+  //   }
+  // };
 
   const handleDeleteBlogPost = async (postId) => {
     const confirmed = window.confirm(
@@ -216,8 +438,10 @@ const ManageBlogPosts = () => {
   };
 
   if (loading) return <LoadingSpinner color="blue-800" />;
+
   if (errorMessage)
     return <div className="text-center text-red-500">{errorMessage}</div>;
+
   return (
     <>
       <Helmet>

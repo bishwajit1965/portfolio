@@ -51,7 +51,6 @@ const router = createBrowserRouter([
             `http://localhost:5000/api/blogPosts/${params.postId}`
           );
           const post = await postResponse.json();
-
           return { post };
         },
       },

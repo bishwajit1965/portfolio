@@ -105,12 +105,12 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
           </div>
 
           <p className="mt-2">
-            {content ? content.slice(0, 200) : "No content to display."}...
+            {content ? content.slice(0, 295) : "No content to display."}...
           </p>
 
-          <div className="mt-1">
-            <Link to={`/single-blog-post/${_id}`} className="text-blue-500 m-0">
-              <button className="btn btn-xs btn-primary shadow-md dark:btn-success">
+          <div className="mt-1 flex justify-end">
+            <Link to={`/single-blog-post/${_id}`} className="m-0">
+              <button className="btn btn-sm btn-primary shadow-md dark:btn-success">
                 Read more <FaArrowCircleRight className="ml-1" />
               </button>
             </Link>

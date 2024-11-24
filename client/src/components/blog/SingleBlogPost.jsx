@@ -13,7 +13,9 @@ import { FaComment } from "react-icons/fa6";
 import { FaHome } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import LikeButton from "./LikeButton";
+import RelatedCategoryPostsModal from "./RelatedCategoryPostsModal";
 import SectionTitle from "../sectionTitle/SectionTitle";
+import SocialShare from "../socialLinkShare/SocialShare";
 import api from "../../services/commentsApi";
 import useAuth from "../../hooks/useAuth";
 
@@ -32,6 +34,10 @@ const SingleBlogPost = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [token, setToken] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
 
   // Fetch categories when the component mounts
   useEffect(() => {
@@ -268,6 +274,18 @@ const SingleBlogPost = () => {
               <LikeButton postId={postId} token={token} />
             </div>
           </div>
+
+          <div className="">
+            {/* Button to toggle modal */}
+
+            <button onClick={handleOpenModal}>View Related Posts</button>
+            {showModal && (
+              <RelatedCategoryPostsModal
+                categoryIds={post.category}
+                onClose={handleCloseModal}
+              />
+            )}
+          </div>
         </div>
       </div>
 
@@ -287,7 +305,7 @@ const SingleBlogPost = () => {
           />
         </div>
         <div className="">
-          <div className="mt-6">
+          <div className="mt-6 flex items-center">
             <button
               className="btn btn-sm btn-primary lg:mr-10 mr-4 dark:btn-success"
               onClick={handleCommentButtonClick}
@@ -317,14 +335,21 @@ const SingleBlogPost = () => {
                 </div>
               )}
             </div>
-            {showCommentForm && (
-              <CommentsForm
-                postId={postId}
-                onSubmitComment={handleAddComment}
-              />
-            )}
+            <div className="lg:mb-8">
+              {showCommentForm && (
+                <CommentsForm
+                  postId={postId}
+                  onSubmitComment={handleAddComment}
+                />
+              )}
+            </div>
           </div>
         </div>
+      </div>
+
+      {/* Social link share */}
+      <div className="lg:flex grid">
+        <SocialShare blogId={postId} title={post.title} />
       </div>
     </div>
   );

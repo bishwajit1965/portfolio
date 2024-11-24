@@ -81,7 +81,7 @@ const BlogPosts = () => {
 
       {/* Blog Posts */}
       <div className="grid grid-cols-12 gap-6 lg:pt-10">
-        <div className="lg:col-span-8 col-span-12">
+        <div className="lg:col-span-9 col-span-12">
           {loading ? (
             <span className="loading-spinner loading-lg text-success mt-10"></span>
           ) : error ? (
@@ -103,7 +103,7 @@ const BlogPosts = () => {
         </div>
 
         {/* Sidebar Content */}
-        <div className="lg:col-span-4 col-span-12 px-2">
+        <div className="lg:col-span-3 col-span-12 px-2">
           <div className="bg-base-200 rounded-sm shadow-sm">
             <SectionTitleSmall title="Follow" decoratedText="Us" />
           </div>

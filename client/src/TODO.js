@@ -21,7 +21,7 @@
 /** SUPER ADMIN TO-DOS
  * =====================================================
  * 1. In super admin dashboard photoUrl and name have to be inserted into token.
- * 2. Super admin dashboard login becomes successful second time.
+ * 2. Super admin dashboard login becomes successful second time. It needs to be addressed.
  * 3. Super admin dashboard statistical date display with graphs and charts is to be complete yet.
  * 4. Comments management has not been done yet
  * 5. Project management need to readjusted/ modified in tabular format.
@@ -31,5 +31,5 @@
  * =====================================================
  * 1. Like button working but a post tried to be liked twice by the same user does not show the message-"You have already liked the post."
  * 2. Blog posts update and delete functionality is to be completed
- * 3.
+ * 3. Category-wise post filter for SingleBlogPost.jsx is not working. Route conflict is there which needs to be solved.
  */

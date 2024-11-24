@@ -6,8 +6,8 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState(null);
   const [selectedTags, setSelectedTags] = useState(null);
-
   const [formData, setFormData] = useState({
+    _id: "",
     title: "",
     content: "",
     author: "",
@@ -20,16 +20,17 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
   useEffect(() => {
     if (blog) {
       setFormData({
-        title: blog.title,
-        content: blog.content,
-        author: blog.author,
+        _id: blog._id,
+        title: blog.title || "",
+        content: blog.content || "",
+        author: blog.author || "",
         imageUrl: blog.imageUrl,
         category: blog.category || [],
         tag: blog.tag || [],
         status: blog.status || "draft",
       });
     }
-  }, [blog]);
+  }, [blog, selectedImage]);
 
   // Preselected categories and tags
   useEffect(() => {
@@ -62,7 +63,7 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
     }
   }, [blog, categories, tags]);
 
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
@@ -71,28 +72,113 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
     const file = e.target.files[0];
     setSelectedImage(file);
   };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const updatedBlogPost = {
-      ...blog,
-      title: formData.title,
-      content: formData.content,
-      author: formData.author,
-      imageUrl: selectedImage ? selectedImage.filename : formData.imageUrl,
-      category: selectedCategories.map((cat) => cat.value),
-      tag: selectedTags.map((tag) => tag.value),
-      status: formData.status || "draft",
+    // Prepare the data to send
+    const formDataToSend = {
+      ...formData, // Form fields like title, content, etc.
+      _id: blog._id, // Blog ID for identification during update
+      category: selectedCategories.map((cat) => cat.value), // Category IDs
+      tag: selectedTags.map((tag) => tag.value), // Tag IDs
     };
-    onUpdate(updatedBlogPost);
+
+    // Initialize FormData if there is an image
+    const formDataWithImage = new FormData();
+
+    // Append image if selected
+    if (selectedImage) {
+      formDataWithImage.append("imageUrl", selectedImage);
+    }
+
+    // Append the rest of the form fields to FormData
+    for (const key in formDataToSend) {
+      formDataWithImage.append(key, formDataToSend[key]);
+    }
+
+    // Log the final FormData or data to check
+    console.log("Form Data to send:", formDataWithImage);
+
+    if (selectedImage) {
+      // If image is selected, submit with image
+      await onUpdate(formDataWithImage, true);
+    } else {
+      // Otherwise, submit without image
+      await onUpdate(formDataToSend, false);
+    }
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const formDataToSend = {
+  //     ...formData,
+  //     _id: blog._id, // Blog ID for identification during update
+  //     category: selectedCategories.map((cat) => cat.value), // Extract category IDs
+  //     tag: selectedTags.map((tag) => tag.value), // Extract tag IDs
+  //   };
+
+  //   const formDataWithImage = new FormData();
+
+  //   // If an image exists, add it to the formData
+  //   if (selectedImage) {
+  //     formDataWithImage.append("imageUrl", selectedImage);
+  //   }
+
+  //   // Append other fields
+  //   for (const key in formDataToSend) {
+  //     console.log(`Appending field: ${key} with value: ${formDataToSend[key]}`);
+  //     formDataWithImage.append(key, formDataToSend[key]);
+  //   }
+
+  //   console.log("Form Data to send:", formDataWithImage);
+
+  //   if (selectedImage) {
+  //     // Send the form data with image
+  //     await onUpdate(formDataWithImage, true);
+  //   } else {
+  //     // Submit without image
+  //     await onUpdate(formDataToSend, false);
+  //   }
+  // };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const formDataToSend = {
+  //     ...formData, // Includes title, content, author, status, etc.
+  //     _id: blog._id, // Blog ID for identification during update
+  //     category: selectedCategories.map((cat) => cat.value), // Extract category IDs
+  //     tag: selectedTags.map((tag) => tag.value), // Extract tag IDs
+  //   };
+
+  //   // If an image file exists, use FormData for multipart request
+  //   if (selectedImage) {
+  //     const formDataWithImage = new FormData();
+
+  //     formDataWithImage.append("imageUrl", selectedImage);
+  //     // Append the rest of the form fields
+  //     for (const key in formDataToSend) {
+  //       formDataWithImage.append(key, formDataToSend[key]);
+  //     }
+
+  //     // Send the form data with the image
+  //     await onUpdate(formDataWithImage, true);
+  //   } else {
+  //     // Submit without image
+  //     await onUpdate(formDataToSend, false);
+  //   }
+  // };
 
   return (
     <div style={styles.modalOverlay}>
       <div style={styles.modalContent}>
         <h2 className="text-xl font-bold">Update Blog Post</h2>
-        <form onSubmit={handleSubmit} encType="multipart/form-data">
+        <form
+          onSubmit={handleSubmit}
+          method="POST"
+          encType="multipart/form-data"
+        >
           {/* Title */}
           <div style={styles.formGroup}>
             <label htmlFor="title">Blog Title:</label>
@@ -101,7 +187,7 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
               id="title"
               name="title"
               value={formData.title}
-              onChange={handleChange}
+              onChange={handleInputChange}
               style={styles.input}
               required
               className="input-sm"
@@ -117,7 +203,7 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
               rows="6"
               name="content"
               value={formData.content}
-              onChange={handleChange}
+              onChange={handleInputChange}
               style={styles.textarea}
               className="w-full border p-2 text-xs rounded-b-md mb-[-10px]"
               required
@@ -132,7 +218,7 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
               id="author"
               name="author"
               value={formData.author}
-              onChange={handleChange}
+              onChange={handleInputChange}
               style={styles.input}
               required
               className="input-sm"
@@ -155,14 +241,15 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
               </div>
               <input
                 type="file"
-                id="image"
-                name="image"
+                id="imageUrl"
+                name="imageUrl"
                 onChange={handleImageChange}
                 style={styles.input}
               />
             </div>
           </div>
 
+          {/* Categories Multi-Select */}
           <div style={styles.formGroup}>
             <Select
               id="categories"
