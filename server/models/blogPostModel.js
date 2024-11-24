@@ -1,6 +1,7 @@
 const { getDB } = require("../utils/database");
-
 const { ObjectId } = require("mongodb");
+const fs = require("fs");
+const path = require("path");
 
 // Create blog posts
 const createBlogPost = async (blogPostData) => {
@@ -45,77 +46,164 @@ const getBlogPost = async (id) => {
   }
 };
 
-// Get all blog posts
-const getAllBlogPosts = async () => {
+// Function to get blog posts based on filter criteria
+const getBlogPostsByCriteria = async () => {
   try {
     const db = getDB();
-    const posts = await db.collection("blogPosts").find({}).toArray();
-    return posts;
+    const blogPosts = await db.collection("blogPosts").find().toArray();
+    return blogPosts;
   } catch (error) {
-    throw new Error("No posts found:" + error.message);
+    throw new Error("Database query failed: " + error.message);
   }
 };
 
-// Update blog post
-const updateBlogPost = async (postId, updatedData, newImage) => {
-  try {
-    const db = getDB();
-    const postsCollection = db.collection("blogPosts");
+// Update a blog post
+const updateBlogPost = async (id, updateData) => {
+  const db = getDB();
 
-    // Log the incoming postId and updatedData
-    console.log("Post ID to Update:", postId);
-    console.log("Updated Data:", updatedData);
+  // Convert ID to ObjectId
+  const objectId = new ObjectId(id);
 
-    // Find the existing post to get the already uploaded image path
-    const existingPost = await postsCollection.findOne({
-      _id: new ObjectId(postId),
-    });
+  // Retrieve current blog post to get existing image info
+  const existingBlogPost = await db
+    .collection("blogPosts")
+    .findOne({ _id: objectId });
 
-    console.log("Existing Post:", existingPost);
+  if (!existingBlogPost) {
+    throw new Error("Blog post not found.");
+  }
 
-    if (!existingPost) {
-      throw new Error("Post not found.");
-    }
+  // Destructure updateData to get the new image and other fields to update
+  const { _id, imageUrl: newImage, ...updateFields } = updateData;
 
-    // Set the new image Url if provided
-    let imageUrl = existingPost.imageUrl;
-
-    if (newImage) {
-      // Update the image url with the new image
-      imageUrl = newImage.filename;
-      console.log("New Image URL:", imageUrl);
-    }
-    // Remove '_id' from the updatedData to avoid modifying the immutable field
-    const { _id, ...dataWithoutId } = updatedData;
-
-    // Update the post with new fields
-    const updatedPost = await postsCollection.updateOne(
-      { _id: new ObjectId(postId) },
-      {
-        $set: {
-          ...dataWithoutId,
-          imageUrl, // Update only if a new image was uploaded
-          updatedAt: new Date(),
-        },
-      }
+  // Handle image replacement logic
+  if (newImage && existingBlogPost.imageUrl) {
+    const oldImagePath = path.join(
+      __dirname,
+      "../uploads",
+      path.basename(existingBlogPost.imageUrl) // Only use the filename to remove it
     );
-    console.log("Update Result:", updatedPost);
 
-    if (updatedPost.modifiedCount === 0) {
-      throw new Error("Blog post is not updated.");
+    // Check if the old image file exists and delete it if present
+    if (fs.existsSync(oldImagePath)) {
+      fs.unlinkSync(oldImagePath); // Remove the old image file
     }
-
-    // Fetch the updated post
-    const updateResult = await postsCollection.findOne({
-      _id: new ObjectId(postId),
-    });
-    return updateResult;
-  } catch (error) {
-    throw new Error("Error in updating blog post:" + error.message);
   }
+
+  // Update the blog post, either with the new image or retain the old one if no new image is provided
+  const result = await db.collection("blogPosts").updateOne(
+    { _id: objectId },
+    {
+      $set: {
+        ...updateFields, // Updates the other fields (title, content, etc.)
+        imageUrl: newImage || existingBlogPost.imageUrl, // Use the new image or retain the old one if not provided
+      },
+    }
+  );
+
+  return result; // Return the result of the update operation
 };
+
+// const updateBlogPost = async (id, updateData) => {
+//   const db = getDB();
+
+//   // Convert ID to ObjectId
+//   const objectId = new ObjectId(id);
+
+//   // Retrieve current blog post to get existing image info
+//   const existingBlogPost = await db
+//     .collection("blogPosts")
+//     .findOne({ _id: objectId });
+
+//   if (!existingBlogPost) {
+//     throw new Error("Blog post not found.");
+//   }
+
+//   const { _id, imageUrl: newImage, ...updateFields } = updateData;
+
+//   // Handle image replacement
+//   if (newImage && existingBlogPost.imageUrl) {
+//     const oldImagePath = path.join(
+//       __dirname,
+//       "../uploads",
+//       path.basename(existingBlogPost.imageUrl) // Use only the filename
+//     );
+//     if (fs.existsSync(oldImagePath)) {
+//       fs.unlinkSync(oldImagePath);
+//     }
+//   }
+
+//   // Update blog post
+//   const result = await db.collection("blogPosts").updateOne(
+//     { _id: objectId },
+//     {
+//       $set: {
+//         ...updateFields,
+//         imageUrl: newImage || existingBlogPost.imageUrl, // Update image only if provided
+//       },
+//     }
+//   );
+
+//   return result;
+// };
+
+// const updateBlogPost = async (id, updateData) => {
+//   const db = getDB();
+//   // Create a new ObjectId instance from the provided id
+//   // retrieve current project to get existing image info
+//   const existingBlogPost = await db
+//     .collection("blogPosts")
+//     .findOne({ _id: new ObjectId(id) });
+
+//   if (!existingBlogPost) {
+//     throw new Error("Project not found.");
+//   }
+
+//   //Separates _id and Image from existing data
+//   const { _id, imageUrl: newImage, ...updateFields } = updateData;
+
+//   // If a new image is uploaded and there remains an old image, delete the old one
+//   if (newImage && existingBlogPost.imageUrl) {
+//     const oldImagePath = path.join(
+//       __dirname,
+//       "../uploads",
+//       existingBlogPost.imageUrl
+//     );
+//     if (fs.existsSync(oldImagePath)) {
+//       fs.unlinkSync(oldImagePath); //delete old image file
+//     }
+//   }
+//   const result = await db.collection("blogPosts").updateOne(
+//     { _id: new ObjectId(id) },
+//     {
+//       $set: {
+//         ...updateFields,
+//         imageUrl: newImage || existingBlogPost.imageUrl,
+//       },
+//     }
+//   );
+//   return result;
+// };
 
 // Delete blog post
+
+// Get related blog post
+const getRelatedPosts = async (categoryIds) => {
+  console.log("Category IDs received for querying:", categoryIds);
+  const db = getDB();
+  const postsCollection = db.collection("blogPosts");
+  try {
+    const relatedPosts = await postsCollection
+      .find({ category: { $in: categoryIds } })
+      .limit(5)
+      .toArray();
+    return relatedPosts;
+  } catch (error) {
+    console.error("Error in fetching blog posts,", error);
+    return [];
+  }
+};
+
 const deleteBlogPost = async (id) => {
   const objectId = new ObjectId(id);
   try {
@@ -143,7 +231,8 @@ const deleteBlogPost = async (id) => {
 module.exports = {
   createBlogPost,
   getBlogPost,
-  getAllBlogPosts,
+  getBlogPostsByCriteria,
   updateBlogPost,
+  getRelatedPosts,
   deleteBlogPost,
 };

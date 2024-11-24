@@ -5,8 +5,10 @@ const path = require("path");
 const {
   addBlogPost,
   getSinglePost,
-  fetchBlogPosts,
-  editBloPost,
+  getPublishedBlogPosts,
+  getAllBlogPostsForAdmin,
+  editBlogPost,
+  getCategoryRelatedPosts,
   removeBlogPost,
 } = require("../controllers/blogPostController");
 
@@ -30,16 +32,27 @@ router.post(
 // Get a single blog post
 router.get("/:id", getSinglePost);
 
-// Get all blog posts
-router.get("/", fetchBlogPosts);
+// Get category related posts
+router.get("/filter", getCategoryRelatedPosts);
+
+// Get all approved blog posts for public view
+router.get("/", getPublishedBlogPosts);
+
+// Get all blog posts for super-admin dashboard
+router.get(
+  "/admin",
+  isAuthenticated,
+  isAuthorized("superAdmin"),
+  getAllBlogPostsForAdmin
+);
 
 // Update blog post
 router.patch(
   "/:id",
   isAuthenticated,
   isAuthorized("superAdmin"),
-  upload.single("image"),
-  editBloPost
+  upload.single("imageUrl"),
+  editBlogPost
 );
 
 // Delete blog post

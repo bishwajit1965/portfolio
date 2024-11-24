@@ -45,6 +45,7 @@ const updateProject = async (id, updateData) => {
   if (!existingProject) {
     throw new Error("Project not found.");
   }
+
   //Separates _id and Image from existing data
   const { _id, image: newImage, ...updateFields } = updateData;
 

@@ -86,7 +86,9 @@ const updateProjectById = async (req, res) => {
 
     // Update the project data
     updateData.image = imagePath;
+
     const result = await updateProject(id, updateData);
+
     if (result.modifiedCount === 1) {
       res
         .status(200)

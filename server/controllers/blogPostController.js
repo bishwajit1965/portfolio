@@ -1,14 +1,16 @@
 const fs = require("fs");
 const path = require("path");
 
-const { ObjectId } = require("mongodb");
 const {
   createBlogPost,
   getBlogPost,
-  getAllBlogPosts,
+  getBlogPostsByCriteria,
   updateBlogPost,
+  getRelatedPosts,
   deleteBlogPost,
 } = require("../models/blogPostModel");
+const { ObjectId } = require("mongodb");
+const { response } = require("express");
 
 // Add blog post
 const addBlogPost = async (req, res) => {
@@ -39,54 +41,119 @@ const getSinglePost = async (req, res) => {
   }
 };
 
-// Fetch all blog Posts
-const fetchBlogPosts = async (req, res) => {
+// Controller function to fetch only published blog posts for regular users
+const getPublishedBlogPosts = async (req, res) => {
   try {
-    const posts = await getAllBlogPosts();
-    res.status(200).json(posts);
+    const blogPosts = await getBlogPostsByCriteria({});
+    res.status(200).json(blogPosts);
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error in fetching blog posts", error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
-// Edit blog post
-const editBloPost = async (req, res) => {
-  const { id } = req.params;
-  const updatedData = req.body;
-  const newImage = req.file; //Assuming image is uploaded with multer
+// Controller function to fetch all blog posts for admin
+const getAllBlogPostsForAdmin = async (req, res) => {
   try {
-    const postId = new ObjectId(id);
-    console.log("Post ID:", postId);
-    console.log("Updated Data:", updatedData);
-    console.log("New Image:", newImage);
-    const updatedPost = await updateBlogPost(postId, updatedData, newImage);
-    if (newImage && updatedPost.imageUrl !== newImage.filename) {
-      // Remove the old image from the uploads if new image is provided
-      const oldImagePath = path.join(
+    const blogPosts = await getBlogPostsByCriteria({}); // No filter, fetch all
+    res.status(200).json(blogPosts);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const editBlogPost = async (req, res) => {
+  try {
+    const { id } = req.params; // Extract blog post ID from request params
+    let updateData = req.body;
+
+    console.log("req.body:", req.body);
+    console.log("req.params:", req.params);
+
+    // Validate ID format
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid ID format." });
+    }
+
+    const objectId = new ObjectId(id);
+
+    // Validate existing blog post
+    const existingBlogPost = await getBlogPost(objectId); // Ensure ID is valid
+    console.log("Existing post:", existingBlogPost);
+    if (!existingBlogPost) {
+      return res.status(404).json({ error: "Blog post not found" });
+    }
+
+    // Handle image upload (if new image is provided)
+    let imagePath = existingBlogPost.imageUrl; // Default to the existing image URL
+    if (req.file) {
+      imagePath = `/uploads/${req.file.filename}`; // Set new image URL
+      const previousImagePath = path.join(
         __dirname,
         "../uploads",
-        updatedPost.imageUrl
+        path.basename(existingBlogPost.imageUrl) // Extract filename
       );
 
-      if (fs.existsSync(oldImagePath)) {
-        fs.unlink(oldImagePath, (err) => {
-          if (err) {
-            console.error("Failed to delete old image.", err);
-          }
-        });
+      // Delete the old image file if it exists
+      try {
+        if (fs.existsSync(previousImagePath)) {
+          fs.unlinkSync(previousImagePath); // Delete old image synchronously
+        }
+      } catch (err) {
+        console.error("Error deleting old image:", err);
+        // Optionally, you could continue and not stop the update process
       }
     }
-    if (updatedPost) {
-      res.status(200).json({ message: "Blog Post updated successfully." });
+
+    // Add the imagePath to updateData
+    updateData.imageUrl = imagePath;
+
+    // Update blog post in the database
+    const result = await updateBlogPost(id, updateData);
+
+    if (result.modifiedCount === 1 || result.matchedCount === 1) {
+      return res.status(200).json({
+        message: "Blog post updated successfully.",
+        data: { ...existingBlogPost, ...updateData },
+      });
     } else {
-      res.status(404).json({ message: "Blog post not found." });
+      return res.status(400).json({ message: "Failed to update blog post" });
     }
   } catch (error) {
-    res
+    console.error("Error in updating blog post:", error);
+    return res
       .status(500)
-      .json({ message: "Error in updating blog post.", error: error.message });
+      .json({ message: "An error occurred while updating blog post" });
+  }
+};
+
+// Get category related posts for SingleBlogPosts.jsx
+const getCategoryRelatedPosts = async (req, res) => {
+  const { categories } = req.query;
+
+  // Validate input
+  if (!categories) {
+    return res
+      .status(400)
+      .json({ message: "Categories are required for filtering." });
+  }
+
+  try {
+    // Split categories into an array
+    const categoryIds = categories.split(",").map((id) => id.trim());
+
+    // Fetch posts matching any of the categories
+    const relatedPosts = await getRelatedPosts(categoryIds);
+
+    if (!relatedPosts || relatedPosts.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No posts found for the given categories." });
+    }
+
+    res.status(200).json(relatedPosts);
+  } catch (error) {
+    console.error("Error fetching filtered posts:", error);
+    res.status(500).json({ message: "Error fetching related posts." });
   }
 };
 
@@ -112,7 +179,9 @@ const removeBlogPost = async (req, res) => {
 module.exports = {
   addBlogPost,
   getSinglePost,
-  fetchBlogPosts,
-  editBloPost,
+  getPublishedBlogPosts,
+  getAllBlogPostsForAdmin,
+  editBlogPost,
+  getCategoryRelatedPosts,
   removeBlogPost,
 };

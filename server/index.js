@@ -62,10 +62,11 @@ const { connectDB, getDB } = require("./utils/database");
     app.use("/api/tags", tagRoutes);
     // Initialize comments route
     app.use("/api/comments", commentRoutes);
+    // app.use("/api/comments-admin/status", commentRoutes);
     // Initialized blog post route
     app.use("/api/blogPosts", blogPostRoutes);
     app.use("/api/super-admin/auth", superAdminAuthRoutes);
-    app.use("/api/users", superAdminRoutes);
+    app.use("/api/super-admin/users", superAdminRoutes);
     app.use("/api/users", userRoutes);
     app.use("/api/categories", categoryRoutes);
     // app.use("/api/admin", adminRoutes);
