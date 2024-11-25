@@ -18,7 +18,7 @@ const router = express.Router();
 router.post("/", verifyAuth, handleCreateComment);
 
 // Fetch all comments for super-admin
-router.get("/", getAllComments);
+router.get("/", verifyAuth, getAllComments);
 
 // Fetch comments
 router.get("/:postId", handleFetchComment);
