@@ -27,7 +27,7 @@ const UpdateCommentsModal = ({ comment, onClose, onUpdate }) => {
             <label htmlFor="TagName" className="font-bold">
               Comment status:
             </label>
-            <input
+            {/* <input
               type="text"
               id="TagName"
               name="status"
@@ -35,7 +35,21 @@ const UpdateCommentsModal = ({ comment, onClose, onUpdate }) => {
               onChange={(e) => setStatus(e.target.value)}
               style={styles.input}
               required
-            />
+            /> */}
+            <div className="">
+              <select
+                id="status"
+                name="status"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                style={styles.select}
+                className="w-full border my-4 p-2"
+                required
+              >
+                <option value="approved">Approved</option>
+                <option value="draft">Draft</option>
+              </select>
+            </div>
           </div>
           <div style={styles.buttonGroup}>
             <button type="submit" style={styles.buttonPrimary}>
