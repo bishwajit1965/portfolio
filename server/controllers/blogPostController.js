@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { ObjectId } = require("mongodb");
 
 const {
   createBlogPost,
@@ -9,8 +10,6 @@ const {
   getRelatedPosts,
   deleteBlogPost,
 } = require("../models/blogPostModel");
-const { ObjectId } = require("mongodb");
-const { response } = require("express");
 
 // Add blog post
 const addBlogPost = async (req, res) => {

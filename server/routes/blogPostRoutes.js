@@ -1,6 +1,4 @@
 const express = require("express");
-const multer = require("multer");
-const path = require("path");
 
 const {
   addBlogPost,
@@ -20,14 +18,8 @@ const upload = require("../middlewares/upload");
 
 const router = express.Router();
 
-// Create a new blog post
-router.post(
-  "/",
-  isAuthenticated,
-  isAuthorized("superAdmin"),
-  upload.single("image"),
-  addBlogPost
-);
+/** PUBLIC ROUTES
+ * ===================================*/
 
 // Get a single blog post
 router.get("/:id", getSinglePost);
@@ -38,19 +30,32 @@ router.get("/filter", getCategoryRelatedPosts);
 // Get all approved blog posts for public view
 router.get("/", getPublishedBlogPosts);
 
+/** SUPER ADMIN ROUTES
+ * ===================================*/
+router.use(isAuthenticated, isAuthorized("superAdmin"));
+
+// Create a new blog post
+router.post(
+  "/",
+  // isAuthenticated,
+  // isAuthorized("superAdmin"),
+  upload.single("imageUrl"),
+  addBlogPost
+);
+
 // Get all blog posts for super-admin dashboard
 router.get(
   "/admin",
-  isAuthenticated,
-  isAuthorized("superAdmin"),
+  // isAuthenticated,
+  // isAuthorized("superAdmin"),
   getAllBlogPostsForAdmin
 );
 
 // Update blog post
 router.patch(
   "/:id",
-  isAuthenticated,
-  isAuthorized("superAdmin"),
+  // isAuthenticated,
+  // isAuthorized("superAdmin"),
   upload.single("imageUrl"),
   editBlogPost
 );
@@ -58,8 +63,8 @@ router.patch(
 // Delete blog post
 router.delete(
   "/:id",
-  isAuthenticated,
-  isAuthorized("superAdmin"),
+  // isAuthenticated,
+  // isAuthorized("superAdmin"),
   removeBlogPost
 );
 
