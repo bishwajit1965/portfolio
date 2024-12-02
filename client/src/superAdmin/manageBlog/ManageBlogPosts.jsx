@@ -161,7 +161,6 @@ const ManageBlogPosts = () => {
             formDataWithImage.append(key, filteredData[key]);
           }
         }
-
         requestData = formDataWithImage;
       } else {
         // If no image, send regular data
@@ -229,25 +228,61 @@ const ManageBlogPosts = () => {
   };
 
   const handleDeleteBlogPost = async (postId) => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this project?"
-    );
-    if (confirmed) {
-      try {
-        await fetch(`${baseUrl}/blogPosts/${postId}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        setBlogPosts((prevBlogPosts) =>
-          prevBlogPosts.filter((blog) => blog._id !== postId)
-        );
-        alert("Blog post deleted successfully!");
-      } catch (error) {
-        console.error("Encountered an error!", error);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone. Do you want to delete this blog post?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          // API call to delete blog post
+          const response = await fetch(`${baseUrl}/blogPosts/${postId}`, {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+
+          // Check if the response status is not successful
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+              errorData.message || "Failed to delete the blog post."
+            );
+          }
+
+          // Update the UI by removing the deleted blog post
+          setBlogPosts((prevBlogPosts) =>
+            prevBlogPosts.filter((blog) => blog._id !== postId)
+          );
+
+          // Show success message
+          Swal.fire({
+            title: "Deleted!",
+            text: "The blog post has been deleted successfully.",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+        } catch (error) {
+          console.error("Error during deletion:", error);
+
+          // Show error message
+          Swal.fire({
+            title: "Error!",
+            text:
+              error.message ||
+              "An error occurred while deleting the blog post.",
+            icon: "error",
+            confirmButtonText: "OK",
+          });
+        }
       }
-    }
+    });
   };
 
   if (loading) return <LoadingSpinner color="blue-800" />;
