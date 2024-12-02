@@ -128,22 +128,25 @@ const deleteBlogPost = async (id) => {
   try {
     const db = getDB();
     const postCollection = db.collection("blogPosts");
-    // Find the the post to delete to get the old image path
+
+    // Find the post to delete to get the old image path
     const postToDelete = await postCollection.findOne({
       _id: objectId,
     });
+
     if (!postToDelete) {
       throw new Error("Post not found.");
     }
+
     // Delete the post from database
     const result = await postCollection.deleteOne({
       _id: objectId,
     });
-    if (result.deletedCount === 0) {
-      throw new Error("Blog post not deleted.");
-    }
+
+    // Return deletedCount to indicate success
+    return result.deletedCount;
   } catch (error) {
-    throw new Error("Blog post is not deleted:" + error.message);
+    throw new Error("Blog post is not deleted: " + error.message);
   }
 };
 

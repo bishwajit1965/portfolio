@@ -161,15 +161,16 @@ const removeBlogPost = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const result = await deleteBlogPost(id);
-    if (result.deletedCount > 0) {
+    const deletedCount = await deleteBlogPost(id);
+
+    if (deletedCount > 0) {
       res.status(200).json({ message: "Blog post deleted successfully." });
     } else {
-      res.status(404).json({ message: "Blog post not found," });
+      res.status(404).json({ message: "Blog post not found." });
     }
   } catch (error) {
     res.status(500).json({
-      message: " Server error in deleting blog post",
+      message: "Server error in deleting blog post.",
       error: error.message,
     });
   }
