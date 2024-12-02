@@ -1,8 +1,10 @@
+import { FaEdit, FaTimesCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
 import Select from "react-select";
 
 const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState(null);
   const [selectedTags, setSelectedTags] = useState(null);
@@ -17,8 +19,9 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
     status: "",
   });
 
+  // Preselected categories and tags
   useEffect(() => {
-    if (blog) {
+    if (blog && categories.length > 0 && tags.length > 0) {
       setFormData({
         _id: blog._id,
         title: blog.title || "",
@@ -29,12 +32,8 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
         tag: blog.tag || [],
         status: blog.status || "draft",
       });
-    }
-  }, [blog, selectedImage]);
+      console.log("Blog post data:", blog);
 
-  // Preselected categories and tags
-  useEffect(() => {
-    if (blog && categories.length > 0 && tags.length > 0) {
       // Map blog.categories to pre-select values
       const preselectedCategories = (
         Array.isArray(blog.category) ? blog.category : []
@@ -70,8 +69,12 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setSelectedImage(file);
+    if (file) {
+      console.log("Selected file:", file);
+      setSelectedImage(file); // Save the file to state for submission
+    }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -108,75 +111,13 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
     }
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   const formDataToSend = {
-  //     ...formData,
-  //     _id: blog._id, // Blog ID for identification during update
-  //     category: selectedCategories.map((cat) => cat.value), // Extract category IDs
-  //     tag: selectedTags.map((tag) => tag.value), // Extract tag IDs
-  //   };
-
-  //   const formDataWithImage = new FormData();
-
-  //   // If an image exists, add it to the formData
-  //   if (selectedImage) {
-  //     formDataWithImage.append("imageUrl", selectedImage);
-  //   }
-
-  //   // Append other fields
-  //   for (const key in formDataToSend) {
-  //     console.log(`Appending field: ${key} with value: ${formDataToSend[key]}`);
-  //     formDataWithImage.append(key, formDataToSend[key]);
-  //   }
-
-  //   console.log("Form Data to send:", formDataWithImage);
-
-  //   if (selectedImage) {
-  //     // Send the form data with image
-  //     await onUpdate(formDataWithImage, true);
-  //   } else {
-  //     // Submit without image
-  //     await onUpdate(formDataToSend, false);
-  //   }
-  // };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   const formDataToSend = {
-  //     ...formData, // Includes title, content, author, status, etc.
-  //     _id: blog._id, // Blog ID for identification during update
-  //     category: selectedCategories.map((cat) => cat.value), // Extract category IDs
-  //     tag: selectedTags.map((tag) => tag.value), // Extract tag IDs
-  //   };
-
-  //   // If an image file exists, use FormData for multipart request
-  //   if (selectedImage) {
-  //     const formDataWithImage = new FormData();
-
-  //     formDataWithImage.append("imageUrl", selectedImage);
-  //     // Append the rest of the form fields
-  //     for (const key in formDataToSend) {
-  //       formDataWithImage.append(key, formDataToSend[key]);
-  //     }
-
-  //     // Send the form data with the image
-  //     await onUpdate(formDataWithImage, true);
-  //   } else {
-  //     // Submit without image
-  //     await onUpdate(formDataToSend, false);
-  //   }
-  // };
-
   return (
     <div style={styles.modalOverlay}>
       <div style={styles.modalContent}>
         <h2 className="text-xl font-bold">Update Blog Post</h2>
         <form
           onSubmit={handleSubmit}
-          method="POST"
+          // method="POST"
           encType="multipart/form-data"
         >
           {/* Title */}
@@ -232,7 +173,7 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
               <div className="">
                 {formData.imageUrl && !selectedImage && (
                   <img
-                    src={`http://localhost:5000${blog.imageUrl}`}
+                    src={`${apiUrl}${blog.imageUrl}`}
                     alt={blog.title}
                     width="100"
                     className="w-28 h-10 rounded-sm"
@@ -243,6 +184,7 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
                 type="file"
                 id="imageUrl"
                 name="imageUrl"
+                accept="image/*"
                 onChange={handleImageChange}
                 style={styles.input}
               />
@@ -251,6 +193,7 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
 
           {/* Categories Multi-Select */}
           <div style={styles.formGroup}>
+            <label htmlFor="categories">Categories:</label>
             <Select
               id="categories"
               name="category"
@@ -294,14 +237,21 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
           </div>
 
           <div style={styles.buttonGroup}>
-            <button type="submit" style={styles.buttonPrimary}>
+            <button
+              className="flex items-center btn btn-sm"
+              type="submit"
+              style={styles.buttonPrimary}
+            >
+              <FaEdit />
               Update
             </button>
             <button
+              className="flex items-center btn btn-sm"
               type="button"
               onClick={onClose}
               style={styles.buttonSecondary}
             >
+              <FaTimesCircle />
               Cancel
             </button>
           </div>

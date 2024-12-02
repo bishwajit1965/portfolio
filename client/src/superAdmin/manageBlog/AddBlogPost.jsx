@@ -171,6 +171,7 @@ const AddBlogPost = () => {
       JSON.stringify(selectedTags.map((tag) => tag.value))
     );
     formData.append("status", status);
+
     if (image) formData.append("image", image); // Append image file
 
     try {

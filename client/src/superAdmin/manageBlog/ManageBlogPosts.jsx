@@ -10,6 +10,8 @@ import Swal from "sweetalert2";
 import UpdateBlogModal from "./UpdateBlogModal";
 
 const ManageBlogPosts = () => {
+  const baseUrl =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
   const [blogPosts, setBlogPosts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
@@ -31,13 +33,13 @@ const ManageBlogPosts = () => {
 
         const [blogPostsResponse, categoriesResponse, tagsResponse] =
           await Promise.all([
-            fetch("http://localhost:5000/api/blogPosts", {
+            fetch(`${baseUrl}/blogPosts`, {
               headers,
             }),
-            fetch("http://localhost:5000/api/categories", {
+            fetch(`${baseUrl}/categories`, {
               headers,
             }),
-            fetch("http://localhost:5000/api/tags", { headers }),
+            fetch(`${baseUrl}/tags`, { headers }),
           ]);
 
         // Blog posts fetched
@@ -86,13 +88,13 @@ const ManageBlogPosts = () => {
     };
 
     fetchData();
-  }, []);
+  }, [baseUrl]);
 
   // Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/categories", {
+        const response = await fetch(`${baseUrl}/categories`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -113,7 +115,7 @@ const ManageBlogPosts = () => {
       }
     };
     fetchCategories();
-  }, []);
+  }, [baseUrl]);
 
   // Handlers for edit and delete actions (to be implemented)
   const handleEditBlogPost = (blog) => {
@@ -178,7 +180,7 @@ const ManageBlogPosts = () => {
 
       // Make the PATCH request
       const response = await fetch(
-        `http://localhost:5000/api/blogPosts/${selectedBlogPost._id}`,
+        `${baseUrl}/blogPosts/${selectedBlogPost._id}`,
         {
           method: "PATCH",
           headers,
@@ -226,202 +228,13 @@ const ManageBlogPosts = () => {
     }
   };
 
-  // const handleUpdateBlogPost = async (formData) => {
-  //   try {
-  //     console.log("Updating blog post ID:", formData._id);
-
-  //     // Destructure formData and remove the _id
-  //     const { _id, imageUrl, ...dataWithoutId } = formData;
-
-  //     // Prepare filtered data for submission (excluding _id)
-  //     const filteredData = {
-  //       title: dataWithoutId.title,
-  //       content: dataWithoutId.content,
-  //       author: dataWithoutId.author,
-  //       category: dataWithoutId.category,
-  //       tag: dataWithoutId.tag,
-  //       status: dataWithoutId.status,
-  //     };
-
-  //     let requestData;
-
-  //     // If an image exists, prepare FormData
-  //     if (imageUrl instanceof File) {
-  //       const formDataWithImage = new FormData();
-
-  //       // Append image file and other fields
-  //       formDataWithImage.append("imageUrl", imageUrl);
-
-  //       // Handle arrays correctly
-  //       for (const key in filteredData) {
-  //         if (Array.isArray(filteredData[key])) {
-  //           filteredData[key].forEach((item) =>
-  //             formDataWithImage.append(`${key}[]`, item)
-  //           );
-  //         } else {
-  //           formDataWithImage.append(key, filteredData[key]);
-  //         }
-  //       }
-
-  //       requestData = formDataWithImage;
-  //     } else {
-  //       // If no image, send regular data
-  //       requestData = filteredData;
-  //     }
-
-  //     // Prepare headers
-  //     const headers = {
-  //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //     };
-
-  //     // If it's not FormData, set content type as JSON
-  //     if (!(requestData instanceof FormData)) {
-  //       headers["Content-Type"] = "application/json";
-  //     }
-
-  //     // Make the PATCH request
-  //     const response = await fetch(
-  //       `http://localhost:5000/api/blogPosts/${selectedBlogPost._id}`,
-  //       {
-  //         method: "PATCH",
-  //         headers,
-  //         body:
-  //           requestData instanceof FormData
-  //             ? requestData
-  //             : JSON.stringify(requestData),
-  //       }
-  //     );
-
-  //     // Parse response
-  //     const data = await response.json();
-
-  //     if (!response.ok) {
-  //       throw new Error(data.message || "Error updating blog post");
-  //     }
-
-  //     // Success message
-  //     Swal.fire({
-  //       title: "Success!",
-  //       text: "Blog post updated successfully.",
-  //       icon: "success",
-  //       confirmButtonText: "OK",
-  //     });
-
-  //     setShowUpdateModal(false);
-
-  //     // Update local state for the updated blog post
-  //     setBlogPosts((prevPosts) =>
-  //       prevPosts.map((post) =>
-  //         post._id === _id ? { ...post, ...filteredData } : post
-  //       )
-  //     );
-  //   } catch (error) {
-  //     console.error("Error updating blog post:", error);
-
-  //     // Display error alert
-  //     Swal.fire({
-  //       title: "Error!",
-  //       text:
-  //         error.message || "An error occurred while updating the blog post.",
-  //       icon: "error",
-  //       confirmButtonText: "OK",
-  //     });
-  //   }
-  // };
-
-  // const handleUpdateBlogPost = async (formData) => {
-  //   try {
-  //     console.log("Updating blog post ID:", formData._id);
-
-  //     const { _id, ...dataWithoutId } = formData;
-
-  //     const filteredData = {
-  //       title: dataWithoutId.title,
-  //       content: dataWithoutId.content,
-  //       author: dataWithoutId.author,
-  //       category: dataWithoutId.category,
-  //       tag: dataWithoutId.tag,
-  //       status: dataWithoutId.status,
-  //     };
-
-  //     let requestData;
-
-  //     const formDataWithImage = new FormData();
-
-  //     if (formData.imageUrl) {
-  //       formDataWithImage.append("imageUrl", formData.imageUrl);
-  //       for (const key in filteredData) {
-  //         if (Array.isArray(filteredData[key])) {
-  //           formDataWithImage.append(key, JSON.stringify(filteredData[key]));
-  //         } else {
-  //           formDataWithImage.append(key, filteredData[key]);
-  //         }
-  //       }
-  //       requestData = formDataWithImage;
-  //     } else {
-  //       requestData = filteredData;
-  //     }
-
-  //     const headers = {
-  //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //     };
-
-  //     if (!(requestData instanceof FormData)) {
-  //       headers["Content-Type"] = "application/json";
-  //     }
-
-  //     const response = await fetch(
-  //       `http://localhost:5000/api/blogPosts/${_id}`,
-  //       {
-  //         method: "PATCH",
-  //         headers,
-  //         body:
-  //           requestData instanceof FormData
-  //             ? requestData
-  //             : JSON.stringify(requestData),
-  //       }
-  //     );
-
-  //     const data = await response.json();
-
-  //     if (!response.ok) {
-  //       throw new Error(data.message || "Error updating blog post");
-  //     }
-
-  //     Swal.fire({
-  //       title: "Success!",
-  //       text: "Blog post updated successfully.",
-  //       icon: "success",
-  //       confirmButtonText: "OK",
-  //     });
-
-  //     setShowUpdateModal(false);
-
-  //     // Update local state instead of refetching all posts
-  //     setBlogPosts((prevPosts) =>
-  //       prevPosts.map((post) =>
-  //         post._id === _id ? { ...post, ...filteredData } : post
-  //       )
-  //     );
-  //   } catch (error) {
-  //     console.error("Error updating blog post:", error);
-  //     Swal.fire({
-  //       title: "Error!",
-  //       text:
-  //         error.message || "An error occurred while updating the blog post.",
-  //       icon: "error",
-  //       confirmButtonText: "OK",
-  //     });
-  //   }
-  // };
-
   const handleDeleteBlogPost = async (postId) => {
     const confirmed = window.confirm(
       "Are you sure you want to delete this project?"
     );
     if (confirmed) {
       try {
-        await fetch(`http://localhost:5000/api/blogPosts/${postId}`, {
+        await fetch(`${baseUrl}/blogPosts/${postId}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -454,17 +267,19 @@ const ManageBlogPosts = () => {
           decoratedText="Blog Posts"
           subtitle="Super admin can only manage all blog posts"
         />
-
-        <div className="flex lg:justify-start items-center justify-between lg:mb-4 bg-base-200 p-2 shadow-sm">
+        <div className="lg:flex lg:items-start items-center justify-between lg:mb-4 bg-base-200 p-2 shadow-sm">
           <NavLink to="/super-admin/add-blog-post" className="m-0">
             <button className="btn btn-xs btn-primary">
               <FaPlusCircle />
               Add Blog Post
             </button>
           </NavLink>
-          <h2 className="text-xl font-bold text-center lg:ml-72">
+
+          <h2 className="text-xl font-bold text-center lg:ml-">
             Blog posts List:{" "}
-            {blogPosts.length > 0 ? blogPosts.length : "No post uploaded yet"}
+            <span className="text-orange-700">
+              {blogPosts.length > 0 ? blogPosts.length : "No post uploaded yet"}
+            </span>
           </h2>
         </div>
 
