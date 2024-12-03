@@ -125,105 +125,57 @@ const ManageBlogPosts = () => {
     setShowUpdateModal(true);
   };
 
-  const handleUpdateBlogPost = async (formData) => {
+  const handleUpdateBlogPost = async (formData, hasImage) => {
     try {
-      console.log("Updating blog post ID:", formData._id);
-
-      // Destructure formData and remove the _id
-      const { _id, imageUrl, ...dataWithoutId } = formData;
-
-      // Prepare filtered data for submission (excluding _id)
-      const filteredData = {
-        title: dataWithoutId.title,
-        content: dataWithoutId.content,
-        author: dataWithoutId.author,
-        category: dataWithoutId.category,
-        tag: dataWithoutId.tag,
-        status: dataWithoutId.status,
-      };
-
-      let requestData;
-
-      // If an image exists, prepare FormData
-      if (imageUrl && imageUrl instanceof File) {
-        const formDataWithImage = new FormData();
-
-        // Append image file and other fields
-        formDataWithImage.append("imageUrl", imageUrl);
-
-        // Handle arrays correctly (and ensure they're not empty)
-        for (const key in filteredData) {
-          if (Array.isArray(filteredData[key])) {
-            filteredData[key].forEach((item) =>
-              formDataWithImage.append(`${key}[]`, item)
-            );
-          } else {
-            formDataWithImage.append(key, filteredData[key]);
-          }
-        }
-        requestData = formDataWithImage;
-      } else {
-        // If no image, send regular data
-        requestData = filteredData;
-      }
-
-      // Prepare headers
+      const token = localStorage.getItem("token");
       const headers = {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${token}`,
       };
 
-      // If it's not FormData, set content type as JSON
-      if (!(requestData instanceof FormData)) {
+      let requestBody;
+
+      if (hasImage) {
+        // Form data will include the image, so no need for additional adjustments
+        requestBody = formData;
+      } else {
+        // If no image is provided, explicitly include the existing image in the request
         headers["Content-Type"] = "application/json";
+
+        requestBody = JSON.stringify({
+          title: formData.title,
+          content: formData.content,
+          author: formData.author,
+          category: formData.category || selectedBlogPost.category,
+          tag: formData.tag || selectedBlogPost.tag,
+          status: formData.status || selectedBlogPost.status,
+          imageUrl: formData.imageUrl || selectedBlogPost.imageUrl, // Explicitly retain the existing image
+        });
       }
 
-      // Make the PATCH request
       const response = await fetch(
         `${baseUrl}/blogPosts/${selectedBlogPost._id}`,
         {
           method: "PATCH",
           headers,
-          body:
-            requestData instanceof FormData
-              ? requestData
-              : JSON.stringify(requestData),
+          body: requestBody,
         }
       );
 
-      // Parse response
-      const data = await response.json();
+      if (!response.ok) throw new Error("Failed to update blog post.");
 
-      if (!response.ok) {
-        throw new Error(data.message || "Error updating blog post");
-      }
+      const updatedBlog = await response.json();
+      console.log("updated Blog", updatedBlog);
 
-      // Success message
-      Swal.fire({
-        title: "Success!",
-        text: "Blog post updated successfully.",
-        icon: "success",
-        confirmButtonText: "OK",
-      });
-
-      setShowUpdateModal(false);
-
-      // Update local state for the updated blog post
       setBlogPosts((prevPosts) =>
         prevPosts.map((post) =>
-          post._id === _id ? { ...post, ...filteredData } : post
+          post._id === updatedBlog._id ? { ...post, ...updatedBlog } : post
         )
       );
-    } catch (error) {
-      console.error("Error updating blog post:", error);
 
-      // Display error alert
-      Swal.fire({
-        title: "Error!",
-        text:
-          error.message || "An error occurred while updating the blog post.",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
+      Swal.fire("Success!", "Blog post updated successfully.", "success");
+      setShowUpdateModal(false);
+    } catch (error) {
+      Swal.fire("Error!", error.message || "Update failed.", "error");
     }
   };
 

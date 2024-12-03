@@ -74,42 +74,100 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
       setSelectedImage(file); // Save the file to state for submission
     }
   };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Prepare the data to send
-    const formDataToSend = {
-      ...formData, // Form fields like title, content, etc.
-      _id: blog._id, // Blog ID for identification during update
-      category: selectedCategories.map((cat) => cat.value), // Category IDs
-      tag: selectedTags.map((tag) => tag.value), // Tag IDs
+    // Extract updated fields
+    const updatedData = {
+      _id: blog._id,
+      title: formData.get("title"),
+      content: formData.get("content"),
+      author: formData.get("author"),
+      category: formData.getAll("category"),
+      tag: formData.getAll("tag"),
+      status: formData.get("status"),
     };
 
-    // Initialize FormData if there is an image
-    const formDataWithImage = new FormData();
+    const imageUrl = formData.get("imageUrl");
+    const hasImage = imageUrl && imageUrl.size > 0; // Check if an image is provided
 
-    // Append image if selected
-    if (selectedImage) {
-      formDataWithImage.append("imageUrl", selectedImage);
-    }
-
-    // Append the rest of the form fields to FormData
-    for (const key in formDataToSend) {
-      formDataWithImage.append(key, formDataToSend[key]);
-    }
-
-    // Log the final FormData or data to check
-    console.log("Form Data to send:", formDataWithImage);
-
-    if (selectedImage) {
-      // If image is selected, submit with image
-      await onUpdate(formDataWithImage, true);
+    if (hasImage) {
+      // Include image along with categories and tags
+      formData.append("category", JSON.stringify(updatedData.category));
+      formData.append("tag", JSON.stringify(updatedData.tag));
+      onUpdate(formData, true);
     } else {
-      // Otherwise, submit without image
-      await onUpdate(formDataToSend, false);
+      // Send the updated fields without image
+      onUpdate(updatedData, false);
     }
   };
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const formData = new FormData(event.target);
+
+  //   // Extract updated values
+  //   const updatedData = {
+  //     _id: blog._id,
+  //     title: formData.get("title"),
+  //     content: formData.get("content"),
+  //     author: formData.get("author"),
+  //     category: formData.getAll("category"),
+  //     tag: formData.getAll("tag"),
+  //     status: formData.getAll("status"),
+  //   };
+
+  //   const imageUrl = formData.get("imageUrl");
+  //   const selectedImage = imageUrl && imageUrl.size > 0; // Check if an image is uploaded
+
+  //   if (selectedImage) {
+  //     // Include image if selected
+  //     formData.append("category", JSON.stringify(updatedData.category));
+  //     formData.append("tag", JSON.stringify(updatedData.tag));
+  //     onUpdate(formData, true);
+  //   } else {
+  //     // Pass updatedData without image
+  //     onUpdate(updatedData, false);
+  //   }
+  // };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   // Prepare the data to send
+  //   const formDataToSend = {
+  //     ...formData, // Form fields like title, content, etc.
+  //     _id: blog._id, // Blog ID for identification during update
+  //     category: selectedCategories.map((cat) => cat.value), // Category IDs
+  //     tag: selectedTags.map((tag) => tag.value), // Tag IDs
+  //   };
+
+  //   // Initialize FormData if there is an image
+  //   const formDataWithImage = new FormData();
+
+  //   // Append image if selected
+  //   if (selectedImage) {
+  //     formDataWithImage.append("imageUrl", selectedImage);
+  //   }
+
+  //   // Append the rest of the form fields to FormData
+  //   for (const key in formDataToSend) {
+  //     formDataWithImage.append(key, formDataToSend[key]);
+  //     console.log("Keys:", { key });
+  //   }
+
+  //   // Log the final FormData or data to check
+  //   console.log("Form Data to send:", formDataWithImage);
+
+  //   if (selectedImage) {
+  //     // If image is selected, submit with image
+  //     await onUpdate(formDataWithImage, true);
+  //   } else {
+  //     // Otherwise, submit without image
+  //     await onUpdate(formDataToSend, false);
+  //   }
+  // };
 
   return (
     <div style={styles.modalOverlay}>
@@ -117,7 +175,7 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
         <h2 className="text-xl font-bold">Update Blog Post</h2>
         <form
           onSubmit={handleSubmit}
-          // method="POST"
+          method="POST"
           encType="multipart/form-data"
         >
           {/* Title */}
