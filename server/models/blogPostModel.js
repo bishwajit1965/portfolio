@@ -65,7 +65,7 @@ const updateBlogPost = async (id, updateData) => {
   // Convert ID to ObjectId
   const objectId = new ObjectId(id);
 
-  // Retrieve current blog post to get existing image info
+  // Retrieve the current blog post to get existing image info
   const existingBlogPost = await db
     .collection("blogPosts")
     .findOne({ _id: objectId });
@@ -74,35 +74,33 @@ const updateBlogPost = async (id, updateData) => {
     throw new Error("Blog post not found.");
   }
 
-  // Destructure updateData to get the new image and other fields to update
-  const { _id, imageUrl: newImage, ...updateFields } = updateData;
+  const { imageUrl: newImage, ...updateFields } = updateData;
 
   // Handle image replacement logic
   if (newImage && existingBlogPost.imageUrl) {
     const oldImagePath = path.join(
       __dirname,
       "../uploads",
-      path.basename(existingBlogPost.imageUrl) // Only use the filename to remove it
+      path.basename(existingBlogPost.imageUrl)
     );
 
-    // Check if the old image file exists and delete it if present
+    // Delete the old image if it exists
     if (fs.existsSync(oldImagePath)) {
-      fs.unlinkSync(oldImagePath); // Remove the old image file
+      fs.unlinkSync(oldImagePath);
     }
   }
 
-  // Update the blog post, either with the new image or retain the old one if no new image is provided
-  const result = await db.collection("blogPosts").updateOne(
-    { _id: objectId },
-    {
-      $set: {
-        ...updateFields, // Updates the other fields (title, content, etc.)
-        imageUrl: newImage || existingBlogPost.imageUrl, // Use the new image or retain the old one if not provided
-      },
-    }
-  );
+  // Ensure imageUrl is updated only when a new image is provided
+  const updatePayload = {
+    ...updateFields,
+    ...(newImage ? { imageUrl: newImage } : {}),
+  };
 
-  return result; // Return the result of the update operation
+  const result = await db
+    .collection("blogPosts")
+    .updateOne({ _id: objectId }, { $set: updatePayload });
+
+  return result;
 };
 
 // Get related blog post

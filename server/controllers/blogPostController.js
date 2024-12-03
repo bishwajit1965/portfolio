@@ -62,11 +62,8 @@ const getAllBlogPostsForAdmin = async (req, res) => {
 
 const editBlogPost = async (req, res) => {
   try {
-    const { id } = req.params; // Extract blog post ID from request params
+    const { id } = req.params;
     let updateData = req.body;
-
-    console.log("req.body:", req.body);
-    console.log("req.params:", req.params);
 
     // Validate ID format
     if (!ObjectId.isValid(id)) {
@@ -76,35 +73,38 @@ const editBlogPost = async (req, res) => {
     const objectId = new ObjectId(id);
 
     // Validate existing blog post
-    const existingBlogPost = await getBlogPost(objectId); // Ensure ID is valid
-    console.log("Existing post:", existingBlogPost);
+    const existingBlogPost = await getBlogPost(objectId);
     if (!existingBlogPost) {
       return res.status(404).json({ error: "Blog post not found" });
     }
 
-    // Handle image upload (if new image is provided)
-    let imagePath = existingBlogPost.imageUrl; // Default to the existing image URL
+    // Handle image upload (if a new image is provided)
+    let imagePath = existingBlogPost.imageUrl; // Default to existing image
     if (req.file) {
-      imagePath = `/uploads/${req.file.filename}`; // Set new image URL
+      imagePath = `/uploads/${req.file.filename}`; // Update with new image
+
+      // Delete the old image if it exists
       const previousImagePath = path.join(
         __dirname,
         "../uploads",
-        path.basename(existingBlogPost.imageUrl) // Extract filename
+        path.basename(existingBlogPost.imageUrl)
       );
 
-      // Delete the old image file if it exists
       try {
         if (fs.existsSync(previousImagePath)) {
-          fs.unlinkSync(previousImagePath); // Delete old image synchronously
+          fs.unlinkSync(previousImagePath);
         }
       } catch (err) {
         console.error("Error deleting old image:", err);
-        // Optionally, you could continue and not stop the update process
       }
     }
 
-    // Add the imagePath to updateData
-    updateData.imageUrl = imagePath;
+    // Only set `imageUrl` if a new image is uploaded
+    if (req.file) {
+      updateData.imageUrl = imagePath;
+    } else {
+      delete updateData.imageUrl; // Remove the field to avoid overwriting with undefined
+    }
 
     // Update blog post in the database
     const result = await updateBlogPost(id, updateData);
