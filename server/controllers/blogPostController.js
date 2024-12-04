@@ -74,12 +74,14 @@ const editBlogPost = async (req, res) => {
 
     // Validate existing blog post
     const existingBlogPost = await getBlogPost(objectId);
+
     if (!existingBlogPost) {
       return res.status(404).json({ error: "Blog post not found" });
     }
 
     // Handle image upload (if a new image is provided)
     let imagePath = existingBlogPost.imageUrl; // Default to existing image
+
     if (req.file) {
       imagePath = `/uploads/${req.file.filename}`; // Update with new image
 
