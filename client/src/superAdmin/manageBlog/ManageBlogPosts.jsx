@@ -163,16 +163,21 @@ const ManageBlogPosts = () => {
 
       if (!response.ok) throw new Error("Failed to update blog post.");
 
-      const updatedBlog = await response.json();
-      console.log("updated Blog", updatedBlog);
+      const updatedBlogPost = await response.json();
 
-      setBlogPosts((prevPosts) =>
-        prevPosts.map((post) =>
-          post._id === updatedBlog._id ? { ...post, ...updatedBlog } : post
-        )
-      );
+      if (updatedBlogPost) {
+        // Update the local state with the new data
+        const fetchBlogPosts = async () => {
+          const response = await fetch(`${baseUrl}/blogPosts`);
+          const data = await response.json();
+          setBlogPosts(data);
+        };
+
+        await fetchBlogPosts();
+      }
 
       Swal.fire("Success!", "Blog post updated successfully.", "success");
+
       setShowUpdateModal(false);
     } catch (error) {
       Swal.fire("Error!", error.message || "Update failed.", "error");
