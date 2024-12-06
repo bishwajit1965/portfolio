@@ -1,3 +1,4 @@
+import { FaComment, FaEye } from "react-icons/fa6";
 import {
   Link,
   useLoaderData,
@@ -7,9 +8,9 @@ import {
 } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+import CTAButton from "../ctaButton/CTAButton";
 import CommentsForm from "../comments/CommentsForm";
 import CommentsList from "../comments/CommentsList";
-import { FaComment } from "react-icons/fa6";
 import { FaHome } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import LikeButton from "./LikeButton";
@@ -20,6 +21,9 @@ import api from "../../services/commentsApi";
 import useAuth from "../../hooks/useAuth";
 
 const SingleBlogPost = () => {
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const baseUrl =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
   const { postId } = useParams();
   const { post } = useLoaderData();
 
@@ -34,10 +38,21 @@ const SingleBlogPost = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [token, setToken] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentCategoryIds, setCurrentCategoryIds] = useState([]);
 
-  const handleOpenModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
+  console.log("Category Ids:", currentCategoryIds);
+
+  const handleOpenModal = () => {
+    console.log("Opening related post modal"); // Debug log
+    setCurrentCategoryIds(post.category || []); // Ensure category is set
+    setIsModalOpen(true); // Set the modal to open
+  };
+
+  const handleCloseModal = () => {
+    console.log("Closing related post modal");
+    setIsModalOpen(false);
+  };
 
   // Fetch categories when the component mounts
   useEffect(() => {
@@ -46,9 +61,7 @@ const SingleBlogPost = () => {
 
     const fetchData = async () => {
       try {
-        const categoryResponse = await fetch(
-          "http://localhost:5000/api/categories"
-        );
+        const categoryResponse = await fetch(`${baseUrl}/categories`);
         if (!categoryResponse.ok) {
           throw new Error(`HTTP error! Status: ${categoryResponse.status}`);
         }
@@ -75,7 +88,7 @@ const SingleBlogPost = () => {
     return () => {
       isMounted = false; //Clean up function to set the flag to false on unmount
     };
-  }, []);
+  }, [baseUrl]);
 
   // Fetch tags when the component mounts
   useEffect(() => {
@@ -84,7 +97,7 @@ const SingleBlogPost = () => {
 
     const fetchData = async () => {
       try {
-        const tagResponse = await fetch("http://localhost:5000/api/tags");
+        const tagResponse = await fetch(`${baseUrl}/tags`);
         if (!tagResponse.ok) {
           throw new Error(`HTTP error! Status: ${tagResponse.status}`);
         }
@@ -111,7 +124,7 @@ const SingleBlogPost = () => {
     return () => {
       isMounted = false; //Clean up function to set the flag to false on unmount
     };
-  }, []);
+  }, [baseUrl]);
 
   // Fetch existing comments when component mounts
   useEffect(() => {
@@ -202,7 +215,7 @@ const SingleBlogPost = () => {
     return tagIds
       .map((id) => {
         const tag = tags.find((cat) => cat.value === id);
-        return tag ? tag.label : "Unknown";
+        return tag ? tag.label : "";
       })
       .join(", ");
   };
@@ -222,7 +235,7 @@ const SingleBlogPost = () => {
         <div className="lg:col-span-12 col-span-12">
           {post.imageUrl && post.imageUrl.trim() !== "" && (
             <img
-              src={`http://localhost:5000${post.imageUrl}`}
+              src={`${apiUrl}${post.imageUrl}`}
               alt={post.title}
               className="rounded-md shadow-md w-full object-cover h-72 lg:h-[480px] object-center"
             />
@@ -265,23 +278,31 @@ const SingleBlogPost = () => {
 
           <div className="lg:mt-4 mt-2 pb-2 flex items-center">
             <Link to="/blog-posts" className="m-0">
-              <button className="btn btn-sm btn-primary dark:btn-success dark:text-base-200">
-                <FaHome />
-                Blogs Page
-              </button>
+              <CTAButton
+                type="submit"
+                label="Go Blogs Page"
+                className="flex"
+                icon={<FaHome />}
+              />
             </Link>
-            <div className="ml-10">
+            <div className="lg:ml-8">
               <LikeButton postId={postId} token={token} />
             </div>
+
+            <CTAButton
+              type="submit"
+              label="View Related Posts"
+              className="flex lg:ml-8"
+              icon={<FaEye />}
+              onClick={handleOpenModal}
+            />
           </div>
 
+          {/* Button to toggle related post modal */}
           <div className="">
-            {/* Button to toggle modal */}
-
-            <button onClick={handleOpenModal}>View Related Posts</button>
-            {showModal && (
+            {isModalOpen && (
               <RelatedCategoryPostsModal
-                categoryIds={post.category}
+                categoryIds={currentCategoryIds}
                 onClose={handleCloseModal}
               />
             )}

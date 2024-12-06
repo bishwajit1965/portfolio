@@ -72,22 +72,22 @@ const LikeButton = ({ postId, token }) => {
         <Loader />
       ) : (
         <>
-          <div className="flex border rounded-md shadow-sm px-2 py-1 bg-base-300">
+          <div className="flex border shadow-sm px-2 py-2 bg-base-300 rounded-full">
             <button onClick={handleLikeToggle} className="flex items-center">
               {liked ? (
-                <FaThumbsDown className="mr-2 text-blue-700" />
+                <FaThumbsDown className="mr-2 text-blue-800" />
               ) : (
-                <FaThumbsUp className="mr-2 text-blue-700" />
-              )}{" "}
+                <FaThumbsUp className="mr-2 text-blue-800" />
+              )}
               {/* ({likeCount}) */}
             </button>
             <div className="lg:flex lg:items-center grid grid-cols-1">
-              <div className="mr-2 ml-2 badge badge-primary badge-md">
+              <div className="mr-2 ml-2 badge badge-primary badge-lg px-2">
                 Likes: {likeCount}
               </div>
               <div className="">
                 {message && (
-                  <p className="lg:test-md text-xs text-blue-700">{message}</p>
+                  <p className="lg:test-md text-xs text-blue-800">{message}</p>
                 )}
               </div>
             </div>
