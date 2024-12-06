@@ -1,9 +1,11 @@
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
+import Avatar from "/assets/Avatar-Profile-PNG-Photos.png";
 import DataTable from "react-data-table-component";
 import { useState } from "react";
 
 const BlogsTable = ({ blogPosts = [], onEdit, onDelete }) => {
+  const apiUrl = "http://localhost:5000";
   const [filterText, setFilterText] = useState("");
 
   // Filtered categories calculated directly from props and input
@@ -14,6 +16,23 @@ const BlogsTable = ({ blogPosts = [], onEdit, onDelete }) => {
   );
 
   const columns = [
+    {
+      name: "Photo",
+      selector: (row) => (
+        <img
+          src={row.imageUrl ? `${apiUrl}${row.imageUrl}` : Avatar}
+          alt={row.title || "Default Avatar"}
+          onError={(e) => (e.target.src = Avatar)} // Fallback to Avatar on error
+          style={{
+            width: "60px",
+            height: "38px",
+            borderRadius: "5%",
+            objectFit: "cover",
+          }}
+        />
+      ),
+      sortable: true,
+    },
     {
       name: "Blog Title",
       selector: (row) => row.title,
