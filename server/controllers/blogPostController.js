@@ -128,35 +128,120 @@ const editBlogPost = async (req, res) => {
 };
 
 // Get category related posts for SingleBlogPosts.jsx
-const getCategoryRelatedPosts = async (req, res) => {
-  const { categories } = req.query;
 
-  // Validate input
-  if (!categories) {
+const getCategoryRelatedPosts = async (req, res) => {
+  console.log("=== START: getCategoryRelatedPosts ===");
+
+  const { category } = req.query;
+
+  // Validate the `category` parameter
+  if (!category) {
+    console.error("Category parameter is missing.");
     return res
       .status(400)
-      .json({ message: "Categories are required for filtering." });
+      .json({ message: "Category is required for filtering." });
   }
+
+  // Parse category IDs into an array of strings
+  const categoryIds = category.split(",").map((id) => id.trim());
+  console.log("Parsed category IDs:", categoryIds);
 
   try {
-    // Split categories into an array
-    const categoryIds = categories.split(",").map((id) => id.trim());
-
-    // Fetch posts matching any of the categories
+    // Fetch related posts
     const relatedPosts = await getRelatedPosts(categoryIds);
 
-    if (!relatedPosts || relatedPosts.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "No posts found for the given categories." });
+    if (relatedPosts.length === 0) {
+      console.log("No related posts found for the given category IDs.");
+      return res.status(404).json({ message: "No related posts found." });
     }
 
-    res.status(200).json(relatedPosts);
+    console.log("Fetched related posts:", relatedPosts);
+    return res.status(200).json(relatedPosts);
   } catch (error) {
-    console.error("Error fetching filtered posts:", error);
-    res.status(500).json({ message: "Error fetching related posts." });
+    console.error("Error fetching related posts:", error);
+    return res
+      .status(500)
+      .json({ message: "Server error while fetching related posts." });
   }
 };
+
+// const getCategoryRelatedPosts = async (req, res) => {
+//   try {
+//     console.log("=== START: getCategoryRelatedPosts ===");
+
+//     console.log("Received query parameters:", req.query);
+
+//     const { category } = req.query;
+//     if (!category) {
+//       console.error("Category query parameter is missing.");
+//       return res.status(400).json({ message: "Category is required." });
+//     }
+
+//     const categoryIds = category.split(",").map((id) => id.trim());
+//     console.log("Parsed category IDs:", categoryIds);
+
+//     const invalidIds = categoryIds.filter((id) => !ObjectId.isValid(id));
+//     if (invalidIds.length > 0) {
+//       console.error("Invalid ObjectId(s):", invalidIds);
+//       return res
+//         .status(400)
+//         .json({ message: `Invalid ObjectId(s): ${invalidIds.join(", ")}` });
+//     }
+
+//     console.log("All IDs are valid. Proceeding with query...");
+
+//     const relatedPosts = await getRelatedPosts(categoryIds);
+//     console.log("Fetched related posts:", relatedPosts);
+
+//     if (!relatedPosts || relatedPosts.length === 0) {
+//       console.warn("No related posts found for the given category IDs.");
+//       return res.status(404).json({ message: "No related posts found." });
+//     }
+
+//     console.log("Returning related posts...");
+//     return res.status(200).json(relatedPosts);
+//   } catch (error) {
+//     console.error("Error in getCategoryRelatedPosts:", error);
+//     return res.status(500).json({ message: "Server error occurred." });
+//   } finally {
+//     console.log("=== END: getCategoryRelatedPosts ===");
+//   }
+// };
+
+// const getCategoryRelatedPosts = async (req, res) => {
+//   // Logging for debugging
+//   console.log("Received query parameters:", req.query);
+//   console.log("Query parameter category:", req.query.category);
+
+//   const { category } = req.query; // Extract category from the query string
+
+//   // Validate the category parameter
+//   if (!category) {
+//     return res
+//       .status(400)
+//       .json({ message: "Category is required for filtering." });
+//   }
+
+//   // Split the category into an array and trim any spaces
+//   const categoryIds = category.split(",").map((id) => id.trim());
+//   console.log("Parsed category IDs:", categoryIds);
+
+//   try {
+//     // Fetch related posts using the category IDs
+//     const relatedPosts = await getRelatedPosts(categoryIds);
+
+//     if (relatedPosts.length === 0) {
+//       return res.status(404).json({ message: "No related posts found." });
+//     }
+
+//     res.status(200).json(relatedPosts);
+//   } catch (error) {
+//     console.error("Error fetching filtered posts:", error);
+//     res
+//       .status(500)
+//       .json({ message: "Server error while fetching related posts." });
+//   }
+// };
 
 // Delete blog post
 const removeBlogPost = async (req, res) => {

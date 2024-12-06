@@ -103,22 +103,93 @@ const updateBlogPost = async (id, updateData) => {
   return result;
 };
 
-// Get related blog post
+// Get category related blog post
+
 const getRelatedPosts = async (categoryIds) => {
-  console.log("Category IDs received for querying:", categoryIds);
+  console.log("Received category IDs:", categoryIds);
+
   const db = getDB();
   const postsCollection = db.collection("blogPosts");
+
   try {
+    // MongoDB query with string IDs
     const relatedPosts = await postsCollection
       .find({ category: { $in: categoryIds } })
-      .limit(5)
+      .limit(8) // Using string IDs directly
       .toArray();
+
+    console.log("Found related posts:", relatedPosts);
     return relatedPosts;
   } catch (error) {
-    console.error("Error in fetching blog posts,", error);
-    return [];
+    console.error("Error fetching related posts:", error);
+    throw new Error("Error fetching related posts");
   }
 };
+
+module.exports = {
+  getRelatedPosts,
+};
+
+// const getRelatedPosts = async (categoryIds) => {
+//   console.log("=== START: getRelatedPosts ===");
+//   console.log("Received category IDs:", categoryIds);
+
+//   const db = getDB();
+//   const postsCollection = db.collection("blogPosts");
+
+//   const invalidIds = categoryIds.filter((id) => !ObjectId.isValid(id));
+//   if (invalidIds.length > 0) {
+//     console.error("Invalid ObjectId(s):", invalidIds);
+//     throw new Error(`Invalid ObjectId(s): ${invalidIds.join(", ")}`);
+//   }
+
+//   const objectIds = categoryIds.map((id) => new ObjectId(id));
+//   console.log("Converted ObjectIds for query:", objectIds);
+
+//   try {
+//     const query = { category: { $in: objectIds } };
+//     console.log("MongoDB Query:", query);
+
+//     const relatedPosts = await postsCollection.find(query).toArray();
+//     console.log("Query result:", relatedPosts);
+
+//     return relatedPosts;
+//   } catch (error) {
+//     console.error("Error executing query:", error);
+//     throw error; // Re-throw the error for the controller to catch
+//   } finally {
+//     console.log("=== END: getRelatedPosts ===");
+//   }
+// };
+
+// const getRelatedPosts = async (categoryIds) => {
+//   console.log("Received category IDs:", categoryIds);
+
+//   const db = getDB();
+//   const postsCollection = db.collection("blogPosts");
+//   const invalidIds = categoryIds.filter((id) => !ObjectId.isValid(id));
+//   if (invalidIds.length > 0) {
+//     console.error("Invalid ObjectId(s):", invalidIds);
+//     throw new Error(`Invalid ObjectId(s): ${invalidIds.join(", ")}`);
+//   }
+
+//   const objectIds = categoryIds.map((id) => new ObjectId(id));
+//   console.log("Converted ObjectIds:", objectIds);
+
+//   try {
+//     // MongoDB query
+//     const relatedPosts = await postsCollection
+//       .find({ category: { $in: objectIds } })
+//       .toArray();
+
+//     console.log("Found related posts:", relatedPosts);
+
+//     return relatedPosts;
+//   } catch (error) {
+//     console.error("Error fetching related posts:", error);
+//     return [];
+//   }
+// };
 
 // Delete blog post
 const deleteBlogPost = async (id) => {

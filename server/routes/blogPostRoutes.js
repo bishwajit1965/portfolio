@@ -20,12 +20,11 @@ const router = express.Router();
 
 /** PUBLIC ROUTES
  * ===================================*/
+// Get category related posts
+router.get("/filter", getCategoryRelatedPosts);
 
 // Get a single blog post
 router.get("/:id", getSinglePost);
-
-// Get category related posts
-router.get("/filter", getCategoryRelatedPosts);
 
 // Get all approved blog posts for public view
 router.get("/", getPublishedBlogPosts);
