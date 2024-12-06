@@ -104,7 +104,6 @@ const updateBlogPost = async (id, updateData) => {
 };
 
 // Get category related blog post
-
 const getRelatedPosts = async (categoryIds) => {
   console.log("Received category IDs:", categoryIds);
 
@@ -129,67 +128,6 @@ const getRelatedPosts = async (categoryIds) => {
 module.exports = {
   getRelatedPosts,
 };
-
-// const getRelatedPosts = async (categoryIds) => {
-//   console.log("=== START: getRelatedPosts ===");
-//   console.log("Received category IDs:", categoryIds);
-
-//   const db = getDB();
-//   const postsCollection = db.collection("blogPosts");
-
-//   const invalidIds = categoryIds.filter((id) => !ObjectId.isValid(id));
-//   if (invalidIds.length > 0) {
-//     console.error("Invalid ObjectId(s):", invalidIds);
-//     throw new Error(`Invalid ObjectId(s): ${invalidIds.join(", ")}`);
-//   }
-
-//   const objectIds = categoryIds.map((id) => new ObjectId(id));
-//   console.log("Converted ObjectIds for query:", objectIds);
-
-//   try {
-//     const query = { category: { $in: objectIds } };
-//     console.log("MongoDB Query:", query);
-
-//     const relatedPosts = await postsCollection.find(query).toArray();
-//     console.log("Query result:", relatedPosts);
-
-//     return relatedPosts;
-//   } catch (error) {
-//     console.error("Error executing query:", error);
-//     throw error; // Re-throw the error for the controller to catch
-//   } finally {
-//     console.log("=== END: getRelatedPosts ===");
-//   }
-// };
-
-// const getRelatedPosts = async (categoryIds) => {
-//   console.log("Received category IDs:", categoryIds);
-
-//   const db = getDB();
-//   const postsCollection = db.collection("blogPosts");
-//   const invalidIds = categoryIds.filter((id) => !ObjectId.isValid(id));
-//   if (invalidIds.length > 0) {
-//     console.error("Invalid ObjectId(s):", invalidIds);
-//     throw new Error(`Invalid ObjectId(s): ${invalidIds.join(", ")}`);
-//   }
-
-//   const objectIds = categoryIds.map((id) => new ObjectId(id));
-//   console.log("Converted ObjectIds:", objectIds);
-
-//   try {
-//     // MongoDB query
-//     const relatedPosts = await postsCollection
-//       .find({ category: { $in: objectIds } })
-//       .toArray();
-
-//     console.log("Found related posts:", relatedPosts);
-
-//     return relatedPosts;
-//   } catch (error) {
-//     console.error("Error fetching related posts:", error);
-//     return [];
-//   }
-// };
 
 // Delete blog post
 const deleteBlogPost = async (id) => {
