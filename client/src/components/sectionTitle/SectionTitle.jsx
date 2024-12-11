@@ -2,7 +2,7 @@
 
 const SectionTitle = ({ title, decoratedText, subtitle }) => {
   return (
-    <div className="lg:space-y-3 space-y-2 text-center lg:my-10 md:my-6 my-2 lg:py-6 py-2">
+    <div className="lg:space-y-3 space-y-2 text-center lg:my-10 md:my-6 my-2 lg:py-6 py-2 lg:bg-base-300 rounded-md">
       <h2 className="lg:text-3xl text-2xl font-bold dark:text-emerald-400">
         <span className="text-amber-700">{title}</span>{" "}
         <span className="text-green-700">{decoratedText}</span>

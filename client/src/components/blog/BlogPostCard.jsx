@@ -1,63 +1,39 @@
-// import "./BlogPostCard.css";
-
-// import BlogCategoriesTags from "./BlogCategoriesTags";
-// import BlogImage from "./BlogImage";
-// import BlogMeta from "./BlogMeta";
-// import BlogSummary from "./BlogSummary";
-// import BlogTitle from "./BlogTitle";
-// import ReadMoreLink from "./ReadMoreLink";
-
-// const BlogPostCard = ({ post }) => {
-//   const { title, summary, date, author, image, url, categories, tags } = post;
-
-//   return (
-//     <div className="p-4 bg-white rounded-lg shadow-md">
-//       <BlogImage src={`http://localhost:5000${post.imageUrl}`} alt={title} />
-//       <BlogTitle title={title} url={url} />
-//       <BlogMeta date={date} author={author} />
-//       <BlogSummary summary={summary} />
-//       <BlogCategoriesTags categories={categories} tags={tags} />
-//       <ReadMoreLink url={url} />
-//     </div>
-//   );
-// };
-
-// export default BlogPostCard;
-
-// import BlogCategoriesTags from "./BlogCategoriesTags";
-// import BlogImage from "./BlogImage";
-// import BlogMeta from "./BlogMeta";
-// import BlogSummary from "./BlogSummary";
-// import BlogTitle from "./BlogTitle";
-// import React from "react";
-// import ReadMoreLink from "./ReadMoreLink";
-
-// const BlogPostCard = ({ post }) => (
-//   <div className="blog-card p-6 shadow-md rounded-lg mb-6">
-//     <BlogImage imageUrl={post.imageUrl} title={post.title} />
-//     <div className="blog-content">
-//       <BlogTitle title={post.title} postId={post._id} />
-//       <BlogMeta createdAt={post.createdAt} />
-//       <BlogSummary content={post.content} summary={post.summary} />
-//       <BlogCategoriesTags categories={post.categories} tags={post.tags} />
-//       <ReadMoreLink postId={post._id} />
-//     </div>
-//   </div>
-// );
-
-// export default BlogPostCard;
-
 import "./BlogPostCard.css";
+
+import { useEffect, useState } from "react";
 
 import { FaArrowCircleRight } from "react-icons/fa";
 import LazyLoad from "react-lazyload";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 
 const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const [loaded, setLoaded] = useState(false);
-  const { _id, author, title, content, imageUrl, category, tag, createdAt } =
-    post;
+  const [autoSummary, setAutoSummary] = useState("");
+  const {
+    _id,
+    author,
+    title,
+    summary,
+    content,
+    imageUrl,
+    category,
+    tag,
+    createdAt,
+  } = post;
+
+  // Blog post summary
+  const generateSummary = (content) => {
+    const plainText = content.replace(/<\/?[^>]+(>|$)/g, ""); // Strip HTML tag
+    return plainText.length > 150 ? plainText.slice(0, 150) : plainText;
+  };
+
+  useEffect(() => {
+    if (content) {
+      setAutoSummary(generateSummary(content));
+    }
+  }, [content]);
+
   return (
     <div className="grid grid-cols-12 gap-4 justify-between items-center border dark:border-slate-800 lg:mb-8 p-2 rounded-md bg-base-100 dark:bg-slate-900">
       <div className="lg:col-span-5 col-span-12">
@@ -65,19 +41,19 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
           {post.imageUrl && post.imageUrl.trim() !== "" && (
             <LazyLoad height={200} offset={100} once>
               <img
-                src={`http://localhost:5000${imageUrl}`}
+                src={`${apiUrl}${imageUrl}`}
                 alt={post.title}
                 className={`lazy-image ${
                   loaded ? "loaded" : ""
-                } w-full lg:h-auto rounded-md`}
+                } w-full lg:min-h-full rounded-md`}
                 onLoad={() => setLoaded(true)}
               />
             </LazyLoad>
           )}
         </div>
       </div>
-      <div className="lg:col-span-7 col-span-12 bg-sky-1000">
-        <div key={_id}>
+      <div className="lg:col-span-7 col-span-12">
+        <div key={_id} className="lg:space-y-2">
           <h2 className="text-xl font-bold">{title.slice(0, 60)}...</h2>
 
           <p className="text-gray-500 italic text-sm">
@@ -90,6 +66,7 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
               year: "numeric",
             })}
           </p>
+
           <div className="mb-1">
             <div className="badge badge-ghost badge-outline italic">
               <span className="font-bold">Categories:&nbsp; </span>
@@ -103,10 +80,25 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
               {tag ? getTagNames(tag) : "No tags"}
             </div>
           </div>
+          <div className="">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: content
+                  ? content.slice(0, 295) + "..."
+                  : "No content to display...",
+              }}
+            ></div>
+          </div>
 
-          <p className="mt-2">
-            {content ? content.slice(0, 295) : "No content to display."}...
-          </p>
+          <div className="">
+            <p>
+              <span className="font-bold text-slate-900 underline italic">
+                Post Summary :
+              </span>{" "}
+              &nbsp;
+              {summary ? summary : autoSummary}
+            </p>
+          </div>
 
           <div className="mt-1 flex justify-end">
             <Link to={`/single-blog-post/${_id}`} className="m-0">

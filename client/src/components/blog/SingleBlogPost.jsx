@@ -274,9 +274,17 @@ const SingleBlogPost = () => {
             {post.tag ? getTagNames(post.tag) : "No tags"}
           </div>
 
+          <div
+            dangerouslySetInnerHTML={{
+              __html: post.content
+                ? post.content.slice(0, 295) + "..."
+                : "No content to display...",
+            }}
+          ></div>
+
           <p className="mt-4">{post.content}</p>
 
-          <div className="lg:mt-4 mt-2 pb-2 flex items-center">
+          <div className="lg:mt-4 mt-2 pb-2 flex items-center lg:space-x-10 space-x-4">
             <Link to="/blog-posts" className="m-0">
               <CTAButton
                 type="submit"
@@ -285,17 +293,16 @@ const SingleBlogPost = () => {
                 icon={<FaHome />}
               />
             </Link>
-            <div className="lg:ml-8">
-              <LikeButton postId={postId} token={token} />
-            </div>
 
             <CTAButton
               type="submit"
               label="View Related Posts"
-              className="flex lg:ml-8"
               icon={<FaEye />}
               onClick={handleOpenModal}
             />
+            <div className="">
+              <LikeButton postId={postId} token={token} />
+            </div>
           </div>
 
           {/* Button to toggle related post modal */}
@@ -326,19 +333,15 @@ const SingleBlogPost = () => {
           />
         </div>
         <div className="">
-          <div className="mt-6 flex items-center">
-            <button
-              className="btn btn-sm btn-primary lg:mr-10 mr-4 dark:btn-success"
+          <div className="mt-6 flex items-center space-x-6">
+            <CTAButton
               onClick={handleCommentButtonClick}
-            >
-              <FaComment />
-              {showCommentForm ? "Cancel" : "Add Comment"}
-            </button>
+              label={showCommentForm ? "Cancel" : "Add Comment"}
+              className="flex"
+              icon={<FaComment />}
+            />
             <Link to="/blog-posts" className="m-0">
-              <button className="btn btn-sm btn-warning dark:btn-success dark:text-base-200">
-                <FaHome />
-                Blogs Page
-              </button>
+              <CTAButton icon={<FaHome />} label="Blogs Page" />
             </Link>
           </div>
 
@@ -369,7 +372,7 @@ const SingleBlogPost = () => {
       </div>
 
       {/* Social link share */}
-      <div className="lg:flex grid">
+      <div className="lg:flex grid bg-base-300 py-10 rounded-md shadow-md">
         <SocialShare blogId={postId} title={post.title} />
       </div>
     </div>

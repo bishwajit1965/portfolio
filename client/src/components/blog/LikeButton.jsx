@@ -72,17 +72,17 @@ const LikeButton = ({ postId, token }) => {
         <Loader />
       ) : (
         <>
-          <div className="flex border shadow-sm px-2 py-2 bg-base-300 rounded-full">
+          <div className="flex border shadow-sm px-2 py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 focus:ring-blue-400">
             <button onClick={handleLikeToggle} className="flex items-center">
               {liked ? (
-                <FaThumbsDown className="mr-2 text-blue-800" />
+                <FaThumbsDown className="mr-2 text-white ml-2" />
               ) : (
-                <FaThumbsUp className="mr-2 text-blue-800" />
+                <FaThumbsUp className="mr-2 text-white ml-2" />
               )}
               {/* ({likeCount}) */}
             </button>
             <div className="lg:flex lg:items-center grid grid-cols-1">
-              <div className="mr-2 ml-2 badge badge-primary badge-lg px-2">
+              <div className="mr-2 ml-2 badge badge-ghost badge-lg px-2 text-slate-900">
                 Likes: {likeCount}
               </div>
               <div className="">

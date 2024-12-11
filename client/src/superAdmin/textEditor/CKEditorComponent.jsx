@@ -2,27 +2,28 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useState } from "react";
 
-const CKEditorComponent = () => {
-  // State to hold the editor content
-  const [content, setContent] = useState("");
+const CKEditorComponent = ({ onChange, value }) => {
+  const [editorContent, setEditorContent] = useState(value || "");
+
+  const handleEditorChange = (event, editor) => {
+    const data = editor.getData();
+    setEditorContent(data);
+    if (onChange) {
+      onChange(data);
+    }
+  };
 
   return (
-    <div className="editor-container">
-      {/* <h2>Content</h2> */}
-      {/* <TextEditor /> */}
+    <div>
+      {/* <h3>CKEditor Example</h3> */}
       <CKEditor
         editor={ClassicEditor}
-        data={content} // Initial content if needed
-        onChange={(event, editor) => {
-          const data = editor.getData();
-          setContent(data); // Updates content when user edits
+        data={editorContent}
+        onChange={handleEditorChange}
+        onReady={(editor) => {
+          console.log("Editor is ready:", editor);
         }}
       />
-      {/* Displaying content for demonstration */}
-      <div className="editor-content">
-        <h3>Output Content</h3>
-        <div dangerouslySetInnerHTML={{ __html: content }} />
-      </div>
     </div>
   );
 };

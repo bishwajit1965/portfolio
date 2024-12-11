@@ -1,6 +1,7 @@
 import { FaCopy, FaFacebook, FaTwitter } from "react-icons/fa";
 import { FaLinkedin, FaWhatsapp } from "react-icons/fa6";
 
+import CTAButton from "../ctaButton/CTAButton";
 import { useState } from "react";
 
 const SocialShare = ({ blogId, title }) => {
@@ -55,9 +56,57 @@ const SocialShare = ({ blogId, title }) => {
   };
 
   return (
-    <div className="social-share lg:flex items-center space-y-2 lg:space-y-0 mb-4">
+    <div className="social-share lg:flex items-center space-y-2 lg:space-y-0 lg:space-x-6 px-2">
       {/* Social media sharing buttons */}
-      <a
+      <CTAButton
+        label="Share on"
+        href={shareLinks.facebook}
+        target="_blank"
+        rel="noopener noreferrer"
+        variant="primary"
+        onClick={() => handleGenerateLink("facebook")}
+        className="btn btn-sm"
+        icon={<FaFacebook />}
+      />
+      <CTAButton
+        label="Share on"
+        variant="primary"
+        className="btn btn-sm"
+        icon={<FaTwitter />}
+        href={shareLinks.twitter}
+        onClick={() => handleGenerateLink("twitter")}
+        target="_blank"
+        rel="noopener noreferrer"
+      />
+      <CTAButton
+        href={shareLinks.linkedin}
+        onClick={() => handleGenerateLink("linkedin")}
+        target="_blank"
+        rel="noopener noreferrer"
+        label="Share on"
+        variant="primary"
+        className="btn btn-sm"
+        icon={<FaLinkedin />}
+      />
+      <CTAButton
+        label="Share on"
+        href={shareLinks.whatsapp}
+        target="_blank"
+        rel="noopener noreferrer"
+        variant="primary"
+        onClick={() => handleGenerateLink("whatsapp")}
+        className="btn btn-sm"
+        icon={<FaWhatsapp />}
+      />
+      <CTAButton
+        label="Copy link"
+        rel="noopener noreferrer"
+        variant="info"
+        onClick={handleCopyLink}
+        className="btn btn-sm"
+        icon={<FaCopy />}
+      />
+      {/* <a
         href={shareLinks.facebook}
         onClick={() => handleGenerateLink("facebook")}
         target="_blank"
@@ -65,8 +114,8 @@ const SocialShare = ({ blogId, title }) => {
         className="btn btn-sm btn-outline shadow-md"
       >
         Share on <FaFacebook />
-      </a>
-      <a
+      </a> */}
+      {/* <a
         href={shareLinks.twitter}
         onClick={() => handleGenerateLink("twitter")}
         target="_blank"
@@ -74,8 +123,8 @@ const SocialShare = ({ blogId, title }) => {
         className="btn btn-sm btn-outline shadow-md"
       >
         Share on <FaTwitter />
-      </a>
-      <a
+      </a> */}
+      {/* <a
         href={shareLinks.linkedin}
         onClick={() => handleGenerateLink("linkedin")}
         target="_blank"
@@ -83,8 +132,8 @@ const SocialShare = ({ blogId, title }) => {
         className="btn btn-sm btn-outline shadow-md"
       >
         Share on <FaLinkedin />
-      </a>
-      <a
+      </a> */}
+      {/* <a
         href={shareLinks.whatsapp}
         onClick={() => handleGenerateLink("whatsapp")}
         target="_blank"
@@ -92,15 +141,15 @@ const SocialShare = ({ blogId, title }) => {
         className="btn btn-sm btn-outline shadow-md"
       >
         Share on <FaWhatsapp />
-      </a>
+      </a> */}
 
       {/* Copy link button */}
-      <button
+      {/* <button
         className="btn btn-sm btn-outline shadow-md bg-base-200"
         onClick={handleCopyLink}
       >
         <FaCopy /> Copy Link
-      </button>
+      </button> */}
 
       {/* Display the copy status message */}
       {copyStatus && <span className="ml-4">{copyStatus}</span>}

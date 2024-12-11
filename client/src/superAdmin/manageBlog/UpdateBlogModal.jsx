@@ -11,12 +11,14 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
   const [formData, setFormData] = useState({
     _id: "",
     title: "",
+    summary: "",
     content: "",
     author: "",
     imageUrl: "",
     category: [],
     tag: [],
     status: "",
+    updatedAt: "",
   });
 
   // Preselected categories and tags
@@ -25,14 +27,16 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
       setFormData({
         _id: blog._id,
         title: blog.title || "",
+        summary: blog.summary || "",
         content: blog.content || "",
         author: blog.author || "",
         imageUrl: blog.imageUrl,
         category: blog.category || [],
         tag: blog.tag || [],
         status: blog.status || "draft",
+        // updatedAt: blog.updatedAt || new Date(),
+        updatedAt: new Date().toISOString(),
       });
-      console.log("Blog post data:", blog);
 
       // Map blog.categories to pre-select values
       const preselectedCategories = (
@@ -62,18 +66,19 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
     }
   }, [blog, categories, tags]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
     if (file) {
       console.log("Selected file:", file);
       setSelectedImage(file); // Save the file to state for submission
     }
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -82,11 +87,13 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
     const updatedData = {
       _id: blog._id,
       title: formData.get("title"),
+      summary: formData.get("summary"),
       content: formData.get("content"),
       author: formData.get("author"),
       category: formData.getAll("category"),
       tag: formData.getAll("tag"),
       status: formData.get("status"),
+      updatedAt: new Date().toISOString(),
     };
 
     const imageUrl = formData.get("imageUrl");
@@ -127,13 +134,31 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
             />
           </div>
 
+          {/* Post summary */}
+          <div style={styles.formGroup}>
+            <label htmlFor="summary">Summary:</label>
+            <textarea
+              type="text"
+              id="summary"
+              cols="56"
+              rows="2"
+              name="summary"
+              value={formData.summary}
+              onChange={handleInputChange}
+              style={styles.textarea}
+              className="w-full border p-2 text-xs rounded-b-md mb-[-10px]"
+              required
+            ></textarea>
+          </div>
+
           {/* Content */}
           <div style={styles.formGroup}>
             <label htmlFor="content">Content:</label>
             <textarea
+              type="text"
               id="content"
               cols="56"
-              rows="6"
+              rows="4"
               name="content"
               value={formData.content}
               onChange={handleInputChange}

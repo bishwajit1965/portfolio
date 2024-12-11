@@ -39,6 +39,11 @@ const BlogsTable = ({ blogPosts = [], onEdit, onDelete }) => {
       sortable: true,
     },
     {
+      name: "Summary",
+      selector: (row) => row.summary,
+      sortable: true,
+    },
+    {
       name: "Author",
       selector: (row) => row.author,
       sortable: true,

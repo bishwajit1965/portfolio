@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import HeroSection from "../../components/sections/hero/HeroSection";
 import JourneyMilestones from "../../components/sections/parallax/JourneyMilestones";
 import ProjectsSection from "../../components/projects/ProjectsSection";
+import RandomLatestPosts from "../../components/sections/randomLatestsPosts/RandomLatestPosts";
 import ScrollTopButton from "../../components/scrollTopButton/ScrollTopButton";
 import SectionTitle from "../../components/sectionTitle/SectionTitle";
 
@@ -43,6 +44,11 @@ const Home = () => {
         {/* Animate Background */}
         <div className="lg:py-3">
           <AnimatedBackground />
+        </div>
+
+        {/* Random latest posts */}
+        <div className="lg:py-3">
+          <RandomLatestPosts />
         </div>
 
         {/* Scroll to top button */}

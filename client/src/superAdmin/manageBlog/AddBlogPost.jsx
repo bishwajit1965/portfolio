@@ -1,6 +1,7 @@
 import { FaBlogger, FaUpload } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 
+import CKEditorComponent from "../textEditor/CKEditorComponent";
 import { Helmet } from "react-helmet-async";
 import { NavLink } from "react-router-dom";
 import Select from "react-select";
@@ -15,6 +16,7 @@ import tagApi from "../utils/tagApi";
 const AddBlogPost = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
+  const [summary, setSummary] = useState("");
   const [content, setContent] = useState("");
   const [categories, setCategories] = useState([]); // To store fetched categories
   const [tags, setTags] = useState([]);
@@ -122,6 +124,13 @@ const AddBlogPost = () => {
       newErrors.push("Author name must be between 2 to 50 characters.");
     }
 
+    // Post summary validation
+    if (!summary.trim()) {
+      newErrors.push("Summary is required.");
+    } else if (summary.length < 10) {
+      newErrors.push("Post summary must be at least 10 characters long.");
+    }
+
     // Content validation
     if (!content.trim()) {
       newErrors.push("Content is required.");
@@ -133,6 +142,7 @@ const AddBlogPost = () => {
     if (selectedCategories.length === 0) {
       newErrors.push("At least one category must be selected.");
     }
+
     // Categories validation
     if (selectedTags.length === 0) {
       newErrors.push("At least one tag must be selected.");
@@ -161,6 +171,7 @@ const AddBlogPost = () => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("author", author);
+    formData.append("summary", summary);
     formData.append("content", content);
     formData.append(
       "category",
@@ -188,6 +199,7 @@ const AddBlogPost = () => {
         Swal.fire("Success", "Blog post created successfully", "success");
         setTitle("");
         setAuthor("");
+        setSummary("");
         setContent("");
         setSelectedCategories([]);
         setSelectedTags([]);
@@ -314,56 +326,72 @@ const AddBlogPost = () => {
                   />
                 </div>
               </div>
+              <div className="lg:grid grid-cols-12 gap-2 justify-between">
+                <div className="lg:col-span-6 col-span-12">
+                  <div className="form-control">
+                    <label>Categories:</label>
+                    {categories.length > 0 ? (
+                      <Select
+                        name="category"
+                        options={categories}
+                        isMulti
+                        value={selectedCategories}
+                        onChange={handleCategoryChange}
+                        placeholder="Select categories"
+                        noOptionsMessage={() => "No categories available"}
+                      />
+                    ) : (
+                      <p>Loading categories...</p>
+                    )}
+                  </div>
+                </div>
+                <div className="lg:col-span-6 col-span-12">
+                  <div className="form-control">
+                    <label>Tags:</label>
+                    {tags.length > 0 ? (
+                      <Select
+                        name="tag"
+                        options={tags}
+                        isMulti
+                        value={selectedTags}
+                        onChange={handleTagChange}
+                        placeholder="Select tags"
+                        noOptionsMessage={() => "No tags available"}
+                      />
+                    ) : (
+                      <p>Loading tags...</p>
+                    )}
+                  </div>
+                </div>
+              </div>
               <div className="form-control">
-                <label>Categories:</label>
-                {categories.length > 0 ? (
-                  <Select
-                    name="category"
-                    options={categories}
-                    isMulti
-                    value={selectedCategories}
-                    onChange={handleCategoryChange}
-                    placeholder="Select categories"
-                    noOptionsMessage={() => "No categories available"}
-                  />
-                ) : (
-                  <p>Loading categories...</p>
-                )}
+                <label htmlFor="summary">Post Summary:</label>
+                <textarea
+                  className="textarea textarea-bordered h-16 w-full"
+                  placeholder="Post summary..."
+                  type="text"
+                  name="summary"
+                  value={summary}
+                  onChange={(e) => setSummary(e.target.value)}
+                ></textarea>
               </div>
 
-              <div className="form-control">
-                <label>Tags:</label>
-                {tags.length > 0 ? (
-                  <Select
-                    name="tag"
-                    options={tags}
-                    isMulti
-                    value={selectedTags}
-                    onChange={handleTagChange}
-                    placeholder="Select tags"
-                    noOptionsMessage={() => "No tags available"}
-                  />
-                ) : (
-                  <p>Loading tags...</p>
-                )}
-              </div>
-
-              <div className="my-">
+              <div className="">
                 <label className="form-control">
                   <div className="label">
                     <span className="label-text">Post Content:</span>
                   </div>
-                  <textarea
+                  {/* <textarea
                     className="textarea textarea-bordered h-24"
                     placeholder="Post content..."
                     type="text"
+                    id="editor"
                     name="content"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
-                  ></textarea>
-                  {/* <TextEditor value={content} onChange={setContent} /> */}
+                  ></textarea> */}
 
-                  {/* <CKEditorComponent /> */}
+                  <CKEditorComponent value={content} onChange={setContent} />
                 </label>
               </div>
               <div className="form-control pt-3">
