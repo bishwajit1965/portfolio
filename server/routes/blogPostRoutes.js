@@ -5,6 +5,7 @@ const {
   getSinglePost,
   getPublishedBlogPosts,
   getAllBlogPostsForAdmin,
+  getRandomBlogPosts,
   editBlogPost,
   getCategoryRelatedPosts,
   removeBlogPost,
@@ -20,8 +21,12 @@ const router = express.Router();
 
 /** PUBLIC ROUTES
  * ===================================*/
+
 // Get category related posts
 router.get("/filter", getCategoryRelatedPosts);
+
+// Get random latest posts
+router.get("/random-latest", getRandomBlogPosts);
 
 // Get a single blog post
 router.get("/:id", getSinglePost);
@@ -38,7 +43,7 @@ router.post(
   "/",
   // isAuthenticated,
   // isAuthorized("superAdmin"),
-  upload.single("imageUrl"),
+  upload.single("image"),
   addBlogPost
 );
 

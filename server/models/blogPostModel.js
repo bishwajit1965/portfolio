@@ -7,7 +7,7 @@ const path = require("path");
 const createBlogPost = async (blogPostData) => {
   try {
     const db = getDB();
-    const { title, content, author, imageUrl, category, tag, status } =
+    const { title, summary, content, author, imageUrl, category, tag, status } =
       blogPostData;
     const parsedCategories =
       typeof category === "string" ? JSON.parse(category) : category;
@@ -16,6 +16,7 @@ const createBlogPost = async (blogPostData) => {
 
     const newPost = {
       title,
+      summary,
       content,
       author,
       imageUrl,
@@ -47,6 +48,22 @@ const getBlogPost = async (id) => {
   }
 };
 
+// Fetch random posts
+const randomPosts = async () => {
+  try {
+    const db = getDB();
+    const postsCollection = db.collection("blogPosts");
+    const posts = await postsCollection
+      .find({})
+      .sort({ createdAt: -1 })
+      .limit(10)
+      .toArray();
+    return posts;
+  } catch (error) {
+    throw new Error("Database query failed" + error.message);
+  }
+};
+
 // Function to get blog posts based on filter criteria
 const getBlogPostsByCriteria = async () => {
   try {
@@ -74,7 +91,7 @@ const updateBlogPost = async (id, updateData) => {
     throw new Error("Blog post not found.");
   }
 
-  const { imageUrl: newImage, ...updateFields } = updateData;
+  const { imageUrl: newImage, _id, ...updateFields } = updateData;
 
   // Handle image replacement logic
   if (newImage && existingBlogPost.imageUrl) {
@@ -95,6 +112,7 @@ const updateBlogPost = async (id, updateData) => {
     ...updateFields,
     ...(newImage ? { imageUrl: newImage } : {}),
   };
+  console.log("Updated payload:", updatePayload);
 
   const result = await db
     .collection("blogPosts")
@@ -123,10 +141,6 @@ const getRelatedPosts = async (categoryIds) => {
     console.error("Error fetching related posts:", error);
     throw new Error("Error fetching related posts");
   }
-};
-
-module.exports = {
-  getRelatedPosts,
 };
 
 // Delete blog post
@@ -160,6 +174,7 @@ const deleteBlogPost = async (id) => {
 module.exports = {
   createBlogPost,
   getBlogPost,
+  randomPosts,
   getBlogPostsByCriteria,
   updateBlogPost,
   getRelatedPosts,

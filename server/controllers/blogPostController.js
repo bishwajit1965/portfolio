@@ -5,6 +5,7 @@ const { ObjectId } = require("mongodb");
 const {
   createBlogPost,
   getBlogPost,
+  randomPosts,
   getBlogPostsByCriteria,
   updateBlogPost,
   getRelatedPosts,
@@ -57,6 +58,18 @@ const getAllBlogPostsForAdmin = async (req, res) => {
     res.status(200).json(blogPosts);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+const getRandomBlogPosts = async (req, res) => {
+  try {
+    const latestPosts = await randomPosts();
+    const randomizedPosts = latestPosts.sort(() => 0.5 - Math.random());
+    const limitedPosts = randomizedPosts.slice(0, 8);
+    res.status(200).json({ posts: limitedPosts });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching posts" });
   }
 };
 
@@ -129,8 +142,6 @@ const editBlogPost = async (req, res) => {
 
 // Get category related posts for SingleBlogPosts.jsx
 const getCategoryRelatedPosts = async (req, res) => {
-  console.log("=== START: getCategoryRelatedPosts ===");
-
   const { category } = req.query;
 
   // Validate the `category` parameter
@@ -143,18 +154,15 @@ const getCategoryRelatedPosts = async (req, res) => {
 
   // Parse category IDs into an array of strings
   const categoryIds = category.split(",").map((id) => id.trim());
-  console.log("Parsed category IDs:", categoryIds);
 
   try {
     // Fetch related posts
     const relatedPosts = await getRelatedPosts(categoryIds);
 
     if (relatedPosts.length === 0) {
-      console.log("No related posts found for the given category IDs.");
       return res.status(404).json({ message: "No related posts found." });
     }
 
-    console.log("Fetched related posts:", relatedPosts);
     return res.status(200).json(relatedPosts);
   } catch (error) {
     console.error("Error fetching related posts:", error);
@@ -189,6 +197,7 @@ module.exports = {
   getSinglePost,
   getPublishedBlogPosts,
   getAllBlogPostsForAdmin,
+  getRandomBlogPosts,
   editBlogPost,
   getCategoryRelatedPosts,
   removeBlogPost,
