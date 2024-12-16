@@ -22,7 +22,8 @@ const RandomLatestPosts = () => {
     <div className="">
       <div className="bg-base-300 rounded-md">
         <SectionTitle
-          title="Latest Blog Posts"
+          title="Latest Random"
+          decoratedText="Blog Posts"
           subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
         />
       </div>

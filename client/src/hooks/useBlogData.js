@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 
 const useBlogData = () => {
+  const baseUrl =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -14,9 +16,9 @@ const useBlogData = () => {
     const fetchData = async () => {
       try {
         const [postRes, catRes, tagRes] = await Promise.all([
-          fetch("http://localhost:5000/api/blogPosts"),
-          fetch("http://localhost:5000/api/categories"),
-          fetch("http://localhost:5000/api/tags"),
+          fetch(`${baseUrl}/blogPosts`),
+          fetch(`${baseUrl}/categories`),
+          fetch(`${baseUrl}/tags`),
         ]);
 
         if (!postRes.ok || !catRes.ok || !tagRes.ok) {
@@ -24,11 +26,15 @@ const useBlogData = () => {
         }
 
         const postData = await postRes.json();
+        // Filter posts according to status="published"
+        const publishedPosts = postData.filter(
+          (post) => post.status === "published"
+        );
         const categoryData = await catRes.json();
         const tagData = await tagRes.json();
 
         if (isMounted) {
-          setPosts(postData);
+          setPosts(publishedPosts);
           setCategories(
             categoryData.map((cat) => ({ value: cat._id, label: cat.name }))
           );
@@ -42,10 +48,14 @@ const useBlogData = () => {
     };
 
     fetchData();
+
+    const interval = setInterval(fetchData, 60000);
+    // Set interval to refresh at every minute
     return () => {
+      clearInterval(interval);
       isMounted = false;
     };
-  }, []);
+  }, [baseUrl]);
 
   return { loading, posts, categories, tags, error };
 };

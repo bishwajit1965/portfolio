@@ -53,7 +53,7 @@ const RelatedCategoryPostsModal = ({ categoryIds, onClose }) => {
             relatedPosts.map((post) => (
               <div
                 key={post._id}
-                className="lg:col-span-3 relative col-span-12 shadow-md rounded-md"
+                className="lg:col-span-3 relative col-span-12 shadow-md rounded-md dark:bg-slate-800 dark:text-base-300"
               >
                 <a href={`/single-blog-post/${post._id}`}>
                   <img

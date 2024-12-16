@@ -372,7 +372,7 @@ const SingleBlogPost = () => {
       </div>
 
       {/* Social link share */}
-      <div className="lg:flex grid bg-base-300 py-10 rounded-md shadow-md">
+      <div className="lg:flex grid dark:bg-slate-800 bg-base-300 py-10 rounded-md shadow-md">
         <SocialShare blogId={postId} title={post.title} />
       </div>
     </div>

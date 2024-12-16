@@ -79,7 +79,7 @@ const ContactMeForm = () => {
   };
 
   return (
-    <>
+    <div className="bg-base-200 lg:py-10 rounded-md shadow-sm dark:bg-slate-800">
       <div className="lg:max-w-5xl mx-auto p-4 bg- rounded-lg shadow-md">
         {error && (
           <p className="text-red-500 p-1 border border-red-800 rounded-md text-sm">
@@ -98,6 +98,7 @@ const ContactMeForm = () => {
               value={formData.name}
               onChange={handleChange}
               id=""
+              placeholder="Name..."
               className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-700"
             />
             {errors.name && (
@@ -114,6 +115,7 @@ const ContactMeForm = () => {
               value={formData.email}
               onChange={handleChange}
               id=""
+              placeholder="Email..."
               className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-700"
             />
             {errors.email && (
@@ -129,6 +131,7 @@ const ContactMeForm = () => {
               value={formData.message}
               onChange={handleChange}
               rows="4"
+              placeholder="Message..."
               className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-700"
             ></textarea>
             {errors.message && (
@@ -147,7 +150,7 @@ const ContactMeForm = () => {
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

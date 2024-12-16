@@ -31,6 +31,7 @@ const NavBar = () => {
     { id: 2, route: "/about-me", name: "About Me" },
     { id: 3, route: "/contact-me", name: "Contact" },
     { id: 4, route: "/blog-posts", name: "Blogs" },
+    { id: 5, route: "/blog-coming-soon", name: "Blog Coming Soon" },
   ];
 
   const handleLogOut = () => {

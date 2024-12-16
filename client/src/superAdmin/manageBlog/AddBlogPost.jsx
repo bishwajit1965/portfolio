@@ -20,6 +20,7 @@ const AddBlogPost = () => {
   const [content, setContent] = useState("");
   const [categories, setCategories] = useState([]); // To store fetched categories
   const [tags, setTags] = useState([]);
+  const [willPublishAt, setWillPublishAt] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]); // To handle selected categories
   const [selectedTags, setSelectedTags] = useState([]); // To handle selected tags
   const [status, setStatus] = useState("draft");
@@ -27,7 +28,8 @@ const AddBlogPost = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
   const fileInputRef = useRef(null);
-
+  const baseUrl =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
   // Fetching categories
   useEffect(() => {
     const fetchCategories = async () => {
@@ -182,17 +184,16 @@ const AddBlogPost = () => {
       JSON.stringify(selectedTags.map((tag) => tag.value))
     );
     formData.append("status", status);
+    formData.append("willPublishAt", willPublishAt);
 
     if (image) formData.append("image", image); // Append image file
 
     try {
-      const response = await fetchWithAuth(
-        "http://localhost:5000/api/blogPosts",
-        {
-          method: "POST",
-          body: formData, // For multipart/form-data
-        }
-      );
+      const response = await fetchWithAuth(`${baseUrl}`, {
+        method: "POST",
+        body: formData, // For multipart/form-data
+      });
+
       console.log("Form data value", formData);
       // Assuming the response will always be JSON in a successful case
       if (response.ok) {
@@ -205,6 +206,7 @@ const AddBlogPost = () => {
         setSelectedTags([]);
         setStatus("draft");
         setImage(null);
+        setWillPublishAt(null);
         fileInputRef.current.value = null; // Clear file input
       } else {
         // Assuming the error is in JSON format
@@ -297,7 +299,7 @@ const AddBlogPost = () => {
               </div>
 
               <div className="grid grid-cols-12 justify-between items-center gap-2">
-                <div className="lg:col-span-6 col-span-12">
+                <div className="lg:col-span-4 col-span-12">
                   <div className="form-control">
                     <label htmlFor="title">Upload File:</label>
                     <input
@@ -310,10 +312,11 @@ const AddBlogPost = () => {
                     />
                   </div>
                 </div>
-                <div className="lg:col-span-6 col-span-12">
+                <div className="lg:col-span-4 col-span-12">
                   <label htmlFor="status">Post Status</label>
                   <Select
                     name="status"
+                    className=""
                     value={{
                       value: status,
                       label: status.charAt(0).toUpperCase() + status.slice(1),
@@ -323,6 +326,18 @@ const AddBlogPost = () => {
                       { value: "draft", label: "Draft" },
                       { value: "published", label: "Published" },
                     ]}
+                  />
+                </div>
+
+                <div className="lg:col-span-4 col-span-12">
+                  {/* New Field for Scheduling */}
+                  <label htmlFor="status">Will publish at:</label>
+                  <input
+                    type="datetime-local"
+                    name="willPublishAt"
+                    value={willPublishAt}
+                    onChange={(e) => setWillPublishAt(e.target.value)}
+                    className="input input-sm w-full input-bordered"
                   />
                 </div>
               </div>
@@ -390,12 +405,11 @@ const AddBlogPost = () => {
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                   ></textarea> */}
-
                   <CKEditorComponent value={content} onChange={setContent} />
                 </label>
               </div>
               <div className="form-control pt-3">
-                <button type="submit" className="btn btn-md btn-primary">
+                <button type="submit" className="btn btn-sm btn-primary">
                   {loading ? (
                     <span className="loading loading-spinner loading-xs"></span>
                   ) : (

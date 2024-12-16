@@ -33,7 +33,7 @@ const ManageBlogPosts = () => {
 
         const [blogPostsResponse, categoriesResponse, tagsResponse] =
           await Promise.all([
-            fetch(`${baseUrl}/blogPosts`, {
+            fetch(`${baseUrl}/admin/blogPosts/admin`, {
               headers,
             }),
             fetch(`${baseUrl}/categories`, {
@@ -143,12 +143,14 @@ const ManageBlogPosts = () => {
 
         requestBody = JSON.stringify({
           title: formData.title,
+          summary: formData.summary,
           content: formData.content,
           author: formData.author,
           category: formData.category || selectedBlogPost.category,
           tag: formData.tag || selectedBlogPost.tag,
           status: formData.status || selectedBlogPost.status,
           imageUrl: formData.imageUrl || selectedBlogPost.imageUrl, // Explicitly retain the existing image
+          updatedAt: new Date().toISOString(),
         });
       }
 

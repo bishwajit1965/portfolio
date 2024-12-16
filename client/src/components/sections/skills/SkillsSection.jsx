@@ -1,3 +1,4 @@
+import Loader from "../../loader/Loader";
 import SkillCard from "./SkillCard";
 import useFetchCollection from "../../../hooks/useFetchCollection";
 import { useMemo } from "react";
@@ -11,7 +12,7 @@ const SkillsSection = () => {
   console.log("Fetched skills data:", data);
 
   // Loading state
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loader />;
 
   // Error state
   if (error) return <div>Error: {error.message}</div>;

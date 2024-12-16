@@ -10,7 +10,7 @@ const LatestPostCard = ({ latestPosts }) => {
         <Link to={`/single-blog-post/${_id}`} className="m-0">
           <img
             src={`${apiUrl}${imageUrl}`}
-            alt=""
+            alt={title}
             className="w-full lg:h-52 rounded-md shadow-md"
           />
         </Link>

@@ -5,6 +5,7 @@ import AddProjectForm from "../superAdmin/manageProjects/AddProjectForm";
 import AddTag from "../superAdmin/manageTags/AddTag";
 import AdminDashboard from "../superAdmin/adminDashboard/AdminDashboard";
 import BlogPosts from "../components/blog/BlogPosts";
+import ComingSoon from "../components/blog/ComingSoon";
 import ContactMe from "../components/sections/contact/ContactMe";
 import ErrorPage from "../components/errorPage/ErrorPage";
 import Home from "../pages/home/Home";
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "/blog-posts",
         element: <BlogPosts />,
+      },
+      {
+        path: "/blog-coming-soon",
+        element: <ComingSoon />,
       },
       {
         path: "/single-blog-post/:postId",
