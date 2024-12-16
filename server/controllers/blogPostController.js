@@ -6,10 +6,12 @@ const {
   createBlogPost,
   getBlogPost,
   randomPosts,
-  getBlogPostsByCriteria,
+  getPublishedBlogPosts,
+  getBlogPostsForAdmin,
   updateBlogPost,
   getRelatedPosts,
   deleteBlogPost,
+  comingSoon,
 } = require("../models/blogPostModel");
 
 // Add blog post
@@ -41,38 +43,27 @@ const getSinglePost = async (req, res) => {
   }
 };
 
-// Controller function to fetch only published blog posts for regular users
-const getPublishedBlogPosts = async (req, res) => {
-  try {
-    const blogPosts = await getBlogPostsByCriteria({});
-    res.status(200).json(blogPosts);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-// Controller function to fetch all blog posts for admin
+// Fetch all blog posts for admin
 const getAllBlogPostsForAdmin = async (req, res) => {
   try {
-    const blogPosts = await getBlogPostsByCriteria({}); // No filter, fetch all
-    res.status(200).json(blogPosts);
+    const adminBlogPosts = await getBlogPostsForAdmin(); // No filter, fetch all
+    res.status(200).json(adminBlogPosts);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-const getRandomBlogPosts = async (req, res) => {
+// Fetch only published blog posts for regular users
+const getOnlyPublishedBlogPosts = async (req, res) => {
   try {
-    const latestPosts = await randomPosts();
-    const randomizedPosts = latestPosts.sort(() => 0.5 - Math.random());
-    const limitedPosts = randomizedPosts.slice(0, 8);
-    res.status(200).json({ posts: limitedPosts });
+    const publishedBlogPosts = await getPublishedBlogPosts();
+    res.status(200).json(publishedBlogPosts);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error fetching posts" });
+    res.status(500).json({ error: error.message });
   }
 };
 
+// Update blog posts
 const editBlogPost = async (req, res) => {
   try {
     const { id } = req.params;
@@ -140,6 +131,19 @@ const editBlogPost = async (req, res) => {
   }
 };
 
+// Fetch random latest post for home page
+const getRandomBlogPosts = async (req, res) => {
+  try {
+    const latestPosts = await randomPosts();
+    const randomizedPosts = latestPosts.sort(() => 0.5 - Math.random());
+    const limitedPosts = randomizedPosts.slice(0, 8);
+    res.status(200).json({ posts: limitedPosts });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching posts" });
+  }
+};
+
 // Get category related posts for SingleBlogPosts.jsx
 const getCategoryRelatedPosts = async (req, res) => {
   const { category } = req.query;
@@ -172,6 +176,18 @@ const getCategoryRelatedPosts = async (req, res) => {
   }
 };
 
+// Blog post coming soon
+const blogPostComingSoon = async (req, res) => {
+  try {
+    const result = await comingSoon();
+    return res.status(200).json(result);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Server error in fetching coming soon blog post." });
+  }
+};
+
 // Delete blog post
 const removeBlogPost = async (req, res) => {
   const { id } = req.params;
@@ -195,10 +211,11 @@ const removeBlogPost = async (req, res) => {
 module.exports = {
   addBlogPost,
   getSinglePost,
-  getPublishedBlogPosts,
+  getOnlyPublishedBlogPosts,
   getAllBlogPostsForAdmin,
   getRandomBlogPosts,
   editBlogPost,
   getCategoryRelatedPosts,
+  blogPostComingSoon,
   removeBlogPost,
 };

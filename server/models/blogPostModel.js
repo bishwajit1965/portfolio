@@ -7,8 +7,18 @@ const path = require("path");
 const createBlogPost = async (blogPostData) => {
   try {
     const db = getDB();
-    const { title, summary, content, author, imageUrl, category, tag, status } =
-      blogPostData;
+    const {
+      title,
+      summary,
+      content,
+      author,
+      imageUrl,
+      category,
+      tag,
+      status,
+      willPublishAt,
+    } = blogPostData;
+
     const parsedCategories =
       typeof category === "string" ? JSON.parse(category) : category;
 
@@ -23,8 +33,12 @@ const createBlogPost = async (blogPostData) => {
       category: parsedCategories,
       tag: parsedTags,
       status: status || "draft", // Default status
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      willPublishAt: willPublishAt
+        ? new Date(willPublishAt).toISOString()
+        : null, // Scheduling,
+      isPublished: false, // Default as unpublished
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
 
     const result = await db.collection("blogPosts").insertOne(newPost);
@@ -48,7 +62,7 @@ const getBlogPost = async (id) => {
   }
 };
 
-// Fetch random posts
+// Fetch random category-wise latest posts
 const randomPosts = async () => {
   try {
     const db = getDB();
@@ -64,12 +78,36 @@ const randomPosts = async () => {
   }
 };
 
-// Function to get blog posts based on filter criteria
-const getBlogPostsByCriteria = async () => {
+// Fetches all blog posts for super-admin dashboard
+const getBlogPostsForAdmin = async () => {
   try {
     const db = getDB();
-    const blogPosts = await db.collection("blogPosts").find().toArray();
-    return blogPosts;
+    console.log("Blog post for admin is hit:");
+    const adminBlogPosts = await db
+      .collection("blogPosts")
+      .find({})
+      .sort({ createdAt: -1 })
+      .toArray();
+    console.log("Response for admin blog posts:", adminBlogPosts);
+    return adminBlogPosts;
+  } catch (error) {
+    throw new Error("Database query failed: " + error.message);
+  }
+};
+
+// Fetches published blog posts only
+const getPublishedBlogPosts = async () => {
+  try {
+    const db = getDB();
+    console.log("Blog post for users is hit:");
+    const publishedBlogPosts = await db
+      .collection("blogPosts")
+      .find({})
+      .sort({ createdAt: -1 })
+      .toArray();
+    console.log("Response for users blog posts:", publishedBlogPosts);
+
+    return publishedBlogPosts;
   } catch (error) {
     throw new Error("Database query failed: " + error.message);
   }
@@ -143,6 +181,28 @@ const getRelatedPosts = async (categoryIds) => {
   }
 };
 
+// Blog post coming soon
+const comingSoon = async (req, res) => {
+  try {
+    const db = getDB();
+    const blogsCollection = db.collection("blogPosts");
+    const result = await blogsCollection
+      .find({
+        status: "draft",
+        willPublishAt: { $exists: true, $gt: new Date().toISOString() },
+      })
+      .limit(12)
+      .sort({ createdAt: -1 })
+      .toArray();
+    return result;
+  } catch (error) {
+    console.error("Error in fetching coming-soon blog posts", error);
+    res
+      .status(500)
+      .json({ message: "Server error in fetching coming soon post." });
+  }
+};
+
 // Delete blog post
 const deleteBlogPost = async (id) => {
   const objectId = new ObjectId(id);
@@ -175,8 +235,10 @@ module.exports = {
   createBlogPost,
   getBlogPost,
   randomPosts,
-  getBlogPostsByCriteria,
+  getPublishedBlogPosts,
+  getBlogPostsForAdmin,
   updateBlogPost,
   getRelatedPosts,
+  comingSoon,
   deleteBlogPost,
 };
