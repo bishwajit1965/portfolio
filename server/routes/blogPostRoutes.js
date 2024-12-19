@@ -52,6 +52,6 @@ router.patch("/:id", upload.single("imageUrl"), editBlogPost);
 router.delete("/:id", removeBlogPost);
 
 // Create a new blog post
-router.post("/", upload.single("image"), addBlogPost);
+router.post("/", upload.single("imageUrl"), addBlogPost);
 
 module.exports = router;

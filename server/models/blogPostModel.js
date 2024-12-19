@@ -189,9 +189,10 @@ const comingSoon = async (req, res) => {
     const result = await blogsCollection
       .find({
         status: "draft",
-        willPublishAt: { $exists: true, $gt: new Date().toISOString() },
+        willPublishAt: { $exists: true, $gt: new Date() },
+        project: { title: 1, willPublishAt: 1, imageUrl: 1 },
       })
-      .limit(12)
+      .limit(5)
       .sort({ createdAt: -1 })
       .toArray();
     return result;

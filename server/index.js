@@ -19,9 +19,6 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // Connect to mongoDB
 const { connectDB, getDB } = require("./utils/database");
 
-// Refetching scheduled post after a certain time
-const { publishScheduledPosts } = require("./utils/publishScheduledPosts");
-
 (async () => {
   try {
     await connectDB(); //Database connected first
@@ -85,12 +82,6 @@ const { publishScheduledPosts } = require("./utils/publishScheduledPosts");
     app.use("/api/featured-projects", featuredProjectRoutes);
     app.use("/api/journey-milestones", journeyMilestonesRoutes);
     app.use("/api/copyright", validateCopyrightMiddlewareRules);
-
-    // Cron schedule of fetching at every minute
-    // cron.schedule("1,2,4,5 * * * *", async () => {
-    //   console.log("running every minute 1, 2, 4 and 5");
-    //   await publishScheduledPosts();
-    // });
 
     // Simple route to test server
     app.get("/", (req, res) => {
