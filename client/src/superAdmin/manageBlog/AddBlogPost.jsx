@@ -7,16 +7,18 @@ import { NavLink } from "react-router-dom";
 import Select from "react-select";
 import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import Swal from "sweetalert2";
+import apiRequest from "../utils/apiRequest";
 import categoryApi from "../utils/categoryApi";
-import fetchWithAuth from "../utils/fetchWithAuth";
 import tagApi from "../utils/tagApi";
+
+// import fetchWithAuth from "../utils/fetchWithAuth";
 
 // import CKEditorComponent from "../textEditor/CKEditorComponent";
 
 const AddBlogPost = () => {
   const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
   const [summary, setSummary] = useState("");
+  const [author, setAuthor] = useState("");
   const [content, setContent] = useState("");
   const [categories, setCategories] = useState([]); // To store fetched categories
   const [tags, setTags] = useState([]);
@@ -28,8 +30,10 @@ const AddBlogPost = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
   const fileInputRef = useRef(null);
-  const baseUrl =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+  // const baseUrl =
+  //   import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+
+  const token = localStorage.getItem("token");
   // Fetching categories
   useEffect(() => {
     const fetchCategories = async () => {
@@ -115,15 +119,8 @@ const AddBlogPost = () => {
     // Title validation
     if (!title.trim()) {
       newErrors.push("Title is required.");
-    } else if (title.length < 5 || title.length > 50) {
-      newErrors.push("Title must be between 2 to 50 characters.");
-    }
-
-    // Author validation
-    if (!author.trim()) {
-      newErrors.push("Author is required.");
-    } else if (author.length < 5 || author.length > 50) {
-      newErrors.push("Author name must be between 2 to 50 characters.");
+    } else if (title.length < 5 || title.length > 150) {
+      newErrors.push("Title must be between 2 to 150 characters.");
     }
 
     // Post summary validation
@@ -131,6 +128,13 @@ const AddBlogPost = () => {
       newErrors.push("Summary is required.");
     } else if (summary.length < 10) {
       newErrors.push("Post summary must be at least 10 characters long.");
+    }
+
+    // Author validation
+    if (!author.trim()) {
+      newErrors.push("Author is required.");
+    } else if (author.length < 5 || author.length > 50) {
+      newErrors.push("Author name must be between 2 to 50 characters.");
     }
 
     // Content validation
@@ -172,8 +176,8 @@ const AddBlogPost = () => {
     // Create FormData object for multipart/form-data
     const formData = new FormData();
     formData.append("title", title);
-    formData.append("author", author);
     formData.append("summary", summary);
+    formData.append("author", author);
     formData.append("content", content);
     formData.append(
       "category",
@@ -186,32 +190,38 @@ const AddBlogPost = () => {
     formData.append("status", status);
     formData.append("willPublishAt", willPublishAt);
 
-    if (image) formData.append("image", image); // Append image file
+    if (image) formData.append("imageUrl", image); // Append image file
 
     try {
-      const response = await fetchWithAuth(`${baseUrl}`, {
-        method: "POST",
-        body: formData, // For multipart/form-data
+      const response = await apiRequest("/blogPosts", "POST", formData, token, {
+        autoMessage: true,
       });
 
       console.log("Form data value", formData);
       // Assuming the response will always be JSON in a successful case
-      if (response.ok) {
-        Swal.fire("Success", "Blog post created successfully", "success");
+      if (response.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Great!",
+          text: "Blog post added successfully!",
+        });
         setTitle("");
-        setAuthor("");
         setSummary("");
+        setAuthor("");
         setContent("");
         setSelectedCategories([]);
         setSelectedTags([]);
         setStatus("draft");
         setImage(null);
         setWillPublishAt(null);
+        setWillPublishAt(null);
         fileInputRef.current.value = null; // Clear file input
       } else {
-        // Assuming the error is in JSON format
-        const result = await response.json();
-        setErrorMessages(result.errors || ["An unexpected error occurred."]);
+        Swal.fire({
+          icon: "error",
+          title: "Oops!",
+          text: response.error,
+        });
       }
     } catch (error) {
       setErrorMessages([
@@ -304,7 +314,7 @@ const AddBlogPost = () => {
                     <label htmlFor="title">Upload File:</label>
                     <input
                       type="file"
-                      name="image"
+                      name="imageUrl"
                       accept="image/*"
                       onChange={handleImageChange} // Use the new handler
                       ref={fileInputRef}

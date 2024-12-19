@@ -1,6 +1,6 @@
 const PageTitle = ({ title, decoratedText, subtitle }) => {
   return (
-    <div className="lg:space-y-4 text-center lg:my-10 md:my-6 my-2">
+    <div className="lg:space-y-4 text-center lg:my-10 md:my-6 my-2 bg-base-200 lg:py-10 rounded-md py-6 shadow-sm dark:bg-slate-800 dark:text-teal-600">
       <h2 className="lg:text-3xl text-2xl font-bold dark:text-emerald-400">
         <span className="text-amber-700">{title}</span>{" "}
         <span className="text-green-700">{decoratedText}</span>

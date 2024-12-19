@@ -37,7 +37,7 @@ const apiRequest = async (
       Swal.fire({
         icon: "success",
         title: "Success",
-        text: responseData.message || "Operation successful!",
+        text: responseData.message || "Operation is successful!",
         timer: 3000,
         showConfirmButton: false,
         toast: true,
@@ -48,7 +48,7 @@ const apiRequest = async (
     return {
       success: true,
       data: responseData,
-      message: responseData.message || "Request successful",
+      message: responseData.message || "Request is successful!",
     };
   } catch (error) {
     // Display error message with SweetAlert2

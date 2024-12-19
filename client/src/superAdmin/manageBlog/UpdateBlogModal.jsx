@@ -74,7 +74,6 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      console.log("Selected file:", file);
       setSelectedImage(file); // Save the file to state for submission
     }
   };

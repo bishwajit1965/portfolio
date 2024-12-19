@@ -87,7 +87,7 @@ const LikeButton = ({ postId, token }) => {
               </div>
               <div className="">
                 {message && (
-                  <p className="lg:test-md text-xs text-blue-800">{message}</p>
+                  <p className="lg:test-md text-xs text-white">{message}</p>
                 )}
               </div>
             </div>

@@ -36,8 +36,8 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
 
   return (
     <div className="grid grid-cols-12 gap-4 justify-between items-center border dark:border-slate-800 lg:mb-8 p-2 rounded-md bg-base-100 dark:bg-slate-900">
-      <div className="lg:col-span-5 col-span-12">
-        <div className="w-full h-full">
+      <div className="lg:col-span-6 col-span-12">
+        <div className="w-full lg:min-h-full">
           {post.imageUrl && post.imageUrl.trim() !== "" && (
             <LazyLoad height={200} offset={100} once>
               <img
@@ -52,7 +52,7 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
           )}
         </div>
       </div>
-      <div className="lg:col-span-7 col-span-12">
+      <div className="lg:col-span-6 col-span-12">
         <div key={_id} className="lg:space-y-2">
           <h2 className="text-xl font-bold">{title.slice(0, 60)}...</h2>
 

@@ -3,6 +3,7 @@ import ContactMeSection from "../../components/sections/contact/ContactMeSection
 import { Helmet } from "react-helmet-async";
 import HeroSection from "../../components/sections/hero/HeroSection";
 import JourneyMilestones from "../../components/sections/parallax/JourneyMilestones";
+import ProjectCarousel from "../../components/sections/projectCarousel/ProjectCarousel";
 import ProjectsSection from "../../components/projects/ProjectsSection";
 import RandomLatestPosts from "../../components/sections/randomLatestsPosts/RandomLatestPosts";
 import ScrollTopButton from "../../components/scrollTopButton/ScrollTopButton";
@@ -24,6 +25,11 @@ const Home = () => {
         {/* Hero section */}
         <div className="lg:py-3">
           <HeroSection />
+        </div>
+
+        {/* Carousel of Projects */}
+        <div className="lg:py-3">
+          <ProjectCarousel />
         </div>
 
         {/* Projects Section */}

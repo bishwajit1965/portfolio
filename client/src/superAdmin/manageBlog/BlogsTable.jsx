@@ -24,39 +24,46 @@ const BlogsTable = ({ blogPosts = [], onEdit, onDelete }) => {
           alt={row.title || "Default Avatar"}
           onError={(e) => (e.target.src = Avatar)} // Fallback to Avatar on error
           style={{
-            width: "60px",
-            height: "38px",
+            width: "80px",
+            height: "40px",
+            padding: "4px",
             borderRadius: "5%",
             objectFit: "cover",
           }}
         />
       ),
       sortable: true,
+      width: "90px",
     },
     {
       name: "Blog Title",
       selector: (row) => row.title,
       sortable: true,
+      width: "130px",
     },
     {
       name: "Summary",
       selector: (row) => row.summary,
       sortable: true,
+      width: "130px",
     },
     {
       name: "Author",
       selector: (row) => row.author,
       sortable: true,
+      width: "100px",
     },
     {
       name: "Status",
       selector: (row) => row.status,
       sortable: true,
+      width: "100px",
     },
     {
       name: "Created At",
       selector: (row) => new Date(row.createdAt).toLocaleDateString(),
       sortable: true,
+      width: "110px",
     },
     {
       name: "Updated At",
@@ -65,9 +72,11 @@ const BlogsTable = ({ blogPosts = [], onEdit, onDelete }) => {
           ? new Date(row.updatedAt).toLocaleDateString()
           : "Not updated",
       sortable: true,
+      width: "110px",
     },
     {
       name: "Actions",
+      width: "100px",
       cell: (row) => (
         <>
           <button
@@ -99,6 +108,7 @@ const BlogsTable = ({ blogPosts = [], onEdit, onDelete }) => {
         columns={columns}
         data={filteredBlogPosts} // Use filtered data here
         pagination
+        dense
         highlightOnHover
         pointerOnHover
       />

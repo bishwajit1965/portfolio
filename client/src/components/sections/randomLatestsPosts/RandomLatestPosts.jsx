@@ -16,8 +16,6 @@ const RandomLatestPosts = () => {
       .catch((error) => console.error("Error fetching posts:", error));
   }, [baseUrl]);
 
-  console.log("Random latest posts", posts);
-
   return (
     <div className="">
       <div className="bg-base-300 rounded-md">
@@ -27,7 +25,7 @@ const RandomLatestPosts = () => {
           subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
         />
       </div>
-      <div className="grid lg:grid-cols-12 gap-4 justify-between">
+      <div className="grid lg:grid-cols-12 grid-cols-1 gap-4 justify-between">
         {posts
           ? posts.map((latestPosts) => (
               <LatestPostCard key={latestPosts._id} latestPosts={latestPosts} />

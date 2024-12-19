@@ -2,6 +2,8 @@ import { getCategoryNames, getTagNames } from "../../helpers/blogHelpers";
 import { useMemo, useState } from "react";
 
 import BlogPostCard from "./BlogPostCard";
+import BlogsCarousel from "../sections/blogsCarousael/BlogsCarousel";
+import Loader from "../loader/Loader";
 import PageTitle from "../../pages/pageTitle/PageTitle";
 import Pagination from "./Pagination";
 import ScrollTopButton from "../scrollTopButton/ScrollTopButton";
@@ -44,6 +46,7 @@ const BlogPosts = () => {
 
   return (
     <div className="lg:pt-10">
+      {loading && <Loader />}
       <PageTitle
         title="Blog"
         decoratedText={`Posts : ${posts.length}`}
@@ -51,7 +54,7 @@ const BlogPosts = () => {
       />
 
       {/* Search and Filters */}
-      <div className="lg:flex justify-between items-center p-2 bg-base-200 border lg:border-slate-200 lg:p-2 rounded-md shadow-sm lg:pt-2 pt-8 lg:space-y-px space-y-2">
+      <div className="lg:flex justify-between items-center p-2 bg-base-200 border lg:border-slate-200 lg:p-2 rounded-md shadow-sm lg:pt-2 pt-8 lg:space-y-px space-y-2 dark:bg-slate-800 dark:border-none">
         {/* Search by title */}
         <input
           type="text"
@@ -118,7 +121,10 @@ const BlogPosts = () => {
             <div className="bg-base-200 rounded-sm shadow-sm">
               <SectionTitleSmall title="Recent" decoratedText="posts" />
             </div>
-            <div className="lg:mb-6">Recent posts here</div>
+            <div className="lg:mb-6">
+              {/* Recent posts here */}
+              <BlogsCarousel />
+            </div>
           </div>
           <div className="">
             <div className="bg-base-200 rounded-sm shadow-sm">

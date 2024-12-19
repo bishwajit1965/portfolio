@@ -14,12 +14,15 @@ const ManageCategories = () => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
+  const baseUrl =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+
   // Fetch categories on component mount
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:5000/api/categories", {
+        const response = await fetch(`${baseUrl}/categories`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -43,7 +46,7 @@ const ManageCategories = () => {
     };
 
     fetchCategories();
-  }, []);
+  }, [baseUrl]);
 
   // Handlers for edit and delete actions (to be implemented)
   const handleEditCategory = (category) => {
@@ -58,7 +61,7 @@ const ManageCategories = () => {
       console.log("Updating category ID:", updatedCategory._id); // Debugging
 
       const response = await fetch(
-        `http://localhost:5000/api/categories/${updatedCategory._id}`,
+        `${baseUrl}/categories/${updatedCategory._id}`,
         {
           method: "PATCH", // Ensure it's PATCH
           headers: {
@@ -81,15 +84,12 @@ const ManageCategories = () => {
         setShowUpdateModal(false); // Close modal
 
         // Force fetch all categories again to update the UI
-        const fetchCategoriesResponse = await fetch(
-          "http://localhost:5000/api/categories",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+        const fetchCategoriesResponse = await fetch(`${baseUrl}/categories`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
 
         if (fetchCategoriesResponse.ok) {
           const updatedCategories = await fetchCategoriesResponse.json();
@@ -121,7 +121,7 @@ const ManageCategories = () => {
     );
     if (confirmed) {
       try {
-        await fetch(`http://localhost:5000/api/categories/${categoryId}`, {
+        await fetch(`${baseUrl}/categories/${categoryId}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
