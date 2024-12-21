@@ -3,6 +3,26 @@ const { ObjectId } = require("mongodb");
 const fs = require("fs");
 const path = require("path");
 
+// Helper function to generate a slug from a title
+const generateSlug = (title) => {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "") // Remove special characters
+    .replace(/\s+/g, "-") // Replace spaces with hyphens
+    .replace(/^-+|-+$/g, ""); // Trim hyphens from start and end
+};
+
+// Ensure unique index on the slug field
+const ensureUniqueSlugIndex = async () => {
+  try {
+    const db = getDB();
+    await db.collection("blogPosts").createIndex({ slug: 1 }, { unique: true });
+    console.log("Unique index on 'slug' field created successfully.");
+  } catch (error) {
+    console.error("Error creating unique index on 'slug':", error.message);
+  }
+};
+
 // Create blog posts
 const createBlogPost = async (blogPostData) => {
   try {
@@ -19,6 +39,13 @@ const createBlogPost = async (blogPostData) => {
       willPublishAt,
     } = blogPostData;
 
+    let slug = generateSlug(title);
+
+    // Ensure unique slug by adding a number suffix if needed
+    while (await db.collection("blogPosts").findOne({ slug })) {
+      slug = `${slug}-${Date.now()}`;
+    }
+
     const parsedCategories =
       typeof category === "string" ? JSON.parse(category) : category;
 
@@ -26,6 +53,7 @@ const createBlogPost = async (blogPostData) => {
 
     const newPost = {
       title,
+      slug,
       summary,
       content,
       author,
@@ -234,6 +262,7 @@ const deleteBlogPost = async (id) => {
 
 module.exports = {
   createBlogPost,
+  ensureUniqueSlugIndex,
   getBlogPost,
   randomPosts,
   getPublishedBlogPosts,

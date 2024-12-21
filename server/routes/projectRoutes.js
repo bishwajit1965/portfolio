@@ -12,7 +12,7 @@ const validateProjectData = require("../middlewares/validateProjectData");
 const upload = require("../middlewares/upload");
 
 const verifyToken = require("../middlewares/authMiddleware");
-const uploadMiddleware = require("../middlewares/upload");
+// const uploadMiddleware = require("../middlewares/upload");
 const router = express.Router();
 
 router.post("/", upload.single("image"), validateProjectData, createProject);
