@@ -31,6 +31,7 @@ const ComingSoon = () => {
   return (
     <div className="lg:pt-10">
       {loading && <Loader />}
+
       <PageTitle
         title="Posts"
         subtitle="Hope you will enjoy the posts very much as those are informative and instructive as well."

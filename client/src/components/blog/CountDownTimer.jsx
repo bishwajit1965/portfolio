@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+import { FaBlogger } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
 const CountdownTimer = ({ releaseDate }) => {
   const [timeLeft, setTimeLeft] = useState("");
 
@@ -38,8 +41,14 @@ const CountdownTimer = ({ releaseDate }) => {
   }, [releaseDate]);
 
   return (
-    <div className="lg:text-4xl text-3xl font-bold text-gray-500">
+    <div className="lg:text-2xl text-3xl font-bold text-gray-500">
       <span className="text-amber-700">Time Remaining:</span> {timeLeft}
+      <div className="lg:mt-4 mt-2">
+        <Link to="/blog-posts" className="btn lg:btn-md btn-primary m-0">
+          <FaBlogger />
+          Blog Posts
+        </Link>
+      </div>
     </div>
   );
 };

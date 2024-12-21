@@ -19,8 +19,9 @@ const ComingSoonCard = ({ post }) => {
       setAutoSummary(generateSummary(content));
     }
   }, [content]);
+
   return (
-    <div className="lg:col-span-12 col-span-12 lg:my-6 bg-base-100 dark:bg-slate-800 dark:text-base-200 shadow-md rounded-b-md">
+    <div className="lg:col-span-12 col-span-12 lg:my-6 my-4 bg-base-100 dark:bg-slate-800 dark:text-base-200 shadow-md rounded-b-md">
       <div key={_id}>
         <img
           src={

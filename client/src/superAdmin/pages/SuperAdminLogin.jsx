@@ -18,6 +18,7 @@ const SuperAdminLogin = () => {
   const navigate = useNavigate();
 
   console.log("Email:", email, "Password:", password);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
