@@ -5,6 +5,7 @@ import AddProjectForm from "../superAdmin/manageProjects/AddProjectForm";
 import AddTag from "../superAdmin/manageTags/AddTag";
 import AdminDashboard from "../superAdmin/adminDashboard/AdminDashboard";
 import BlogPosts from "../components/blog/BlogPosts";
+import BookmarksPage from "../pages/bookmarksPage/BookmarksPage";
 import ComingSoon from "../components/blog/ComingSoon";
 import ContactMe from "../components/sections/contact/ContactMe";
 import ErrorPage from "../components/errorPage/ErrorPage";
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
           const post = await postResponse.json();
           return { post };
         },
+      },
+      {
+        path: "bookmarked-posts",
+        element: <BookmarksPage />,
       },
       {
         path: "/contact-me",

@@ -1,0 +1,42 @@
+/* Base styles for the bookmark button */
+.bookmark-btn {
+  display: inline-block;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #28a745; /* Bootstrap's success green */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Hover effect */
+.bookmark-btn:hover {
+  background-color: #218838; /* Darker green for hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* Active state when bookmarked */
+.bookmark-btn.active {
+  background-color: #dc3545; /* Bootstrap's danger red */
+  color: #fff;
+}
+
+/* Hover effect for the active state */
+.bookmark-btn.active:hover {
+  background-color: #c82333; /* Darker red for hover */
+}
+
+/* Small button adjustments (btn-sm class) */
+.bookmark-btn.btn-sm {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+/* Optional focus styles for accessibility */
+.bookmark-btn:focus {
+  outline: none;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}

@@ -84,11 +84,11 @@ const ProjectCarousel = () => {
             : "No project is available."}
         </div>
       </div>
-      <div className="lg:col-span-6 col-span-12 bg-blue-900 lg:h-80 rounded-md shadow-md lg:p-2 p-2 text-base-300 dark:bg-slate-800 dark:text-slate-400 dark:border border-slate-700">
-        <h2 className="text-1xl text-base-300 dark:text-slate-400 font-bold">
+      <div className="lg:col-span-6 col-span-12 bg-base-200 lg:h-80 rounded-md shadow-md lg:p-2 p-2 text-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:border border-slate-700">
+        <h2 className="text-1xl text-slate-700 dark:text-slate-400 font-bold">
           Recent Projects:
         </h2>{" "}
-        <hr />
+        <hr className="border-slate-400" />
         {slides.length > 0
           ? slides.slice(0, 10).map((data, index) => (
               <Link
@@ -97,7 +97,7 @@ const ProjectCarousel = () => {
                 className="flex items-center space-y-1 m-0"
               >
                 <div key={data._id} className="flex items-center space-y-1">
-                  <span className="bg-base-300 text-blue-900 text-xs rounded-full h-4 w-4 flex justify-center items-center p-1 mr-2">
+                  <span className="bg-slate-800 text-base-200 text-xs rounded-full h-4 w-4 flex justify-center items-center mr-2">
                     {index + 1}
                   </span>
                   <h2 className="font-bold">Title: {data.name}</h2>

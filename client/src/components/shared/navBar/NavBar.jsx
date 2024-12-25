@@ -32,6 +32,7 @@ const NavBar = () => {
     { id: 3, route: "/contact-me", name: "Contact" },
     { id: 4, route: "/blog-posts", name: "Blogs" },
     { id: 5, route: "/blog-coming-soon", name: "Blog Coming Soon" },
+    user ? { id: 6, route: "/bookmarked-posts", name: "Blogs Bookmarked" } : "",
   ];
 
   const handleLogOut = () => {
@@ -49,7 +50,7 @@ const NavBar = () => {
       <div
         className={`navbar ${
           theme === "dark" ? "bg-grey-900" : "bg-base-200"
-        } md:py-1 py-0 lg:px-2 md:px-2 lg:bg-base- shadow-lg fixed top-0 mb-20 max-w-7xl z-50 mx-auto`}
+        } md:py-0 py- lg:px-0 px- md:px- lg:bg-base-200 shadow-lg fixed top-0 mb-20 max-w-7xl z-50 mx-auto`}
       >
         <div className="navbar dark:border-b dark:bg-slate-900 dark:border-slate-700">
           <div className="navbar-start">

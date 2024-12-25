@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import CTAButton from "../ctaButton/CTAButton";
 import { FaBlogger } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -44,9 +45,8 @@ const CountdownTimer = ({ releaseDate }) => {
     <div className="lg:text-2xl text-3xl font-bold text-gray-500">
       <span className="text-amber-700">Time Remaining:</span> {timeLeft}
       <div className="lg:mt-4 mt-2">
-        <Link to="/blog-posts" className="btn lg:btn-md btn-primary m-0">
-          <FaBlogger />
-          Blog Posts
+        <Link to="/blog-posts" className=" m-0">
+          <CTAButton label="Blog posts" icon={<FaBlogger />} />
         </Link>
       </div>
     </div>
