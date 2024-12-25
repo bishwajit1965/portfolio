@@ -10,6 +10,9 @@ const {
   getBlogPostsForAdmin,
   updateBlogPost,
   getRelatedPosts,
+  addBookmarkToUser,
+  removeBookmark,
+  fetchBookmarkedPosts,
   deleteBlogPost,
   comingSoon,
 } = require("../models/blogPostModel");
@@ -188,6 +191,56 @@ const blogPostComingSoon = async (req, res) => {
   }
 };
 
+// Add bookmark
+const addBookmarkToPost = async (req, res) => {
+  const { userId, postId } = req.body;
+  console.log("Incoming request body:", req.body); // Log incoming data
+
+  try {
+    const result = await addBookmarkToUser(userId, postId);
+    if (result.modifiedCount > 0) {
+      res.status(200).json({ message: "Bookmark added successfully.", result });
+    } else {
+      res.status(400).json({ message: "Failed to add bookmark." });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Server error in adding bookmark." });
+  }
+};
+
+// Remove bookmark
+const removeBookmarkFromPost = async (req, res) => {
+  const userId = req.user.id;
+  const { postId } = req.body;
+
+  try {
+    const result = await removeBookmark(userId, postId);
+    if (result.modifiedCount > 0) {
+      res.status(200).json({ message: "Bookmark removed successfully." });
+    } else {
+      res.status(400).json({ message: "Failed to remove bookmark." });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Server error in removing bookmark." });
+  }
+};
+
+// Fetch bookmarked posts
+const fetchBookmarkedPostsForUser = async (req, res) => {
+  const userId = req.user.id;
+  console.log("User ID in fetchBookmarkedPostsForUser:", userId);
+
+  try {
+    const bookmarkedPosts = await fetchBookmarkedPosts(userId);
+    if (bookmarkedPosts.length === 0) {
+      return res.status(404).json({ message: "No bookmarked posts found." });
+    }
+    res.status(200).json(bookmarkedPosts);
+  } catch (error) {
+    res.status(500).json({ message: "Server error in fetching bookmarks." });
+  }
+};
+
 // Delete blog post
 const removeBlogPost = async (req, res) => {
   const { id } = req.params;
@@ -217,5 +270,8 @@ module.exports = {
   editBlogPost,
   getCategoryRelatedPosts,
   blogPostComingSoon,
+  addBookmarkToPost,
+  removeBookmarkFromPost,
+  fetchBookmarkedPostsForUser,
   removeBlogPost,
 };

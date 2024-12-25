@@ -232,6 +232,52 @@ const comingSoon = async (req, res) => {
   }
 };
 
+// Add bookmark to user's bookmarked posts
+const addBookmarkToUser = async (userId, postId) => {
+  const db = getDB();
+  const userCollection = db.collection("users");
+  const userExists = await userCollection.findOne({ uid: userId });
+  userId = userExists._id;
+  const result = await userCollection.updateOne(
+    { _id: new ObjectId(userId) },
+    { $addToSet: { bookmarkedPosts: new ObjectId(postId) } }
+  ); //$addToSet prevents duplicate entries
+  return result;
+};
+
+// Remove bookmark from user's bookmarked posts
+const removeBookmark = async (id, postId) => {
+  const db = getDB();
+  const userCollection = db.collection("users");
+  const result = await userCollection.updateOne(
+    { _id: new ObjectId(id) },
+    { $pull: { bookmarkedPosts: new ObjectId(postId) } }
+  );
+  return result;
+};
+
+// Fetch bookmarked posts for a user
+const fetchBookmarkedPosts = async (id) => {
+  const db = getDB();
+  const userCollection = db.collection("users");
+
+  const user = await userCollection.findOne({ _id: new ObjectId(id) });
+
+  console.log("User found:", user);
+
+  if (!user || !user.bookmarkedPosts || user.bookmarkedPosts.length === 0) {
+    return [];
+  }
+  console.log("User's bookmarked posts:", user.bookmarkedPosts);
+
+  const bookmarkedPosts = await db
+    .collection("blogPosts")
+    .find({ _id: { $in: user.bookmarkedPosts } })
+    .toArray();
+
+  return bookmarkedPosts;
+};
+
 // Delete blog post
 const deleteBlogPost = async (id) => {
   const objectId = new ObjectId(id);
@@ -270,5 +316,8 @@ module.exports = {
   updateBlogPost,
   getRelatedPosts,
   comingSoon,
+  addBookmarkToUser,
+  removeBookmark,
+  fetchBookmarkedPosts,
   deleteBlogPost,
 };

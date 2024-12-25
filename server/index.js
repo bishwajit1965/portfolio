@@ -32,6 +32,8 @@ const { connectDB, getDB } = require("./utils/database");
     const blogPostRoutes = require("./routes/blogPostRoutes");
     // Likes route
     const likesRoutes = require("./routes/likesRoutes");
+    // Bookmarks route
+    const bookmarkRoutes = require("./routes/bookmarkRoutes");
     // Tags route
     const tagRoutes = require("./routes/tagRoutes");
     // Comments route
@@ -64,6 +66,7 @@ const { connectDB, getDB } = require("./utils/database");
     app.use("/api/admin/blogPosts/admin", blogPostRoutes);
     app.use("/api/coming-soon/blogPosts/coming-soon", blogPostRoutes);
     app.use("/api/likes", likesRoutes);
+    app.use("/api/blog", bookmarkRoutes);
     app.use("/api/tags", tagRoutes);
     app.use("/api/comments", commentRoutes);
     app.use("/api/super-admin/auth", superAdminAuthRoutes);
