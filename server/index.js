@@ -9,7 +9,6 @@ const app = express();
 const port = process.env.PORT || 5000;
 const { ensureUniqueSlugIndex } = require("./models/blogPostModel");
 ensureUniqueSlugIndex;
-
 // Middlewares
 app.use(cors());
 app.use(express.json());
@@ -28,6 +27,7 @@ const { connectDB, getDB } = require("./utils/database");
 
     /** Import the routes here
      *==============================================**/
+    const rssRoutes = require("./routes/rssRoutes");
     // Blog posts route
     const blogPostRoutes = require("./routes/blogPostRoutes");
     // Likes route
@@ -62,6 +62,7 @@ const { connectDB, getDB } = require("./utils/database");
 
     /**Initialize your routes here
      *================================================= **/
+    app.use("/api/rss", rssRoutes);
     app.use("/api/blogPosts", blogPostRoutes);
     app.use("/api/admin/blogPosts/admin", blogPostRoutes);
     app.use("/api/coming-soon/blogPosts/coming-soon", blogPostRoutes);
