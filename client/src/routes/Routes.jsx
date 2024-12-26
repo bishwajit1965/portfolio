@@ -23,6 +23,7 @@ import ProjectDetails from "../components/projectDetails/ProjectDetails";
 import ProjectUpdateForm from "../superAdmin/manageProjects/ProjectUpdateForm";
 import RequireSuperAdmin from "../superAdmin/requireSuperAdmin/RequireSuperAdmin";
 import RootLayout from "../layout/RootLayout";
+import RssPage from "../pages/rss/RssPage";
 import SignUp from "../pages/signUp/SignUp";
 import SingleBlogPost from "../components/blog/SingleBlogPost";
 import SuperAdminDashboard from "../superAdmin/superAdminDashboard/SuperAdminDashboard";
@@ -83,6 +84,10 @@ const router = createBrowserRouter([
       {
         path: "/sign-up",
         element: <SignUp />,
+      },
+      {
+        path: "/rss",
+        element: <RssPage />,
       },
       {
         path: "*",

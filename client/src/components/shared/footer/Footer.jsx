@@ -1,5 +1,6 @@
 import CopyrightText from "../copyright/CopyrightText";
 import Logo from "/assets/favicon/webDevProF.png";
+import RssImage from "/assets/rss.png";
 import SocialMediaLinks from "../socialMedia/SocialMediaLinks";
 
 const Footer = () => {
@@ -45,11 +46,23 @@ const Footer = () => {
             </div>
           </div>
         </aside>
-        <nav className="md:place-self-center md:justify-self-end w-full">
-          <div className="grid grid-flow-col sm:w-full">
-            <SocialMediaLinks />
-          </div>
-        </nav>
+        <aside className="grid-flow-col items-center lg:py-2">
+          <nav className="md:place-self-center md:justify-self-end w-full">
+            <div className="grid grid-flow-col sm:w-full">
+              <SocialMediaLinks />
+            </div>
+          </nav>
+
+          <a href="/rss" className="tooltip" data-tip="Subscribe to RSS">
+            <img
+              src={RssImage}
+              alt="RSS Feed"
+              width="20"
+              height="20"
+              className="rounded-sm"
+            />
+          </a>
+        </aside>
       </footer>
     </div>
   );

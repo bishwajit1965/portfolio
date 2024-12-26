@@ -8,7 +8,11 @@ const ContactMe = () => {
       <Helmet>
         <title>Web-tech-services || Contact</title>
       </Helmet>
-      <SectionTitle title="Contact" decoratedText="Me 24/7" />
+      <SectionTitle
+        title="Contact"
+        decoratedText="Me 24/7"
+        subtitle="Subtitle here"
+      />
       <ContactMeForm />
     </div>
   );

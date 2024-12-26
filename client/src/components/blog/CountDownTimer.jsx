@@ -42,11 +42,15 @@ const CountdownTimer = ({ releaseDate }) => {
   }, [releaseDate]);
 
   return (
-    <div className="lg:text-2xl text-3xl font-bold text-gray-500">
+    <div className="lg:text-3xl text-2xl font-bold text-gray-500">
       <span className="text-amber-700">Time Remaining:</span> {timeLeft}
       <div className="lg:mt-4 mt-2">
-        <Link to="/blog-posts" className=" m-0">
-          <CTAButton label="Blog posts" icon={<FaBlogger />} />
+        <Link to="/blog-posts" className="m-0">
+          <CTAButton
+            label="Blog posts"
+            icon={<FaBlogger />}
+            className="btn btn-sm btn-primary"
+          />
         </Link>
       </div>
     </div>
