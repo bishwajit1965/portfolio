@@ -60,7 +60,7 @@ const ProjectsSection = () => {
   };
 
   return (
-    <div className="p-2">
+    <div className="lg:p-0 p-2">
       <SectionTitle
         title="My Projects"
         subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."

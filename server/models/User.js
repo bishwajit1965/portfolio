@@ -21,7 +21,7 @@ class User {
       };
 
       const result = await this.collection.insertOne(user);
-      return { _id: result.insertedId, ...user }; // Return the newly created user
+      return { _id: result.insertedId, ...user }; //Return the newly created user
     } catch (error) {
       throw new Error("Error creating user: " + error.message);
     }

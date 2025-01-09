@@ -7,7 +7,7 @@ import { useState } from "react";
 const CommentsTable = ({ comments = [], onEdit, onDelete }) => {
   const [filterText, setFilterText] = useState("");
 
-  // Filtered categories calculated directly from props and input
+  // Filtered comments calculated directly from props and input
   const filteredComments = comments.filter(
     (comment) =>
       typeof comment.author === "string" &&

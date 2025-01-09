@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 
 import { AuthContext } from "../../providers/AuthProvider";
 import BookmarkButton from "../bookmarkButton/BookmarkButton";
+import CTAButton from "../ctaButton/CTAButton";
 import { FaArrowCircleRight } from "react-icons/fa";
 import LazyLoad from "react-lazyload";
 import { Link } from "react-router-dom";
@@ -113,9 +114,11 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
               initialBookmarked={false}
             />
             <Link to={`/single-blog-post/${_id}`} className="m-0">
-              <button className="btn btn-sm btn-primary shadow-md dark:btn-success">
-                Read more <FaArrowCircleRight className="ml-1" />
-              </button>
+              <CTAButton
+                label="Read More"
+                className="btn btn-sm"
+                icon={<FaArrowCircleRight />}
+              />
             </Link>
           </div>
         </div>

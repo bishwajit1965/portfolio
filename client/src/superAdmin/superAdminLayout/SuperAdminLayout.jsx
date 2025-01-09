@@ -18,10 +18,10 @@ const SuperAdminLayout = () => {
         </div>
         <div className="grid lg:grid-cols-12 gap-2 justify-between">
           <div className="lg:col-span-3 col-span-6 bg-base-200 p-2">
+            <SideNav />
             <h2 className="text-xl font-bold border-b border-slate-300 mb-2 pb-2">
               Super Admin Dashboard
             </h2>
-            <SideNav />
           </div>
           <div className="lg:col-span-9 col-span-6 border border-b-rounded-md">
             <Outlet />

@@ -94,7 +94,7 @@ const ProjectCarousel = () => {
               <Link
                 to={`/project-details/${data._id}`}
                 key={data._id}
-                className="flex items-center space-y-1 m-0"
+                className="flex items-center hover:link space-y-1 m-0"
               >
                 <div key={data._id} className="flex items-center space-y-1">
                   <span className="bg-slate-800 text-base-200 text-xs rounded-full h-4 w-4 flex justify-center items-center mr-2">

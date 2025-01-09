@@ -21,7 +21,7 @@ const ComingSoonCard = ({ post }) => {
   }, [content]);
 
   return (
-    <div className="lg:col-span-12 col-span-12 lg:my-6 my-4 bg-base-100 dark:bg-slate-800 dark:text-base-200 shadow-md rounded-b-md">
+    <div className="lg:col-span-12 col-span-12 lg:my-6 my-4 bg-base-100 dark:bg-slate-800 dark:text-base-200 shadow-md rounded-b-md pb-1">
       <div key={_id}>
         <img
           src={
@@ -51,8 +51,7 @@ const ComingSoonCard = ({ post }) => {
             )}
           </p>
           <p className="text-gray-500 italic text-lg">
-            {" "}
-            <span className="text-gray-500 italic text-lg">Summary:</span>{" "}
+            <span className="text-gray-500 italic text-lg">Summary:</span>
             {summary ? summary : autoSummary || "N/A"}
           </p>
 

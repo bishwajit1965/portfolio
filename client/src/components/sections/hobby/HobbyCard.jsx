@@ -3,7 +3,7 @@ import { FaCheckCircle } from "react-icons/fa";
 const HobbyCard = ({ hobby }) => {
   const { name, description, level } = hobby;
   return (
-    <div className="p-2 border border-slate-300 dark:border-slate-700 rounded-md shadow-sm space-y-1">
+    <div className="lg:p-3 p-3 border border-slate-300 dark:border-slate-700 rounded-md shadow-sm space-y-1">
       <h2 className="font-bold flex items-baseline">
         <span className="mr-2">
           <FaCheckCircle className="text-green-600" />

@@ -7,7 +7,7 @@ class Post {
     this.collection = this.db.collection("blogPosts");
   }
 
-  async getPublishedPosts(limit = 10) {
+  async getPublishedPosts(limit = 9) {
     const posts = await this.collection
       .find({ status: "published" })
       .sort({ createdAt: -1 })

@@ -15,7 +15,7 @@ const AnimatedBackground = () => {
       <div className="w-full rounded-md">
         <div className="flex justify-between"></div>
         {/* Content here */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 justify-between items-center p-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 justify-between items-center lg:p-0 p-2">
           <div className="">
             <HobbySection />
           </div>

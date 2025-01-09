@@ -9,7 +9,7 @@ const SuperAdminPageTitle = ({ title, decoratedText, subtitle }) => {
           {subtitle}
         </p>
       )}
-      <div className="w-20 h-1 shadow-md mx-auto bg-orange-900 dark:bg-emerald-400 hidden lg:block"></div>
+      <div className="w-20 h-1 shadow-md mx-auto bg-orange-900 dark:bg-emerald-400 hidden lg:block rounded-md"></div>
     </div>
   );
 };

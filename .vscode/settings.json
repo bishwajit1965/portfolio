@@ -3,6 +3,8 @@
     "capi",
     "Enginge",
     "lazyload",
+    "noopener",
+    "noreferrer",
     "refetched",
     "unliked",
     "unliking",

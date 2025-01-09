@@ -18,7 +18,7 @@ const SkillsProgressBar = () => {
         {skillsData.map((skill, index) => (
           <div
             key={index}
-            className="skill rounded-lg border border-slate-300 p-2 dark:border-slate-700"
+            className="skill rounded-lg border border-slate-300 lg:p-3 p-3 dark:border-slate-700"
           >
             <p className="skill-name">{skill.skill}</p>
             <div className="progress-bar">

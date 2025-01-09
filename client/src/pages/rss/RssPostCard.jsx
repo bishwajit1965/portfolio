@@ -11,7 +11,7 @@ const RssPostCard = ({ post }) => {
         <h1 className="text-2xl font-bold text-slate-500">
           {title.slice(0, 60)}
         </h1>
-        <p dangerouslySetInnerHTML={{ __html: description.slice(0, 150) }} />
+        <p dangerouslySetInnerHTML={{ __html: description.slice(0, 160) }} />
         <p className="text-slate-500 font-bold">
           {" "}
           Published on:

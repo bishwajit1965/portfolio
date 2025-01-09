@@ -1,5 +1,4 @@
 const express = require("express");
-// const cron = require("node-cron");
 const { startScheduler } = require("./utils/scheduler");
 const path = require("path");
 require("dotenv").config();
@@ -9,6 +8,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 const { ensureUniqueSlugIndex } = require("./models/blogPostModel");
 ensureUniqueSlugIndex;
+
 // Middlewares
 app.use(cors());
 app.use(express.json());
@@ -27,6 +27,7 @@ const { connectDB, getDB } = require("./utils/database");
 
     /** Import the routes here
      *==============================================**/
+    const noticeRoutes = require("./routes/noticeRoutes");
     const rssRoutes = require("./routes/rssRoutes");
     // Blog posts route
     const blogPostRoutes = require("./routes/blogPostRoutes");
@@ -62,6 +63,7 @@ const { connectDB, getDB } = require("./utils/database");
 
     /**Initialize your routes here
      *================================================= **/
+    app.use("/api/notices/", noticeRoutes);
     app.use("/api/rss", rssRoutes);
     app.use("/api/blogPosts", blogPostRoutes);
     app.use("/api/admin/blogPosts/admin", blogPostRoutes);

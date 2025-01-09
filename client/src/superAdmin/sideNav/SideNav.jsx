@@ -50,6 +50,10 @@ const SideNav = () => {
           <FaArrowAltCircleRight />
           <NavLink to="/super-admin/manage-tags">Tags Management</NavLink>
         </li>
+        <li className="flex items-center hover:bg-base-300 py-1">
+          <FaArrowAltCircleRight />
+          <NavLink to="/super-admin/manage-notices">Notice Management</NavLink>
+        </li>
       </ul>
     </div>
   );

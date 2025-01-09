@@ -131,8 +131,8 @@ const AuthProvider = ({ children }) => {
 
   // Logout
   const handleSignOut = async (onSuccess) => {
-    setLoading(true);
     try {
+      setLoading(true);
       await signOut(auth);
       localStorage.removeItem("jwt");
       setUser(null);

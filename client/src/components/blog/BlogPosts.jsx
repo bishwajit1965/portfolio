@@ -2,7 +2,8 @@ import { getCategoryNames, getTagNames } from "../../helpers/blogHelpers";
 import { useMemo, useState } from "react";
 
 import BlogPostCard from "./BlogPostCard";
-import BlogsCarousel from "../sections/blogsCarousael/BlogsCarousel";
+import BlogsCarousel from "../sections/blogsCarousel/BlogsCarousel";
+import { Helmet } from "react-helmet-async";
 import Loader from "../loader/Loader";
 import PageTitle from "../../pages/pageTitle/PageTitle";
 import Pagination from "./Pagination";
@@ -46,6 +47,9 @@ const BlogPosts = () => {
 
   return (
     <div className="lg:pt-10">
+      <Helmet>
+        <title>Web-tech-services || Blogs</title>
+      </Helmet>
       {loading && <Loader />}
       <PageTitle
         title="Blog"

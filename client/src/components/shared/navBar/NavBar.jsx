@@ -34,6 +34,15 @@ const NavBar = () => {
     { id: 5, route: "/blog-coming-soon", name: "Blog Coming Soon" },
     user ? { id: 6, route: "/bookmarked-posts", name: "Blogs Bookmarked" } : "",
     { id: 7, route: "/rss", name: "Rss" },
+    {
+      id: 9,
+      route: "/pdf",
+      name: "Notice",
+    },
+    {
+      id: 8,
+      isThemeToggle: true, // Differentiator key
+    },
   ];
 
   const handleLogOut = () => {
@@ -49,7 +58,7 @@ const NavBar = () => {
   return (
     <div
       className={`navbar ${
-        theme === "dark" ? "bg-grey-900" : "bg-base-200"
+        theme === "dark" ? "bg-gray-900" : "bg-base-200"
       } md:py-0 lg:px-0 lg:bg-base-200 shadow-lg fixed top-0 mb- lg:max-w-7xl z-50 mx-auto`}
     >
       <div className="navbar dark:border-b dark:bg-slate-900 dark:border-slate-700">
@@ -69,11 +78,29 @@ const NavBar = () => {
             </label>
             <ul
               tabIndex={0}
-              className={`bg-base-200 border lg:hidden md:hidden lg:ml-0 -ml-4 py- space-y-1 z-[1] shadow-lg w-72 absolute duration-1000 md:static rounded-b-md ${
+              className={`bg-base-200 border lg:hidden md:hidden lg:ml-2 -ml-4 space-y-1 z-[1] shadow-lg w-72 absolute duration-1000 md:static rounded-b-md ${
                 open ? "top-[62px]" : "-top-64"
               } dark:bg-slate-700 dark:text-slate-200 dark:border-slate-600 dark:shadow-lg`}
             >
-              {routes.map((route) => (
+              {routes.map((item) =>
+                item ? (
+                  item.isThemeToggle ? ( // Check for the theme toggle button
+                    <li key={item.id}>
+                      <button
+                        className={`theme-toggle-btn items-center ml-3 ${theme}`}
+                        onClick={toggleTheme}
+                      >
+                        {theme === "light" ? <FaMoon /> : <FaSun />}
+                      </button>
+                    </li>
+                  ) : (
+                    <li key={item.id}>
+                      <a href={item.route}>{item.name}</a>
+                    </li>
+                  )
+                ) : null
+              )}
+              {/* {routes.map((route) => (
                 <li key={route.id} className="">
                   <NavLink
                     to={route.route}
@@ -92,7 +119,7 @@ const NavBar = () => {
                 >
                   {theme === "light" ? <FaMoon /> : <FaSun />}
                 </button>
-              </li>
+              </li> */}
             </ul>
           </div>
 

@@ -4,7 +4,7 @@ const Post = require("../models/Post");
 const generatedRssFeed = async (req, res) => {
   try {
     const postsModel = new Post();
-    const posts = await postsModel.getPublishedPosts(10);
+    const posts = await postsModel.getPublishedPosts(9);
     console.log("posts", posts.length);
     const feed = create({
       version: "1.0",

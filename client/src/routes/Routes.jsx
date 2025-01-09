@@ -1,6 +1,7 @@
 import AboutMeSection from "../components/sections/about/AboutMeSection";
 import AddBlogPost from "../superAdmin/manageBlog/AddBlogPost";
 import AddCategories from "../superAdmin/manageCategories/AddCategories";
+import AddNotice from "../superAdmin/manageNotice/AddNotice";
 import AddProjectForm from "../superAdmin/manageProjects/AddProjectForm";
 import AddTag from "../superAdmin/manageTags/AddTag";
 import AdminDashboard from "../superAdmin/adminDashboard/AdminDashboard";
@@ -15,10 +16,12 @@ import ManageBlogPosts from "../superAdmin/manageBlog/ManageBlogPosts";
 import ManageCategories from "../superAdmin/manageCategories/ManageCategories";
 import ManageComments from "../superAdmin/manageComments/ManageComments";
 import ManageHobby from "../superAdmin/manageHobby/ManageHobby";
+import ManageNotice from "../superAdmin/manageNotice/ManageNotice";
 import ManageProjects from "../superAdmin/manageProjects/ManageProjects";
 import ManageTags from "../superAdmin/manageTags/ManageTags";
 import ManageTestimonials from "../superAdmin/manageTestimonials/ManageTestimonials";
 import ManageUsers from "../superAdmin/manageUsers/ManageUsers";
+import NoticePage from "../components/noticePage/NoticePage";
 import ProjectDetails from "../components/projectDetails/ProjectDetails";
 import ProjectUpdateForm from "../superAdmin/manageProjects/ProjectUpdateForm";
 import RequireSuperAdmin from "../superAdmin/requireSuperAdmin/RequireSuperAdmin";
@@ -60,6 +63,10 @@ const router = createBrowserRouter([
           const post = await postResponse.json();
           return { post };
         },
+      },
+      {
+        path: "/pdf",
+        element: <NoticePage />,
       },
       {
         path: "bookmarked-posts",
@@ -173,6 +180,18 @@ const router = createBrowserRouter([
       {
         path: "manage-hobby",
         element: <ManageHobby />,
+      },
+      {
+        path: "add-notice",
+        element: <AddNotice />,
+      },
+      {
+        path: "manage-notices",
+        element: <ManageNotice />,
+      },
+      {
+        path: "*",
+        element: <ErrorPage/>,
       },
     ],
   },

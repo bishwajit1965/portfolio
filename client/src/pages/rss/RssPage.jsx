@@ -10,6 +10,7 @@ const RssPage = () => {
   const [loading, setLoading] = useState(false);
   console.log("Rss posts", rssPosts);
   useEffect(() => {
+    setLoading(true);
     fetch("http://localhost:5000/api/rss") // Replace with your RSS route
       .then((response) => {
         if (!response.ok) {

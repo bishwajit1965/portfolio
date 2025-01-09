@@ -1,5 +1,6 @@
-import "./BookmarkButton.css";
+import { FaBookmark, FaTrash } from "react-icons/fa";
 
+import CTAButton from "../ctaButton/CTAButton";
 import { useState } from "react";
 
 const BookmarkButton = ({ postId, userId, initialBookmarked }) => {
@@ -33,14 +34,13 @@ const BookmarkButton = ({ postId, userId, initialBookmarked }) => {
   };
 
   return (
-    <button
+    <CTAButton
       onClick={toggleBookmark}
-      className={`bookmark-btn ${
-        bookmarked ? "active" : ""
-      } btn btn-sm btn-success`}
-    >
-      {bookmarked ? "Remove Bookmark" : "Bookmark"}
-    </button>
+      label={`${bookmarked ? "Remove Bookmark" : "Bookmark"}`}
+      icon={bookmarked ? <FaTrash /> : <FaBookmark />}
+      className="btn btn-sm"
+      variant={`${bookmarked ? "danger" : "primary"}`}
+    />
   );
 };
 

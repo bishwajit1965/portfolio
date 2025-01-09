@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import BookmarkedPostCard from "./BookmarkedPostCard";
+import { Helmet } from "react-helmet-async";
 import Loader from "../../components/loader/Loader";
 import PageTitle from "../pageTitle/PageTitle";
 
@@ -42,6 +43,9 @@ const BookmarksPage = () => {
 
   return (
     <div className="lg:pt-10">
+      <Helmet>
+        <title>Web-tech-services || Bookmarked</title>
+      </Helmet>
       {loading && <Loader />}
       <PageTitle
         title="Bookmarked"
@@ -49,6 +53,7 @@ const BookmarksPage = () => {
         dataLength={bookmarks.length}
         subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
       />
+
       {bookmarks.length > 0 ? (
         <div className="grid lg:grid-cols-12 grid-cols-1 gap-4 justify-between">
           {bookmarks.map((post) => (

@@ -14,6 +14,8 @@ import CommentsList from "../comments/CommentsList";
 import { FaHome } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import LikeButton from "./LikeButton";
+import Loader from "../loader/Loader";
+import PageTitle from "../../pages/pageTitle/PageTitle";
 import RelatedCategoryPostsModal from "./RelatedCategoryPostsModal";
 import SectionTitle from "../sectionTitle/SectionTitle";
 import SocialShare from "../socialLinkShare/SocialShare";
@@ -221,16 +223,17 @@ const SingleBlogPost = () => {
   };
 
   return (
-    <div className="lg:pt-24 pt-24">
+    <div className="lg:pt-10 pt-10">
       <Helmet>
         <title>Web-tech-services || Single Blog</title>
       </Helmet>
-      {/* Spinner */}
-      <div className="text-center">
-        {loading && (
-          <span className="text-center loading loading-spinner loading-lg text-success"></span>
-        )}
-      </div>
+      {/*Loader Spinner */}
+      {loading && <Loader />}
+      <PageTitle
+        title="Blog Post"
+        decoratedText="Details"
+        subtitle=" Blog posts data displayed here."
+      />
       <div className="grid lg:grid-cols-12 justify-between gap-4 mb-8">
         <div className="lg:col-span-12 col-span-12">
           {post.imageUrl && post.imageUrl.trim() !== "" && (

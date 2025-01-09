@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import ComingSoonCard from "./ComingSoonCard";
+import { Helmet } from "react-helmet-async";
 import Loader from "../loader/Loader";
 import PageTitle from "../../pages/pageTitle/PageTitle";
 
@@ -30,6 +31,9 @@ const ComingSoon = () => {
 
   return (
     <div className="lg:pt-10">
+      <Helmet>
+        <title>Web-tech-services || Coming Soon</title>
+      </Helmet>
       {loading && <Loader />}
 
       <PageTitle
@@ -37,15 +41,14 @@ const ComingSoon = () => {
         subtitle="Hope you will enjoy the posts very much as those are informative and instructive as well."
         decoratedText={`${"Coming Soon: "}${posts?.length}`}
       />
-      <h2 className="text-center text-2xl font-bold dark:text-gray-500">
-        Coming Soon Posts
-      </h2>
 
-      <div className="grid grid-cols-12" data-cy="coming-soon-posts">
-        {posts.length > 0 ? (
-          posts.map((post) => <ComingSoonCard key={post._id} post={post} />)
+      <div className="" data-cy="coming-soon-posts">
+        {posts.length === 0 ? (
+          <p className="text-center font-bold text-red-600">
+            No upcoming posts at this moment.
+          </p>
         ) : (
-          <p>No upcoming posts at the moment.</p>
+          posts.map((post) => <ComingSoonCard key={post._id} post={post} />)
         )}
       </div>
     </div>

@@ -11,7 +11,7 @@ const SuperAdminDashboard = () => {
   return (
     <div>
       <SuperAdminPageTitle
-        title="Super Admin "
+        title="Super Admin"
         decoratedText="Dashboard Home"
         subtitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur praesentium numquam nesciunt sequi, aliquam quia accusantium quae."
       />
