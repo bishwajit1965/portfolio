@@ -19,18 +19,18 @@ const ComingSoon = () => {
       .then((response) => response.json())
       .then((data) => {
         const publishedPosts = data.filter(
-          (post) => post.status === "draft" && post.willPublishAt > now
+          (post) => post.status === "draft" && post.willPublishAt > now,
         );
         setPosts(publishedPosts);
       })
       .catch((error) =>
-        console.error("Error fetching coming soon posts:", error)
+        console.error("Error fetching coming soon posts:", error),
       )
       .finally(() => setLoading(false));
   }, [baseUrl, now]);
 
   return (
-    <div className="lg:pt-10">
+    <div className="">
       <Helmet>
         <title>Web-tech-services || Coming Soon</title>
       </Helmet>

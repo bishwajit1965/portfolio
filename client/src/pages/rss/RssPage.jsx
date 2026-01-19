@@ -27,7 +27,7 @@ const RssPage = () => {
             link: item.querySelector("link").textContent,
             description: item.querySelector("description").textContent,
             pubDate: item.querySelector("pubDate").textContent,
-          })
+          }),
         );
         setRssPosts(items); // Assuming your backend sends an array of posts
         setLoading(false);
@@ -39,7 +39,7 @@ const RssPage = () => {
   }, []);
 
   return (
-    <div className="lg:pt-10">
+    <div className="">
       <Helmet>
         <title>Web-tech-services || Rss posts</title>
       </Helmet>

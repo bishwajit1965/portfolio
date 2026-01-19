@@ -8,61 +8,43 @@ import ProjectsSection from "../../components/projects/ProjectsSection";
 import RandomLatestPosts from "../../components/sections/randomLatestsPosts/RandomLatestPosts";
 import ScrollTopButton from "../../components/scrollTopButton/ScrollTopButton";
 import SectionTitle from "../../components/sectionTitle/SectionTitle";
+import SkillsPreview from "../../components/skillsPreview/SkillsPreview";
+import { FaHome } from "react-icons/fa";
 
 const Home = () => {
   return (
-    <>
-      <div className="lg:pt-10">
-        <Helmet>
-          <title>Web-tech-services || Home</title>
-        </Helmet>
-        <SectionTitle
-          title="Welcome to"
-          decoratedText="My Portfolio Site"
-          subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
-        />
+    <div className="lg:p-0 p-3">
+      <Helmet>
+        <title>Web-tech || Home</title>
+      </Helmet>
 
-        {/* Hero section */}
-        <div className="lg:py-3">
-          <HeroSection />
-        </div>
+      <SectionTitle
+        title="Web Tech"
+        decoratedText="Portfolio"
+        subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
+        icon={FaHome}
+      />
 
-        {/* Carousel of Projects */}
-        <div className="lg:py-3">
-          <ProjectCarousel />
-        </div>
+      <div className="lg:space-y-12 space-y-8">
+        <HeroSection />
 
-        {/* Projects Section */}
-        <div className="lg:py-3">
-          <ProjectsSection />
-        </div>
+        <SkillsPreview />
 
-        {/* Contact Me Section */}
-        <div className="lg:py-3">
-          <ContactMeSection />
-        </div>
+        <ProjectCarousel />
 
-        {/* Parallax Section */}
-        <div className="lg:py-3">
-          <JourneyMilestones />
-        </div>
+        <ProjectsSection />
 
-        {/* Animate Background */}
-        <div className="lg:py-3">
-          <AnimatedBackground />
-        </div>
+        <ContactMeSection />
 
-        {/* Random latest posts */}
-        <div className="lg:py-3">
-          <RandomLatestPosts />
-        </div>
+        <JourneyMilestones />
 
-        {/* Scroll to top button */}
-        <div className="height-[2000px]">
-          <ScrollTopButton />
-        </div>
+        <AnimatedBackground />
+
+        <RandomLatestPosts />
+
+        <ScrollTopButton />
       </div>
-    </>
+    </div>
   );
 };
 

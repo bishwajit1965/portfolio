@@ -20,6 +20,7 @@ const AddProjectForm = () => {
     name: "",
     type: "",
     description: "",
+    engineeringHighlight: "",
   });
 
   const validateForm = () => {
@@ -35,6 +36,9 @@ const AddProjectForm = () => {
     }
     if (!formData.description) {
       newErrors.description = "Description is required";
+    }
+    if (!formData.engineeringHighlight) {
+      newErrors.engineeringHighlight = "Engineering highlight is required";
     }
     return newErrors;
   };
@@ -67,6 +71,10 @@ const AddProjectForm = () => {
         const formDataWithFile = new FormData();
         formDataWithFile.append("name", formData.name);
         formDataWithFile.append("type", formData.type);
+        formDataWithFile.append(
+          "engineeringHighlight",
+          formData.engineeringHighlight,
+        );
         formDataWithFile.append("description", formData.description);
 
         if (file) {
@@ -87,6 +95,7 @@ const AddProjectForm = () => {
             name: "",
             type: "",
             description: "",
+            engineeringHighlight: "",
           });
           setFile(null); // Reset file input
           if (fileInputRef.current) {
@@ -137,111 +146,133 @@ const AddProjectForm = () => {
         subtitle="Only super admin can manage projects!"
       />
 
-      <div className="mx-auto p-2 bg- rounded-lg shadow-md">
+      <div className="mx-auto lg:p-4 p-3 rounded-lg shadow-md">
         {/* Display general backend error */}
+
         {error && (
           <p className="text-red-500 p-1 border border-red-800 rounded-md text-sm">
             {error}
           </p>
         )}
+
         {successMessage && <p className="text-green-500">{successMessage}</p>}
 
-        <form
-          onSubmit={handleSubmit}
-          encType="multipart/form-data"
-          method="post"
-        >
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Name:
-            </label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Project name..."
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-800"
-              aria-required="true"
-            />
-            {errors.name && (
-              <p className="text-red-500 text-sm">{errors.name}</p>
-            )}
-          </div>
+        <div className="bg-base-200 rounded-xl lg:p-8 p-4">
+          <form
+            onSubmit={handleSubmit}
+            encType="multipart/form-data"
+            method="post"
+          >
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Name:
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Project name..."
+                className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-800"
+                aria-required="true"
+              />
+              {errors.name && (
+                <p className="text-red-500 text-sm">{errors.name}</p>
+              )}
+            </div>
 
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Type:
-            </label>
-            <input
-              type="text"
-              name="type"
-              value={formData.type}
-              onChange={handleChange}
-              placeholder="Project type..."
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-800"
-              aria-required="true"
-            />
-            {errors.type && (
-              <p className="text-red-500 text-sm">{errors.type}</p>
-            )}
-          </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Type:
+              </label>
+              <input
+                type="text"
+                name="type"
+                value={formData.type}
+                onChange={handleChange}
+                placeholder="Project type..."
+                className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-800"
+                aria-required="true"
+              />
+              {errors.type && (
+                <p className="text-red-500 text-sm">{errors.type}</p>
+              )}
+            </div>
 
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              File:
-            </label>
-            <input
-              type="file"
-              name="image"
-              onChange={handleFileChange}
-              ref={fileInputRef}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-800"
-              aria-required="true"
-            />
-            {errors.image && (
-              <p className="text-red-500 text-sm">{errors.image}</p>
-            )}
-          </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Engineering Highlight (Uncommon Factor):
+              </label>
+              <textarea
+                name="engineeringHighlight"
+                value={formData.engineeringHighlight}
+                onChange={handleChange}
+                placeholder="What makes this project technically different?"
+                className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-800"
+              />
+              {errors.engineeringHighlight && (
+                <p className="text-red-500 text-sm">
+                  {errors.engineeringHighlight}
+                </p>
+              )}
+            </div>
 
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Description:
-            </label>
-            <textarea
-              type="text"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              placeholder="Project description..."
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-800"
-              aria-required="true"
-            ></textarea>
-            {errors.description && (
-              <p className="text-red-500 text-sm">{errors.description}</p>
-            )}
-          </div>
-          <div className="flex">
-            <CTAButton
-              type="submit"
-              label={loading ? "Uploading..." : "Add Project"}
-              variant="primary"
-              disabled={loading}
-              icon={<FaPlusCircle />}
-              className="btn btn-sm"
-            />
-            <Link to="/super-admin/manage-projects">
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                File:
+              </label>
+              <input
+                type="file"
+                name="image"
+                onChange={handleFileChange}
+                ref={fileInputRef}
+                className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-800 cursor-pointer"
+                aria-required="true"
+              />
+              {errors.image && (
+                <p className="text-red-500 text-sm">{errors.image}</p>
+              )}
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Description:
+              </label>
+              <textarea
+                type="text"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Project description..."
+                className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-800"
+                aria-required="true"
+              ></textarea>
+              {errors.description && (
+                <p className="text-red-500 text-sm">{errors.description}</p>
+              )}
+            </div>
+            <div className="flex">
               <CTAButton
                 type="submit"
-                label={loading ? "Loading..." : "Go Manage Projects"}
+                label={loading ? "Uploading..." : "Add Project"}
                 variant="primary"
                 disabled={loading}
-                icon={<FaHome />}
+                icon={<FaPlusCircle />}
                 className="btn btn-sm"
               />
-            </Link>
-          </div>
-        </form>
+              <Link to="/super-admin/manage-projects">
+                <CTAButton
+                  type="submit"
+                  label={loading ? "Loading..." : "Go Manage Projects"}
+                  variant="primary"
+                  disabled={loading}
+                  icon={<FaHome />}
+                  className="btn btn-sm"
+                />
+              </Link>
+            </div>
+          </form>
+        </div>
       </div>
     </>
   );

@@ -1,7 +1,8 @@
-import CTAButton from "../../ctaButton/CTAButton";
-import { FaEnvelope } from "react-icons/fa";
 import api from "../../../services/api";
 import { useState } from "react";
+import Button from "../../buttons/Button";
+import { FaEnvelopesBulk } from "react-icons/fa6";
+import Swal from "sweetalert2";
 
 const ContactMeForm = () => {
   const [loading, setLoading] = useState(false);
@@ -41,6 +42,11 @@ const ContactMeForm = () => {
       try {
         const response = await api.post("/contacts", formData);
         if (response.status === 201) {
+          Swal.fire(
+            "Success!",
+            "Your message has been sent successfully!",
+            "success",
+          );
           setSuccessMessage("Message has been sent successfully!");
           setFormData({ name: "", email: "", message: "" });
           setErrors({});
@@ -79,76 +85,90 @@ const ContactMeForm = () => {
   };
 
   return (
-    <div className="bg-base-200 lg:py-10 rounded-md shadow-sm dark:bg-slate-800">
-      <div className="lg:max-w-5xl mx-auto p-4 bg- rounded-lg shadow-md">
-        {error && (
-          <p className="text-red-500 p-1 border border-red-800 rounded-md text-sm">
-            {error}
-          </p>
-        )}
-        {successMessage && <p className="text-green-500">{successMessage}</p>}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Name:
-            </label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              id=""
-              placeholder="Name..."
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-700"
-            />
-            {errors.name && (
-              <p className="text-red-500 text-sm">{errors.name}</p>
-            )}
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Email:
-            </label>
-            <input
-              type="text"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              id=""
-              placeholder="Email..."
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-700"
-            />
-            {errors.email && (
-              <p className="text-red-500 text-sm">{errors.email}</p>
-            )}
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Message:
-            </label>
-            <textarea
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              rows="4"
-              placeholder="Message..."
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-700"
-            ></textarea>
-            {errors.message && (
-              <p className="text-red-500 text-sm">{errors.message}</p>
-            )}
-          </div>
-          <div className="flex">
-            <CTAButton
-              type="submit" // Important for form submission
-              label={loading ? "Uploading..." : "Send Message"}
-              variant="primary" // Button variant for styling
-              disabled={loading} // Disable the button when loading
-              icon={<FaEnvelope />} // Add icon to the button
-              className="" // Additional Tailwind CSS classes
-            />
-          </div>
-        </form>
+    <div className="bg-base-200 lg:py-16 rounded-md shadow-sm dark:bg-slate-800">
+      <div className="lg:max-w-5xl mx-auto p-4 rounded-lg shadow-md">
+        <div className="lg:p-8 p-2">
+          {error && (
+            <p className="text-red-500 p-1 border border-red-800 rounded-md text-sm">
+              {error}
+            </p>
+          )}
+          {successMessage && <p className="text-green-500">{successMessage}</p>}
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Name:
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                id=""
+                placeholder="Name..."
+                className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-700"
+              />
+              {errors.name && (
+                <p className="text-red-500 text-sm">{errors.name}</p>
+              )}
+            </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Email:
+              </label>
+              <input
+                type="text"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                id=""
+                placeholder="Email..."
+                className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-700"
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email}</p>
+              )}
+            </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Message:
+              </label>
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                rows="4"
+                placeholder="Message..."
+                className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-700"
+              ></textarea>
+              {errors.message && (
+                <p className="text-red-500 text-sm">{errors.message}</p>
+              )}
+            </div>
+            <div className="flex">
+              {/* <CTAButton
+                type="submit" // Important for form submission
+                label={loading ? "Uploading..." : "Send Message"}
+                variant="primary" // Button variant for styling
+                disabled={loading} // Disable the button when loading
+                icon={<FaEnvelope />} // Add icon to the button
+                className="btn lg:btn-md btn-sm lg:w-44 w-full lg:text-lg text-sm" // Additional Tailwind CSS classes
+              /> */}
+
+              <Button
+                type="submit"
+                icon={<FaEnvelopesBulk size={20} />}
+                variant="outline"
+                label={loading ? "Uploading..." : "Send Message"}
+                disabled={loading}
+                size="lg"
+                className=""
+              >
+                Send Mail
+              </Button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import LatestPostCard from "./LatestPostCard";
 import SectionTitle from "../../sectionTitle/SectionTitle";
+import { FaBlog } from "react-icons/fa6";
 
 const RandomLatestPosts = () => {
   const baseUrl =
@@ -23,6 +24,7 @@ const RandomLatestPosts = () => {
           title="Latest Random"
           decoratedText="Blog Posts"
           subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
+          icon={FaBlog}
         />
       </div>
       <div className="grid lg:grid-cols-12 grid-cols-1 gap-4 justify-between">

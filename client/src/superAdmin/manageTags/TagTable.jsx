@@ -74,6 +74,7 @@ const TagTable = ({ tags = [], onEdit, onDelete }) => {
         columns={columns}
         data={filteredTags} // Use filtered data here
         pagination
+        dense
         highlightOnHover
         pointerOnHover
       />

@@ -42,7 +42,7 @@ const BookmarksPage = () => {
   }, [baseUrl]);
 
   return (
-    <div className="lg:pt-10">
+    <div className="">
       <Helmet>
         <title>Web-tech-services || Bookmarked</title>
       </Helmet>
@@ -50,7 +50,7 @@ const BookmarksPage = () => {
       <PageTitle
         title="Bookmarked"
         decoratedText="Blog Posts"
-        dataLength={bookmarks.length}
+        dataLength={bookmarks ? bookmarks.length : 0}
         subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
       />
 

@@ -1,15 +1,16 @@
 import HobbySection from "../hobby/HobbySection";
 import SectionTitle from "../../sectionTitle/SectionTitle";
 import SkillsProgressBar from "../skillsProgressBar/SkillsProgressBar";
+import { FaGears } from "react-icons/fa6";
 
 const AnimatedBackground = () => {
   return (
     <>
       <SectionTitle
-        title={"My Hobby & Skills Progress Bar"}
-        subtitle={
-          "Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
-        }
+        title="My Hobby &"
+        decoratedText="Skills Progress Bar"
+        subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
+        icon={FaGears}
       />
 
       <div className="w-full rounded-md">

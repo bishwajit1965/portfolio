@@ -12,13 +12,14 @@ const path = require("path");
 
 const createProject = async (req, res) => {
   try {
-    const { name, type, description } = req.body;
+    const { name, type, engineeringHighlight, description } = req.body;
     // Include the uploaded image path in the project data
     const image = req.file ? req.file.filename : null; // Assuming filename is used; adjust if using full path
 
     const projectData = {
       name,
       type,
+      engineeringHighlight,
       image,
       description,
     };
@@ -74,7 +75,7 @@ const updateProjectById = async (req, res) => {
         const previousImagePath = path.join(
           __dirname,
           "../uploads",
-          existingProject.image
+          existingProject.image,
         );
         fs.unlink(previousImagePath, (err) => {
           if (err) {

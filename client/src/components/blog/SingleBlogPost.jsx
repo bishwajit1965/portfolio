@@ -75,7 +75,7 @@ const SingleBlogPost = () => {
             categoryData.map((category) => ({
               value: category._id,
               label: category.name,
-            }))
+            })),
           );
         }
       } catch (error) {
@@ -111,7 +111,7 @@ const SingleBlogPost = () => {
             tagData.map((tag) => ({
               value: tag._id,
               label: tag.name,
-            }))
+            })),
           );
         }
       } catch (error) {
@@ -223,7 +223,7 @@ const SingleBlogPost = () => {
   };
 
   return (
-    <div className="lg:pt-10 pt-10">
+    <div className="">
       <Helmet>
         <title>Web-tech-services || Single Blog</title>
       </Helmet>

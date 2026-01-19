@@ -180,6 +180,7 @@ const ManageUsers = () => {
             onChangeRowsPerPage={handleRowsPerPageChange} // Handle rows per page change
             paginationPerPage={rowsPerPage} // Set rows per page
             highlightOnHover
+            dense
           />
         )}
       </div>

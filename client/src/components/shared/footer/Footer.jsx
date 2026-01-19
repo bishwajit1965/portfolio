@@ -9,7 +9,7 @@ const Footer = () => {
 
   return (
     <div>
-      <footer className="footer bg-slate-700 text-slate-100 p-4 max-w-full">
+      <footer className="footer bg-slate-700 text-slate-100 lg:py-10 py-4 lg:px-28 px-4 max-w-full">
         <nav>
           <h6 className="footer-title">Contact Information</h6>
           <a className="link link-hover">Branding</a>
@@ -37,16 +37,16 @@ const Footer = () => {
           <a className="link link-hover">Cookie policy</a>
         </nav>
       </footer>
-      <footer className="footer bg-slate-800 text-slate-200 border-slate-700 border-t px-6">
+      <footer className="footer bg-slate-800 text-slate-200 border-slate-700 border-t lg:px-28 px-4 pt-2">
         <aside className="grid-flow-col items-center lg:py-2">
-          <div className="lg:flex lg:py-0 py-2 lg:p-0 grid items-center">
+          <div className="lg:flex lg:py-0 pt-2 lg:p-0 grid items-center">
             <img src={Logo} alt="Logo" className="lg:w-14 lg:h-14 h-8 w-8" />
             <div className="lg:flex lg:items-center">
               &copy; {currentYear} &nbsp; <CopyrightText />
             </div>
           </div>
         </aside>
-        <aside className="grid-flow-col items-center lg:py-2">
+        <aside className="grid-flow-col items-center lg:pt-1">
           <nav className="md:place-self-center md:justify-self-end w-full">
             <div className="grid grid-flow-col sm:w-full">
               <SocialMediaLinks />

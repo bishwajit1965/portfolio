@@ -31,16 +31,17 @@ const NavBar = () => {
     { id: 2, route: "/about-me", name: "About Me" },
     { id: 3, route: "/contact-me", name: "Contact" },
     { id: 4, route: "/blog-posts", name: "Blogs" },
-    { id: 5, route: "/blog-coming-soon", name: "Blog Coming Soon" },
-    user ? { id: 6, route: "/bookmarked-posts", name: "Blogs Bookmarked" } : "",
-    { id: 7, route: "/rss", name: "Rss" },
+    { id: 5, route: "/portfolio-projects", name: "Projects" },
+    { id: 6, route: "/blog-coming-soon", name: "Blog Coming Soon" },
+    user ? { id: 7, route: "/bookmarked-posts", name: "Blogs Bookmarked" } : "",
+    { id: 8, route: "/rss", name: "Rss" },
     {
       id: 9,
       route: "/pdf",
       name: "Notice",
     },
     {
-      id: 8,
+      id: 10,
       isThemeToggle: true, // Differentiator key
     },
   ];
@@ -57,11 +58,11 @@ const NavBar = () => {
 
   return (
     <div
-      className={`navbar ${
+      className={`navbar py-0 px-0 ${
         theme === "dark" ? "bg-gray-900" : "bg-base-200"
-      } md:py-0 lg:px-0 lg:bg-base-200 shadow-lg fixed top-0 mb- lg:max-w-7xl z-50 mx-auto`}
+      } lg:py-0 md:py-0 py-0 sm:py-0 lg:bg-base-200 shadow-lg sticky top-0 lg:max-w-full z-50 mx-auto`}
     >
-      <div className="navbar dark:border-b dark:bg-slate-900 dark:border-slate-700">
+      <div className="navbar dark:border-b dark:bg-slate-900 dark:border-slate-700 m-0 p-0 lg:px-12">
         <div className="navbar-start">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -70,16 +71,22 @@ const NavBar = () => {
                 onClick={() => handleOpen(setOpen(!open))}
               >
                 {open === true ? (
-                  <FaTimes className="m- w-7 h-7 border-2 border-slate-300 p-1 rounded-sm" />
+                  <FaTimes
+                    size={24}
+                    className="m- w- h- border border-slate-300 p-1 rounded-sm"
+                  />
                 ) : (
-                  <FaBars className="m- w-7 h-7  border-2 border-slate-300 p-1 rounded-sm" />
+                  <FaBars
+                    size={24}
+                    className="m- w- h-  border border-slate-300 p-1 rounded-sm"
+                  />
                 )}
               </div>
             </label>
             <ul
               tabIndex={0}
               className={`bg-base-200 border lg:hidden md:hidden lg:ml-2 -ml-4 space-y-1 z-[1] shadow-lg w-72 absolute duration-1000 md:static rounded-b-md ${
-                open ? "top-[62px]" : "-top-64"
+                open ? "top-[62px] pl-4" : "-top-80"
               } dark:bg-slate-700 dark:text-slate-200 dark:border-slate-600 dark:shadow-lg`}
             >
               {routes.map((item) =>
@@ -98,7 +105,7 @@ const NavBar = () => {
                       <a href={item.route}>{item.name}</a>
                     </li>
                   )
-                ) : null
+                ) : null,
               )}
               {/* {routes.map((route) => (
                 <li key={route.id} className="">
@@ -123,17 +130,17 @@ const NavBar = () => {
             </ul>
           </div>
 
-          <img src={Logo} alt="Logo" className="lg:w-14 lg:h-14 h-8 w-8" />
+          <img src={Logo} alt="Logo" className="lg:w-10 lg:h-10 h-6 w-6" />
           <Link to="/" className="ml-0">
             <span className="xl:text-xl xl:w-48 md:w-32 lg:block xl:block lg:text-xs md:hidden md:ml-0 hidden lg:font-bold text-emerald-500">
-              Web-tech-services
+              Web-tech
             </span>
           </Link>
         </div>
-        <div className="navbar-center hidden md:block lg:flex">
+        <div className="navbar-center hidden md:block lg:flex p-0 m-0">
           <ul className="menu-horizontal">
-            {routes.map((route) => (
-              <li key={route.id} className="">
+            {routes?.map((route) => (
+              <li key={route.id} className="p-0 m-0">
                 <NavLink
                   className={({ isActive, isPending }) =>
                     isPending ? "pending" : isActive ? "active" : ""
@@ -144,12 +151,12 @@ const NavBar = () => {
                 </NavLink>
               </li>
             ))}
-            <li className="flex items-center lg:ml-8">
+            <li className="flex items-center lg:ml-">
               <button
                 className={`theme-toggle-btn ${theme}`}
                 onClick={toggleTheme}
               >
-                {theme === "light" ? <FaMoon /> : <FaSun />}
+                {theme === "light" ? <FaMoon size={16} /> : <FaSun size={16} />}
               </button>
             </li>
           </ul>
@@ -207,17 +214,17 @@ const NavBar = () => {
                 className="btn btn-sm w-9 lg:w-24 capitalize dark:text-slate-300 dark:bg-slate-900 dark:border-none"
                 onClick={handleLogOut}
               >
-                <FaSignOutAlt />
+                <FaSignOutAlt size={18} />
                 <span className="hidden lg:block">Logout</span>
               </button>
             ) : (
               <>
                 <NavLink to="/login" className="flex items-center">
-                  <FaSignInAlt className="mr-1" />
+                  <FaSignInAlt size={18} className="mr-1" />
                   <span className="hidden md:block">Login</span>
                 </NavLink>
                 <NavLink to="/sign-up" className="flex items-center">
-                  <FaUserFriends className="mr-1" />
+                  <FaUserFriends size={20} className="mr-1" />
                   <span className="hidden md:block">Signup</span>
                 </NavLink>
               </>

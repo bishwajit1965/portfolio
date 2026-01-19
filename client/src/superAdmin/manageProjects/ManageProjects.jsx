@@ -35,7 +35,7 @@ const ManageProjects = () => {
 
   const handleDelete = async (id) => {
     const confirmed = window.confirm(
-      "Are you sure you want to delete this project?"
+      "Are you sure you want to delete this project?",
     );
     if (confirmed) {
       try {
@@ -97,18 +97,20 @@ const ManageProjects = () => {
         </div>
 
         {/* Show More or Show Less Button */}
-        <div className="flex justify-center lg:mt-5 mt-2">
+        <div className="flex justify-center lg:mt-5 mt-2 pb-6">
           {visibleCount < projects.length ? (
             <CTAButton
               label="Show More"
               icon={<FaArrowAltCircleDown />}
               onClick={showMoreProjects}
+              className="cursor-pointer"
             />
           ) : (
             <CTAButton
               label="Show Less"
               icon={<FaArrowAltCircleUp />}
               onClick={showLessProjects}
+              className="cursor-pointer"
             />
           )}
         </div>

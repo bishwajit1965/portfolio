@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const SideNav = () => {
   return (
     <div>
-      <ul className="divide-y-2 divide-slate-300 space-y-">
+      <ul className="divide-y-2 divide-slate-300 space-y-1 rounded-b-lg">
         <li className="flex items-center hover:bg-base-300 py-1">
           <FaArrowAltCircleRight />
           <NavLink to="/super-admin/dashboard">Super Admin Home</NavLink>
@@ -53,6 +53,10 @@ const SideNav = () => {
         <li className="flex items-center hover:bg-base-300 py-1">
           <FaArrowAltCircleRight />
           <NavLink to="/super-admin/manage-notices">Notice Management</NavLink>
+        </li>
+        <li className="flex items-center hover:bg-base-300 py-1">
+          <FaArrowAltCircleRight />
+          <NavLink to="/super-admin/manage-skills">Skills Management</NavLink>
         </li>
       </ul>
     </div>

@@ -5,6 +5,7 @@ import CTAButton from "../ctaButton/CTAButton";
 import ProjectCard from "./ProjectCard";
 import SectionTitle from "../sectionTitle/SectionTitle";
 import api from "../../services/api";
+import { FaLayerGroup } from "react-icons/fa6";
 
 const ProjectsSection = () => {
   const [projects, setProjects] = useState([]);
@@ -15,7 +16,7 @@ const ProjectsSection = () => {
       try {
         const response = await api.get("/projects");
         const visibleProjects = response.data.filter(
-          (project) => project.visibility === "visible"
+          (project) => project.visibility === "visible",
         );
         setProjects(visibleProjects);
       } catch (error) {
@@ -27,7 +28,7 @@ const ProjectsSection = () => {
 
   const handleProjectVisibilityUpdate = async (
     projectId,
-    currentVisibility
+    currentVisibility,
   ) => {
     try {
       const newVisibility =
@@ -43,8 +44,8 @@ const ProjectsSection = () => {
         prevProjects.map((project) =>
           project._id === projectId
             ? { ...project, visibility: newVisibility }
-            : project
-        )
+            : project,
+        ),
       );
     } catch (error) {
       console.error("Error in updating project visibility!", error);
@@ -62,8 +63,10 @@ const ProjectsSection = () => {
   return (
     <div className="lg:p-0 p-2">
       <SectionTitle
-        title="My Projects"
+        title="Portfolio"
+        decoratedText="Projects"
         subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
+        icon={FaLayerGroup}
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -77,18 +80,22 @@ const ProjectsSection = () => {
       </div>
 
       {/* Show More or Show Less Button */}
-      <div className="flex justify-center lg:mt-10 mt-4">
+      <div className="flex justify-center lg:mt-10 mt-6">
         {visibleCount < projects.length ? (
           <CTAButton
             label="Show More"
-            icon={<FaArrowAltCircleDown />}
+            variant="success"
+            icon={<FaArrowAltCircleDown size={20} />}
             onClick={showMoreProjects}
+            className="lg:btn-md lg:w-48 w-40"
           />
         ) : (
           <CTAButton
             label="Show Less"
-            icon={<FaArrowAltCircleUp />}
+            variant="success"
+            icon={<FaArrowAltCircleUp size={20} />}
             onClick={showLessProjects}
+            className="lg:btn-md lg:w-48 w-40"
           />
         )}
       </div>

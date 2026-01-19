@@ -2,6 +2,7 @@ import JourneyMilestonesCard from "./JourneyMilestonesCard";
 import SectionTitle from "../../sectionTitle/SectionTitle";
 import useFetchCollection from "../../../hooks/useFetchCollection";
 import { useMemo } from "react";
+import { FaLandmark } from "react-icons/fa";
 
 const JourneyMilestones = () => {
   // Memoize query parameters to avoid unnecessary re-renders
@@ -10,7 +11,7 @@ const JourneyMilestones = () => {
   // Use the custom hook to fetch data from the "journey-milestones" collection
   const { data, loading, error } = useFetchCollection(
     "journey-milestones",
-    queryParams
+    queryParams,
   );
   console.log("Fetched milestone data:", data);
 
@@ -25,6 +26,7 @@ const JourneyMilestones = () => {
       <SectionTitle
         title="Milestones in My Development Journey"
         subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
+        icon={FaLandmark}
       />
 
       <div

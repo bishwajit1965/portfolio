@@ -6,21 +6,28 @@ const addSkills = async (skillName, level, experience, tools, category) => {
     const db = getDB();
     // Ensure tools is an array
     if (!Array.isArray(tools)) {
-      throw new Error("Tools must e an array");
+      throw new Error("Tools must be an array");
     }
     // Ensure category is array
     if (!Array.isArray(category)) {
       throw new Error("Category must be an array");
     }
-    const result = await db
-      .collection("skills")
-      .insertOne({ skillName, level, experience, tools, category });
+
+    const now = new Date();
+    const result = await db.collection("skills").insertOne({
+      skillName,
+      level,
+      experience,
+      tools,
+      category,
+      createdAt: now,
+      updatedAt: now,
+    });
     if (result.acknowledged && result.insertedId) {
       return { success: true, insertedId: result.insertedId };
     }
   } catch (error) {
-    console.error("Error in adding data to database.", error.message);
-    return error;
+    console.error("Error in adding data to database.", error);
   }
 };
 
@@ -56,8 +63,10 @@ const getAllSkills = async () => {
             experience: 1,
             tools: 1,
             category: 1,
+            createdAt: 1,
+            updatedAt: 1,
           },
-        }
+        },
       )
       .toArray();
     //   Check if any skills is found
@@ -75,13 +84,23 @@ const updateSkills = async (id, updateSkillsData) => {
   try {
     const db = getDB();
     const objectId = new ObjectId(id);
-    const { _id, ...updateFields } = updateSkillsData;
-    const result = await db
-      .collection("skills")
-      .updateOne({ _id: objectId }, { $set: updateFields });
+
+    const { _id, createdAt, ...updateFields } = updateSkillsData;
+
+    const result = await db.collection("skills").updateOne(
+      { _id: objectId }, // ✅ NO parentheses
+      {
+        $set: {
+          ...updateFields,
+          updatedAt: new Date(), // ✅ always update this
+        },
+      },
+    );
+
     return result;
   } catch (error) {
     console.error("Skills data not updated", error);
+    throw error;
   }
 };
 

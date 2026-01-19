@@ -48,7 +48,7 @@ const SuperAdminLogin = () => {
     <div className="h-screen flex items-center mx-auto">
       <div className="mx-auto p-6 bg-base-300 rounded-md border border-slate-300 shadow-md">
         <h2 className="text-2xl font-bold pb-1 mb-6 border-b border-slate-400 flex items-center">
-          <FaSignInAlt className="mr-2" /> Super Admin Login
+          <FaSignInAlt className="mr-2" /> Super Admin Login Page
         </h2>
         {error && <p className="text-red-600 text-sm">{error}</p>}
         <form onSubmit={handleSubmit}>

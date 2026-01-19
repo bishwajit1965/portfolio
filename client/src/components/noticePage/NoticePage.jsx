@@ -19,7 +19,7 @@ const NoticePage = () => {
         const response = await api.get("/notices");
         console.log("Response:", response.data);
         const visibleNotices = response.data.filter(
-          (notice) => notice.status === "published"
+          (notice) => notice.status === "published",
         );
         setNotices(visibleNotices);
       } catch (error) {
@@ -41,7 +41,7 @@ const NoticePage = () => {
   let serial = 1;
 
   return (
-    <div className="pt-10">
+    <div className="">
       <Helmet>
         <title>Web-tech-services || Notices</title>
       </Helmet>
@@ -63,9 +63,9 @@ const NoticePage = () => {
         </div>
       ) : (
         <div className="overflow-x-auto">
-          <table className="table table-sm">
-            <thead>
-              <tr className="font-bold">
+          <table className="table table-sm dark:text-gray-400">
+            <thead className="dark:text-gray-400">
+              <tr className="font-bold dark:border-gray-700">
                 <th className="lg:col-span-1">#</th>
                 <th className="lg:col-span-10">Notice Title:</th>
                 <th className="lg:col-span-1 flex justify-end">Action</th>
@@ -73,7 +73,7 @@ const NoticePage = () => {
             </thead>
             <tbody>
               {notices.map((notice) => (
-                <tr key={notice._id}>
+                <tr key={notice._id} className="dark:border-gray-700">
                   <td className="lg:col-span-1">{serial++}</td>
                   <td className="lg:col-span-10">{notice.title}</td>
                   <td className="lg:col-span-1 flex justify-end">

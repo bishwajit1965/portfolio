@@ -18,7 +18,7 @@ const SuperAdminDashboard = () => {
 
       <h1>Welcome, {user.email}</h1>
       <p>Your role: {user.role}</p>
-      <div className="grid grid-cols-1 lg:grid-cols-4 justify-between gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-4 justify-between gap-4 lg:my-10 my-4">
         <SuperAdminDashboardCard />
         <SuperAdminDashboardCard />
         <SuperAdminDashboardCard />

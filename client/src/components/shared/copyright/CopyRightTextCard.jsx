@@ -1,8 +1,8 @@
 const CopyRightTextCard = ({ copyrightData }) => {
   const { copyrightText } = copyrightData;
   return (
-    <div>
-      <p>{copyrightText}</p>
+    <div className="flex items-center">
+      <p className="text-sm">{copyrightText}</p>
     </div>
   );
 };

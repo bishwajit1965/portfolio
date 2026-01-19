@@ -4,7 +4,7 @@ const SkillCard = ({ skill }) => {
   const { skillName, level, category } = skill;
   return (
     <div className="border border-slate-300 dark:border-slate-700 shadow-sm rounded-md p-2 mb-2">
-      <h2 className="font-bold flex items-center">
+      <h2 className="font-bold flex items-center flex-wrap">
         <FaCheckCircle className="text-blue-700 dark:text-amber-400 mr-2" />
         Skill: {skillName}
       </h2>
@@ -15,7 +15,7 @@ const SkillCard = ({ skill }) => {
         </span>{" "}
       </p>
       <p>
-        <span className="font-bold flex items-center">
+        <span className="font-bold flex items-center flex-wrap lg:space-y-0 space-y-4">
           <FaCheckCircle className="text-blue-700 dark:text-amber-400 mr-2" />
           Category:{" "}
           {category.map((cat, index) => (

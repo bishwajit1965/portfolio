@@ -46,19 +46,20 @@ const BlogPosts = () => {
   } = usePagination(filteredPosts, postsPerPage);
 
   return (
-    <div className="lg:pt-10">
+    <div className="">
       <Helmet>
         <title>Web-tech-services || Blogs</title>
       </Helmet>
       {loading && <Loader />}
       <PageTitle
         title="Blog"
-        decoratedText={`Posts : ${posts.length}`}
+        decoratedText="Posts"
+        dataLength={posts ? posts.length : 0}
         subtitle="Explore my blog posts. Hello! I am Bishwajit Paul, a Passionate Web Developer.I specialize in creating dynamic and responsive websites that provide excellent user experiences. With a strong foundation in HTML, CSS, and JavaScript, and expertise in modern frameworks like React, Node.js, and Express, I build scalable and efficient web applications. My focus is on writing clean, maintainable code and delivering projects that exceed client expectations.I love solving complex problems and continuously improving my skills to stay updated with the latest industry trends. Whether it's front-end development, back-end APIs, or full-stack solutions, I am committed to building web experiences that are both visually appealing and highly functional.I like this introduction. What do you think about it?"
       />
 
       {/* Search and Filters */}
-      <div className="lg:flex justify-between items-center p-2 bg-base-200 border lg:border-slate-200 lg:p-2 rounded-md shadow-sm lg:pt-2 pt-8 lg:space-y-px space-y-2 dark:bg-slate-800 dark:border-none">
+      <div className="lg:flex justify-between items-center p-2 bg-base-200 border lg:border-slate-200 lg:p-2 rounded-md shadow-sm lg:pt-2 lg:space-y-px space-y-2 dark:bg-slate-800 dark:border-none">
         {/* Search by title */}
         <input
           type="text"
@@ -87,7 +88,7 @@ const BlogPosts = () => {
       </div>
 
       {/* Blog Posts */}
-      <div className="grid grid-cols-12 gap-6 lg:pt-10">
+      <div className="grid grid-cols-12 gap-6 lg:pt-4">
         <div className="lg:col-span-9 col-span-12">
           {loading ? (
             <span className="loading-spinner loading-lg text-success mt-10"></span>

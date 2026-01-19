@@ -66,6 +66,7 @@ const CategoryTable = ({ categories = [], onEdit, onDelete }) => {
         columns={columns}
         data={filteredCategories} // Use filtered data here
         pagination
+        dense
         highlightOnHover
         pointerOnHover
       />

@@ -18,7 +18,6 @@ const AddNotice = () => {
       title,
       content,
       status,
-      createdAt: new Date().toISOString(),
     };
 
     try {

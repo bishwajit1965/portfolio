@@ -1,4 +1,4 @@
-import { FaEdit, FaHome } from "react-icons/fa";
+import { FaCog, FaEdit, FaHome } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -64,7 +64,7 @@ const ProjectUpdateForm = () => {
         formDataToSend,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
+        },
       );
 
       if (response.status === 200) {
@@ -142,6 +142,25 @@ const ProjectUpdateForm = () => {
                   <p className="text-red-500 text-xs">{errors.name}</p>
                 )}
               </div>
+
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">
+                  Engineering Highlight (Uncommon Factor):
+                </label>
+                <textarea
+                  name="engineeringHighlight"
+                  value={formData.engineeringHighlight}
+                  onChange={handleChange}
+                  placeholder="What makes this project technically different?"
+                  className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-800"
+                />
+                {errors.engineeringHighlight && (
+                  <p className="text-red-500 text-sm">
+                    {errors.engineeringHighlight}
+                  </p>
+                )}
+              </div>
+
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 dark:text-slate-400">
                   Description:
@@ -175,22 +194,38 @@ const ProjectUpdateForm = () => {
                   <p className="text-red-500 text-xs">{errors.image}</p>
                 )}
               </div>
-              <button
-                type="submit"
-                className="btn btn-sm btn-success text-white mr-4"
-                disabled={loading}
-              >
-                {loading ? "Updating data..." : "Update Project"} <FaEdit />
-              </button>
 
-              <button
-                type="submit"
-                className="btn btn-sm btn-primary text-white"
-              >
-                <Link to="/super-admin/manage-projects" className="flex">
-                  <FaHome className="mr-2" /> Go Home
-                </Link>
-              </button>
+              <div className="flex justify-between space-x-2 items-center">
+                <button
+                  type="submit"
+                  className="btn btn-sm btn-success text-white"
+                  disabled={loading}
+                >
+                  <FaEdit /> {loading ? "Updating data..." : "Update Project"}
+                </button>
+
+                <button
+                  type="submit"
+                  className="btn btn-sm btn-primary text-white"
+                >
+                  <Link to="/super-admin/manage-projects" className="flex">
+                    <FaHome className="mr-2" /> Go Home
+                  </Link>
+                </button>
+
+                <button
+                  type="submit"
+                  className="btn btn-sm btn-success text-white"
+                >
+                  <Link
+                    to="/super-admin/manage-projects"
+                    className="flex gap-2"
+                  >
+                    <FaCog />
+                    All Projects
+                  </Link>
+                </button>
+              </div>
             </form>
           </div>
         </div>

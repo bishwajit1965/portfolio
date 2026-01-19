@@ -34,6 +34,9 @@ import SuperAdminLayout from "../superAdmin/superAdminLayout/SuperAdminLayout";
 import SuperAdminLogin from "../superAdmin/pages/SuperAdminLogin";
 import ViewProjectDetails from "../superAdmin/manageProjects/ViewProjectDetail";
 import { createBrowserRouter } from "react-router-dom";
+import ManageSkills from "../superAdmin/manageSkills/ManageSkills";
+import AddSkills from "../superAdmin/manageSkills/AddSkills";
+import PortfolioProjects from "../pages/portfolioProjects/PortfolioProjects";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +53,10 @@ const router = createBrowserRouter([
         element: <BlogPosts />,
       },
       {
+        path: "/portfolio-projects",
+        element: <PortfolioProjects />,
+      },
+      {
         path: "/blog-coming-soon",
         element: <ComingSoon />,
       },
@@ -58,7 +65,7 @@ const router = createBrowserRouter([
         element: <SingleBlogPost />,
         loader: async ({ params }) => {
           const postResponse = await fetch(
-            `http://localhost:5000/api/blogPosts/${params.postId}`
+            `http://localhost:5000/api/blogPosts/${params.postId}`,
           );
           const post = await postResponse.json();
           return { post };
@@ -190,8 +197,16 @@ const router = createBrowserRouter([
         element: <ManageNotice />,
       },
       {
+        path: "add-skills",
+        element: <AddSkills />,
+      },
+      {
+        path: "manage-skills",
+        element: <ManageSkills />,
+      },
+      {
         path: "*",
-        element: <ErrorPage/>,
+        element: <ErrorPage />,
       },
     ],
   },

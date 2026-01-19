@@ -15,7 +15,7 @@ const BriefIntro = () => {
   if (error) return <div className="text-center"> {error.message}</div>;
 
   const maxLength = 100;
-  const fetchedData = data.length > 0 ? data[0].briefIntro : "";
+  const fetchedData = data?.length > 0 ? data[0]?.briefIntro : "";
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { shortenedText, fullText } = useTextShortener(fetchedData, maxLength);
 
@@ -26,7 +26,7 @@ const BriefIntro = () => {
       <h2 className="text-2xl font-bold mb-1">A Brief Introduction of mine</h2>
 
       {data
-        ? data.slice(0, 1).map((introduction) => (
+        ? data?.slice(0, 1).map((introduction) => (
             <div key={introduction._id}>
               <p className="text-justify text-sm border rounded-md p-2 border-slate-400 dark:border-slate-700 shadow-sm">
                 {isExpanded ? fullText : shortenedText}

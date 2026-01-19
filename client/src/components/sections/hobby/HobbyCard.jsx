@@ -23,7 +23,7 @@ const HobbyCard = ({ hobby }) => {
         {level.map((lev, index) => (
           <span
             key={index}
-            className="bg-green-600 text-white px-2 py-1 text-xs rounded-md capitalize mr-2"
+            className="bg-green-600 text-white px-2 py-1 text-[12px] rounded-md capitalize mr-2"
           >
             {lev}
           </span>

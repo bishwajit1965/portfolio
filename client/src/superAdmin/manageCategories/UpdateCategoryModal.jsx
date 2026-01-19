@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FaEdit } from "react-icons/fa";
 
 const UpdateCategoryModal = ({ category, onClose, onUpdate }) => {
   const [name, setName] = useState("");
@@ -22,7 +23,12 @@ const UpdateCategoryModal = ({ category, onClose, onUpdate }) => {
   return (
     <div style={styles.modalOverlay}>
       <div style={styles.modalContent}>
-        <h2>Update Category</h2>
+        <div className="border-b mb-2 pb-1">
+          <h2 className="lg:text-xl font-extrabold flex items-center gap-2">
+            <FaEdit />
+            Update Category
+          </h2>
+        </div>
         <form onSubmit={handleSubmit}>
           <div style={styles.formGroup}>
             <label htmlFor="categoryName">Category Name:</label>
