@@ -8,31 +8,65 @@ const {
 } = require("../models/projectModel");
 
 const fs = require("fs");
+const { ObjectId } = require("mongodb");
 const path = require("path");
 
 const createProject = async (req, res) => {
   try {
-    const { name, type, engineeringHighlight, description } = req.body;
-    // Include the uploaded image path in the project data
-    const image = req.file ? req.file.filename : null; // Assuming filename is used; adjust if using full path
+    const { name, type, description } = req.body;
+
+    const mainImageFile = req.files?.mainImage?.[0];
+    const screenshotFiles = req.files?.screenshots || [];
+
+    // Category names and captions sent as parallel arrays
+    const categoryNames = req.body.categoryNames || [];
+    const captions = req.body.captions || [];
+
+    // Rebuild screenshots structure
+    const categoriesMap = {};
+
+    screenshotFiles.forEach((file, i) => {
+      const category = categoryNames[i] || "General";
+      const caption = captions[i] || "";
+
+      if (!categoriesMap[category]) categoriesMap[category] = [];
+      categoriesMap[category].push({
+        id: new ObjectId().toString(),
+        image: file.filename,
+        caption,
+      });
+    });
+
+    const screenshots = Object.entries(categoriesMap).map(
+      ([category, items]) => ({
+        id: new ObjectId().toString(), // id for the category group
+        category,
+        items, // siblings of category
+      }),
+    );
 
     const projectData = {
       name,
       type,
-      engineeringHighlight,
-      image,
       description,
+      image: mainImageFile?.filename || null,
+      visibility: "visible",
+      screenshots,
+      createdAt: new Date(),
     };
-    // console.log(projectData);
-    const result = await addProject(projectData);
-    console.log("Result: ", result);
-    res
-      .status(201)
-      .json({ message: "Project created successfully", data: result });
+    console.log("Project data", projectData);
+    await addProject(projectData);
+
+    res.status(201).json({
+      message: "Project created successfully",
+      data: projectData,
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Failed to create project", error: error.message });
+    console.error("Error in createProject:", error);
+    res.status(500).json({
+      message: "Failed to create project",
+      error: error.message,
+    });
   }
 };
 
@@ -61,53 +95,100 @@ const getProjects = async (req, res) => {
 const updateProjectById = async (req, res) => {
   try {
     const { id } = req.params;
-    const updateData = req.body;
-    // Retrieve existing project data from database
     const existingProject = await getProjectById(id);
+
     if (!existingProject) {
-      return res.status(404).json({ error: "Project not found" });
+      return res.status(404).json({ message: "Project not found" });
     }
-    // Update the image path if new image file is uploaded
-    let imagePath = existingProject.image; // Default to the existing image path
-    if (req.file) {
-      imagePath = `../uploads/${req.file.filename}`; //Get the path of the newly uploaded image
+
+    /* ----------------------------------
+       1️⃣ Update main fields
+    ---------------------------------- */
+    const { name, type, description, visibility } = req.body;
+
+    const updateFields = {
+      name,
+      type,
+      description,
+      visibility,
+    };
+
+    /* ----------------------------------
+       2️⃣ Main image update
+    ---------------------------------- */
+    if (req.files?.mainImage?.[0]) {
+      const newMainImage = req.files.mainImage[0].filename;
+
       if (existingProject.image) {
-        const previousImagePath = path.join(
+        const oldPath = path.join(
           __dirname,
           "../uploads",
           existingProject.image,
         );
-        fs.unlink(previousImagePath, (err) => {
-          if (err) {
-            console.error("Error in deleting previous image", err);
-          }
-        });
+        fs.unlink(oldPath, () => {});
       }
+
+      updateFields.image = newMainImage;
     }
 
-    // Update the project data
-    updateData.image = imagePath;
+    /* ----------------------------------
+       3️⃣ Screenshot handling (FIXED)
+    ---------------------------------- */
+    if (req.files?.screenshots?.length > 0) {
+      const captions = Array.isArray(req.body.captions)
+        ? req.body.captions
+        : [req.body.captions];
 
-    const result = await updateProject(id, updateData);
+      const categories = Array.isArray(req.body.categories)
+        ? req.body.categories
+        : [req.body.categories];
+
+      req.files.screenshots.forEach((file, idx) => {
+        const category = categories[idx] || "Uncategorized";
+
+        const newItem = {
+          id: new ObjectId().toString(),
+          image: file.filename,
+          caption: captions[idx] || "",
+        };
+
+        const categoryIndex = existingProject.screenshots.findIndex(
+          (s) => s.category === category,
+        );
+
+        if (categoryIndex !== -1) {
+          existingProject.screenshots[categoryIndex].items.push(newItem);
+        } else {
+          existingProject.screenshots.push({
+            id: new ObjectId().toString(),
+            category,
+            items: [newItem],
+          });
+        }
+      });
+
+      updateFields.screenshots = existingProject.screenshots;
+    }
+
+    /* ----------------------------------
+       4️⃣ Update database
+    ---------------------------------- */
+    const result = await updateProject(id, updateFields);
 
     if (result.modifiedCount === 1) {
-      res
-        .status(200)
-        .json({ message: "Project updated successfully", data: updateData });
-    } else {
-      res.status(400).json({
-        message: "Failed to update project",
+      return res.status(200).json({
+        message: "Project updated successfully",
+        data: updateFields,
       });
     }
+
+    res.status(400).json({ message: "No changes were made" });
   } catch (error) {
-    console.error("Error in updating project", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while updating project" });
+    console.error("UpdateProject error:", error);
+    res.status(500).json({ message: "Failed to update project" });
   }
 };
 
-// Function to make project visible or hide if necessary
 const updateProjectVisibility = async (req, res) => {
   try {
     const { projectId } = req.params;

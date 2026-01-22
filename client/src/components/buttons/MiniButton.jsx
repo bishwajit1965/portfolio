@@ -5,7 +5,7 @@ const VARIANTS = {
     shadow-sm
   `,
   outline: `
-    border border-slate-600 text-slate-600
+    border border-slate-600 dark:border-slate-400 text-slate-600 dark:text-slate-400
     hover:bg-slate-600 hover:text-white
     shadow-sm
   `,
@@ -25,8 +25,11 @@ const VARIANTS = {
 };
 
 const MiniButton = ({
+  label,
   children,
   variant = "base",
+  icon,
+  iconPosition = "left",
   type = "button",
   disabled = false,
   className = "",
@@ -48,7 +51,10 @@ const MiniButton = ({
       `}
       {...props}
     >
-      <span className="flex items-center gap-1">{children}</span>
+      {icon && iconPosition === "left" && (
+        <span className="flex items-center mr-1">{icon}</span>
+      )}
+      <span className="flex items-center gap-1">{label ?? children}</span>
     </button>
   );
 };

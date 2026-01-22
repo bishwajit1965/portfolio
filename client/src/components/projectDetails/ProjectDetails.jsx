@@ -1,13 +1,21 @@
-import { FaEye, FaGithubSquare, FaHome, FaReadme } from "react-icons/fa";
+import {
+  FaArrowCircleDown,
+  FaEye,
+  FaGithub,
+  FaHome,
+  FaReadme,
+  FaSourcetree,
+} from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import CTAButton from "../ctaButton/CTAButton";
-import SectionTitle from "../sectionTitle/SectionTitle";
 import api from "../../services/api";
 import PageTitle from "../../pages/pageTitle/PageTitle";
+import MiniButton from "../buttons/MiniButton";
 
 const ProjectDetails = () => {
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const baseURL = `${apiUrl}/uploads/`;
   const { projectId } = useParams();
   console.log(projectId);
   const [projectDetails, setProjectDetails] = useState({
@@ -16,7 +24,9 @@ const ProjectDetails = () => {
     description: "",
   });
   console.log("Project details:", projectDetails);
-  const imageUrl = `http://localhost:5000/uploads/${projectDetails.image}`;
+  const imageUrl = `${baseURL}${projectDetails.image}`;
+
+  console.log("Project Screenshots", projectDetails.screenshots);
 
   useEffect(() => {
     const fetchProjectDetails = async () => {
@@ -45,46 +55,106 @@ const ProjectDetails = () => {
         icon={FaReadme}
       />
 
-      <div className="lg:py-14 p-2 rounded-md border dark:border-slate-600 shadow-lg">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-          <div className="bg-base-100 lg:col-span-6 p-2 rounded-md">
-            <img
-              src={imageUrl}
-              alt={projectDetails.name}
-              className="rounded-md h-auto w-full"
-            />
-          </div>
-          <div className="bg-base-100 lg:p-4 p-2 lg:col-span-6 space-y-2 rounded-md dark:bg-slate-900 border dark:border-slate-700 relative">
-            <div className="">
-              <h2 className="font-bold lg:text-3xl text-gray-600 dark:text-slate-200">
+      <div className="lg:py-4 rounded-md shadow-lg">
+        <div className="">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 bg-base-100 dark:bg-gray-800 dark:text-gray-400 rounded-md shadow-md lg:p-4 p-2">
+            <div className="lg:col-span-6 col-span-12">
+              <figure>
+                <img
+                  src={imageUrl}
+                  alt={projectDetails?.name}
+                  className="rounded-md h-auto w-full"
+                />
+                <figureCaption className="text-center text-gray-800 dark:text-gray-400 font-bold">
+                  Main Project Image
+                </figureCaption>
+              </figure>
+            </div>
+            <div className="lg:col-span-6 col-span-12 p-2">
+              <h2 className="font-bold lg:text-3xl text-gray-600 dark:text-slate-400">
+                <span className="text-stone-600 dark:text-stone-500 pr-2 font-bold">
+                  Name:
+                </span>
                 {projectDetails.name}
               </h2>
-              <p>{projectDetails.type}</p>
-              <p>{projectDetails.description}</p>
+              <p>
+                {" "}
+                <span className="text-stone-600 dark:text-stone-500 pr-2 font-bold">
+                  Type:
+                </span>
+                {projectDetails.type}
+              </p>
+              <p>
+                {" "}
+                <span className="text-stone-600 dark:text-stone-500 pr-2 font-bold">
+                  Description:
+                </span>
+                {projectDetails.description}
+              </p>
             </div>
-            <div className="flex absolute bottom-1 left-0">
-              <Link to="/">
-                <CTAButton
+          </div>
+
+          <div className="bg-base-100 lg:p-4 p-2 lg:col-span-6 space-y-2 rounded-md dark:bg-slate-900">
+            <div className="lg:space-y-4 space-y-2 mb-12">
+              <div className="lg:space-y-4 space-y-2">
+                <div className="">
+                  <h2 className="lg:text-3xl text-lg font-bold flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                    <FaSourcetree /> Project Screenshots
+                  </h2>
+                </div>
+                <div className="">
+                  {projectDetails?.screenshots?.map((category) => (
+                    <div key={category.id} className=" ">
+                      <h2 className="text-lg font-bold mt-4 mb-2 text-gray-700 dark:text-gray-400 flex items-center gap-2">
+                        <FaArrowCircleDown /> {category.category}
+                      </h2>
+
+                      <div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-4 gap-2">
+                        {category.items.map((item, index) => (
+                          <div
+                            key={index}
+                            className="lg:col-span-3 col-span-12"
+                          >
+                            <figure>
+                              <img
+                                src={`${baseURL}${item.image}`}
+                                alt={item.caption}
+                                className="w-full h-40 object-contain rounded-md mb-2 shadow-md bg-gray-1000 dark:border-stone-700 border"
+                              />
+                              {item?.caption && (
+                                <figcaption className="font- dark:text-gray-400">
+                                  {item?.caption}
+                                </figcaption>
+                              )}
+                            </figure>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="lg:flex lg:space-x-6 grid space-y-2 lg:space-y-0">
+              <Link to="/" className="m-0">
+                <MiniButton
                   label="Go Home"
-                  variant="primary"
+                  variant="outline"
                   icon={<FaHome />}
-                  className="my-2 btn btn-sm"
                 />
               </Link>
-              <Link to="#">
-                <CTAButton
+              <Link to="#" className="m-0">
+                <MiniButton
                   label="Live Demo"
-                  variant="primary"
+                  variant="outline"
                   icon={<FaEye />}
-                  className="my-2 btn btn-sm"
                 />
               </Link>
-              <Link to="#">
-                <CTAButton
+              <Link to="#" className="m-0">
+                <MiniButton
                   label="GitHub Source Code"
-                  variant="primary"
-                  icon={<FaGithubSquare />}
-                  className="my-2 btn btn-sm"
+                  variant="outline"
+                  icon={<FaGithub />}
                 />
               </Link>
             </div>

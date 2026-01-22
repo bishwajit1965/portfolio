@@ -11,6 +11,7 @@ import { NavLink } from "react-router-dom";
 import ProjectDisplayCard from "./ProjectDisplayCard";
 import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import api from "../../services/api";
+import Swal from "sweetalert2";
 
 const ManageProjects = () => {
   const [loading, setLoading] = useState(true);
@@ -34,15 +35,37 @@ const ManageProjects = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this project?",
-    );
-    if (confirmed) {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    });
+    // const confirmed = window.confirm(
+    //   "Are you sure you want to delete this project?",
+    // );
+    if (result.isConfirmed) {
       try {
         await api.delete(`projects/${id}`);
         setProjects(projects.filter((project) => project._id !== id));
-        alert("Project deleted successfully!");
+        Swal.fire({
+          title: "Deleted!",
+          text: "Project deleted successfully.",
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+        // alert("Project deleted successfully!");
       } catch (error) {
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to delete the project.",
+          icon: "error",
+        });
         console.error("Encountered an error!", error);
       }
     }
@@ -78,7 +101,9 @@ const ManageProjects = () => {
 
           <h2 className="text-xl font-bold text-center lg:ml-72">
             Total Projects:{" "}
-            {projects.length > 0 ? projects.length : "No tag uploaded yet"}
+            {projects.length > 0
+              ? projects.length
+              : "No project is uploaded yet"}
           </h2>
         </div>
 
@@ -106,12 +131,15 @@ const ManageProjects = () => {
               className="cursor-pointer"
             />
           ) : (
-            <CTAButton
-              label="Show Less"
-              icon={<FaArrowAltCircleUp />}
-              onClick={showLessProjects}
-              className="cursor-pointer"
-            />
+            visibleCount &&
+            visibleCount.length > 0 && (
+              <CTAButton
+                label="Show Less"
+                icon={<FaArrowAltCircleUp />}
+                onClick={showLessProjects}
+                className="cursor-pointer"
+              />
+            )
           )}
         </div>
       </div>

@@ -119,10 +119,9 @@ const router = createBrowserRouter([
     path: "/super-admin",
     element: (
       <RequireSuperAdmin>
-        <SuperAdminLayout />
+        <SuperAdminLayout />,
       </RequireSuperAdmin>
     ),
-
     children: [
       {
         path: "dashboard",

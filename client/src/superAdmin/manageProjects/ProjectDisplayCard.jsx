@@ -5,10 +5,12 @@ import ProjectVisibilityToggle from "./ProjectVisibilityToggle";
 import { useNavigate } from "react-router-dom";
 
 const ProjectDisplayCard = ({ project, handleDelete }) => {
-  const imageUrl = `http://localhost:5000/uploads/${project.image}`;
+  const baseURL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const coverImage = project?.image;
 
-  const { _id, name, type, engineeringHighlight, description, visibility } =
-    project;
+  const imageUrl = `${baseURL}/uploads/${coverImage}`;
+
+  const { _id, name, type, description, visibility } = project;
 
   const navigate = useNavigate();
 
@@ -32,7 +34,7 @@ const ProjectDisplayCard = ({ project, handleDelete }) => {
           <p>{_id}</p>
           <h2 className="font-bold">{name}</h2>
           <p>{type}</p>
-          <p>{engineeringHighlight}</p>
+
           <p>{description}</p>
         </div>
       </div>

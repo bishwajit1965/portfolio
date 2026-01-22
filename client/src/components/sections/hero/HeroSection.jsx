@@ -30,7 +30,7 @@ const HeroSection = () => {
                   label="View Projects"
                   icon={<FaArrowRight size={20} />}
                   variant="info"
-                  className="btn lg:btn-lg btn-sm lg:w-52 w-48 lg:text-lg text-sm"
+                  className="btn lg:btn-md btn-sm lg:w-40 w-36 lg:text-lg text-sm"
                 />
               </Link>
 
@@ -42,7 +42,7 @@ const HeroSection = () => {
                   label="Download CV"
                   icon={<FaCloud size={20} />}
                   variant="amber"
-                  className="btn lg:btn-lg btn-sm lg:w-52 w-48 lg:text-xl text-sm"
+                  className="btn lg:btn-md btn-sm lg:w-40 w-36 lg:text-xl text-sm"
                 />
               </a>
             </div>

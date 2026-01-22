@@ -10,12 +10,22 @@ const {
 
 const validateProjectData = require("../middlewares/validateProjectData");
 const upload = require("../middlewares/upload");
+const projectUpload = upload.fields([
+  { name: "mainImage", maxCount: 1 },
+  { name: "screenshots", maxCount: 10 },
+]);
 
 const verifyToken = require("../middlewares/authMiddleware");
 // const uploadMiddleware = require("../middlewares/upload");
 const router = express.Router();
 
-router.post("/", upload.single("image"), validateProjectData, createProject);
+router.post(
+  "/",
+  projectUpload,
+  // upload.array( "images" ),
+  validateProjectData,
+  createProject,
+);
 
 router.get("/:id", getProject);
 
@@ -23,9 +33,10 @@ router.get("/", getProjects);
 
 router.patch(
   "/:id",
-  upload.single("image"),
+  projectUpload,
+  // upload.array("images"),
   validateProjectData,
-  updateProjectById
+  updateProjectById,
 );
 
 router.patch("/visibility/:projectId", updateProjectVisibility);

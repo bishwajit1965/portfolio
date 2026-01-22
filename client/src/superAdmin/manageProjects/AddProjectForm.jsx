@@ -1,137 +1,159 @@
-import { FaHome, FaPlusCircle } from "react-icons/fa";
-import { useRef, useState } from "react";
-
-import CTAButton from "../../components/ctaButton/CTAButton";
+import { FaSave, FaPlus, FaTrash, FaSpinner } from "react-icons/fa";
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
-import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import api from "../../services/api";
+import Button from "../../components/buttons/Button";
+import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
+import { FaCirclePlus } from "react-icons/fa6";
+import Swal from "sweetalert2";
 
 const AddProjectForm = () => {
-  const [error, setError] = useState("");
-  const [errors, setErrors] = useState({});
-  const [successMessage, setSuccessMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  // Separate state to handle file input
-  const [file, setFile] = useState(null);
-  const fileInputRef = useRef(null);
   const [formData, setFormData] = useState({
     name: "",
     type: "",
     description: "",
-    engineeringHighlight: "",
+    mainImage: null,
+    categories: [], // [{ name: "", screenshots: [{ file: null, caption: "" }] }]
   });
 
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errors, setErrors] = useState({});
+
+  // Basic fields
+  const handleChange = (field, value) => {
+    setFormData({ ...formData, [field]: value });
+  };
+
+  // Categories
+  const addCategory = () => {
+    setFormData({
+      ...formData,
+      categories: [...formData.categories, { name: "", screenshots: [] }],
+    });
+  };
+
+  const removeCategory = (index) => {
+    const updated = [...formData.categories];
+    updated.splice(index, 1);
+    setFormData({ ...formData, categories: updated });
+  };
+
+  const updateCategoryName = (index, value) => {
+    const updated = [...formData.categories];
+    updated[index].name = value;
+    setFormData({ ...formData, categories: updated });
+  };
+
+  // Screenshots
+  const addScreenshot = (catIndex) => {
+    const updated = [...formData.categories];
+    updated[catIndex].screenshots.push({ file: null, caption: "" });
+    setFormData({ ...formData, categories: updated });
+  };
+
+  const removeScreenshot = (catIndex, shotIndex) => {
+    const updated = [...formData.categories];
+    updated[catIndex].screenshots.splice(shotIndex, 1);
+    setFormData({ ...formData, categories: updated });
+  };
+
+  const handleFileChange = (catIndex, shotIndex, file) => {
+    const updated = [...formData.categories];
+    updated[catIndex].screenshots[shotIndex].file = file;
+    setFormData({ ...formData, categories: updated });
+  };
+
+  const handleCaptionChange = (catIndex, shotIndex, caption) => {
+    const updated = [...formData.categories];
+    updated[catIndex].screenshots[shotIndex].caption = caption;
+    setFormData({ ...formData, categories: updated });
+  };
+
+  // Validation
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.name) {
-      newErrors.name = "Name is required";
-    }
-    if (!formData.type) {
-      newErrors.type = "Type is required";
-    }
-    if (!file) {
-      newErrors.image = "Image is required";
-    }
-    if (!formData.description) {
+    if (!formData.name) newErrors.name = "Name is required";
+    if (!formData.type) newErrors.type = "Type is required";
+    if (!formData.description)
       newErrors.description = "Description is required";
-    }
-    if (!formData.engineeringHighlight) {
-      newErrors.engineeringHighlight = "Engineering highlight is required";
-    }
+    if (formData.categories.length === 0)
+      newErrors.categories = "At least one category required";
+
+    formData.categories.forEach((cat, ci) => {
+      if (!cat.name) newErrors[`category-${ci}`] = "Category name required";
+      if (cat.screenshots.length === 0)
+        newErrors[`screenshots-${ci}`] = "At least one screenshot required";
+      cat.screenshots.forEach((shot, si) => {
+        if (!shot.file)
+          newErrors[`screenshot-${ci}-${si}`] = "Screenshot file required";
+      });
+    });
+
     return newErrors;
-  };
-
-  // Handles file input
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile && selectedFile.size > 5 * 1024 * 1024) {
-      setErrors({ ...errors, image: "File size exceeds 5MB" });
-    } else {
-      setErrors({ ...errors, image: null });
-      setFile(selectedFile);
-    }
-    // setFile(e.target.files[0]); // Capture the file from input
-  };
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // 1️⃣ Validate form
     const validationErrors = validateForm();
-
-    if (Object.keys(validationErrors).length === 0) {
-      setLoading(true);
-      try {
-        // Prepare FormData object to handle file upload
-        const formDataWithFile = new FormData();
-        formDataWithFile.append("name", formData.name);
-        formDataWithFile.append("type", formData.type);
-        formDataWithFile.append(
-          "engineeringHighlight",
-          formData.engineeringHighlight,
-        );
-        formDataWithFile.append("description", formData.description);
-
-        if (file) {
-          formDataWithFile.append("image", file); // Append the file to FormData
-        }
-        console.log(file);
-
-        // Log FormData content
-        for (let pair of formDataWithFile.entries()) {
-          console.log(pair[0] + ": " + pair[1]);
-        }
-
-        const response = await api.post("/projects", formDataWithFile);
-
-        if (response.status === 201 || response.status === 200) {
-          setSuccessMessage("Project added successfully!");
-          setFormData({
-            name: "",
-            type: "",
-            description: "",
-            engineeringHighlight: "",
-          });
-          setFile(null); // Reset file input
-          if (fileInputRef.current) {
-            fileInputRef.current.value = ""; // Reset the actual file input element
-          }
-          setErrors({});
-          setTimeout(() => {
-            setSuccessMessage("");
-          }, 2000);
-        }
-      } catch (error) {
-        console.error("Failed to add project!", error);
-        if (error.response && error.response.status === 400) {
-          // Check if the error is from backend validation
-          const backendErrors = error.response.data; // Expecting backend to return { message: "Error message." } or { errors: { fieldName: "Error message." } }
-          if (backendErrors.errors) {
-            // If backend returns field specific errors
-            setErrors(backendErrors.errors);
-          } else if (backendErrors.message) {
-            setError(backendErrors.message);
-          } else {
-            setError("An unexpected error occurred. Please try again later");
-          }
-          setTimeout(() => {
-            setError(""); // Clear backend error after timeout
-          }, 2000);
-        }
-        setErrors({ general: "An error occurred. Please try again later." });
-      } finally {
-        setLoading(false);
-      }
-    } else {
-      setErrors(validationErrors); // Use the validated errors
-      setTimeout(() => {
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      const timer = setTimeout(() => {
         setErrors({});
-      }, 2000);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+
+    setLoading(true);
+    try {
+      const data = new FormData();
+
+      // Basic fields
+      data.append("name", formData.name);
+      data.append("type", formData.type);
+      data.append("description", formData.description);
+
+      // Main image
+      if (formData.mainImage) data.append("mainImage", formData.mainImage);
+
+      // Screenshots + categories
+      formData.categories.forEach((cat) => {
+        cat.screenshots.forEach((shot) => {
+          if (shot.file) data.append("screenshots", shot.file); // all screenshot files
+          data.append("categoryNames", cat.name); // parallel array
+          data.append("captions", shot.caption || ""); // parallel array
+        });
+      });
+
+      // 2️⃣ Send to backend
+      const res = await api.post("/projects", data);
+
+      if (res.status === 201) {
+        Swal.fire({
+          title: "Success!",
+          text: "Project added successfully.",
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+        setSuccessMessage("Project added successfully!");
+        setFormData({
+          name: "",
+          type: "",
+          description: "",
+          mainImage: null,
+          categories: [],
+        });
+        setErrors({});
+        setTimeout(() => setSuccessMessage(""), 3000);
+      }
+    } catch (err) {
+      console.error(err);
+      setErrors({ general: "Failed to add project" });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -140,140 +162,142 @@ const AddProjectForm = () => {
       <Helmet>
         <title>Web-tech-services || Add project</title>
       </Helmet>
+
       <SuperAdminPageTitle
         title="Add"
-        decoratedText="New Projects"
-        subtitle="Only super admin can manage projects!"
+        decoratedText="New Project"
+        subtitle="Super admin can manage projects!"
+        icon={FaCirclePlus}
       />
 
-      <div className="mx-auto lg:p-4 p-3 rounded-lg shadow-md">
-        {/* Display general backend error */}
-
-        {error && (
-          <p className="text-red-500 p-1 border border-red-800 rounded-md text-sm">
-            {error}
-          </p>
-        )}
-
+      <form
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
+        className="mx-auto p-4 rounded shadow bg-base-100"
+      >
+        {errors.general && <p className="text-red-500">{errors.general}</p>}
         {successMessage && <p className="text-green-500">{successMessage}</p>}
 
-        <div className="bg-base-200 rounded-xl lg:p-8 p-4">
-          <form
-            onSubmit={handleSubmit}
-            encType="multipart/form-data"
-            method="post"
-          >
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">
-                Name:
-              </label>
+        {/* Basic fields */}
+        {["name", "type", "description"].map((field) => (
+          <div key={field} className="mb-2">
+            <label className="block font-medium capitalize">{field}:</label>
+            {field !== "description" ? (
               <input
                 type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Project name..."
-                className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-800"
-                aria-required="true"
+                value={formData[field]}
+                onChange={(e) => handleChange(field, e.target.value)}
+                className="mt-1 file-input-bordered block w-full border p-2 rounded"
               />
-              {errors.name && (
-                <p className="text-red-500 text-sm">{errors.name}</p>
-              )}
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">
-                Type:
-              </label>
-              <input
-                type="text"
-                name="type"
-                value={formData.type}
-                onChange={handleChange}
-                placeholder="Project type..."
-                className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-800"
-                aria-required="true"
-              />
-              {errors.type && (
-                <p className="text-red-500 text-sm">{errors.type}</p>
-              )}
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">
-                Engineering Highlight (Uncommon Factor):
-              </label>
+            ) : (
               <textarea
-                name="engineeringHighlight"
-                value={formData.engineeringHighlight}
-                onChange={handleChange}
-                placeholder="What makes this project technically different?"
-                className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-800"
-              />
-              {errors.engineeringHighlight && (
-                <p className="text-red-500 text-sm">
-                  {errors.engineeringHighlight}
-                </p>
-              )}
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">
-                File:
-              </label>
-              <input
-                type="file"
-                name="image"
-                onChange={handleFileChange}
-                ref={fileInputRef}
-                className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-800 cursor-pointer"
-                aria-required="true"
-              />
-              {errors.image && (
-                <p className="text-red-500 text-sm">{errors.image}</p>
-              )}
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">
-                Description:
-              </label>
-              <textarea
-                type="text"
-                name="description"
                 value={formData.description}
-                onChange={handleChange}
-                placeholder="Project description..."
-                className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-800"
-                aria-required="true"
-              ></textarea>
-              {errors.description && (
-                <p className="text-red-500 text-sm">{errors.description}</p>
-              )}
-            </div>
-            <div className="flex">
-              <CTAButton
-                type="submit"
-                label={loading ? "Uploading..." : "Add Project"}
-                variant="primary"
-                disabled={loading}
-                icon={<FaPlusCircle />}
-                className="btn btn-sm"
+                onChange={(e) => handleChange(field, e.target.value)}
+                className="mt-1 block w-full border p-2 rounded"
               />
-              <Link to="/super-admin/manage-projects">
-                <CTAButton
-                  type="submit"
-                  label={loading ? "Loading..." : "Go Manage Projects"}
-                  variant="primary"
-                  disabled={loading}
-                  icon={<FaHome />}
-                  className="btn btn-sm"
-                />
-              </Link>
-            </div>
-          </form>
+            )}
+            {errors[field] && (
+              <p className="text-red-500 text-sm">{errors[field]}</p>
+            )}
+          </div>
+        ))}
+
+        <div className="my-4">
+          <input
+            type="file"
+            name="mainImage"
+            accept="image/*"
+            onChange={(e) =>
+              setFormData({ ...formData, mainImage: e.target.files[0] })
+            }
+            className="border p-1 file-input file-input-bordered w-full"
+          />
         </div>
-      </div>
+
+        {/* Categories */}
+        {formData.categories.map((cat, ci) => (
+          <div key={ci} className="mb-4 border p-2 rounded bg-gray-50">
+            <div className="flex justify-between items-center gap-2">
+              <input
+                type="text"
+                placeholder="Category name"
+                value={cat.name}
+                onChange={(e) => updateCategoryName(ci, e.target.value)}
+                className="border input-md input-bordered p-1 rounded w-full"
+              />
+              <Button
+                icon={<FaTrash />}
+                variant="danger"
+                md
+                label="Delete"
+                size="sm"
+                onClick={() => removeCategory(ci)}
+              />
+            </div>
+            {errors[`category-${ci}`] && (
+              <p className="text-red-500 text-sm">{errors[`category-${ci}`]}</p>
+            )}
+
+            {/* Screenshots */}
+            {cat.screenshots.map((shot, si) => (
+              <div key={si} className="flex gap-2 mt-2 items-center space-y-2">
+                <input
+                  type="file"
+                  onChange={(e) => handleFileChange(ci, si, e.target.files[0])}
+                  className="border p-1 mt-2 file-input file-input-bordered rounded w-1/3"
+                />
+                <input
+                  type="text"
+                  placeholder="Caption"
+                  value={shot.caption}
+                  onChange={(e) => handleCaptionChange(ci, si, e.target.value)}
+                  className="border p-1 input-md input-bordered rounded w-2/3"
+                />
+                <Button
+                  icon={<FaTrash />}
+                  variant="danger"
+                  label="Delete"
+                  size="sm"
+                  onClick={() => removeScreenshot(ci, si)}
+                />
+                {errors[`screenshot-${ci}-${si}`] && (
+                  <p className="text-red-500 text-sm">
+                    {errors[`screenshot-${ci}-${si}`]}
+                  </p>
+                )}
+              </div>
+            ))}
+            <Button
+              icon={<FaPlus />}
+              variant="outline"
+              size="sm"
+              onClick={() => addScreenshot(ci)}
+              label="Add Screenshot"
+              className="m-2"
+            />
+          </div>
+        ))}
+
+        <Button
+          icon={<FaPlus />}
+          variant="outline"
+          size="sm"
+          onClick={addCategory}
+          label="Add Category"
+        />
+
+        <div
+          className={`${loading ? "cursor-not-allowed opacity-50 bg-red-200 rounded-md" : ""} mt-4`}
+        >
+          <Button
+            type="submit"
+            variant="base"
+            icon={loading ? <FaSpinner /> : <FaSave />}
+            label={loading ? "Adding..." : "Add Project"}
+            disabled={loading}
+          />
+        </div>
+      </form>
     </>
   );
 };

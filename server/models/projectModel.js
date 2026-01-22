@@ -12,10 +12,9 @@ const addProject = async (projectData) => {
     } else {
       throw new Error("Failed to insert project data");
     }
-    // return result;
   } catch (error) {
     console.error("Error adding project to database", error.message);
-    return error;
+    return { success: false, error: error.message };
   }
 };
 
@@ -33,43 +32,23 @@ const getAllProjects = async () => {
   return projects;
 };
 
+// Update project safely
 const updateProject = async (id, updateData) => {
   const db = getDB();
-  // Create a new ObjectId instance from the provided id
   const objectId = new ObjectId(id);
-  // retrieve current project to get existing image info
+
   const existingProject = await db
     .collection("projects")
     .findOne({ _id: objectId });
+  if (!existingProject) throw new Error("Project not found");
 
-  if (!existingProject) {
-    throw new Error("Project not found.");
-  }
-
-  //Separates _id and Image from existing data
-  const { _id, image: newImage, ...updateFields } = updateData;
-
-  // If a new image is uploaded and there remains an old image, delete the old one
-  if (newImage && existingProject.image) {
-    const oldImagePath = path.join(
-      __dirname,
-      "../uploads",
-      existingProject.image
-    );
-    if (fs.existsSync(oldImagePath)) {
-      fs.unlinkSync(oldImagePath); //delete old image file
-    }
-  }
-  const result = await db
+  // Do NOT handle filesystem here
+  // Model only updates DB
+  return db
     .collection("projects")
-    .updateOne(
-      { _id: objectId },
-      { $set: { ...updateFields, image: newImage || existingProject.image } }
-    );
-  return result;
+    .updateOne({ _id: objectId }, { $set: updateData });
 };
 
-// Method to update project visibility
 const toggleProjectVisibility = async (projectId, visibilityStatus) => {
   try {
     const db = getDB();

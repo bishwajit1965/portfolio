@@ -1,12 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import CTAButton from "../../components/ctaButton/CTAButton";
-import { FaHome } from "react-icons/fa";
+import { FaArrowCircleDown, FaHome } from "react-icons/fa";
 import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import api from "../../services/api";
-
-// import api from "../../services/api";
+import Button from "../../components/buttons/Button";
+const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const baseURL = `${apiUrl}/uploads/`;
 
 const ViewProjectDetails = () => {
   const { projectId } = useParams();
@@ -45,26 +45,60 @@ const ViewProjectDetails = () => {
         }
       />
       <div className="lg:p-2 p-2 rounded-md border dark:border-slate-600 shadow-lg">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-          <div className="bg-base-100 lg:col-span-6 rounded-md">
+        <div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-4 gap-2">
+          <div className="lg:col-span-6 col-span-12 bg-base-100   rounded-md">
             <img
               src={imageUrl}
               alt={projectDetails.name}
-              className="rounded-md"
+              className="h-60 w-full object-contain rounded-md"
             />
           </div>
-          <div className="bg-base-100 p-2 lg:col-span-6 space-y-2 rounded-md dark:bg-slate-900 border dark:border-slate-700">
-            <h2 className="font-bold lg:text-3xl text-gray-600 dark:text-slate-200">
+          <div className="lg:col-span-6 col-span-12 lg:p-6 p-2">
+            <h2 className="font-bold lg:text-3xl text-lg text-gray-600 dark:text-slate-200 lg:mt-6 mt-2">
               {projectDetails.name}
             </h2>
             <p>{projectDetails.type}</p>
             <p>{projectDetails.description}</p>
-            <Link to="/super-admin/manage-projects">
-              <CTAButton
+          </div>
+        </div>
+
+        <div className="bg-base-100 p-2 lg:col-span-6 space-y-2 rounded-md dark:bg-slate-800">
+          <div className=" ">
+            {projectDetails?.screenshots?.map((category) => (
+              <div key={category.id} className=" ">
+                <h2 className="text-lg font-bold lg:mt-6 mt-4 mb-2 text-gray-700 dark:text-slate-300 flex items-center gap-2 bg-base-300 lg:p-2 p-1 rounded-t-md">
+                  <FaArrowCircleDown /> {category.category}
+                </h2>
+
+                <div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-4 gap-2">
+                  {category.items.map((item, index) => (
+                    <div key={index} className="lg:col-span-3 col-span-12">
+                      <figure>
+                        <img
+                          src={`${baseURL}${item.image}`}
+                          alt={item.caption}
+                          className="w-full h-40 object-contain rounded-md mb-2 shadow-md border dark:border-slate-600"
+                        />
+                        {item?.caption && (
+                          <figcaption className=" font-semibold">
+                            {item?.caption}
+                          </figcaption>
+                        )}
+                      </figure>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="lg:pt-4 pt-2">
+            <Link to="/super-admin/manage-projects" className="m-0">
+              <Button
                 label="Go Home"
-                variant="primary"
+                variant="outline"
                 icon={<FaHome />}
-                className="my-2"
+                className=""
               />
             </Link>
           </div>

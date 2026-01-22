@@ -1,5 +1,5 @@
 const VARIANTS = {
-  base: "bg-emerald-600 text-white hover:bg-emerald-700",
+  base: "bg-emerald-600 text-white hover:bg-emerald-700 justify-center flex",
   outline:
     "border border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white",
   ghost: "text-emerald-600 hover:bg-emerald-100",
@@ -9,9 +9,9 @@ const VARIANTS = {
 };
 
 const SIZES = {
-  sm: "h-8 px-3 text-sm",
-  md: "h-10 px-5 text-base",
-  lg: "h-12 px-6 text-lg",
+  sm: "h-8 px-2 text-sm",
+  md: "h-10 px-3 text-base",
+  lg: "h-12 px-5 text-lg",
 };
 
 const Button = ({
@@ -31,7 +31,7 @@ const Button = ({
       type={type}
       disabled={disabled}
       className={`
-        inline-flex items-center justify-center gap-2
+        inline-flex items-center justify-center gap-1.5
         rounded-md font-medium
         transition-all duration-200
         focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2
