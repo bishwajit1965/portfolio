@@ -54,7 +54,7 @@ const ManageComments = () => {
         `/comments/${updatedComment._id}`,
         "PATCH",
         updatedComment,
-        token
+        token,
       );
 
       if (response) {
@@ -63,8 +63,8 @@ const ManageComments = () => {
           prevComments.map((comment) =>
             comment._id === updatedComment._id
               ? { ...comment, ...updatedComment }
-              : comment
-          )
+              : comment,
+          ),
         );
         setShowUpdateModal(false); // Close modal
         // Swal.fire("Success", "Comment updated successfully!", "success");
@@ -93,13 +93,13 @@ const ManageComments = () => {
           `/comments/${commentId}`,
           "DELETE",
           null,
-          localStorage.getItem("token")
+          localStorage.getItem("token"),
         );
 
         if (response) {
           // Optionally, update your state to remove the deleted comment from the UI
           setComments((prevComments) =>
-            prevComments.filter((comment) => comment._id !== commentId)
+            prevComments.filter((comment) => comment._id !== commentId),
           );
           Swal.fire({
             icon: "success",
@@ -115,7 +115,7 @@ const ManageComments = () => {
           Swal.fire(
             "Error",
             "There was a problem deleting the comment.",
-            "error"
+            "error",
           );
         }
       } catch (error) {
@@ -123,7 +123,7 @@ const ManageComments = () => {
         Swal.fire(
           "Error",
           "Failed to delete the comment. Please try again later.",
-          "error"
+          "error",
         );
       }
     }
@@ -140,8 +140,8 @@ const ManageComments = () => {
         subtitle="Super admin only!"
       />
       <div className="flex lg:justify-center items-center lg:mb-4 bg-base-200 p-2 shadow-sm">
-        <h2 className="text-xl font-bold">
-          Comments List: {comments.length > 0 ? comments.length : 0}
+        <h2 className="text-xl font-bold flex items-center">
+          Comments List: {comments?.length > 0 ? comments?.length : 0}
         </h2>
       </div>
 

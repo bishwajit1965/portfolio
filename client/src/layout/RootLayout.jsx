@@ -8,8 +8,8 @@ const RootLayout = () => {
       <div className="w-full mx-auto sticky top-0 z-50">
         <NavBar />
       </div>
-      <main className="lg:pt-16 pt-2">
-        <div className="lg:max-w-7xl mx-auto">
+      <main className="lg:pt- pt-">
+        <div className="lg:max-w-full mx-auto">
           <Outlet />
         </div>
       </main>

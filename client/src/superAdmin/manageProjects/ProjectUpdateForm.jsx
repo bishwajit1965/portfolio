@@ -26,6 +26,8 @@ const ProjectUpdateForm = () => {
     name: "",
     type: "",
     description: "",
+    githubLink: "",
+    liveLink: "",
     visibility: "visible",
     image: "",
     screenshots: [],
@@ -107,6 +109,8 @@ const ProjectUpdateForm = () => {
     dataToSend.append("name", formData.name);
     dataToSend.append("type", formData.type);
     dataToSend.append("description", formData.description);
+    dataToSend.append("githubLink", formData.githubLink);
+    dataToSend.append("liveLink", formData.liveLink);
     dataToSend.append("visibility", formData.visibility);
 
     if (mainImageFile) dataToSend.append("mainImage", mainImageFile);
@@ -122,17 +126,6 @@ const ProjectUpdateForm = () => {
         }
       });
     });
-
-    // formData.screenshots.forEach((cat) => {
-    //   cat.items.forEach((item) => {
-    //     if (item.newImageFile) {
-    //       dataToSend.append("screenshots", item.newImageFile);
-    //     }
-    //     dataToSend.append("captions", item.caption || "");
-    //     dataToSend.append("categories", cat.category);
-    //     dataToSend.append("itemIds", item.id);
-    //   });
-    // });
 
     try {
       setLoading(true);
@@ -226,6 +219,30 @@ const ProjectUpdateForm = () => {
                 <textarea
                   name="description"
                   value={formData.description}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded-md dark:bg-slate-800"
+                />
+              </div>
+
+              {/* GitHub Link */}
+              <div className="mb-3">
+                <label className="text-sm">GitHub Link</label>
+                <input
+                  type="url"
+                  name="githubLink"
+                  value={formData.githubLink}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded-md dark:bg-slate-800"
+                />
+              </div>
+
+              {/* Live Demo Link */}
+              <div className="mb-3">
+                <label className="text-sm">Live Demo Link</label>
+                <input
+                  type="url"
+                  name="liveLink"
+                  value={formData.liveLink}
                   onChange={handleChange}
                   className="w-full p-2 border rounded-md dark:bg-slate-800"
                 />

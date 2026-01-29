@@ -6,11 +6,11 @@ const PageTitle = ({
   icon: Icon,
 }) => {
   return (
-    <div className="lg:space-y-4 text-center lg:py-6 md:py-6 py-2 mb-4 bg-base-200 rounded-md shadow-sm dark:bg-slate-800 dark:text-teal-600">
-      <h1 className="lg:text-3xl text-lg font-bold dark:text-emerald-400 flex justify-center items-center space-x-2">
+    <div className="lg:space-y-4 space-y-2 text-center lg:mt-10 mt-4 lg:py-6 md:py-6 dark:text-teal-600">
+      <h1 className="lg:text-3xl text-lg font-extrabold dark:text-emerald-400 flex justify-center items-center space-x-2">
         {Icon && <Icon className="text-amber-600" size={24} />}
 
-        {title && <span className="text-amber-700">{title}</span>}
+        {title && <span className="text-amber-500">{title}</span>}
 
         {decoratedText && (
           <span className="text-green-700">{decoratedText}</span>

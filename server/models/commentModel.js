@@ -7,7 +7,6 @@ const insertNewComment = async (commentData) => {
   try {
     const db = getDB();
     const result = await db.collection("comments").insertOne(commentData);
-    console.log("Data  fetched:", result);
     return result;
   } catch (error) {
     console.error("Error inserting comment:", error.message);
@@ -32,7 +31,7 @@ const fetchCommentsByPostId = async (postId) => {
     const db = getDB();
     const comments = await db
       .collection("comments")
-      .find({ postId: new ObjectId(postId) })
+      .find({ postId: new ObjectId(postId), status: "approved" })
       .toArray();
     return comments;
   } catch (error) {
@@ -47,17 +46,13 @@ const updateComment = async (id, updatedCommentData) => {
     const objectId = new ObjectId(id);
     const { _id, ...updatedComment } = updatedCommentData;
 
-    console.log("Updating tag with ObjectId:", objectId);
-    console.log("Update data:", updatedComment);
-
     const result = await db
       .collection("comments")
       .updateOne(
         { _id: objectId },
-        { $set: { status: updatedComment.status, updatedAt: new Date() } }
+        { $set: { status: updatedComment.status, updatedAt: new Date() } },
       );
 
-    console.log("MongoDB update result:", result);
     return result;
   } catch (error) {
     throw new Error("Error in updating comment status: " + error.message);

@@ -37,6 +37,7 @@ import { createBrowserRouter } from "react-router-dom";
 import ManageSkills from "../superAdmin/manageSkills/ManageSkills";
 import AddSkills from "../superAdmin/manageSkills/AddSkills";
 import PortfolioProjects from "../pages/portfolioProjects/PortfolioProjects";
+import AddTestimonialForm from "../superAdmin/manageTestimonials/AddTestimonialForm";
 
 const router = createBrowserRouter([
   {
@@ -119,7 +120,7 @@ const router = createBrowserRouter([
     path: "/super-admin",
     element: (
       <RequireSuperAdmin>
-        <SuperAdminLayout />,
+        <SuperAdminLayout />
       </RequireSuperAdmin>
     ),
     children: [
@@ -178,6 +179,10 @@ const router = createBrowserRouter([
       {
         path: "add-tag",
         element: <AddTag />,
+      },
+      {
+        path: "add-testimonials",
+        element: <AddTestimonialForm />,
       },
       {
         path: "manage-testimonials",

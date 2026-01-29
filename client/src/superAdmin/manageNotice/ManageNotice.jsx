@@ -57,15 +57,15 @@ const ManageNotice = () => {
         `/notices/${updatedNotice._id}`,
         "PATCH",
         updatedNotice,
-        token
+        token,
       );
       if (response) {
         setNotices((prevNotices) =>
           prevNotices.map((notice) =>
             notice._id === updatedNotice._id
               ? { ...notice, ...updatedNotice }
-              : notice
-          )
+              : notice,
+          ),
         );
         setShowUpdateModal(false);
       }
@@ -93,12 +93,12 @@ const ManageNotice = () => {
           `/notices/${noticeId}`,
           "DELETE",
           null,
-          localStorage.getItem("token")
+          localStorage.getItem("token"),
         );
         if (response) {
           // Optionally update your state to delete the notice from the UI
           setNotices((preNotices) =>
-            preNotices.filter((notice) => notice._id !== noticeId)
+            preNotices.filter((notice) => notice._id !== noticeId),
           );
           Swal.fire({
             icon: "success",
@@ -113,7 +113,7 @@ const ManageNotice = () => {
           Swal.fire(
             "Error",
             "There was a problem in deleting the notice.",
-            "error"
+            "error",
           );
         }
       } catch (error) {
@@ -121,7 +121,7 @@ const ManageNotice = () => {
         Swal.fire(
           "Error",
           "Failed to delete the comment. Please try again later.",
-          "error"
+          "error",
         );
       }
     }
@@ -148,7 +148,7 @@ const ManageNotice = () => {
 
         <div className="lg:col-span-4 col-span-12 flex lg:justify-center items-center">
           <h2 className="text-xl font-bold">
-            Notices List: {notices.length > 0 ? notices.length : 0}
+            Notices List: {notices?.length > 0 ? notices?.length : 0}
           </h2>
         </div>
         <div className="lg:col-span-4 col-span-12 flex lg:justify-center items-center"></div>

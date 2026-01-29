@@ -1,8 +1,7 @@
 import { FaCopy, FaFacebook, FaTwitter } from "react-icons/fa";
 import { FaLinkedin, FaWhatsapp } from "react-icons/fa6";
-
-import CTAButton from "../ctaButton/CTAButton";
 import { useState } from "react";
+import MiniButton from "../buttons/MiniButton";
 
 const SocialShare = ({ blogId, title }) => {
   const postUrl = `${window.location.origin}/blog/${blogId}`;
@@ -56,100 +55,56 @@ const SocialShare = ({ blogId, title }) => {
   };
 
   return (
-    <div className="social-share lg:flex items-center space-y-2 lg:space-y-0 lg:space-x-6 px-2">
+    <div className="social-share lg:flex grid gap-2 items-center justify-center space-y-4 lg:space-y-0 lg:space-x-6 px-2">
       {/* Social media sharing buttons */}
-      <CTAButton
+      <MiniButton
         label="Share on"
         href={shareLinks.facebook}
         target="_blank"
         rel="noopener noreferrer"
-        variant="primary"
+        variant="base"
         onClick={() => handleGenerateLink("facebook")}
-        className="btn btn-sm"
+        className="btn btn-sm lg:w-28 w-full"
         icon={<FaFacebook />}
       />
-      <CTAButton
+      <MiniButton
         label="Share on"
-        variant="primary"
-        className="btn btn-sm"
+        variant="base"
+        className="btn btn-sm lg:w-28 w-full"
         icon={<FaTwitter />}
         href={shareLinks.twitter}
         onClick={() => handleGenerateLink("twitter")}
         target="_blank"
         rel="noopener noreferrer"
       />
-      <CTAButton
+      <MiniButton
         href={shareLinks.linkedin}
         onClick={() => handleGenerateLink("linkedin")}
         target="_blank"
         rel="noopener noreferrer"
         label="Share on"
-        variant="primary"
-        className="btn btn-sm"
+        variant="base"
+        className="btn btn-sm lg:w-28 w-full"
         icon={<FaLinkedin />}
       />
-      <CTAButton
+      <MiniButton
         label="Share on"
         href={shareLinks.whatsapp}
         target="_blank"
         rel="noopener noreferrer"
-        variant="primary"
+        variant="base"
         onClick={() => handleGenerateLink("whatsapp")}
-        className="btn btn-sm"
+        className="btn btn-sm lg:w-28 w-full"
         icon={<FaWhatsapp />}
       />
-      <CTAButton
+      <MiniButton
         label="Copy link"
         rel="noopener noreferrer"
-        variant="info"
+        variant="base"
         onClick={handleCopyLink}
-        className="btn btn-sm"
+        className="btn btn-sm lg:w-28 w-full"
         icon={<FaCopy />}
       />
-      {/* <a
-        href={shareLinks.facebook}
-        onClick={() => handleGenerateLink("facebook")}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="btn btn-sm btn-outline shadow-md"
-      >
-        Share on <FaFacebook />
-      </a> */}
-      {/* <a
-        href={shareLinks.twitter}
-        onClick={() => handleGenerateLink("twitter")}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="btn btn-sm btn-outline shadow-md"
-      >
-        Share on <FaTwitter />
-      </a> */}
-      {/* <a
-        href={shareLinks.linkedin}
-        onClick={() => handleGenerateLink("linkedin")}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="btn btn-sm btn-outline shadow-md"
-      >
-        Share on <FaLinkedin />
-      </a> */}
-      {/* <a
-        href={shareLinks.whatsapp}
-        onClick={() => handleGenerateLink("whatsapp")}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="btn btn-sm btn-outline shadow-md"
-      >
-        Share on <FaWhatsapp />
-      </a> */}
-
-      {/* Copy link button */}
-      {/* <button
-        className="btn btn-sm btn-outline shadow-md bg-base-200"
-        onClick={handleCopyLink}
-      >
-        <FaCopy /> Copy Link
-      </button> */}
 
       {/* Display the copy status message */}
       {copyStatus && <span className="ml-4">{copyStatus}</span>}

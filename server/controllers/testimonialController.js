@@ -10,8 +10,9 @@ const createTestimonial = async (req, res) => {
   const testimonialData = req.body;
   const saveTestimonial = await addTestimonial(testimonialData);
   res.status(201).json({
+    success: true,
     message: "Testimonial added successfully",
-    message: saveTestimonial,
+    data: saveTestimonial,
   });
 };
 
@@ -34,25 +35,35 @@ const getTestimonialById = async (req, res) => {
 const getAllTestimonials = async (req, res) => {
   try {
     const testimonials = await getTestimonials();
-    res.status(200).json(testimonials);
+    console.log("Testimonials", testimonials);
+    res.status(200).json({
+      success: true,
+      message: "Testimonials fetched successfully!",
+      data: testimonials,
+    });
   } catch (error) {
     res.status(500).json({ message: "Failed to retrieve testimonial", error });
   }
 };
 
 const updateTestimonialById = async (req, res) => {
+  console.log("🎯 Edit testimonial method is hit");
   try {
     const { id } = req.params;
+    console.log("Id", id);
     const testimonialData = req.body;
+    console.log("REQ>BODY", testimonialData);
     const result = await updateTestimonial(id, testimonialData);
     if (result.matchedCount > 0) {
-      res
-        .status(200)
-        .json({ message: "Testimonial data updated successfully." });
-    } else {
-      res.status(404).json({
-        message: "Testimonial not found.",
+      res.status(200).json({
+        success: true,
+        message: "Testimonial data updated successfully.",
+        data: result,
       });
+    } else {
+      res
+        .status(404)
+        .json({ success: false, message: "Testimonial not found." });
     }
   } catch (error) {
     res

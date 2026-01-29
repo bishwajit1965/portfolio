@@ -8,7 +8,7 @@ import PageTitle from "../../pages/pageTitle/PageTitle";
 import api from "../../services/api";
 
 const NoticePage = () => {
-  const [notices, setNotices] = useState(null);
+  const [notices, setNotices] = useState([]);
   const [loading, setLoading] = useState(false);
   const baseUrl =
     import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
@@ -32,7 +32,7 @@ const NoticePage = () => {
     fetchNotices();
   }, []);
 
-  if (!notices) return <div className="text-center">Loading...</div>;
+  // if (!notices) return <div className="text-center">Loading...</div>;
 
   const handleDownloadPdf = (noticeId) => {
     window.open(`${baseUrl}/notices/generate-pdf/${noticeId}`, "_blank");
@@ -41,7 +41,7 @@ const NoticePage = () => {
   let serial = 1;
 
   return (
-    <div className="">
+    <div className="lg:max-w-7xl mx-auto lg:p-0 p-2 mb-10">
       <Helmet>
         <title>Web-tech-services || Notices</title>
       </Helmet>
@@ -68,6 +68,7 @@ const NoticePage = () => {
               <tr className="font-bold dark:border-gray-700">
                 <th className="lg:col-span-1">#</th>
                 <th className="lg:col-span-10">Notice Title:</th>
+                <th className="lg:col-span-10">Notice Date:</th>
                 <th className="lg:col-span-1 flex justify-end">Action</th>
               </tr>
             </thead>
@@ -76,6 +77,13 @@ const NoticePage = () => {
                 <tr key={notice._id} className="dark:border-gray-700">
                   <td className="lg:col-span-1">{serial++}</td>
                   <td className="lg:col-span-10">{notice.title}</td>
+                  <td className="lg:col-span-10">
+                    {new Date(notice.createdAt).toLocaleDateString("en-GB", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </td>
                   <td className="lg:col-span-1 flex justify-end">
                     <CTAButton
                       onClick={() => handleDownloadPdf(notice._id)}

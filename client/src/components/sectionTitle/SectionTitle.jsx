@@ -6,18 +6,22 @@ const SectionTitle = ({
   dataLength,
 }) => {
   return (
-    <div className="lg:py-6 py-2 mb-2 lg:space-y-4 space-y-2 text-center dark:bg-slate-800 bg-base-200 rounded-md shadow-sm border dark:border-base-content">
+    <div className="lg:py-6 py-2 mb-2 lg:mt-10 mt-4 lg:space-y-4 space-y-2 text-center">
       <h2 className="lg:text-3xl text-[18px] lg:font-extrabold font-bold dark:text-emerald-400 flex items-center justify-center gap-1">
-        {Icon && <Icon className="text-amber-600" size={24} />}
-        {title && <span className="text-amber-700">{title}</span>}
+        {Icon && <Icon className="text-amber-600 mr-1" size={24} />}
+        {title && <span className="text-amber-600">{title}</span>}
         {decoratedText && (
           <span className="text-green-700">{decoratedText}</span>
         )}
-        {dataLength && <span className="text-green-700">{dataLength}</span>}
+        {dataLength && (
+          <span className="text-base-100 w-6 lg:w-8 h-6 lg:h-8 rounded-full bg-amber-600 flex items-center justify-center lg:text-[20px] text-sm  dark:bg-emerald-500 ml-2 shadow-sm">
+            {dataLength}
+          </span>
+        )}
       </h2>
 
       {subtitle && (
-        <p className="text-md font-serif max-w-3xl mx-auto hidden lg:block dark:text-emerald-400">
+        <p className="text-md font-serif max-w-2xl mx-auto hidden lg:block dark:text-emerald-400">
           {subtitle}
         </p>
       )}

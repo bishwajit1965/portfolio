@@ -16,14 +16,14 @@ const LikeButton = ({ postId, token }) => {
       try {
         const response = await fetch(
           `http://localhost:5000/api/likes/posts/${postId}/likes`,
-          { method: "GET" }
+          { method: "GET" },
         );
         if (response.ok) {
           const data = await response.json();
           setLikeCount(data.likeCount);
           setLiked(data.userHasLiked);
           setMessage(
-            data.userHasLiked ? "You have already liked the post." : ""
+            data.userHasLiked ? "You have already liked the post." : "",
           );
         } else {
           console.error("Error fetching like data");
@@ -79,7 +79,6 @@ const LikeButton = ({ postId, token }) => {
               ) : (
                 <FaThumbsUp className="mr-2 text-white ml-2" />
               )}
-              {/* ({likeCount}) */}
             </button>
             <div className="lg:flex lg:items-center grid grid-cols-1">
               <div className="mr-2 ml-2 badge badge-ghost badge-lg px-2 text-slate-900">

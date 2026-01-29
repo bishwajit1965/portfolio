@@ -13,7 +13,7 @@ const path = require("path");
 
 const createProject = async (req, res) => {
   try {
-    const { name, type, description } = req.body;
+    const { name, type, description, githubLink, liveLink } = req.body;
 
     const mainImageFile = req.files?.mainImage?.[0];
     const screenshotFiles = req.files?.screenshots || [];
@@ -49,6 +49,8 @@ const createProject = async (req, res) => {
       name,
       type,
       description,
+      githubLink,
+      liveLink,
       image: mainImageFile?.filename || null,
       visibility: "visible",
       screenshots,
@@ -104,12 +106,15 @@ const updateProjectById = async (req, res) => {
     /* ----------------------------------
        1️⃣ Update main fields
     ---------------------------------- */
-    const { name, type, description, visibility } = req.body;
+    const { name, type, description, githubLink, liveLink, visibility } =
+      req.body;
 
     const updateFields = {
       name,
       type,
       description,
+      githubLink,
+      liveLink,
       visibility,
     };
 
@@ -202,9 +207,6 @@ const updateProjectVisibility = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Visibility status is required" });
     }
-
-    console.log("Received projectId:", projectId); // Log projectId
-    console.log("Received visibilityStatus:", visibility);
 
     const result = await toggleProjectVisibility(projectId, visibility);
     if (result.success) {

@@ -34,11 +34,9 @@ const AuthProvider = ({ children }) => {
       const response = await createUserWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
       );
-
       const token = await response.user.getIdToken(); // Firebase token
-
       // Send firebase token to backend (if you want to store it in local storage)
       const { data } = await axios.post(`${API_URL}/register`, {
         email,
@@ -67,8 +65,8 @@ const AuthProvider = ({ children }) => {
       const response = await signInWithEmailAndPassword(auth, email, password);
       const firebaseUser = response.user; //Firebase returns the user object here
       const firebaseToken = await response.user.getIdToken();
-      // Send firebase token to backend (if you want to store it in local storage)
 
+      // Send firebase token to backend (if you want to store it in local storage)
       const { data } = await axios.post(`${API_URL}/login`, {
         email,
         password,
@@ -156,7 +154,7 @@ const AuthProvider = ({ children }) => {
         setLoading(true);
 
         const token = await currentUser.getIdToken(); // Get Firebase ID token
-
+        console.log("Token=>");
         // Store the token in localStorage if it's not there (on page reload)
         if (!localStorage.getItem("jwt")) {
           localStorage.setItem("jwt", token);

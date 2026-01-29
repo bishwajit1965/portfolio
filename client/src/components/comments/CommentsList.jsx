@@ -5,13 +5,17 @@ const CommentsList = ({ comments }) => {
   const commentsArray = Array.isArray(comments) ? comments : [];
 
   if (commentsArray.length === 0) {
-    return <p className="mt-2">No comments yet.</p>;
+    return (
+      <p className="mt-2 text-slate-600 dark:text-slate-400">
+        No comments yet.
+      </p>
+    );
   }
 
   return (
     <div>
       <ol>
-        {commentsArray.map((comment) => (
+        {commentsArray?.map((comment) => (
           <li key={comment._id}>
             <div className="grid lg:grid-cols-12 justify-between gap-2 items-center my-4">
               <div className="lg:col-span-3 col-span-12">
@@ -45,8 +49,8 @@ const CommentsList = ({ comments }) => {
                 </div>
               </div>
 
-              <div className="lg:col-span-9 lg:border-l-4 lg:min-h-fit border-lime-500 lg:ml-1 lg:pl-4 col-span-12 text-zinc-600 text-base">
-                {comment.content}
+              <div className="lg:col-span-9 lg:border-l-4 rounded-md lg:min-h-fit border-lime-500 lg:ml-1 lg:pl-4 col-span-12 text-gray-600 dark:text-slate-400 text-base">
+                {comment?.content}
               </div>
             </div>
             {comment.replyTo && (

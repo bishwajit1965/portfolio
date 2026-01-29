@@ -45,9 +45,7 @@ const ManageProjects = () => {
       confirmButtonText: "Yes, delete it!",
       cancelButtonText: "Cancel",
     });
-    // const confirmed = window.confirm(
-    //   "Are you sure you want to delete this project?",
-    // );
+
     if (result.isConfirmed) {
       try {
         await api.delete(`projects/${id}`);
@@ -59,7 +57,6 @@ const ManageProjects = () => {
           timer: 2000,
           showConfirmButton: false,
         });
-        // alert("Project deleted successfully!");
       } catch (error) {
         Swal.fire({
           title: "Error!",

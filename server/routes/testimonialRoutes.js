@@ -16,14 +16,18 @@ const {
 const router = express.Router();
 
 router.post("/", validateTestimonialData, createTestimonial);
-router.get("/:id", validateTestimonialById, getTestimonialById);
+
 router.get("/", getAllTestimonials);
+
+router.get("/:id", validateTestimonialById, getTestimonialById);
+
 router.patch(
   "/:id",
   validateTestimonialData,
   validateTestimonialById,
-  updateTestimonialById
+  updateTestimonialById,
 );
+
 router.delete("/:id", validateTestimonialById, deleteTestimonialById);
 
 module.exports = router;

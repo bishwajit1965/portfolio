@@ -27,8 +27,8 @@ const ManageUsers = () => {
       });
       console.log("Responses:", response);
       // Update the users and pagination state
-      setUsers(response.data.data); // Use the data field from the backend response
-      setTotalRows(response.data.totalUsers); // Set total number of rows for pagination
+      setUsers(response?.data?.data); // Use the data field from the backend response
+      setTotalRows(response?.data?.data); // Set total number of rows for pagination
     } catch (error) {
       console.error("Failed to fetch users", error);
       Swal.fire("Error", "Failed to fetch users data", "error");
@@ -118,7 +118,7 @@ const ManageUsers = () => {
                 headers: {
                   Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
-              }
+              },
             )
             .then((response) => {
               if (response.status === 200 && response.data.success) {
@@ -132,7 +132,7 @@ const ManageUsers = () => {
               // Log the error for detailed debugging
               console.error(
                 "Error during role update:",
-                error.response || error
+                error.response || error,
               );
 
               // Check if there's an error message from the server

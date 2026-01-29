@@ -8,7 +8,6 @@ import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 
 const ProjectUpdateForm = () => {
   const { projectId } = useParams();
-
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errors, setErrors] = useState({});
@@ -17,6 +16,8 @@ const ProjectUpdateForm = () => {
     name: "",
     type: "",
     description: "",
+    githubLink: "",
+    liveLink: "",
     visibility: "visible",
     screenshots: [],
   });
@@ -39,6 +40,8 @@ const ProjectUpdateForm = () => {
           name: data.name,
           type: data.type,
           description: data.description,
+          githubLink: data.githubLink || "",
+          liveLink: data.liveLink || "",
           visibility: data.visibility,
           screenshots: data.screenshots || [],
         });
@@ -93,6 +96,8 @@ const ProjectUpdateForm = () => {
     formToSend.append("name", formData.name);
     formToSend.append("type", formData.type);
     formToSend.append("description", formData.description);
+    formToSend.append("githubLink", formData.githubLink);
+    formToSend.append("liveLink", formData.liveLink);
     formToSend.append("visibility", formData.visibility);
 
     if (mainImage) {
@@ -194,6 +199,53 @@ const ProjectUpdateForm = () => {
                 <textarea
                   name="description"
                   value={formData.description}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded-md dark:bg-slate-800"
+                />
+              </div>
+
+              {/* GitHub Link */}
+              <div className="mb-3">
+                <label className="text-sm">GitHub Link</label>
+                {formData.githubLink && (
+                  <p className="text-blue-600 underline mb-1">
+                    <a
+                      href={formData.githubLink}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {formData.githubLink}
+                    </a>
+                  </p>
+                )}
+                <input
+                  type="url"
+                  name="githubLink"
+                  value={formData.githubLink}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded-md dark:bg-slate-800"
+                />
+              </div>
+
+              {/* GitHub Link */}
+              <div className="mb-3">
+                <label className="text-sm">GitHub Link</label>
+                <input
+                  type="url"
+                  name="githubLink"
+                  value={formData?.githubLink}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded-md dark:bg-slate-800"
+                />
+              </div>
+
+              {/* Live Link */}
+              <div className="mb-3">
+                <label className="text-sm">Live Link</label>
+                <input
+                  type="url"
+                  name="liveLink"
+                  value={formData?.liveLink}
                   onChange={handleChange}
                   className="w-full p-2 border rounded-md dark:bg-slate-800"
                 />

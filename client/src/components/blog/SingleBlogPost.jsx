@@ -1,4 +1,4 @@
-import { FaComment, FaEye } from "react-icons/fa6";
+import { FaComment, FaEye, FaLink } from "react-icons/fa6";
 import {
   Link,
   useLoaderData,
@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import CTAButton from "../ctaButton/CTAButton";
 import CommentsForm from "../comments/CommentsForm";
 import CommentsList from "../comments/CommentsList";
 import { FaHome } from "react-icons/fa";
@@ -21,6 +20,7 @@ import SectionTitle from "../sectionTitle/SectionTitle";
 import SocialShare from "../socialLinkShare/SocialShare";
 import api from "../../services/commentsApi";
 import useAuth from "../../hooks/useAuth";
+import Button from "../buttons/Button";
 
 const SingleBlogPost = () => {
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -28,7 +28,6 @@ const SingleBlogPost = () => {
     import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
   const { postId } = useParams();
   const { post } = useLoaderData();
-
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -42,8 +41,6 @@ const SingleBlogPost = () => {
   const [token, setToken] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentCategoryIds, setCurrentCategoryIds] = useState([]);
-
-  console.log("Category Ids:", currentCategoryIds);
 
   const handleOpenModal = () => {
     console.log("Opening related post modal"); // Debug log
@@ -133,8 +130,7 @@ const SingleBlogPost = () => {
     const fetchComments = async () => {
       try {
         const response = await api.get(`/comments/${postId}`);
-        const commentsData = response.data;
-        setComments(commentsData);
+        setComments(response?.data?.data);
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
@@ -143,6 +139,7 @@ const SingleBlogPost = () => {
   }, [postId]);
 
   console.log("Comments fetched in single blog post", comments);
+  console.log("Post Id", postId);
 
   // Like related code
   useEffect(() => {
@@ -155,7 +152,7 @@ const SingleBlogPost = () => {
   }, [navigate, location]);
 
   if (!token) {
-    return <p>Returning to login page...</p>;
+    return <p className="text-center">Returning to login page...</p>;
   }
 
   // Manage add comment button to redirect if not logged in
@@ -177,8 +174,9 @@ const SingleBlogPost = () => {
       if (addedComment) {
         // Re-fetch comments to ensure UI is updated
         const updatedComments = await api.get(`/comments/${postId}`);
-        setComments(updatedComments.data);
-        setResponseSuccessMessage(addedComment.message);
+        setComments(updatedComments?.data?.data);
+        setResponseSuccessMessage(addedComment?.message);
+        setShowCommentForm(false);
         setTimeout(() => {
           setResponseSuccessMessage("");
         }, 3000);
@@ -223,7 +221,7 @@ const SingleBlogPost = () => {
   };
 
   return (
-    <div className="">
+    <div className="lg:max-w-7xl mx-auto lg:p-0 p-2">
       <Helmet>
         <title>Web-tech-services || Single Blog</title>
       </Helmet>
@@ -244,17 +242,17 @@ const SingleBlogPost = () => {
             />
           )}
         </div>
-        <div className="lg:col-span-12 col-span-12 lg:p-4 p-2 border-slate-200 lg:border rounded-md shadow-sm dark:border-slate-700">
-          <h2 className="text-3xl font-bold text-slate-800 capitalize dark:text-base-200">
-            {post.title}
+        <div className="lg:col-span-12 col-span-12 lg:p-4 p-2 lg:space-y-2 space-y-1 border-slate-200 lg:border rounded-md shadow-sm dark:border-slate-700">
+          <h2 className="text-3xl font-bold capitalize text-slate-500 dark:text-slate-400 lg:mb-6 mb-4">
+            {post?.title}
           </h2>
-          <p className="italic text-slate-500 font-bold">
+          <p className="italic text-slate-500 dark:text-slate-400 font-bold">
             Author: {post.author}
           </p>
 
-          <p className="italic text-slate-500 font-bold">
+          <p className="italic text-slate-500 dark:text-slate-400 font-bold">
             Published on:{" "}
-            {new Date(post.createdAt).toLocaleDateString("en-GB", {
+            {new Date(post?.createdAt).toLocaleDateString("en-GB", {
               day: "numeric",
               month: "long",
               year: "numeric",
@@ -262,46 +260,52 @@ const SingleBlogPost = () => {
           </p>
 
           {/* Display Categories */}
-          <div className="text-sm text-gray-600 dark:text-base-200 italic badge badge-ghost badge-outline mr-2 mb-2">
-            <span className="font-bold text-base dark:text-base-200">
+          <div className="mr-2 lg:flex grid items-center">
+            <span className="font-bold text-slate-500 dark:text-slate-400">
               Categories:&nbsp;
-            </span>{" "}
-            {post.category ? getCategoryNames(post.category) : "No categories"}
+            </span>
+            <span className="font-bold lg:flex grid items-center text-slate-500 dark:text-slate-400">
+              {post?.category
+                ? getCategoryNames(post?.category)
+                : "No categories"}
+            </span>
           </div>
 
           {/* Display Tags */}
-          <div className="text-sm text-gray-600 dark:text-base-200 italic badge badge-ghost badge-outline">
-            <span className="font-bold text-base dark:text-base-200">
+          <div className=" lg:flex grid items-center">
+            <span className="font-bold text-slate-500 dark:text-slate-400">
               Tags:&nbsp;
             </span>{" "}
-            {post.tag ? getTagNames(post.tag) : "No tags"}
+            <span className="font-bold lg:flex grid items-center text-slate-500 dark:text-slate-400">
+              {post.tag ? getTagNames(post.tag) : "No tags"}
+            </span>
           </div>
-
-          <div
+          <p
             dangerouslySetInnerHTML={{
-              __html: post.content
-                ? post.content.slice(0, 295) + "..."
+              __html: post?.content
+                ? post?.content
                 : "No content to display...",
             }}
-          ></div>
-
-          <p className="mt-4">{post.content}</p>
-
-          <div className="lg:mt-4 mt-2 pb-2 flex items-center lg:space-x-10 space-x-4">
-            <Link to="/blog-posts" className="m-0">
-              <CTAButton
+            className="text-slate-500 dark:text-slate-400"
+          ></p>
+          <div className="lg:flex grid items-center lg:space-x-4 space-x-0 gap-2 lg:py-8 py-4">
+            <Link to="/blog-posts" className="p-0 m-0">
+              <Button
                 type="submit"
                 label="Go Blogs Page"
-                className="flex"
+                className="btn btn-sm lg:w-44 w-full"
                 icon={<FaHome />}
+                variant="outline"
               />
             </Link>
 
-            <CTAButton
+            <Button
               type="submit"
               label="View Related Posts"
               icon={<FaEye />}
+              variant="outline"
               onClick={handleOpenModal}
+              className="btn btn-sm lg:w-48 w-full"
             />
             <div className="">
               <LikeButton postId={postId} token={token} />
@@ -321,13 +325,14 @@ const SingleBlogPost = () => {
       </div>
 
       {/* Add comment section */}
-      <div className="text-center bg-base-200 dark:bg-slate-800 rounded-md">
-        <SectionTitle
-          title="Readers'"
-          subtitle="If you are not logged in, you will be redirected to login page. After login, you will be taken to the blog post you were in. Now click the span Add Comment button, a comment box will open and you will be able to add comment now."
-          decoratedText="Comments"
-        />
-      </div>
+      <SectionTitle
+        title="Readers'"
+        subtitle="If you are not logged in, you will be redirected to login page. After login, you will be taken to the blog post you were in. Now click the span Add Comment button, a comment box will open and you will be able to add comment now."
+        decoratedText="Comments"
+        dataLength={comments ? comments.length : 0}
+        icon={FaComment}
+      />
+
       <div className="p-2">
         <div className="my-2">
           <CommentsList
@@ -336,15 +341,22 @@ const SingleBlogPost = () => {
           />
         </div>
         <div className="">
-          <div className="mt-6 flex items-center space-x-6">
-            <CTAButton
+          <div className="mt-6 lg:flex grid items-center lg:space-x-4 lg:space-y-0 space-y-4 lg:pt-4">
+            <Button
               onClick={handleCommentButtonClick}
               label={showCommentForm ? "Cancel" : "Add Comment"}
-              className="flex"
+              className="btn btn-sm lg:w-40 w-full"
               icon={<FaComment />}
+              variant="outline"
             />
-            <Link to="/blog-posts" className="m-0">
-              <CTAButton icon={<FaHome />} label="Blogs Page" />
+            <Link to="/blog-posts" className="m-0 p-0">
+              <Button
+                type="button"
+                icon={<FaHome />}
+                variant="outline"
+                label="Blogs Page"
+                className="btn btn-sm lg:w-36 w-full"
+              />
             </Link>
           </div>
 
@@ -375,8 +387,16 @@ const SingleBlogPost = () => {
       </div>
 
       {/* Social link share */}
-      <div className="lg:flex grid dark:bg-slate-800 bg-base-300 py-10 rounded-md shadow-md">
-        <SocialShare blogId={postId} title={post.title} />
+      <div className="">
+        <div className="">
+          <h3 className="lg:text-xl font-bold flex items-center gap-2 text-slate-600 dark:text-slate-400">
+            <FaLink className="dark:text-slate-400 text-slate-600" />
+            Share on Social Media
+          </h3>
+        </div>
+        <div className="lg:flex grid dark:bg-slate-800 bg-base-200 lg:py-10 py-4 rounded-md shadow">
+          <SocialShare blogId={postId} title={post.title} />
+        </div>
       </div>
     </div>
   );

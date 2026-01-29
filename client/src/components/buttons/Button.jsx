@@ -1,11 +1,11 @@
 const VARIANTS = {
-  base: "bg-emerald-600 text-white hover:bg-emerald-700 justify-center flex",
+  base: "bg-emerald-600 text-white hover:bg-emerald-700 justify-center flex dark:bg-slate-600 dark:text-base-100 dark:shadow-xl dark:hover:bg-slate-900 dark:hover:text-base-100",
   outline:
-    "border border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white",
+    "border border-emerald-600 dark:border-slate-600 text-emerald-600 hover:bg-emerald-600 hover:text-white dark:bg-slate-600 dark:text-base-100 dark:shadow-xl dark:hover:bg-slate-900 dark:hover:text-base-100",
   ghost: "text-emerald-600 hover:bg-emerald-100",
   danger: "bg-red-600 text-white hover:bg-red-700",
   rounded:
-    "border border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white rounded-full",
+    "border border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white rounded-full dark:bg-slate-600 dark:text-base-100 dark:shadow-xl dark:hover:bg-slate-900 dark:hover:text-base-100",
 };
 
 const SIZES = {

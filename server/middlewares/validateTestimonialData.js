@@ -136,7 +136,7 @@ const validateTestimonialData = (req, res, next) => {
   }
 
   const isValidSocialLinks = socialLinks.every((link) =>
-    urlRegex.test(link.trim())
+    urlRegex.test(link.trim()),
   );
 
   if (!isValidSocialLinks) {
@@ -146,7 +146,7 @@ const validateTestimonialData = (req, res, next) => {
   }
 
   // Validate isVisible (boolean)
-  if (typeof isVisible !== "boolean") {
+  if (isVisible !== undefined && typeof isVisible !== "boolean") {
     return res.status(400).json({
       message: "isVisible must be a boolean.",
     });
@@ -175,7 +175,7 @@ const validateTestimonialData = (req, res, next) => {
     (tag) =>
       typeof tag === "string" &&
       tag.trim().length >= 2 &&
-      tag.trim().length <= 20
+      tag.trim().length <= 20,
   );
 
   if (!isValidTags) {

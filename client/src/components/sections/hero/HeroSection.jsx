@@ -4,9 +4,9 @@ import { FaArrowRight, FaCloud } from "react-icons/fa";
 
 const HeroSection = () => {
   return (
-    <section className="min-h-[85vh] flex items-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 rounded-xl p-6">
+    <section className="min-h-[70vh] flex items-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 rounded-b-xl p-6">
       <div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-8 gap-4 items-center justify-between">
-        <div className="lg:col-span-8">
+        <div className="lg:col-span-9 col-span-12">
           <div className="lg:space-y-6 space-y-2 text-center">
             <h1 className="lg:text-4xl text-xl md:text-5xl font-extrabold text-slate-900 dark:text-slate-100">
               Hi, I’m <span className="text-amber-500">Bishwajit Paul</span>
@@ -19,7 +19,7 @@ const HeroSection = () => {
               Full-Stack Web Developer
             </h2>
 
-            <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 lg:mx-32 mx-0">
               I build clean, scalable, and user-focused web applications using
               modern technologies — from solid backends to polished frontends.
             </p>
@@ -48,26 +48,26 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
-        <div className="lg:col-span-4 bg-slate-300 dark:bg-slate-700 relative shadow-xl p-4 rounded-md lg:h-[26.5rem] h-[17.5rem] lg:order-none order-first skew-x-6 skew-y-6 hover:skew-x-0 hover:skew-y-0">
+        <div className="lg:col-span-3 col-span-12 bg-slate-300 dark:bg-gray-800 relative shadow-xl p-4 rounded-md lg:h-[23.5rem] h-[17.5rem] lg:order-none order-first">
           <Link to="/contact-me">
-            <div className="absolute right-4 top-4 bottom-4 w-full hover:skew-y-9 bg-slate-400 dark:bg-slate-600 lg:min-h-96 skew-x-9 p-4 shadow-xl rounded-md lg:h-[24.5rem] h-[15.5rem] hover:animate-pulses">
+            <div className="absolute right-4 top-4 bottom-4 w-full hover:skew-y-9 bg-slate-400 dark:bg-slate-600 lg:min-h-96 skew-x-9 p-4 shadow-xl rounded-md lg:h-[21.5rem] h-[15.5rem] hover:animate-pulses">
               <div className="bg-slate-300 dark:bg-slate-700 p-4 rounded-md relative">
                 <figure className="relative">
                   <img
-                    src="https://i.ibb.co.com/MgsDqCZ/FB-IMG-1678691214526.jpg"
+                    src="https://i.ibb.co.com/Gv6zHk5d/Gemini-Generated-Image-7h0z6s7h0z6s7h0z.png"
                     alt="developer"
                     className="rounded-xl hover:rounded-full hover:border-8 shadow-lg lg:h-auto w-full object-contain border-8 border-gray-400 dark:border-slate-500"
                   />
-                  <figcaption className="absolute bottom-0 left-0 right-0 bg-indigo-800 opacity-60 text-base-100 lg:text-[16px] text-xs py-1 px-2 rounded-b-xl hover:opacity-100 text-center">
+                  <figcaption className="absolute bottom-0 left-0 right-0 bg-gray-800 opacity-60 text-base-100 lg:text-[14px] text-xs py-1 px-2 rounded-b-xl hover:opacity-100 text-center">
                     Bishwajit Paul, Full-stack MERN Developer
                   </figcaption>
                 </figure>
               </div>
 
-              <div className="w-36 bg-slate-400 rounded-full absolute lg:left-[15px] lg:top-[16px] p-1 top-[16px] right-[15px] flex items-center justify-center border border-slate-300 shadow-lg">
-                <div className="w-36 rounded-full text-black bg-slate-300 shadow dark:text-slate border border-slate-400 flex items-center justify-center text-sm gap-1">
+              <div className="w-44 bg-slate-400 rounded-full absolute lg:left-[15px] lg:top-[16px] p-1 top-[16px] right-[15px] flex items-center justify-center border border-slate-300 shadow-lg">
+                <div className="w-44 rounded-full text-black bg-slate-300 shadow dark:text-slate border border-slate-400 flex items-center justify-center text-sm gap-1">
                   <span className="w-3 h-3 rounded-full bg-purple-500 animate-pulse text-black"></span>{" "}
-                  Available - 24/7
+                  Open to Opportunities
                 </div>
               </div>
             </div>

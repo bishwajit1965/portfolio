@@ -1,15 +1,15 @@
 import { FaArrowAltCircleDown, FaArrowAltCircleUp } from "react-icons/fa";
 import { useEffect, useState } from "react";
-
-import CTAButton from "../ctaButton/CTAButton";
 import ProjectCard from "./ProjectCard";
 import SectionTitle from "../sectionTitle/SectionTitle";
 import api from "../../services/api";
 import { FaLayerGroup } from "react-icons/fa6";
+import Button from "../buttons/Button";
 
 const ProjectsSection = () => {
+  const visibleCountInitial = 3;
   const [projects, setProjects] = useState([]);
-  const [visibleCount, setVisibleCount] = useState(6); // State to control the number of visible projects
+  const [visibleCount, setVisibleCount] = useState(visibleCountInitial); // State to control the number of visible projects
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -53,15 +53,15 @@ const ProjectsSection = () => {
   };
 
   const showMoreProjects = () => {
-    setVisibleCount((prevCount) => prevCount + 6);
+    setVisibleCount((prevCount) => prevCount + visibleCountInitial);
   };
 
   const showLessProjects = () => {
-    setVisibleCount(6);
+    setVisibleCount((prevCount) => prevCount - visibleCountInitial);
   };
 
   return (
-    <div className="lg:p-0 p-2">
+    <div className="lg:max-w-7xl mx-auto lg:p-0 p-2">
       <SectionTitle
         title="Portfolio"
         decoratedText="Projects"
@@ -82,20 +82,20 @@ const ProjectsSection = () => {
       {/* Show More or Show Less Button */}
       <div className="flex justify-center lg:mt-10 mt-6">
         {visibleCount < projects.length ? (
-          <CTAButton
+          <Button
             label="Show More"
-            variant="success"
+            variant="outline"
+            size="lg"
             icon={<FaArrowAltCircleDown size={20} />}
             onClick={showMoreProjects}
-            className="lg:btn-md lg:w-48 w-40"
           />
         ) : (
-          <CTAButton
+          <Button
             label="Show Less"
-            variant="success"
+            variant="outline"
+            size="lg"
             icon={<FaArrowAltCircleUp size={20} />}
             onClick={showLessProjects}
-            className="lg:btn-md lg:w-48 w-40"
           />
         )}
       </div>

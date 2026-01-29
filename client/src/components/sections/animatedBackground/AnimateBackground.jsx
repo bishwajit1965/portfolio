@@ -5,7 +5,7 @@ import { FaGears } from "react-icons/fa6";
 
 const AnimatedBackground = () => {
   return (
-    <>
+    <div className="lg:max-w-7xl mx-auto lg:p-0 p-2">
       <SectionTitle
         title="My Hobby &"
         decoratedText="Skills Progress Bar"
@@ -25,7 +25,7 @@ const AnimatedBackground = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

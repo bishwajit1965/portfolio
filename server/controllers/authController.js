@@ -63,7 +63,7 @@ const registerUser = async (req, res) => {
     const token = jwt.sign(
       { id: newUser._id, email: newUser.email, role: newUser.role },
       JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "1h" },
     );
 
     // Exclude password from user object before sending it back
@@ -103,7 +103,7 @@ const googleLogin = async (req, res) => {
       const jwtToken = jwt.sign(
         { id: newUser._id, email: newUser.email, role: newUser.role },
         JWT_SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: "1h" },
       );
       // Send the JWT token and user data to the frontend
       res.status(200).json({ token: jwtToken, user: newUser });
@@ -111,7 +111,7 @@ const googleLogin = async (req, res) => {
     // If user exists, generate and return JWT
     const jwtToken = jwt.sign(
       { id: user._id, email: user.email, role: user.role },
-      JWT_SECRET
+      JWT_SECRET,
     );
     return res.status(200).json({ token: jwtToken, user });
   } catch (error) {
@@ -127,6 +127,7 @@ const loginUser = async (req, res) => {
   try {
     const userModel = new User();
     const user = await userModel.findUserByEmail(email);
+
     console.log("User", user);
 
     if (!user) {
@@ -143,7 +144,7 @@ const loginUser = async (req, res) => {
     const token = jwt.sign(
       { id: user._id, email: user.email, role: user.role },
       JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "1h" },
     );
 
     res.status(200).json({

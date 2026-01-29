@@ -4,7 +4,9 @@ import {
   FaGithub,
   FaHome,
   FaReadme,
+  FaRegEye,
   FaSourcetree,
+  FaTrashAlt,
 } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -12,8 +14,13 @@ import { useEffect, useState } from "react";
 import api from "../../services/api";
 import PageTitle from "../../pages/pageTitle/PageTitle";
 import MiniButton from "../buttons/MiniButton";
+import Button from "../buttons/Button";
+import { FaCircleRight } from "react-icons/fa6";
 
 const ProjectDetails = () => {
+  const [loading, setLoading] = useState(false);
+  const [isOpenDetailModal, setIsOpenDetailModal] = useState(false);
+  const [data, setData] = useState(null);
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const baseURL = `${apiUrl}/uploads/`;
   const { projectId } = useParams();
@@ -23,14 +30,64 @@ const ProjectDetails = () => {
     type: "",
     description: "",
   });
-  console.log("Project details:", projectDetails);
+
   const imageUrl = `${baseURL}${projectDetails.image}`;
 
-  console.log("Project Screenshots", projectDetails.screenshots);
+  // ---------------------------------------
+  // Effects for ESC, scroll, and focus trap
+  // ---------------------------------------
+  useEffect(() => {
+    if (!isOpenDetailModal) return;
+
+    // Lock background scroll
+    document.body.style.overflow = "hidden";
+
+    // Handle ESC key
+    const handleEsc = (e) => {
+      if (e.key === "Escape") setIsOpenDetailModal(false);
+    };
+    window.addEventListener("keydown", handleEsc);
+
+    // Focus trap
+    const modal = document.getElementById("modal");
+    if (modal) {
+      const focusableEls = modal.querySelectorAll(
+        'a, button, textarea, input, select, [tabindex]:not([tabindex="-1"])',
+      );
+      const firstEl = focusableEls[0];
+      const lastEl = focusableEls[focusableEls.length - 1];
+
+      const handleTab = (e) => {
+        if (e.key !== "Tab") return;
+        if (e.shiftKey) {
+          if (document.activeElement === firstEl) {
+            e.preventDefault();
+            lastEl.focus();
+          }
+        } else {
+          if (document.activeElement === lastEl) {
+            e.preventDefault();
+            firstEl.focus();
+          }
+        }
+      };
+
+      modal.addEventListener("keydown", handleTab);
+      firstEl?.focus();
+
+      // Cleanup
+      return () => {
+        window.removeEventListener("keydown", handleEsc);
+        modal.removeEventListener("keydown", handleTab);
+        document.body.style.overflow = "auto"; // restore scroll
+      };
+    }
+  }, [isOpenDetailModal]);
 
   useEffect(() => {
     const fetchProjectDetails = async () => {
       try {
+        setLoading(true);
         const response = await api.get(`/projects/${projectId}`);
         if (response) {
           setProjectDetails(response.data);
@@ -39,13 +96,27 @@ const ProjectDetails = () => {
         }
       } catch (error) {
         console.error("Failed to fetch project", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchProjectDetails();
   }, [projectId]);
 
+  const handleOpenDetailModal = (item) => {
+    setIsOpenDetailModal(true);
+    if (item) {
+      setData(item);
+    }
+  };
+
   return (
-    <div className="">
+    <div className="lg:max-w-7xl mx-auto lg:p-0 p-2">
+      {loading && (
+        <div className="text-center py-10">
+          <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+        </div>
+      )}
       <PageTitle
         title="Project"
         decoratedText="Details"
@@ -102,7 +173,7 @@ const ProjectDetails = () => {
                     <FaSourcetree /> Project Screenshots
                   </h2>
                 </div>
-                <div className="">
+                <div className="min-h-96">
                   {projectDetails?.screenshots?.map((category) => (
                     <div key={category.id} className=" ">
                       <h2 className="text-lg font-bold mt-4 mb-2 text-gray-700 dark:text-gray-400 flex items-center gap-2">
@@ -110,16 +181,16 @@ const ProjectDetails = () => {
                       </h2>
 
                       <div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-4 gap-2">
-                        {category.items.map((item, index) => (
+                        {category?.items?.map((item, index) => (
                           <div
                             key={index}
-                            className="lg:col-span-3 col-span-12"
+                            className="lg:col-span-4 col-span-12 relative group"
                           >
                             <figure>
                               <img
                                 src={`${baseURL}${item.image}`}
                                 alt={item.caption}
-                                className="w-full h-40 object-contain rounded-md mb-2 shadow-md bg-gray-1000 dark:border-stone-700 border"
+                                className="w-full p-2 h-72 object-cover rounded-md mb-2 shadow-md bg-gray-1000 dark:border-stone-700 border"
                               />
                               {item?.caption && (
                                 <figcaption className="font- dark:text-gray-400">
@@ -127,6 +198,16 @@ const ProjectDetails = () => {
                                 </figcaption>
                               )}
                             </figure>
+
+                            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-amber-400 opacity-0 group-hover:opacity-100">
+                              <Button
+                                variant="base"
+                                icon={<FaRegEye />}
+                                onClick={() => handleOpenDetailModal(item)}
+                              >
+                                Open Modal
+                              </Button>
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -158,6 +239,38 @@ const ProjectDetails = () => {
                 />
               </Link>
             </div>
+
+            {/* Modal toggler panel */}
+            {isOpenDetailModal && (
+              <div
+                id="modal"
+                data={data}
+                className="fixed max-w-full mx-auto inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+              >
+                <div className="bg-white dark:bg-gray-800 lg:p-8 p-2 rounded-md shadow-sm max-w-3xl w-full">
+                  <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200 flex items-center gap-2">
+                    <FaCircleRight className="dark:text-amber-500 text-indigo-500" />{" "}
+                    {data?.caption}
+                  </h2>
+
+                  <div className="mb-2">
+                    <img
+                      src={`${baseURL}${data.image}`}
+                      alt={data.caption}
+                      className="w-full h-96 object-contain rounded-md mb-2 shadow-md border dark:border-slate-600"
+                    />
+                  </div>
+                  <div className="flex justify-end pt-2">
+                    <MiniButton
+                      label="Close"
+                      icon={<FaTrashAlt />}
+                      variant="danger"
+                      onClick={() => setIsOpenDetailModal(false)}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

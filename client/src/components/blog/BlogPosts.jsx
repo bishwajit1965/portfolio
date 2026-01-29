@@ -1,6 +1,5 @@
 import { getCategoryNames, getTagNames } from "../../helpers/blogHelpers";
 import { useMemo, useState } from "react";
-
 import BlogPostCard from "./BlogPostCard";
 import BlogsCarousel from "../sections/blogsCarousel/BlogsCarousel";
 import { Helmet } from "react-helmet-async";
@@ -12,6 +11,8 @@ import SectionTitleSmall from "../sectionTitle/SectionTitleSmall";
 import Select from "react-select";
 import useBlogData from "../../hooks/useBlogData";
 import usePagination from "../../hooks/usePagination";
+import RandomLatestPosts from "../sections/randomLatestsPosts/RandomLatestPosts";
+import SocialMediaLinks from "../shared/socialMedia/SocialMediaLinks";
 
 const BlogPosts = () => {
   const { loading, posts, categories, tags, error } = useBlogData();
@@ -46,7 +47,7 @@ const BlogPosts = () => {
   } = usePagination(filteredPosts, postsPerPage);
 
   return (
-    <div className="">
+    <div className="lg:max-w-7xl mx-auto lg:p-0 p-2 mb-10">
       <Helmet>
         <title>Web-tech-services || Blogs</title>
       </Helmet>
@@ -111,22 +112,24 @@ const BlogPosts = () => {
         </div>
 
         {/* Sidebar Content */}
-        <div className="lg:col-span-3 col-span-12 px-2">
+        <div className="lg:col-span-3 col-span-12 px-2 sticky top-20 max-h-96 ">
           <div className="bg-base-200 rounded-sm shadow-sm">
             <SectionTitleSmall title="Follow" decoratedText="Us" />
           </div>
-          <div className="lg:mb-6">Follow us links here</div>
+          <div className="lg:mb-">
+            <SocialMediaLinks />
+          </div>
           <div className="">
             <div className="bg-base-200 rounded-sm shadow-sm">
               <SectionTitleSmall title="Popular" decoratedText="posts" />
             </div>
-            <div className="lg:mb-6">Popular posts here</div>
+            <div className="lg:mb-">Popular posts here</div>
           </div>
           <div className="">
             <div className="bg-base-200 rounded-sm shadow-sm">
               <SectionTitleSmall title="Recent" decoratedText="posts" />
             </div>
-            <div className="lg:mb-6">
+            <div className="lg:mb-">
               {/* Recent posts here */}
               <BlogsCarousel />
             </div>
@@ -153,6 +156,9 @@ const BlogPosts = () => {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
+
+      {/* Random Blog Posts */}
+      <RandomLatestPosts />
 
       {/* Scroll to top button */}
       <ScrollTopButton />

@@ -98,13 +98,13 @@ const ManageSkills = () => {
           if (!response.ok) {
             const errorData = await response.json();
             throw new Error(
-              errorData.message || "Failed to delete the blog post."
+              errorData.message || "Failed to delete the blog post.",
             );
           }
 
           // Update the UI by removing the deleted blog post
           setSkills((prevSkill) =>
-            prevSkill.filter((skill) => skill._id !== id)
+            prevSkill.filter((skill) => skill._id !== id),
           );
 
           // Show success message
@@ -147,7 +147,7 @@ const ManageSkills = () => {
       </div>
       <div className="lg:col-span-4 col-span-12 flex lg:justify-center items-center">
         <h2 className="text-xl font-bold">
-          Skills List: {skills.length > 0 ? skills.length : 0}
+          Skills List: {skills?.length > 0 ? skills?.length : 0}
         </h2>
       </div>
 

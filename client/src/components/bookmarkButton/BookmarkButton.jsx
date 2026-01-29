@@ -1,15 +1,16 @@
 import { FaBookmark, FaTrash } from "react-icons/fa";
-
-import CTAButton from "../ctaButton/CTAButton";
 import { useState } from "react";
+import MiniButton from "../buttons/MiniButton";
+const baseUrl =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
 
 const BookmarkButton = ({ postId, userId, initialBookmarked }) => {
   const [bookmarked, setBookmarked] = useState(initialBookmarked || false);
 
   const toggleBookmark = async () => {
     const endpoint = bookmarked
-      ? "http://localhost:5000/api/blog/remove-bookmark"
-      : "http://localhost:5000/api/blog/bookmark";
+      ? `${baseUrl}/blog/remove-bookmark`
+      : `${baseUrl}/blog/bookmark`;
 
     try {
       const response = await fetch(endpoint, {
@@ -34,12 +35,12 @@ const BookmarkButton = ({ postId, userId, initialBookmarked }) => {
   };
 
   return (
-    <CTAButton
+    <MiniButton
       onClick={toggleBookmark}
       label={`${bookmarked ? "Remove Bookmark" : "Bookmark"}`}
       icon={bookmarked ? <FaTrash /> : <FaBookmark />}
       className="btn btn-sm"
-      variant={`${bookmarked ? "danger" : "primary"}`}
+      variant={`${bookmarked ? "danger" : "base"}`}
     />
   );
 };

@@ -33,6 +33,9 @@ const NavBar = () => {
     { id: 4, route: "/blog-posts", name: "Blogs" },
     { id: 5, route: "/portfolio-projects", name: "Projects" },
     { id: 6, route: "/blog-coming-soon", name: "Blog Coming Soon" },
+    // ...(user
+    //   ? [{ id: 7, route: "/bookmarked-posts", name: "Blogs Bookmarked" }]
+    //   : [user]),
     user ? { id: 7, route: "/bookmarked-posts", name: "Blogs Bookmarked" } : "",
     { id: 8, route: "/rss", name: "Rss" },
     {

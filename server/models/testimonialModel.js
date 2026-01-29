@@ -23,7 +23,24 @@ const getTestimonials = async () => {
     .collection("testimonials")
     .find(
       {},
-      { projection: { _id: 1, name: 1, email: 1, rating: 1, testimonial: 1 } }
+      {
+        projection: {
+          _id: 1,
+          name: 1,
+          email: 1,
+          rating: 1,
+          testimonial: 1,
+          designation: 1,
+          company: 1,
+          photo: 1,
+          location: 1,
+          projectName: 1,
+          socialLinks: 1,
+          order: 1,
+          tags: 1,
+          date: 1,
+        },
+      },
     )
     .toArray();
   return testimonials;

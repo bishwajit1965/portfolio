@@ -1,9 +1,18 @@
-import { FaArrowAltCircleRight } from "react-icons/fa";
+import { FaArrowAltCircleRight, FaCogs, FaMailBulk } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
-const SideNav = () => {
+const SideNav = ({ user }) => {
   return (
-    <div>
+    <div className="sticky top-20">
+      <div className="border-b border-slate-300 mb-2 pb-2">
+        <h2 className="lg:text-xl text-lg font-bold  flex items-center gap-2">
+          <FaCogs /> Super Admin Dashboard
+        </h2>
+        <p className="text-sm flex items-center gap-2">
+          <FaMailBulk />
+          {user && user?.email}
+        </p>
+      </div>
       <ul className="divide-y-2 divide-slate-300 space-y-1 rounded-b-lg">
         <li className="flex items-center hover:bg-base-300 py-1">
           <FaArrowAltCircleRight />

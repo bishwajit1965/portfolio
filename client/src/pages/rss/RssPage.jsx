@@ -4,14 +4,15 @@ import { Helmet } from "react-helmet-async";
 import Loader from "../../components/loader/Loader";
 import PageTitle from "../pageTitle/PageTitle";
 import RssPostCard from "./RssPostCard";
-
+const baseUrl =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
 const RssPage = () => {
   const [rssPosts, setRssPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   console.log("Rss posts", rssPosts);
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:5000/api/rss") // Replace with your RSS route
+    fetch(`${baseUrl}/rss`) // Replace with your RSS route
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch RSS feed.");
@@ -39,7 +40,7 @@ const RssPage = () => {
   }, []);
 
   return (
-    <div className="">
+    <div className="lg:max-w-7xl mx-auto lg:p-0 p-2 mb-10">
       <Helmet>
         <title>Web-tech-services || Rss posts</title>
       </Helmet>

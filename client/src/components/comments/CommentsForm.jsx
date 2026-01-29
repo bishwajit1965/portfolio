@@ -1,13 +1,14 @@
 import { FaUpload } from "react-icons/fa6";
 import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const CommentsForm = ({ postId, onSubmitComment }) => {
   const { user } = useAuth();
   const [content, setContent] = useState("");
-  const [parentId, setParentId] = useState(null);
   const [error, setError] = useState("");
   console.log("User data in form:", user);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -23,16 +24,20 @@ const CommentsForm = ({ postId, onSubmitComment }) => {
     await onSubmitComment({
       postId,
       content,
-      parentId,
       authorId: user.uid,
       authorEmail: user.email,
       author: user.displayName,
       photoUrl: user.photoURL,
     });
-
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Comment has been saved",
+      showConfirmButton: false,
+      timer: 1500,
+    });
     // Clear the input after submission
     setContent("");
-    setParentId(null);
   };
 
   return (

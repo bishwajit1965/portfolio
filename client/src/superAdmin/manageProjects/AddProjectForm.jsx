@@ -12,6 +12,8 @@ const AddProjectForm = () => {
     name: "",
     type: "",
     description: "",
+    githubLink: "",
+    liveLink: "",
     mainImage: null,
     categories: [], // [{ name: "", screenshots: [{ file: null, caption: "" }] }]
   });
@@ -77,6 +79,11 @@ const AddProjectForm = () => {
     if (!formData.type) newErrors.type = "Type is required";
     if (!formData.description)
       newErrors.description = "Description is required";
+
+    if (!formData.githubLink) newErrors.githubLink = "GitHub link is required";
+
+    if (!formData.liveLink) newErrors.liveLink = "Live link is required";
+
     if (formData.categories.length === 0)
       newErrors.categories = "At least one category required";
 
@@ -114,6 +121,8 @@ const AddProjectForm = () => {
       data.append("name", formData.name);
       data.append("type", formData.type);
       data.append("description", formData.description);
+      data.append("githubLink", formData.githubLink);
+      data.append("liveLink", formData.liveLink);
 
       // Main image
       if (formData.mainImage) data.append("mainImage", formData.mainImage);
@@ -143,6 +152,8 @@ const AddProjectForm = () => {
           name: "",
           type: "",
           description: "",
+          githubLink: "",
+          liveLink: "",
           mainImage: null,
           categories: [],
         });
@@ -179,28 +190,32 @@ const AddProjectForm = () => {
         {successMessage && <p className="text-green-500">{successMessage}</p>}
 
         {/* Basic fields */}
-        {["name", "type", "description"].map((field) => (
-          <div key={field} className="mb-2">
-            <label className="block font-medium capitalize">{field}:</label>
-            {field !== "description" ? (
-              <input
-                type="text"
-                value={formData[field]}
-                onChange={(e) => handleChange(field, e.target.value)}
-                className="mt-1 file-input-bordered block w-full border p-2 rounded"
-              />
-            ) : (
-              <textarea
-                value={formData.description}
-                onChange={(e) => handleChange(field, e.target.value)}
-                className="mt-1 block w-full border p-2 rounded"
-              />
-            )}
-            {errors[field] && (
-              <p className="text-red-500 text-sm">{errors[field]}</p>
-            )}
-          </div>
-        ))}
+        {["name", "type", "description", "githubLink", "liveLink"].map(
+          (field) => (
+            <div key={field} className="mb-2">
+              <label className="block font-medium capitalize">{field}:</label>
+              {field !== "description" ? (
+                <input
+                  type={field.includes("Link") ? "url" : "text"}
+                  value={formData[field]}
+                  onChange={(e) => handleChange(field, e.target.value)}
+                  className="mt-1 file-input-bordered block w-full border p-2 rounded capitalize"
+                  placeholder={field}
+                />
+              ) : (
+                <textarea
+                  value={formData.description}
+                  onChange={(e) => handleChange(field, e.target.value)}
+                  placeholder={field}
+                  className="mt-1 block w-full border p-2 rounded capitalize"
+                />
+              )}
+              {errors[field] && (
+                <p className="text-red-500 text-sm">{errors[field]}</p>
+              )}
+            </div>
+          ),
+        )}
 
         <div className="my-4">
           <input

@@ -11,7 +11,12 @@ const SocialMediaLinkCard = ({ url, iconName }) => {
 
   return (
     <div className="p-0">
-      <a href={url} target="_blank" rel="noopener noreferrer">
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:text-amber-500"
+      >
         <IconComponent size={24} />
       </a>
     </div>

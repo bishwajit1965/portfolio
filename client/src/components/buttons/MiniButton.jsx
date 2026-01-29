@@ -1,8 +1,13 @@
 const VARIANTS = {
   base: `
-    bg-base-200 border border-slate-600 text-slate-800
+    bg-base-100 border border-slate-600 text-slate-800
     hover:bg-slate-800 hover:text-white
-    shadow-sm
+    shadow-am dark:bg-slate-600 dark:text-base-100 dark:shadow-md dark:hover:bg-slate-900 dark:hover:text-base-100
+  `,
+  default: `
+    bg-emerald-600 border border-emerald-700 text-base-100
+    hover:bg-emerald-800 hover:text-white
+    shadow-md dark:bg-emerald-600 dark:text-base-100 dark:shadow-md dark:hover:bg-emerald-900 dark:hover:text-base-100
   `,
   outline: `
     border border-slate-600 dark:border-slate-400 text-slate-600 dark:text-slate-400
@@ -16,11 +21,20 @@ const VARIANTS = {
   rounded: `
     border border-slate-600 text-slate-800
     hover:bg-slate-600 hover:text-white
-    rounded-full shadow-sm
+    rounded-full shadow-md
   `,
   danger: `
-    text-red-600
-    hover:bg-red-100
+    text-base-100 bg-red-500
+    hover:bg-red-700 shadow-md
+  `,
+  success: `
+    bg-base-100 border border-emerald-600 text-emerald-600
+    hover:bg-emerald-600 hover:text-white
+    shadow-sm dark:bg-emerald-600 dark:text-base-100 dark:shadow-md dark:hover:bg-emerald-700 dark:hover:text-base-100
+  `,
+  warning: `
+    text-base-100 bg-amber-600
+    hover:bg-amber-700 shadow-sm
   `,
 };
 
@@ -41,7 +55,7 @@ const MiniButton = ({
       disabled={disabled}
       className={`
         inline-flex items-center justify-center
-        h-8 min-w-8 px-2.5
+        h-7 min-w-8 px-2
         rounded-md text-sm font-medium
         transition-all duration-200
         focus:outline-none focus:ring-2 focus:ring-slate-400

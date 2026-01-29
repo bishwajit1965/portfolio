@@ -3,6 +3,7 @@ import { useState } from "react";
 import Button from "../../buttons/Button";
 import { FaEnvelopesBulk } from "react-icons/fa6";
 import Swal from "sweetalert2";
+import SocialMediaLinks from "../../shared/socialMedia/SocialMediaLinks";
 
 const ContactMeForm = () => {
   const [loading, setLoading] = useState(false);
@@ -85,7 +86,7 @@ const ContactMeForm = () => {
   };
 
   return (
-    <div className="bg-base-200 lg:py-16 rounded-md shadow-sm dark:bg-slate-800">
+    <div className="lg:max-w-7xl mx-auto bg-base-200 lg:py- rounded-md shadow-sm dark:bg-slate-800">
       <div className="lg:max-w-5xl mx-auto p-4 rounded-lg shadow-md">
         <div className="lg:p-8 p-2">
           {error && (
@@ -94,6 +95,10 @@ const ContactMeForm = () => {
             </p>
           )}
           {successMessage && <p className="text-green-500">{successMessage}</p>}
+          <h2 className="lg:text-3xl text-lg font-bold flex items-center gap-2 mb-4 text-slate-600 dark:text-slate-300">
+            <FaEnvelopesBulk size={25} />
+            Contact <span className="text-amber-600"> Me 24/7 </span>
+          </h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
@@ -145,7 +150,7 @@ const ContactMeForm = () => {
                 <p className="text-red-500 text-sm">{errors.message}</p>
               )}
             </div>
-            <div className="flex">
+            <div className="lg:flex grid items-center justify-between lg:pt-4 pt-2">
               {/* <CTAButton
                 type="submit" // Important for form submission
                 label={loading ? "Uploading..." : "Send Message"}
@@ -161,11 +166,18 @@ const ContactMeForm = () => {
                 variant="outline"
                 label={loading ? "Uploading..." : "Send Message"}
                 disabled={loading}
-                size="lg"
+                size="md"
                 className=""
               >
                 Send Mail
               </Button>
+
+              {/* Social Media Links */}
+              <div className="">
+                <div className="grid grid-flow-col sm:w-full">
+                  <SocialMediaLinks />
+                </div>
+              </div>
             </div>
           </form>
         </div>

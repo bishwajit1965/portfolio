@@ -11,38 +11,36 @@ const { ObjectId } = require("mongodb");
 // Create new comment
 const handleCreateComment = async (req, res) => {
   try {
-    const {
-      postId,
-      userId,
-      content,
-      authorId,
-      authorEmail,
-      author,
-      photoUrl,
-      parentId,
-    } = req.body;
+    const { postId, content, authorId, authorEmail, author, photoUrl } =
+      req.body;
+
     console.log("Request Body:", req.body);
+    // console.log("Request User:", req.user);
     // Check if user ID is available
-    if (!req.user || !req.user._id) {
-      return res.status(401).json({ message: "User is not authenticated" });
-    }
+
+    // if (!req.user || !req.user.uid) {
+    //   return res.status(401).json({ message: "User is not authenticated" });
+    // }
     const newComment = {
       postId: new ObjectId(postId),
-      userId: new ObjectId(req.user._id) || userId,
+      // userId: req.user.uid || userId,
       content,
       authorId,
       authorEmail,
       author,
       photoUrl,
-      parentId: parentId ? new ObjectId(parentId) : null,
+      // parentId: parentId ? new ObjectId(parentId) : null,
       createdAt: new Date(),
       updatedAt: new Date(),
       status: "approved",
     };
-    console.log("New Comment Data:", newComment);
 
     const comment = await insertNewComment(newComment);
-    res.status(201).json({ message: "Comment added successfully.", comment });
+    res.status(201).json({
+      success: true,
+      message: "Comment added successfully!",
+      comment,
+    });
   } catch (error) {
     console.error("Error in creating comment:", error.message);
     res.status(500).json({ error: "Error in creating comment" });
@@ -62,8 +60,14 @@ const getAllComments = async (req, res) => {
 const handleFetchComment = async (req, res) => {
   try {
     const { postId } = req.params;
+    console.log("postId from params:", postId);
     const comments = await fetchCommentsByPostId(postId);
-    res.json(comments);
+    console.log("Comments:", comments);
+    res.status(200).json({
+      success: true,
+      message: "Post comments fetched!",
+      data: comments || [],
+    });
   } catch (error) {
     res.status(500).json({ error: "Failed to retrieve comments." });
   }

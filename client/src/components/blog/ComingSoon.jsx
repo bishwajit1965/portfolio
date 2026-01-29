@@ -30,7 +30,7 @@ const ComingSoon = () => {
   }, [baseUrl, now]);
 
   return (
-    <div className="">
+    <div className="lg:max-w-7xl mx-auto lg:p-0 p-2 mb-10">
       <Helmet>
         <title>Web-tech-services || Coming Soon</title>
       </Helmet>

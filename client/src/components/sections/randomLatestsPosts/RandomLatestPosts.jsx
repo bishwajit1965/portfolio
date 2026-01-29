@@ -18,8 +18,8 @@ const RandomLatestPosts = () => {
   }, [baseUrl]);
 
   return (
-    <div className="">
-      <div className="bg-base-300 rounded-md">
+    <div className="lg:max-w-7xl mx-auto lg:p-0 p-2 space-y-4 mb-6">
+      <div className="bg-base-300s rounded-mds">
         <SectionTitle
           title="Latest Random"
           decoratedText="Blog Posts"

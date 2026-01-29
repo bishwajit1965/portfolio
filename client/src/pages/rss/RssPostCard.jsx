@@ -1,6 +1,6 @@
-import CTAButton from "../../components/ctaButton/CTAButton";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import MiniButton from "../../components/buttons/MiniButton";
 
 const RssPostCard = ({ post }) => {
   const { link, title, description, pubDate } = post;
@@ -19,10 +19,11 @@ const RssPostCard = ({ post }) => {
         </p>
       </div>
       <Link to={`/single-blog-post/${link}`} className="m-0 absolute bottom-2">
-        <CTAButton
+        <MiniButton
           label="Read More"
-          className="btn btn-sm border-none"
+          className="btn btn-sm"
           icon={<FaArrowCircleRight />}
+          variant="base"
         />
       </Link>
     </div>

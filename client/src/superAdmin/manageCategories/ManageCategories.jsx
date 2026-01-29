@@ -35,7 +35,7 @@ const ManageCategories = () => {
         } else {
           const errorResponse = await response.json();
           setErrorMessage(
-            errorResponse.message || "Failed to fetch categories"
+            errorResponse.message || "Failed to fetch categories",
           );
         }
       } catch (error) {
@@ -69,7 +69,7 @@ const ManageCategories = () => {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           body: JSON.stringify(updatedCategory),
-        }
+        },
       );
 
       if (response.ok) {
@@ -117,7 +117,7 @@ const ManageCategories = () => {
 
   const handleDeleteCategory = async (categoryId) => {
     const confirmed = window.confirm(
-      "Are you sure you want to delete this project?"
+      "Are you sure you want to delete this project?",
     );
     if (confirmed) {
       try {
@@ -128,7 +128,7 @@ const ManageCategories = () => {
           },
         });
         setCategories((prevCategories) =>
-          prevCategories.filter((category) => category._id !== categoryId)
+          prevCategories.filter((category) => category._id !== categoryId),
         );
         alert("Category deleted successfully!");
       } catch (error) {

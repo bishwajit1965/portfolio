@@ -22,9 +22,10 @@ const JourneyMilestones = () => {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div>
+    <div className="lg:max-w-7xl mx-auto lg:p-0 p-2">
       <SectionTitle
-        title="Milestones in My Development Journey"
+        title="Milestones in"
+        decoratedText="My Development Journey"
         subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
         icon={FaLandmark}
       />

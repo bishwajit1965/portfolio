@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import SectionTitle from "../../sectionTitle/SectionTitle";
 import { FaAlignCenter } from "react-icons/fa";
+import Button from "../../buttons/Button";
+import { FaEye } from "react-icons/fa6";
 
 const ProjectCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -44,7 +46,7 @@ const ProjectCarousel = () => {
   };
 
   return (
-    <div className="">
+    <div className="lg:max-w-7xl mx-auto lg:p-0 p-2">
       <SectionTitle
         title="Latest"
         decoratedText="Project Carousel"
@@ -93,11 +95,11 @@ const ProjectCarousel = () => {
               : "No project is available."}
           </div>
         </div>
-        <div className="lg:col-span-6 col-span-12 bg-base-200 lg:h-80 rounded-md shadow-md lg:p-2 p-2 text-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:border border-slate-700">
-          <h2 className="text-1xl text-slate-700 dark:text-slate-400 font-bold">
+        <div className="lg:col-span-6 col-span-12 bg-base-200s lg:h-80 rounded-md shadow-mds lg:p-2 p-2 text-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:border border-slate-700">
+          <h2 className="lg:text-2xl text-slate-700 dark:text-slate-400 font-bold">
             Recent Projects:
           </h2>{" "}
-          <hr className="border-slate-400" />
+          {/* <hr className="border-slate-400" /> */}
           {slides.length > 0
             ? slides.slice(0, 10).map((data, index) => (
                 <Link
@@ -114,6 +116,17 @@ const ProjectCarousel = () => {
                 </Link>
               ))
             : "No data to display."}
+        </div>
+        {/* View All Projects */}
+        <div className="lg:col-span-12 col-span-12 flex justify-center lg:pt-8 pt-4">
+          <Link to="/portfolio-projects" className="m-0">
+            <Button
+              label="View All Projects"
+              icon={<FaEye size={20} />}
+              variant="outline"
+              size="md"
+            />
+          </Link>
         </div>
       </div>
     </div>

@@ -7,6 +7,10 @@ import {
 import SkillBadge from "../../skillBadge/SkillBadge";
 import SectionTitle from "../../sectionTitle/SectionTitle";
 import { Link } from "react-router-dom";
+import Button from "../../buttons/Button";
+import { FaCheck, FaCloud } from "react-icons/fa6";
+import JourneyMilestones from "../parallax/JourneyMilestones";
+import AnimatedBackground from "../animatedBackground/AnimateBackground";
 
 const AboutMeSection = () => {
   return (
@@ -28,8 +32,8 @@ const AboutMeSection = () => {
               data-tip="Click to Contact Me"
             >
               <img
-                src="https://i.ibb.co.com/MgsDqCZ/FB-IMG-1678691214526.jpg"
-                alt=""
+                src="https://i.ibb.co.com/Gv6zHk5d/Gemini-Generated-Image-7h0z6s7h0z6s7h0z.png"
+                alt="Portrait of Bishwajit Paul"
                 className="lg:w-36 lg:h-36 w-16 h-16 p-1 shadow object-contain rounded-full border-4 border-stone-200"
               />
 
@@ -39,7 +43,7 @@ const AboutMeSection = () => {
 
               <div className="absolute top-5 left-36 border dark:border-green-700 px-3 py-1 rounded-full bg-green-500 dark:bg-green-500 text-base-100 text-sm shadow flex items-center gap-2">
                 <span className="w-4 h-4 rounded-full bg-red-500 animate-pulse"></span>{" "}
-                Available - 24/7
+                Open to Opportunities
               </div>
             </div>
           </Link>
@@ -54,6 +58,15 @@ const AboutMeSection = () => {
             again to make it right. That mindset guides how I structure code,
             design APIs, and organize frontend architecture.
           </p>
+
+          <div className="my-8">
+            <Button
+              label="Download CV"
+              variant="outline"
+              size="md"
+              icon={<FaCloud />}
+            />
+          </div>
         </div>
 
         <div className="lg:col-span-5 bg-base-200 dark:bg-slate-800 dark:text-slate-400 rounded-xl p-6 shadow-md">
@@ -61,12 +74,28 @@ const AboutMeSection = () => {
             <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
               <FaCode className="text-orange-500" /> Core Focus
             </h3>
-            <ul className="space-y-3 text-base">
-              <li className="">• Clean architecture & predictable data flow</li>
-              <li className="">• Role‑based systems & authentication</li>
-              <li className="">• Reusable, scalable React components</li>
-              <li className="">
-                • Backend APIs designed for real production use
+            <ul className="text-base lg:space-y-4 space-y-2">
+              <li className="flex items-center gap-2">
+                <FaCheck size={16} /> Clean architecture & predictable data flow
+              </li>
+              <li className="flex items-center gap-2">
+                <FaCheck size={16} /> Role‑based systems & authentication
+              </li>
+              <li className="flex items-center gap-2">
+                <FaCheck size={16} /> Reusable, scalable React components
+              </li>
+              <li className="flex items-center gap-2">
+                <FaCheck size={16} /> Backend APIs designed for real production
+                use
+              </li>
+              <li className="flex items-center gap-2">
+                <FaCheck size={16} /> Performance optimization & best practices
+              </li>
+              <li className="flex items-center gap-2">
+                <FaCheck size={16} /> Thorough testing & error handling
+              </li>
+              <li className="flex items-center gap-2">
+                <FaCheck size={16} /> Clear, maintainable code
               </li>
             </ul>
           </div>
@@ -86,16 +115,16 @@ const AboutMeSection = () => {
               <ul>
                 {[
                   "React(Hooks, Context)",
-                  "Node.js",
-                  "MongoDB",
+                  "JavaScript (ES6+)",
+                  "HTML5 & CSS3",
                   "Tailwind CSS",
                   "Firebase",
                   "Vite",
                 ].map((skill) => (
                   <>
-                    <li className="my-3 text-sm">
+                    <li key={skill} className="my-3 text-sm">
                       ✅&nbsp;
-                      <SkillBadge key={skill} label={skill} />
+                      <SkillBadge label={skill} />
                     </li>
                   </>
                 ))}
@@ -116,9 +145,9 @@ const AboutMeSection = () => {
                   "React Query",
                 ].map((skill) => (
                   <>
-                    <li className="my-3 text-sm">
+                    <li key={skill} className="my-3 text-sm">
                       ✅&nbsp;
-                      <SkillBadge key={skill} label={skill} />
+                      <SkillBadge label={skill} />
                     </li>
                   </>
                 ))}
@@ -152,17 +181,52 @@ const AboutMeSection = () => {
       </div>
 
       {/* Project Highlight */}
-      <div className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-slate-800 dark:to-slate-700 rounded-xl p-8 mb-16 shadow-lg">
+      <div
+        className="bg-gradient-to-br from-orange-100 to-orange-200
+dark:from-slate-800 dark:to-slate-700 rounded-xl p-8 mb-16 shadow-lg space-y-6"
+      >
         <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-          <FaProjectDiagram className="text-orange-500" /> Featured Project
+          <FaProjectDiagram className="text-orange-500" /> Featured Projects
         </h2>
-        <h3 className="text-xl font-semibold mb-2">Nova‑Cart</h3>
-        <p className="leading-relaxed max-w-4xl">
-          Nova‑Cart is a full‑scale e‑commerce platform built with a
-          production‑ready mindset. It includes authentication, role‑based
-          dashboards, product variants, cart & wishlist systems, and structured
-          admin management — designed with scalability and clarity from day one.
-        </p>
+        <div className="">
+          <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
+            <FaCode size={20} className="text-orange-500 " />
+            Nova‑Cart
+          </h3>
+          <p className="leading-relaxed max-w-4xl">
+            Nova‑Cart is a full‑scale e‑commerce platform built with a
+            production‑ready mindset. It includes authentication, role‑based
+            dashboards, product variants, cart & wishlist systems, and
+            structured admin management — designed with scalability and clarity
+            from day one.
+          </p>
+        </div>
+        <div className="">
+          <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
+            <FaCode size={20} className="text-orange-500 " />
+            Blog Mongoose
+          </h3>
+          <p className="leading-relaxed max-w-4xl">
+            Blog Mongoose is a full‑scale blogging platform built with a
+            production‑ready mindset. It includes authentication, role‑based
+            dashboards, product variants, cart & wishlist systems, and
+            structured admin management — designed with scalability and clarity
+            from day one.
+          </p>
+        </div>
+        <div className="">
+          <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
+            <FaCode size={20} className="text-orange-500 " />
+            Nova dashboard
+          </h3>
+          <p className="leading-relaxed max-w-4xl">
+            Nova dashboard is a full‑scale admin dashboard built with a
+            production‑ready mindset. It includes authentication, role‑based
+            dashboards, product variants, cart & wishlist systems, and
+            structured admin management — designed with scalability and clarity
+            from day one.
+          </p>
+        </div>
       </div>
 
       {/* Closing */}
@@ -174,83 +238,14 @@ const AboutMeSection = () => {
         </p>
         <p className="font-semibold">Let’s build something solid.</p>
       </div>
+
+      {/* Journey Milestones */}
+      <JourneyMilestones />
+
+      {/* Animated Background */}
+      <AnimatedBackground />
     </section>
   );
 };
 
 export default AboutMeSection;
-
-// import { Helmet } from "react-helmet-async";
-// import SectionTitle from "../../sectionTitle/SectionTitle";
-
-// const AboutMeSection = () => {
-//   return (
-//     <div className="lg:pt-10">
-//       <Helmet>
-//         <title>Web-tech-services || About Me</title>
-//       </Helmet>
-//       <SectionTitle
-//         title={" About Me"}
-//         subtitle={
-//           "Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
-//         }
-//       />
-
-//       <div className="container mx-auto px-4">
-//         {/* <h2 className="text-4xl font-bold text-center mb-8">About Me</h2> */}
-//         <p className="text-lg text-gray-700 leading-relaxed mb-6 dark:text-slate-200">
-//           Hi, I am Bishwajit Paul, a passionate web developer with a love for
-//           creating intuitive and dynamic user experiences. With a strong
-//           foundation in HTML, CSS, JavaScript, and React, I strive to build
-//           applications that are not only functional but also enjoyable to use.
-//         </p>
-//         <p className="text-lg text-gray-700 leading-relaxed mb-6 dark:text-slate-200">
-//           I have worked on a variety of projects ranging from small business
-//           websites to more complex web applications. I am constantly learning
-//           and improving my skills to stay on top of the latest trends and
-//           technologies in web development.
-//         </p>
-//         <div className="skills mt-8 lg:grid grid-cols-3 gap-4 justify-between">
-//           <div className="rounded-md shadow-md p-4 dark:bg-slate-800 dark:border-slate-700">
-//             <h3 className="text-2xl font-semibold mb-4">Skills & Expertise</h3>
-//             <ul className="list-disc list-inside text-left text-gray-700 dark:text-slate-200">
-//               <li>Responsive Web Design</li>
-//               <li>JavaScript (ES6+)</li>
-//               <li>React & Redux</li>
-//               <li>Node.js & Express.js</li>
-//               <li>MongoDB & Mongoose</li>
-//               <li>Version Control (Git)</li>
-//               <li>API Development & Integration</li>
-//             </ul>
-//           </div>
-//           <div className="rounded-md shadow-md dark:text-slate-200 dark:bg-slate-800 dark:border-slate-700 p-4">
-//             <h3 className="text-2xl font-semibold mb-4">Skills & Expertise</h3>
-//             <ul className="list-disc list-inside text-left text-gray-700 dark:text-slate-200">
-//               <li>Responsive Web Design</li>
-//               <li>JavaScript (ES6+)</li>
-//               <li>React & Redux</li>
-//               <li>Node.js & Express.js</li>
-//               <li>MongoDB & Mongoose</li>
-//               <li>Version Control (Git)</li>
-//               <li>API Development & Integration</li>
-//             </ul>
-//           </div>
-//           <div className="rounded-md shadow-md dark:text-slate-200 p-4 dark:bg-slate-800 dark:border-slate-700">
-//             <h3 className="text-2xl font-semibold mb-4">Skills & Expertise</h3>
-//             <ul className="list-disc list-inside text-left text-gray-700 dark:text-slate-200">
-//               <li>Responsive Web Design</li>
-//               <li>JavaScript (ES6+)</li>
-//               <li>React & Redux</li>
-//               <li>Node.js & Express.js</li>
-//               <li>MongoDB & Mongoose</li>
-//               <li>Version Control (Git)</li>
-//               <li>API Development & Integration</li>
-//             </ul>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AboutMeSection;
