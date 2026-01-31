@@ -80,6 +80,7 @@ Each screenshot includes:
 - Image
 - Caption
 - Category grouping
+- Tech Stacks included
 
 This allows scalable and clean project presentation.
 
