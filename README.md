@@ -124,9 +124,9 @@ node index.js
 
 👤 Author
 
-Bishwajit Paul
+### Bishwajit Paul
 
-Built & maintained by a solo developer
-End-to-end design, development, and integration handled independently.
+- Built & maintained by a solo developer
+- End-to-end design, development, and integration handled independently.
 
-This portfolio reflects real project experience, not tutorial code.
+- This portfolio reflects real project experience, not tutorial code.
