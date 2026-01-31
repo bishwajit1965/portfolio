@@ -124,6 +124,8 @@ node index.js
 
 👤 Author
 
+Bishwajit Paul
+
 Built & maintained by a solo developer
 End-to-end design, development, and integration handled independently.
 
