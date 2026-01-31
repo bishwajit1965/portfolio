@@ -121,3 +121,10 @@ npm run dev
 cd server
 npm install
 node index.js
+
+👤 Author
+
+Built & maintained by a solo developer
+End-to-end design, development, and integration handled independently.
+
+This portfolio reflects real project experience, not tutorial code.
