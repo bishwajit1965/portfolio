@@ -33,7 +33,12 @@ const ContactMe = () => {
                   <h2 className="lg:text-lg text-sm font-semibold text-center mt-1">
                     Bishwajit Paul,{" "}
                     <span className="text-amber-600">
-                      Full-stack MERN Developer
+                      Full-stack{" "}
+                      <span className="text-emerald-600 lg:text-xl dark:text-orange-300">
+                        {" "}
+                        MERN
+                      </span>{" "}
+                      Developer
                     </span>
                   </h2>
                 </figcaption>
@@ -74,7 +79,12 @@ const ContactMe = () => {
                   <span className="text-gray-600 dark:text-amber-500">
                     Bishwajit Paul
                   </span>{" "}
-                  ➡️ Full-stack MERN Developer (Currently based in Bangladesh)
+                  ➡️ Full-stack{" "}
+                  <span className="text-emerald-600 lg:text-xl dark:text-orange-300">
+                    {" "}
+                    MERN
+                  </span>{" "}
+                  Developer (Currently based in Bangladesh)
                 </h2>
                 <p>Available for freelance work and full-time positions</p>
                 <p>Email: bishwajitpaul123@gmail.com</p>

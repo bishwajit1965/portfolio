@@ -5,6 +5,7 @@ import ProjectCarousel from "../../components/sections/projectCarousel/ProjectCa
 import ProjectsSection from "../../components/projects/ProjectsSection";
 import ScrollTopButton from "../../components/scrollTopButton/ScrollTopButton";
 import SkillsPreview from "../../components/skillsPreview/SkillsPreview";
+import TestimonialSection from "../../components/sections/testimonials/TestimonialsSection";
 
 const Home = () => {
   return (
@@ -21,6 +22,8 @@ const Home = () => {
         <SkillsPreview />
 
         <ProjectsSection />
+
+        <TestimonialSection />
 
         <ContactMeSection />
 

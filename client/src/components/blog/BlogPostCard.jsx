@@ -113,6 +113,7 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
             />
             <Link to={`/single-blog-post/${_id}`} className="m-0">
               <MiniButton
+                variant="success"
                 label="Read More"
                 className="btn btn-sm"
                 icon={<FaArrowCircleRight />}

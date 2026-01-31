@@ -1,11 +1,12 @@
 import {
   FaArrowCircleDown,
-  FaEye,
+  FaExternalLinkAlt,
   FaGithub,
   FaHome,
   FaReadme,
   FaRegEye,
   FaSourcetree,
+  FaTools,
   FaTrashAlt,
 } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
@@ -16,6 +17,7 @@ import PageTitle from "../../pages/pageTitle/PageTitle";
 import MiniButton from "../buttons/MiniButton";
 import Button from "../buttons/Button";
 import { FaCircleRight } from "react-icons/fa6";
+import SkillBadge from "../skillBadge/SkillBadge";
 
 const ProjectDetails = () => {
   const [loading, setLoading] = useState(false);
@@ -29,6 +31,8 @@ const ProjectDetails = () => {
     name: "",
     type: "",
     description: "",
+    captions: "",
+    techStacks: [],
   });
 
   const imageUrl = `${baseURL}${projectDetails.image}`;
@@ -141,7 +145,7 @@ const ProjectDetails = () => {
                 </figureCaption>
               </figure>
             </div>
-            <div className="lg:col-span-6 col-span-12 p-2">
+            <div className="lg:col-span-6 col-span-12 lg:space-y-4 space-y-2 p-2">
               <h2 className="font-bold lg:text-3xl text-gray-600 dark:text-slate-400">
                 <span className="text-stone-600 dark:text-stone-500 pr-2 font-bold">
                   Name:
@@ -162,6 +166,24 @@ const ProjectDetails = () => {
                 </span>
                 {projectDetails.description}
               </p>
+
+              <div className="lg:flex lg:flex-wrap grid items-center gap-2">
+                <h2 className="flex items-center gap-2 font-semibold bg-base-100 text-base-content rounded-md border border-gray-300 dark:border-slate-600 dark:bg-gray-600 dark:text-base-100 pr-2">
+                  <span className="bg-emerald-500 text-base-100 py-1.5 px-2 rounded-l-md">
+                    <FaTools />
+                  </span>
+                  Tech Stacks
+                </h2>
+                {projectDetails && projectDetails?.techStacks?.length > 0 ? (
+                  projectDetails?.techStacks?.map((techStack, i) => (
+                    <SkillBadge key={i} label={techStack} />
+                  ))
+                ) : (
+                  <p className="text-center text-gray-600 font-bold dark:text-base-100">
+                    No techStack !
+                  </p>
+                )}
+              </div>
             </div>
           </div>
 
@@ -205,7 +227,7 @@ const ProjectDetails = () => {
                                 icon={<FaRegEye />}
                                 onClick={() => handleOpenDetailModal(item)}
                               >
-                                Open Modal
+                                View Details
                               </Button>
                             </div>
                           </div>
@@ -218,24 +240,21 @@ const ProjectDetails = () => {
             </div>
             <div className="lg:flex lg:space-x-6 grid space-y-2 lg:space-y-0">
               <Link to="/" className="m-0">
-                <MiniButton
-                  label="Go Home"
-                  variant="outline"
-                  icon={<FaHome />}
-                />
+                <Button label="Go Home" variant="outline" icon={<FaHome />} />
               </Link>
+
               <Link to="#" className="m-0">
-                <MiniButton
-                  label="Live Demo"
-                  variant="outline"
-                  icon={<FaEye />}
-                />
-              </Link>
-              <Link to="#" className="m-0">
-                <MiniButton
+                <Button
                   label="GitHub Source Code"
                   variant="outline"
                   icon={<FaGithub />}
+                />
+              </Link>
+              <Link to="#" className="m-0">
+                <Button
+                  label="Live Demo"
+                  variant="outline"
+                  icon={<FaExternalLinkAlt />}
                 />
               </Link>
             </div>
@@ -247,18 +266,41 @@ const ProjectDetails = () => {
                 data={data}
                 className="fixed max-w-full mx-auto inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
               >
-                <div className="bg-white dark:bg-gray-800 lg:p-8 p-2 rounded-md shadow-sm max-w-3xl w-full">
+                <div className="bg-white dark:bg-gray-800 lg:p-8 p-2 rounded-md shadow-sm max-w-3xl w-full space-y-2">
                   <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200 flex items-center gap-2">
                     <FaCircleRight className="dark:text-amber-500 text-indigo-500" />{" "}
                     {data?.caption}
                   </h2>
 
                   <div className="mb-2">
-                    <img
-                      src={`${baseURL}${data.image}`}
-                      alt={data.caption}
-                      className="w-full h-96 object-contain rounded-md mb-2 shadow-md border dark:border-slate-600"
-                    />
+                    <figure>
+                      <img
+                        src={`${baseURL}${data.image}`}
+                        alt={data.caption}
+                        className="w-full h-96 object-contain rounded-md mb-2 shadow-md border dark:border-slate-600"
+                      />
+                      <figcaption>{data?.caption}</figcaption>
+                    </figure>
+                  </div>
+                  <p>{projectDetails?.description}</p>
+
+                  <div className="lg:flex lg:flex-wrap grid items-center gap-2">
+                    <h2 className="flex items-center gap-2 font-semibold bg-base-100 text-base-content rounded-md border border-gray-300 dark:border-slate-600 dark:bg-gray-600 dark:text-base-100 pr-2">
+                      <span className="bg-emerald-500 text-base-100 py-1.5 px-2 rounded-l-md">
+                        <FaTools />
+                      </span>
+                      Tech Stacks
+                    </h2>
+                    {projectDetails &&
+                    projectDetails?.techStacks?.length > 0 ? (
+                      projectDetails?.techStacks?.map((techStack, i) => (
+                        <SkillBadge key={i} label={techStack} />
+                      ))
+                    ) : (
+                      <p className="text-center text-gray-600 font-bold dark:text-base-100">
+                        No techStack !
+                      </p>
+                    )}
                   </div>
                   <div className="flex justify-end pt-2">
                     <MiniButton

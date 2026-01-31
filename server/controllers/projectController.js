@@ -45,6 +45,13 @@ const createProject = async (req, res) => {
       }),
     );
 
+    // ✅ Tech Stacks (flat array)
+    const techStacks = Array.isArray(req.body.techStacks)
+      ? req.body.techStacks.filter(Boolean)
+      : req.body.techStacks
+        ? [req.body.techStacks]
+        : [];
+
     const projectData = {
       name,
       type,
@@ -54,6 +61,7 @@ const createProject = async (req, res) => {
       image: mainImageFile?.filename || null,
       visibility: "visible",
       screenshots,
+      techStacks,
       createdAt: new Date(),
     };
     console.log("Project data", projectData);
@@ -106,8 +114,15 @@ const updateProjectById = async (req, res) => {
     /* ----------------------------------
        1️⃣ Update main fields
     ---------------------------------- */
-    const { name, type, description, githubLink, liveLink, visibility } =
-      req.body;
+    const {
+      name,
+      type,
+      description,
+      githubLink,
+      liveLink,
+      visibility,
+      techStacks,
+    } = req.body;
 
     const updateFields = {
       name,
@@ -116,6 +131,7 @@ const updateProjectById = async (req, res) => {
       githubLink,
       liveLink,
       visibility,
+      techStacks: Array.isArray(techStacks) ? techStacks : [techStacks],
     };
 
     /* ----------------------------------

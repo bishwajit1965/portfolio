@@ -6,12 +6,14 @@ import {
   FaTrashAlt,
   FaRegEye,
   FaChevronCircleRight,
+  FaTools,
 } from "react-icons/fa";
 import Button from "../../components/buttons/Button";
 import { useEffect, useState } from "react";
 import api from "../../services/api";
 import MiniButton from "../../components/buttons/MiniButton";
 import Loader from "../../components/loader/Loader";
+import SkillBadge from "../../components/skillBadge/SkillBadge";
 
 const PortfolioProjects = () => {
   const [loading, setLoading] = useState(false);
@@ -85,6 +87,7 @@ const PortfolioProjects = () => {
       };
     }
   }, [isOpenDetailModal]);
+
   useEffect(() => {
     const fetchProjects = async () => {
       try {
@@ -116,7 +119,7 @@ const PortfolioProjects = () => {
       setProjectData(project);
     }
   };
-
+  console.log("Projects", projects);
   return (
     <div>
       {loading && <Loader />}
@@ -155,7 +158,7 @@ const PortfolioProjects = () => {
               const filteredScreenshots = filterScreenshotsByCategory(
                 project.screenshots,
               );
-              if (filteredScreenshots.length === 0) return null;
+              if (filteredScreenshots?.length === 0) return null;
 
               return (
                 <div key={project._id} className="lg:mb-10 mb-5">
@@ -203,7 +206,7 @@ const PortfolioProjects = () => {
                                   handleOpenDetailModal({ item, project })
                                 }
                               >
-                                Open Modal
+                                View Details
                               </Button>
                             </div>
                           </div>
@@ -212,8 +215,22 @@ const PortfolioProjects = () => {
                       <div className="lg:space-y-6 space-y-2 lg:pb-6 pb-2">
                         <div className="">
                           {project?.description && (
-                            <p className="mt-4 text-gray-600 dark:text-gray-300">
+                            <span className="mt-4 text-gray-600 dark:text-gray-300">
                               {project?.description}
+                            </span>
+                          )}
+                        </div>
+                        <div className="lg:flex grid  items-center gap-2">
+                          <h2 className="flex items-center gap-2 font-bold bg-base-100 text-base-content py-0.5 px-2 rounded-md border border-gray-400 dark:border-slate-600 dark:bg-gray-600 dark:text-base-100">
+                            <FaTools /> Tech Stacks Used ➡️
+                          </h2>
+                          {project && project?.techStacks?.length > 0 ? (
+                            project?.techStacks?.map((techStack, i) => (
+                              <SkillBadge key={i} label={techStack} />
+                            ))
+                          ) : (
+                            <p className="text-center text-gray-600 font-bold dark:text-base-100">
+                              No techStack is mentioned !
                             </p>
                           )}
                         </div>
@@ -263,15 +280,12 @@ const PortfolioProjects = () => {
           id="modal"
           className="fixed max-w-full mx-auto inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
         >
-          <div className="bg-white dark:bg-gray-800 lg:p-8 p-2 rounded-md max-w-3xl w-full">
-            <div className="mb-4 space-y-1">
+          <div className="bg-white dark:bg-gray-800 lg:p-8 p-2 rounded-md max-w-3xl w-full  space-y-2">
+            <div className="mb-4 space-y-2">
               <h2 className="lg:text-xl text-lg font-bold text-gray-700 dark:text-gray-300 flex items-center gap-2">
                 <FaCircleRight className="dark:text-amber-500 text-indigo-500" />
-                {projectData?.name}
+                Title: {projectData?.name}
               </h2>
-              <p className="text-medium pl-7 text-gray-700 dark:text-gray-300">
-                {projectData?.description}
-              </p>
             </div>
 
             <div className="mb-2">
@@ -290,6 +304,24 @@ const PortfolioProjects = () => {
                   </figcaption>
                 )}
               </figure>
+            </div>
+            <p className="text-medium text-gray-700 dark:text-gray-300">
+              Description: {projectData?.description}
+            </p>
+
+            <div className="lg:flex grid  items-center gap-2">
+              <h2 className="flex items-center gap-2 font-bold bg-base-100 text-base-content py-0.5 px-2 rounded-md border border-gray-400 dark:border-slate-600 dark:bg-gray-600 dark:text-base-100">
+                <FaTools /> Tech Stacks Used ➡️
+              </h2>
+              {projectData && projectData?.techStacks?.length > 0 ? (
+                projectData?.techStacks?.map((techStack, i) => (
+                  <SkillBadge key={i} label={techStack} />
+                ))
+              ) : (
+                <p className="text-center text-gray-600 font-bold dark:text-base-100">
+                  No techStack is mentioned !
+                </p>
+              )}
             </div>
             <div className="flex justify-end pt-2">
               <MiniButton

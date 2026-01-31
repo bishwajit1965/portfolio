@@ -5,6 +5,7 @@ import {
   FaPlus,
   FaPlusCircle,
   FaSpinner,
+  FaTrashAlt,
 } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -12,6 +13,7 @@ import { Helmet } from "react-helmet-async";
 import api from "../../services/api";
 import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import Button from "../../components/buttons/Button";
+import MiniButton from "../../components/buttons/MiniButton";
 
 const ProjectUpdateForm = () => {
   const apiURL = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -31,6 +33,7 @@ const ProjectUpdateForm = () => {
     visibility: "visible",
     image: "",
     screenshots: [],
+    techStacks: [],
   });
 
   const [mainImageFile, setMainImageFile] = useState(null);
@@ -93,15 +96,10 @@ const ProjectUpdateForm = () => {
     setFormData({ ...formData, screenshots: updated });
   };
 
-  // const handleNewItemImage = (catIndex, itemIndex, e) => {
-  //   const updated = [...formData.screenshots];
-  //   updated[catIndex].items[itemIndex].newImageFile = e.target.files[0];
-  //   setFormData({ ...formData, screenshots: updated });
-  // };
+  /***====================================
+  | Submit
+  |====================================***/
 
-  /* ----------------------------------
-     Submit
-  ---------------------------------- */
   const handleSubmit = async (e) => {
     e.preventDefault();
     const dataToSend = new FormData();
@@ -127,6 +125,11 @@ const ProjectUpdateForm = () => {
       });
     });
 
+    // Handle Tech Stacks
+    formData.techStacks.forEach((techStack) => {
+      dataToSend.append("techStacks", techStack);
+    });
+
     try {
       setLoading(true);
       const res = await api.patch(`/projects/${projectId}`, dataToSend);
@@ -143,9 +146,10 @@ const ProjectUpdateForm = () => {
     }
   };
 
-  /* ----------------------------------
-     Render
-  ---------------------------------- */
+  /***====================================
+  | Render
+  | ==================================***/
+
   return (
     <>
       <Helmet>
@@ -154,215 +158,321 @@ const ProjectUpdateForm = () => {
 
       <SuperAdminPageTitle title="Super Admin" decoratedText="Update Project" />
 
-      <div className="lg:p-4 p-2 mt-2 dark:bg-slate-900 rounded-lg shadow-md">
-        <div className="grid lg:grid-cols-12 grid-cols-1 justify-between gap-4">
-          {/* Preview Main Image */}
-          <div className="lg:col-span-4 col-span-12">
-            {formData.image && !mainImageFile ? (
-              <img
-                src={`${baseURL}${formData.image}`}
-                alt={formData.name}
-                className="w-full h-auto rounded-md object-contain"
-              />
-            ) : mainImageFile ? (
-              <img
-                src={URL.createObjectURL(mainImageFile)}
-                alt="Preview"
-                className="w-full h-full rounded-md object-cover"
-              />
-            ) : (
-              <div className="h-full flex items-center justify-center border rounded-md dark:border-slate-700 text-slate-400">
-                No main image
-              </div>
-            )}
-          </div>
+      <div className="lg:p-4 p-2 mt-2 dark:bg-slate-900 rounded-lg shadow-md space-y-6">
+        <div className="">
+          <h2 className="lg:text-2xl text-lg font-bold mb-2 flex items-center border-b pb-2">
+            <FaEdit className="mr-2" /> Update Project
+          </h2>
+        </div>
 
+        {/* Preview Main Image */}
+        <div className="">
+          {formData.image && !mainImageFile ? (
+            <img
+              src={`${baseURL}${formData.image}`}
+              alt={formData.name}
+              className="w-full h-auto rounded-md object-contain"
+            />
+          ) : mainImageFile ? (
+            <img
+              src={URL.createObjectURL(mainImageFile)}
+              alt="Preview"
+              className="w-full h-full rounded-md object-cover shadow-lg"
+            />
+          ) : (
+            <div className="h-full flex items-center justify-center border rounded-md dark:border-slate-700 text-slate-400">
+              No main image
+            </div>
+          )}
+        </div>
+        {/* Success / error message */}
+        <div className="">
+          {successMessage && (
+            <p className="text-green-600 text-sm">{successMessage}</p>
+          )}
+          {errors.general && (
+            <p className="text-red-500 text-sm">{errors.general}</p>
+          )}
+        </div>
+
+        <div className="">
           {/* Form */}
-          <div className="lg:col-span-8 col-span-12 dark:border dark:border-slate-700 p-3 rounded-md">
-            <h2 className="text-2xl font-bold mb-2 flex items-center border-b pb-2">
-              <FaEdit className="mr-2" /> Update Project
-            </h2>
+          <form onSubmit={handleSubmit} encType="multipart/form-data">
+            <div className="grid lg:grid-cols-12 grid-cols-1 justify-between lg:gap-4 gap-2">
+              {/* Left */}
+              <div className="lg:col-span-6 col-span-12 space-y-2">
+                {/* Name */}
+                <div className="mb-3">
+                  <label className="text-sm">Name</label>
+                  <input
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded-md dark:bg-slate-800"
+                  />
+                </div>
 
-            {successMessage && (
-              <p className="text-green-600 text-sm">{successMessage}</p>
-            )}
-            {errors.general && (
-              <p className="text-red-500 text-sm">{errors.general}</p>
-            )}
+                {/* Type */}
+                <div className="mb-3">
+                  <label className="text-sm">Type</label>
+                  <input
+                    name="type"
+                    value={formData.type}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded-md dark:bg-slate-800"
+                  />
+                </div>
 
-            <form onSubmit={handleSubmit} encType="multipart/form-data">
-              {/* Name */}
-              <div className="mb-3">
-                <label className="text-sm">Name</label>
-                <input
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full p-2 border rounded-md dark:bg-slate-800"
-                />
-              </div>
+                {/* Description */}
+                <div className="mb-3">
+                  <label className="text-sm">Description</label>
+                  <textarea
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded-md dark:bg-slate-800"
+                  />
+                </div>
 
-              {/* Type */}
-              <div className="mb-3">
-                <label className="text-sm">Type</label>
-                <input
-                  name="type"
-                  value={formData.type}
-                  onChange={handleChange}
-                  className="w-full p-2 border rounded-md dark:bg-slate-800"
-                />
-              </div>
-
-              {/* Description */}
-              <div className="mb-3">
-                <label className="text-sm">Description</label>
-                <textarea
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  className="w-full p-2 border rounded-md dark:bg-slate-800"
-                />
-              </div>
-
-              {/* GitHub Link */}
-              <div className="mb-3">
-                <label className="text-sm">GitHub Link</label>
-                <input
-                  type="url"
-                  name="githubLink"
-                  value={formData.githubLink}
-                  onChange={handleChange}
-                  className="w-full p-2 border rounded-md dark:bg-slate-800"
-                />
-              </div>
-
-              {/* Live Demo Link */}
-              <div className="mb-3">
-                <label className="text-sm">Live Demo Link</label>
-                <input
-                  type="url"
-                  name="liveLink"
-                  value={formData.liveLink}
-                  onChange={handleChange}
-                  className="w-full p-2 border rounded-md dark:bg-slate-800"
-                />
-              </div>
-
-              {/* Main Image Upload */}
-              <div className="mb-4">
-                <label className="text-sm">Main Image</label>
-                <input
-                  type="file"
-                  onChange={handleMainImageChange}
-                  className="w-full p-2 border rounded-md dark:bg-slate-800"
-                />
-              </div>
-
-              {/* Screenshots */}
-              <div className="mb-4">
-                <label className="text-sm font-bold">Screenshots</label>
-                {formData.screenshots.map((cat, catIndex) => (
-                  <div key={cat.id} className="border p-2 rounded-md mb-2">
-                    <input
-                      type="text"
-                      value={cat.category}
-                      placeholder="Category name"
-                      onChange={(e) => {
-                        const updated = [...formData.screenshots];
-                        updated[catIndex].category = e.target.value;
-                        setFormData({ ...formData, screenshots: updated });
-                      }}
-                      className="w-full mb-2 p-1 border rounded-md dark:bg-slate-800"
-                    />
-
-                    {cat.items.map((item, itemIndex) => (
-                      <div
-                        key={item.id}
-                        className="flex gap-2 items-center mb-2"
-                      >
-                        {item.image && !item.newImageFile && (
-                          <img
-                            src={`http://localhost:5000/uploads/${item.image}`}
-                            alt={item.caption}
-                            className="w-20 h-20 object-cover rounded"
-                          />
-                        )}
-                        {item.newImageFile && (
-                          <img
-                            src={URL.createObjectURL(item.newImageFile)}
-                            alt="Preview"
-                            className="w-20 h-20 object-cover rounded"
-                          />
-                        )}
+                {/* Screenshots */}
+                <div className="mb-4 rounded-md bg-green-200s">
+                  <label className="text-sm font-bold">
+                    Category Wise Screenshots
+                  </label>
+                  {formData.screenshots.map((cat, catIndex) => (
+                    <div
+                      key={cat.id}
+                      className="border-2 border-base-300 p-2 rounded-md mb-2 space-y-2"
+                    >
+                      <div className="flex items-center gap-2">
                         <input
                           type="text"
-                          value={item.caption}
-                          placeholder="Caption"
-                          onChange={(e) =>
-                            handleScreenshotChange(catIndex, itemIndex, e)
-                          }
-                          className="p-1 border rounded-md dark:bg-slate-800"
+                          value={cat.category}
+                          placeholder="Category name"
+                          onChange={(e) => {
+                            const updated = [...formData.screenshots];
+                            updated[catIndex].category = e.target.value;
+                            setFormData({ ...formData, screenshots: updated });
+                          }}
+                          className="input input-sm input-bordered w-full dark:bg-slate-800"
                         />
-                        <input
-                          type="file"
-                          onChange={(e) =>
-                            handleScreenshotChange(catIndex, itemIndex, e)
-                          }
+                        <MiniButton
+                          type="button"
+                          variant="danger"
+                          icon={<FaTrashAlt />}
+                          label="Delete"
+                          onClick={() => {
+                            const updated = [...formData.screenshots];
+                            updated.splice(catIndex, 1);
+                            setFormData({ ...formData, screenshots: updated });
+                          }}
                         />
                       </div>
-                    ))}
-                    <button
+
+                      {cat.items.map((item, itemIndex) => (
+                        <div
+                          key={item.id}
+                          className="grid lg:grid-cols-12 grid-cols-1  gap-2 items-center justify-between mb-2 border border-base-300 shadow-sm p-2 rounded-md hover:border-slate-400"
+                        >
+                          <div className="lg:col-span-4 col-span-12">
+                            {/* Previously Uploaded */}
+                            {item.image && !item.newImageFile && (
+                              <img
+                                src={`${baseURL}${item.image}`}
+                                alt={item.caption}
+                                className="w-full h-28 object-cover rounded-md"
+                              />
+                            )}
+
+                            {/* New Upload preview */}
+                            {item.newImageFile && (
+                              <img
+                                src={URL.createObjectURL(item.newImageFile)}
+                                alt="Preview"
+                                className="w-full h-28 object-cover rounded-md"
+                              />
+                            )}
+                          </div>
+
+                          <div className="lg:col-span-8 space-y-2">
+                            <input
+                              type="text"
+                              value={item.caption}
+                              placeholder="Caption"
+                              onChange={(e) =>
+                                handleScreenshotChange(catIndex, itemIndex, e)
+                              }
+                              className="input input-sm w-full input-bordered dark:bg-slate-800"
+                            />
+
+                            <div className="">
+                              <input
+                                type="file"
+                                onChange={(e) =>
+                                  handleScreenshotChange(catIndex, itemIndex, e)
+                                }
+                                className="file-input input-sm w-full input-bordered pl-0"
+                              />
+                            </div>
+                            <div className="flex justify-end">
+                              <MiniButton
+                                type="button"
+                                variant="danger"
+                                label="Delete"
+                                icon={<FaTrashAlt />}
+                                onClick={() => {
+                                  const updated = [...formData.screenshots];
+                                  updated[catIndex].items.splice(itemIndex, 1);
+                                  setFormData({
+                                    ...formData,
+                                    screenshots: updated,
+                                  });
+                                }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+
+                      <MiniButton
+                        type="button"
+                        variant="success"
+                        label="Add Item"
+                        icon={<FaPlus />}
+                        onClick={() => handleAddNewItem(catIndex)}
+                        className="btn btn-xs btn-primary flex items-center gap-1"
+                      />
+                    </div>
+                  ))}
+                  <div className="p-2">
+                    <MiniButton
                       type="button"
-                      onClick={() => handleAddNewItem(catIndex)}
-                      className="btn btn-xs btn-primary flex items-center gap-1"
-                    >
-                      <FaPlus /> Add Item
-                    </button>
+                      variant="success"
+                      label="Add Category"
+                      icon={<FaPlus />}
+                      onClick={handleAddNewCategory}
+                    />
                   </div>
-                ))}
-                <button
-                  type="button"
-                  onClick={handleAddNewCategory}
-                  className="btn btn-xs text-base-100 btn-success flex items-center gap-1"
-                >
-                  <FaPlus /> Add Category
-                </button>
+                </div>
               </div>
 
-              {/* Actions */}
-              <div className="flex gap-2 mt-4">
-                <Button
-                  type="submit"
-                  disabled={loading}
-                  icon={loading ? <FaSpinner /> : <FaEdit />}
-                  size="sm"
-                  className="btn btn-sm btn-success text-white"
-                >
-                  {loading ? "Updating..." : "Update Project"}
-                </Button>
+              {/* Right */}
+              <div className="lg:col-span-6 col-span-12 space-y-2">
+                {/* GitHub Link */}
+                <div className="mb-3">
+                  <label className="text-sm">GitHub Link</label>
+                  <input
+                    type="url"
+                    name="githubLink"
+                    value={formData.githubLink}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded-md dark:bg-slate-800"
+                  />
+                </div>
 
-                <Link
-                  to="/super-admin/manage-projects"
-                  className="btn btn-sm btn-primary text-white flex items-center"
-                >
-                  <FaHome className="mr-1" /> Home
-                </Link>
+                {/* Live Demo Link */}
+                <div className="mb-3">
+                  <label className="text-sm">Live Demo Link</label>
+                  <input
+                    type="url"
+                    name="liveLink"
+                    value={formData.liveLink}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded-md dark:bg-slate-800"
+                  />
+                </div>
 
-                <Link
-                  to="/super-admin/manage-projects"
-                  className="btn btn-sm btn-success text-white flex items-center"
-                >
-                  <FaCog className="mr-1" /> All Projects
-                </Link>
-                <Link
-                  to="/super-admin/add-project"
-                  className="btn btn-sm btn-success text-white flex items-center"
-                >
-                  <FaPlusCircle className="mr-1" /> Add Project
-                </Link>
+                {/* Main Image Upload */}
+                <div className="mb-4">
+                  <label className="text-sm">Main Image</label>
+                  <input
+                    type="file"
+                    onChange={handleMainImageChange}
+                    className="w-full p-2 border rounded-md dark:bg-slate-800"
+                  />
+                </div>
+
+                {/* Tech Stack */}
+                <div className="">
+                  <label className="text-sm">Tech Stack</label>
+                  {formData?.techStacks?.map((tech, i) => (
+                    <div
+                      key={i}
+                      className="flex gap-2 items-center w-full mb-2"
+                    >
+                      <input
+                        type="text"
+                        value={tech}
+                        onChange={(e) => {
+                          const updated = [...formData.techStacks];
+                          updated[i] = e.target.value;
+                          setFormData({ ...formData, techStacks: updated });
+                        }}
+                        className="input input-sm input-bordered w-full"
+                      />
+                      <MiniButton
+                        type="button"
+                        variant="danger"
+                        label="Delete"
+                        icon={<FaTrashAlt />}
+                        onClick={() => {
+                          const updated = [...formData.techStacks];
+                          updated.splice(i, 1);
+                          setFormData({ ...formData, techStacks: updated });
+                        }}
+                      />
+                    </div>
+                  ))}
+                  <MiniButton
+                    type="button"
+                    variant="success"
+                    icon={<FaPlus />}
+                    onClick={() =>
+                      setFormData({
+                        ...formData,
+                        techStacks: [...formData.techStacks, ""],
+                      })
+                    }
+                  >
+                    Add Tech Stack
+                  </MiniButton>
+                </div>
               </div>
-            </form>
-          </div>
+            </div>
+
+            {/* Actions */}
+            <div className="lg:flex grid gap-2 mt-4">
+              <Button
+                type="submit"
+                disabled={loading}
+                icon={loading ? <FaSpinner /> : <FaEdit />}
+                size="sm"
+                className="btn btn-sm btn-success text-white"
+              >
+                {loading ? "Updating..." : "Update Project"}
+              </Button>
+
+              <Link
+                to="/super-admin/manage-projects"
+                className="btn btn-sm btn-primary text-white flex items-center"
+              >
+                <FaHome className="mr-1" /> Home
+              </Link>
+
+              <Link
+                to="/super-admin/manage-projects"
+                className="btn btn-sm btn-success text-white flex items-center"
+              >
+                <FaCog className="mr-1" /> All Projects
+              </Link>
+              <Link
+                to="/super-admin/add-project"
+                className="btn btn-sm btn-success text-white flex items-center"
+              >
+                <FaPlusCircle className="mr-1" /> Add Project
+              </Link>
+            </div>
+          </form>
         </div>
       </div>
     </>

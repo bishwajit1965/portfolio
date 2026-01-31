@@ -109,6 +109,13 @@ const BlogPosts = () => {
           ) : (
             <p>No blog posts found.</p>
           )}
+          {/* Pagination */}
+          <Pagination
+            totalPosts={filteredPosts.length}
+            postsPerPage={postsPerPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </div>
 
         {/* Sidebar Content */}
@@ -148,14 +155,6 @@ const BlogPosts = () => {
           </div>
         </div>
       </div>
-
-      {/* Pagination */}
-      <Pagination
-        totalPosts={filteredPosts.length}
-        postsPerPage={postsPerPage}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
 
       {/* Random Blog Posts */}
       <RandomLatestPosts />

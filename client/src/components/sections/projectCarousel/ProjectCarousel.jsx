@@ -95,7 +95,7 @@ const ProjectCarousel = () => {
               : "No project is available."}
           </div>
         </div>
-        <div className="lg:col-span-6 col-span-12 bg-base-200s lg:h-80 rounded-md shadow-mds lg:p-2 p-2 text-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:border border-slate-700">
+        <div className="lg:col-span-6 col-span-12 bg-base-200s lg:h-80 rounded-md shadow-mds lg:p-2 p-2 text-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-600 border-base-300 border">
           <h2 className="lg:text-2xl text-slate-700 dark:text-slate-400 font-bold">
             Recent Projects:
           </h2>{" "}
@@ -108,7 +108,7 @@ const ProjectCarousel = () => {
                   className="flex items-center hover:link space-y-1 m-0"
                 >
                   <div key={data._id} className="flex items-center space-y-1">
-                    <span className="bg-slate-800 text-base-200 text-xs rounded-full h-4 w-4 flex justify-center items-center mr-2">
+                    <span className="bg-slate-500 text-base-100 text-xs rounded-full h-4 w-4 flex justify-center items-center mr-2">
                       {index + 1}
                     </span>
                     <h2 className="font-bold">Title: {data.name}</h2>
@@ -117,9 +117,10 @@ const ProjectCarousel = () => {
               ))
             : "No data to display."}
         </div>
+
         {/* View All Projects */}
         <div className="lg:col-span-12 col-span-12 flex justify-center lg:pt-8 pt-4">
-          <Link to="/portfolio-projects" className="m-0">
+          <Link to="/portfolio-projects" className="m-">
             <Button
               label="View All Projects"
               icon={<FaEye size={20} />}

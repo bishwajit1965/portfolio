@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-
-import { FaArrowAltCircleUp } from "react-icons/fa";
+import { FaArrowUp } from "react-icons/fa6";
 
 const ScrollTopButton = () => {
   const [showButton, setShowButton] = useState(false);
@@ -31,25 +30,27 @@ const ScrollTopButton = () => {
   }, []);
 
   return (
-    <div>
-      {showButton && (
-        <button
-          className="btn btn-circle bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 focus:ring-blue-400"
-          onClick={scrollToTop}
-          style={{
-            position: "fixed",
-            bottom: "80px",
-            right: "125px",
-            backgroundColor: "#007BFF",
-            color: "white",
-            border: "none",
-            cursor: "pointer",
-            zIndex: 50,
-          }}
-        >
-          <FaArrowAltCircleUp className="text-5xl p-[1px] text-white shadow-neutral-200" />
-        </button>
-      )}
+    <div className="lg:max-w-7xl w-full">
+      <div className="flex justify-end">
+        {showButton && (
+          <button
+            className="fixed btn btn-circle lg:bg-base-200 bg-base-300 border lg:bottom-80 bottom-10 flex mx-auto lg:right-32 right-1 border-gray-400 lg:opacity-50 opacity-50 hover:bg-base-300 dark:bg-slate-700 dark:text-base-100 dark:hover:text-amber-500 z-50 shadow-lg hover:text-amber-500"
+            onClick={scrollToTop}
+            // style={{
+            //   position: "fixed",
+            //   bottom: "80px",
+            //   right: "125px",
+            //   backgroundColor: "#007BFF",
+            //   color: "white",
+            //   border: "none",
+            //   cursor: "pointer",
+            //   zIndex: 50,
+            // }}
+          >
+            <FaArrowUp size={18} />
+          </button>
+        )}
+      </div>
     </div>
   );
 };

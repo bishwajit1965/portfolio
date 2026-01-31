@@ -1,4 +1,7 @@
-const VARIANTS = {
+const baseStyle =
+  "py-1 font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm transform transition-transform duration-300 inline-block flex items-center text-center";
+
+const variantStyles = {
   base: `
     bg-base-100 border border-slate-600 text-slate-800
     hover:bg-slate-800 hover:text-white
@@ -40,19 +43,47 @@ const VARIANTS = {
 
 const MiniButton = ({
   label,
+  onClick,
   children,
   variant = "base",
   icon,
+  href = null,
   iconPosition = "left",
   type = "button",
   disabled = false,
   className = "",
+  target = "_self",
+  rel = "noopener noreferrer",
   ...props
 }) => {
+  // Combine styles with any additional class names provided
+  const buttonClass = `${baseStyle} ${variantStyles[variant]} ${className}`;
+  // Conditionally render as <a> or <button>
+  if (href) {
+    return (
+      <a
+        href={href}
+        target={target}
+        rel={rel}
+        className={`${buttonClass} ${
+          disabled ? "pointer-events-none opacity-50" : ""
+        }`}
+      >
+        <span className="flex items-center justify-center space-x-2">
+          {icon && <span>{icon}</span>}
+          <span>{label}</span>
+        </span>
+      </a>
+    );
+  }
   return (
     <button
       type={type}
       disabled={disabled}
+      onClick={onClick}
+      style={{
+        cursor: disabled ? "not-allowed" : "pointer",
+      }}
       className={`
         inline-flex items-center justify-center
         h-7 min-w-8 px-2
@@ -60,8 +91,7 @@ const MiniButton = ({
         transition-all duration-200
         focus:outline-none focus:ring-2 focus:ring-slate-400
         disabled:opacity-50 disabled:cursor-not-allowed
-        ${VARIANTS[variant]}
-        ${className}
+        ${buttonClass} ${className}
       `}
       {...props}
     >

@@ -35,7 +35,9 @@ const ProjectDisplayCard = ({ project, handleDelete }) => {
           <h2 className="font-bold">{name}</h2>
           <p>{type}</p>
 
-          <p>{description}</p>
+          <p>{ description }</p>
+
+          
         </div>
       </div>
 

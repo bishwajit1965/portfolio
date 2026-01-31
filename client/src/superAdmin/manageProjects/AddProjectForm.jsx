@@ -16,6 +16,7 @@ const AddProjectForm = () => {
     liveLink: "",
     mainImage: null,
     categories: [], // [{ name: "", screenshots: [{ file: null, caption: "" }] }]
+    techStacks: [],
   });
 
   const [loading, setLoading] = useState(false);
@@ -72,6 +73,21 @@ const AddProjectForm = () => {
     setFormData({ ...formData, categories: updated });
   };
 
+  const addTechStack = () =>
+    setFormData({ ...formData, techStacks: [...formData.techStacks, ""] });
+
+  const updateArrayField = (field, index, value) => {
+    const updated = [...formData[field]];
+    updated[index] = value;
+    setFormData({ ...formData, [field]: updated });
+  };
+
+  const removeTechStack = (index) => {
+    const updated = [...formData.techStacks];
+    updated.splice(index, 1);
+    setFormData({ ...formData, techStacks: updated });
+  };
+
   // Validation
   const validateForm = () => {
     const newErrors = {};
@@ -96,6 +112,9 @@ const AddProjectForm = () => {
           newErrors[`screenshot-${ci}-${si}`] = "Screenshot file required";
       });
     });
+
+    if (formData.techStacks.length === 0)
+      newErrors.techStacks = "At least one tech stack required";
 
     return newErrors;
   };
@@ -134,6 +153,11 @@ const AddProjectForm = () => {
           data.append("categoryNames", cat.name); // parallel array
           data.append("captions", shot.caption || ""); // parallel array
         });
+      });
+
+      // TechStacks
+      formData?.techStacks?.forEach((techStack) => {
+        data.append("techStacks", techStack); // parallel array
       });
 
       // 2️⃣ Send to backend
@@ -300,6 +324,44 @@ const AddProjectForm = () => {
           onClick={addCategory}
           label="Add Category"
         />
+
+        {/* TechStacks */}
+        <div className="my-2">
+          <label className="font-bold block">Tech Stacks</label>
+          {formData?.techStacks?.map((techStack, i) => (
+            <div key={i} className="flex gap-2 items-center space-y-2">
+              <input
+                key={i}
+                type="text"
+                name="techStacks"
+                placeholder="Tech Stacks"
+                value={techStack}
+                onChange={(e) =>
+                  updateArrayField("techStacks", i, e.target.value)
+                }
+                className="input input-bordered w-full mt-1"
+              />
+              <Button
+                icon={<FaTrash />}
+                variant="danger"
+                label="Delete"
+                size="sm"
+                onClick={() => removeTechStack(i)}
+              />
+            </div>
+          ))}
+
+          <Button
+            variant="outline"
+            type="button"
+            onClick={addTechStack}
+            icon={<FaPlus />}
+            size="sm"
+            className="mt-2"
+          >
+            Add Tech Stack
+          </Button>
+        </div>
 
         <div
           className={`${loading ? "cursor-not-allowed opacity-50 bg-red-200 rounded-md" : ""} mt-4`}

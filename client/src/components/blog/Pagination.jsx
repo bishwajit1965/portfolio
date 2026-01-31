@@ -62,8 +62,10 @@ const Pagination = ({
               setCurrentPage(number);
             }
           }}
-          className={`px-4 py-2 ${
-            currentPage === number ? "bg-blue-500 text-white" : "bg-gray-200"
+          className={`px-4 py-2 mx-0.5 ${
+            currentPage === number
+              ? "bg-blue-500 text-white rounded-sm shadow-sm"
+              : "bg-gray-200 dark:bg-gray-600 rounded-sm shadow-sm"
           }`}
           disabled={number === "..."} // Disable button for ellipsis
         >

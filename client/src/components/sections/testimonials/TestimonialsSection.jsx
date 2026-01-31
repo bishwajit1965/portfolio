@@ -1,31 +1,66 @@
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 import TestimonialCard from "./TestimonialCard";
-import useFetchCollection from "../../../hooks/useFetchCollection";
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
+import api from "../../../services/api";
+import SectionTitle from "../../sectionTitle/SectionTitle";
+import { FaCommentSms } from "react-icons/fa6";
+import Loader from "../../loader/Loader";
+import { FaCommentAlt } from "react-icons/fa";
 
-const TestimonialsSection = () => {
-  // Memoize query parameters to avoid unnecessary re-renders
-  const queryParams = useMemo(() => ({ status: "active" }), []);
-  const { data, loading, error } = useFetchCollection(
-    "testimonials",
-    queryParams
-  );
-  if (loading) return <div className="text-center">Loading...</div>;
-  if (error) return <div className="text-center"> {error.message}</div>;
+const TestimonialSection = () => {
+  const [loading, setLoading] = useState(false);
+  const [testimonials, setTestimonials] = useState([]);
 
-  if (data.length === 0) return null; // Return nothing if no quotes
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        setLoading(true);
+        const response = await api.get("/testimonials", {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        });
+        setTestimonials(response.data.data);
+      } catch (error) {
+        console.error("Error in fetching data", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTestimonials();
+  }, []);
 
   return (
-    <>
-      <h2 className="text-2xl font-bold mb-1">Testimonials</h2>
-      <div className="">
-        {data
-          ? data.map((testimonialData, index) => (
-              <TestimonialCard key={index} testimonialData={testimonialData} />
-            ))
-          : ""}
-      </div>
-    </>
+    <section className="lg:max-w-7xl mx-auto min-h-96">
+      {loading && <Loader />}
+
+      <SectionTitle
+        title="What"
+        decoratedText="People Say"
+        subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
+        icon={FaCommentAlt}
+      />
+
+      <Swiper
+        modules={[Autoplay, Pagination]}
+        spaceBetween={20}
+        autoplay={{ delay: 4000, disableOnInteraction: false }}
+        pagination={{ clickable: true }}
+        breakpoints={{
+          640: { slidesPerView: 1 },
+          768: { slidesPerView: 2 },
+          1024: { slidesPerView: 3 },
+        }}
+      >
+        {testimonials.map((testimonialData) => (
+          <SwiperSlide key={testimonialData._id}>
+            <TestimonialCard testimonialData={testimonialData} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </section>
   );
 };
 
-export default TestimonialsSection;
+export default TestimonialSection;
