@@ -243,7 +243,7 @@ const SingleBlogPost = () => {
           )}
         </div>
         <div className="lg:col-span-12 col-span-12 lg:p-4 p-2 lg:space-y-2 space-y-1 border-slate-200 lg:border rounded-md shadow-sm dark:border-slate-700">
-          <h2 className="text-3xl font-bold capitalize text-slate-500 dark:text-slate-400 lg:mb-6 mb-4">
+          <h2 className="lg:text-3xl text-lg font-bold capitalize text-slate-500 dark:text-slate-400 lg:mb-6 mb-4">
             {post?.title}
           </h2>
           <p className="italic text-slate-500 dark:text-slate-400 font-bold">

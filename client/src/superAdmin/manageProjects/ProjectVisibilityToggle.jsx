@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 
 import { FaEdit } from "react-icons/fa";
 import axios from "axios";
+import MiniButton from "../../components/buttons/MiniButton";
 
 const ProjectVisibilityToggle = ({ projectId, initialVisibility }) => {
   const [visibility, setVisibility] = useState(initialVisibility);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [dropdownValue, setDropdownValue] = useState(
-    initialVisibility === "visible" ? "visible" : "invisible"
+    initialVisibility === "visible" ? "visible" : "invisible",
   );
   console.log("dropdown value", dropdownValue);
 
@@ -21,12 +22,16 @@ const ProjectVisibilityToggle = ({ projectId, initialVisibility }) => {
         `http://localhost:5000/api/projects/visibility/${projectId}`,
         {
           visibility: newVisibility,
-        }
+        },
       );
 
-      if (response.data.success) {
+      if (response?.data?.success) {
         setVisibility(dropdownValue);
-        setMessage(response.data.message);
+        setMessage(response?.data?.message);
+        const timer = setTimeout(() => {
+          setMessage("");
+        }, 3000);
+        return () => clearTimeout(timer);
       } else {
         setMessage("Failed to update project visibility.");
       }
@@ -49,26 +54,29 @@ const ProjectVisibilityToggle = ({ projectId, initialVisibility }) => {
       </div>
 
       {/* Select value */}
-      <div className="flex items-center mt-2 ml-[-8px]">
+      <di className="flex items-center mt-2 ml-[-8px] gap-2">
         <select
+          className="select select-xs border"
           name="visibility"
           id="visibility"
           value={dropdownValue}
           onChange={(e) => setDropdownValue(e.target.value)}
           disabled={loading}
-          className="btn btn-xs mr-2 btn-outline items-center place-items-start"
         >
           <option value="visible">Visible</option>
           <option value="invisible">Invisible</option>
         </select>
-        <button
+
+        <MiniButton
           onClick={handleVisibilitySubmit}
+          size="sm"
           disabled={loading}
-          className="btn btn-xs btn-primary"
-        >
-          <FaEdit /> {loading ? "Updating..." : "Update Project Visibility"}
-        </button>
-      </div>
+          variant="success"
+          label={loading ? "Updating..." : "Update Project Visibility"}
+          icon={<FaEdit />}
+          className=""
+        />
+      </di>
     </div>
   );
 };

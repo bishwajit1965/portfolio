@@ -14,7 +14,7 @@ const createSkills = async (req, res) => {
       level,
       experience,
       tools,
-      category
+      category,
     );
 
     res.status(201).json({

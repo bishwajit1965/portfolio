@@ -1,24 +1,23 @@
-# 🚀 Developer Portfolio
+# 🚀 Bishwajit Paul | Developer Portfolio
 
-A modern, responsive developer portfolio built to showcase projects, skills, and real-world development experience.
-Designed and developed as a **solo full-stack project** with focus on clean UI, structured data, and scalable architecture.
+A **modern, full-stack developer portfolio** showcasing real-world projects, skills, and web development expertise.
+Built as a **solo project** with focus on clean UI, scalable architecture, and smooth user experience.
 
 ---
 
-## ✨ Features
+## ✨ Highlights
 
-- 🧑‍💻 About / Bio section
-- 🛠️ Skills & Tech Stack display
-- 📂 Projects with:
-  - Multiple screenshots (category-based)
-  - Tech stack listing
-  - GitHub & Live links
-- 🔐 Admin panel for managing content
-- 🖼️ Image upload support (projects & screenshots)
-- 👁️ Visibility control (show / hide projects)
-- 📱 Fully responsive UI
-- 🌙 Dark mode support
-- ⚡ Smooth UX with loading states & toasts
+- 🧑‍💻 **About / Bio section** – professional intro & background
+- 🛠️ **Skills & Tech Stack** – interactive badges & categories
+- 📂 **Projects Showcase**
+  - 🖼️ Multiple screenshots per project (category-based)
+  - 💻 Tech stack listing per project
+  - 🔗 GitHub & Live demo links
+  - 🔐 Admin panel to manage visibility & content
+- 🖼️ **Image Uploads** – supports multiple screenshots
+- 📱 **Responsive Design** – mobile, tablet, desktop
+- 🌙 **Dark Mode** – toggle for user preference
+- ⚡ **Smooth UX** – loading states, modals, toasts
 
 ---
 
@@ -26,18 +25,16 @@ Designed and developed as a **solo full-stack project** with focus on clean UI, 
 
 ### Frontend
 
-- React
-- Tailwind CSS
-- Vite
-- React Icons
-- Axios
+![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-06B6D4?style=flat-square&logo=tailwind-css&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)
+![React Icons](https://img.shields.io/badge/React%20Icons-61DAFB?style=flat-square&logo=react&logoColor=white)
 
 ### Backend
 
-- Node.js
-- Express
-- File-based storage (JSON)
-- Multer (image uploads)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white)
+![Multer](https://img.shields.io/badge/Multer-FF2D20?style=flat-square&logoColor=white)
 
 ### Others
 
@@ -49,6 +46,8 @@ Designed and developed as a **solo full-stack project** with focus on clean UI, 
 
 ## 🗂️ Project Structure (Simplified)
 
+### Client
+
 client/
 ├─ src/
 │ ├─ components/
@@ -57,6 +56,8 @@ client/
 │ ├─ hooks/
 │ ├─ utils/
 │ └─ App.jsx
+
+### Server
 
 server/
 ├─ controllers/
@@ -67,57 +68,42 @@ server/
 
 ---
 
-## 📸 Project Screenshots Handling
+## 📸 Projects & Screenshots
 
-Projects support **multiple screenshots grouped by category**, for example:
-
-- UI Screens
-- Dashboard
-- Mobile View
-
-Each screenshot includes:
-
-- Image
-- Caption
-- Category grouping
-- Tech Stacks included
-
-This allows scalable and clean project presentation.
+- Supports **category-wise screenshots**: UI, Dashboard, Mobile View
+- Each screenshot includes **image + caption + category + tech stacks**
+- Clean and scalable presentation for each project
 
 ---
 
 ## 🧠 Key Design Decisions
 
-- **Category-based screenshots** instead of flat arrays
-  → Keeps projects organized and future-proof
-- **Visibility flags** for projects
-  → No hard delete needed
-- **Solo-friendly architecture**
-  → Easy to maintain, extend, and debug
-- **UI-first mindset**
-  → Portfolio prioritizes clarity and presentation
+- 📂 **Category-based screenshots** → scalable & organized
+- 👁️ **Visibility flags for projects** → soft delete / easy control
+- 🧑‍💻 **Solo-friendly architecture** → maintainable & extendable
+- 🎨 **UI-first mindset** → clarity and polished experience
 
 ---
 
-## 🚧 Known Improvements (Future Scope)
+## 🚀 Optional Enhancements (Future Scope)
 
-- SEO optimization with meta tags
-- Server-side rendering / pre-rendering
-- Analytics integration
-- Contact form with email service
-- CMS-style role separation
+- 🔍 SEO optimization (meta tags, OG tags, keywords)
+- ⚡ Server-side rendering or pre-rendering
+- 📊 Analytics integration
+- ✉️ Contact form with email service
+- 👥 CMS-style role separation for admin users
 
 ---
 
 ## 🧪 How to Run Locally
 
-### Frontend
+### Frontend Start
 
 cd client
 npm install
 npm run dev
 
-### Backend
+### Backend Start
 
 cd server
 npm install

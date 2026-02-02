@@ -6,7 +6,6 @@ import TestimonialCard from "./TestimonialCard";
 import { useEffect, useState } from "react";
 import api from "../../../services/api";
 import SectionTitle from "../../sectionTitle/SectionTitle";
-import { FaCommentSms } from "react-icons/fa6";
 import Loader from "../../loader/Loader";
 import { FaCommentAlt } from "react-icons/fa";
 

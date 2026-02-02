@@ -239,7 +239,7 @@ const ProjectUpdateForm = () => {
                   <label className="text-sm font-bold">
                     Category Wise Screenshots
                   </label>
-                  {formData.screenshots.map((cat, catIndex) => (
+                  {formData?.screenshots?.map((cat, catIndex) => (
                     <div
                       key={cat.id}
                       className="border-2 border-base-300 p-2 rounded-md mb-2 space-y-2"
@@ -269,7 +269,7 @@ const ProjectUpdateForm = () => {
                         />
                       </div>
 
-                      {cat.items.map((item, itemIndex) => (
+                      {cat?.items?.map((item, itemIndex) => (
                         <div
                           key={item.id}
                           className="grid lg:grid-cols-12 grid-cols-1  gap-2 items-center justify-between mb-2 border border-base-300 shadow-sm p-2 rounded-md hover:border-slate-400"
@@ -394,7 +394,7 @@ const ProjectUpdateForm = () => {
 
                 {/* Tech Stack */}
                 <div className="">
-                  <label className="text-sm">Tech Stack</label>
+                  <label className="text-sm block mb-2">Tech Stack</label>
                   {formData?.techStacks?.map((tech, i) => (
                     <div
                       key={i}
@@ -430,7 +430,7 @@ const ProjectUpdateForm = () => {
                     onClick={() =>
                       setFormData({
                         ...formData,
-                        techStacks: [...formData.techStacks, ""],
+                        techStacks: [...(formData.techStacks || []), ""],
                       })
                     }
                   >

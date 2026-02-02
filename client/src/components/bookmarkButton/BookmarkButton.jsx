@@ -1,6 +1,6 @@
 import { FaBookmark, FaTrash } from "react-icons/fa";
 import { useState } from "react";
-import MiniButton from "../buttons/MiniButton";
+import Button from "../buttons/Button";
 const baseUrl =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
 
@@ -35,12 +35,12 @@ const BookmarkButton = ({ postId, userId, initialBookmarked }) => {
   };
 
   return (
-    <MiniButton
+    <Button
       onClick={toggleBookmark}
       label={`${bookmarked ? "Remove Bookmark" : "Bookmark"}`}
       icon={bookmarked ? <FaTrash /> : <FaBookmark />}
-      className="btn btn-sm"
-      variant={`${bookmarked ? "danger" : "base"}`}
+      className=""
+      variant={`${bookmarked ? "danger" : "darkOutline"}`}
     />
   );
 };

@@ -5,18 +5,19 @@ import {
 } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
-import CTAButton from "../../components/ctaButton/CTAButton";
 import { Helmet } from "react-helmet-async";
 import { NavLink } from "react-router-dom";
 import ProjectDisplayCard from "./ProjectDisplayCard";
 import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import api from "../../services/api";
 import Swal from "sweetalert2";
+import Button from "../../components/buttons/Button";
 
 const ManageProjects = () => {
+  const STEP = 3;
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState([]);
-  const [visibleCount, setVisibleCount] = useState(6); // State to control the number of visible project
+  const [visibleCount, setVisibleCount] = useState(STEP); // State to control the number of visible project
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -69,11 +70,11 @@ const ManageProjects = () => {
   };
 
   const showMoreProjects = () => {
-    setVisibleCount((prevCount) => prevCount + 6);
+    setVisibleCount((prev) => prev + visibleCount);
   };
 
   const showLessProjects = () => {
-    setVisibleCount(6);
+    setVisibleCount(STEP);
   };
 
   return (
@@ -120,23 +121,22 @@ const ManageProjects = () => {
 
         {/* Show More or Show Less Button */}
         <div className="flex justify-center lg:mt-5 mt-2 pb-6">
-          {visibleCount < projects.length ? (
-            <CTAButton
+          {visibleCount < projects?.length ? (
+            <Button
               label="Show More"
+              variant="outline"
               icon={<FaArrowAltCircleDown />}
               onClick={showMoreProjects}
               className="cursor-pointer"
             />
           ) : (
-            visibleCount &&
-            visibleCount.length > 0 && (
-              <CTAButton
-                label="Show Less"
-                icon={<FaArrowAltCircleUp />}
-                onClick={showLessProjects}
-                className="cursor-pointer"
-              />
-            )
+            <Button
+              label="Show Less"
+              variant="outline"
+              icon={<FaArrowAltCircleUp />}
+              onClick={showLessProjects}
+              className="cursor-pointer"
+            />
           )}
         </div>
       </div>

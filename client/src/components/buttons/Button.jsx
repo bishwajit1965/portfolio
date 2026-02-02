@@ -4,8 +4,11 @@ const baseStyle =
 const variantStyles = {
   base: "bg-emerald-600 text-white hover:bg-emerald-700 justify-center flex dark:bg-slate-600 dark:text-base-100 dark:shadow-lg dark:hover:bg-slate-900 dark:hover:text-base-100",
 
+  darkOutline:
+    "bg-base-100 border border-gray-600 dark:border-slate-600 text-gray-600 hover:bg-gray-600 hover:text-white dark:bg-slate-600 dark:text-base-100 dark:shadow-lg dark:hover:bg-slate-900 dark:hover:text-base-100 focus:ring-gray-600",
+
   outline:
-    "bg-base-100 border border-emerald-600 dark:border-slate-600 text-emerald-600 hover:bg-emerald-600 hover:text-white dark:bg-slate-600 dark:text-base-100 dark:shadow-lg dark:hover:bg-slate-900 dark:hover:text-base-100",
+    "bg-base-100 border border-emerald-600 dark:border-slate-600 text-emerald-600 hover:bg-emerald-600 hover:text-white dark:bg-slate-600 dark:text-base-100 dark:shadow-lg dark:hover:bg-slate-900 dark:hover:text-base-100 focus:ring-emerald-600",
 
   ghost: "text-emerald-600 hover:bg-emerald-100",
 

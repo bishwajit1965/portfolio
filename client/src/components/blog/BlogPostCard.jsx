@@ -2,10 +2,11 @@ import "./BlogPostCard.css";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import BookmarkButton from "../bookmarkButton/BookmarkButton";
-import { FaArrowCircleRight } from "react-icons/fa";
+import { FaArrowCircleRight, FaUserAlt } from "react-icons/fa";
 import LazyLoad from "react-lazyload";
 import { Link } from "react-router-dom";
-import MiniButton from "../buttons/MiniButton";
+import { FaLayerGroup, FaTags } from "react-icons/fa6";
+import Button from "../buttons/Button";
 
 const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
   const { user } = useContext(AuthContext);
@@ -58,11 +59,14 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
       </div>
       <div className="lg:col-span-6 col-span-12">
         <div key={_id} className="lg:space-y-2">
-          <p>{_id}</p>
-          <h2 className="text-xl font-bold">{title.slice(0, 60)}...</h2>
+          <h2 className="lg:text-xl text-lg font-bold text-base-content/70 dark:text-gray-500">
+            {title.slice(0, 60)}...
+          </h2>
 
-          <p className="text-gray-500 italic text-sm">
-            <span className="font-bold">Author:</span>{" "}
+          <p className="text-base-content/70 dark:text-gray-500 italic text-sm flex items-center flex-wrap gap-2">
+            <span className="font-bold">
+              <FaUserAlt />
+            </span>{" "}
             <span className="font-bold">{author}</span>{" "}
             <span className="font-bold">|| Published on:</span>{" "}
             {new Date(createdAt).toLocaleDateString("en-GB", {
@@ -72,32 +76,37 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
             })}
           </p>
 
-          <div className="mb-1">
-            <div className="badge badge-ghost badge-outline italic">
-              <span className="font-bold">Categories:&nbsp; </span>
+          <div className="flex items-center gap-2">
+            <span className="text-base-content/70 dark:text-gray-500">
+              <FaLayerGroup />
+            </span>
+            <span className="font-bold text-base-content/70 dark:text-gray-500 italic text-sm">
               {category ? getCategoryNames(category) : "No categories"}
-            </div>
+            </span>
           </div>
 
-          <div className="">
-            <div className="badge badge-ghost badge-outline italic">
-              <span className="font-bold">Tags:&nbsp; </span>
+          <div className="flex items-center gap-2">
+            <span className="text-base-content/70 dark:text-gray-500">
+              <FaTags />
+            </span>
+            <span className="font-bold text-base-content/70 dark:text-gray-500 italic text-sm">
               {tag ? getTagNames(tag) : "No tags"}
-            </div>
+            </span>
           </div>
-          <div className="">
-            <div
+
+          <div className="text-gray-500 flex items-center gap-2">
+            <p
               dangerouslySetInnerHTML={{
                 __html: content
-                  ? content.slice(0, 295) + "..."
+                  ? content.slice(0, 300) + "..."
                   : "No content to display...",
               }}
-            ></div>
+            />
           </div>
 
-          <div className="">
-            <p>
-              <span className="font-bold text-slate-900 underline italic">
+          <div className="text-base-content dark:text-gray-500">
+            <p className="text-base-content dark:text-gray-500">
+              <span className="text-base-content/70 font-bold dark:text-gray-500 underline italic">
                 Post Summary :
               </span>{" "}
               &nbsp;
@@ -112,8 +121,8 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
               initialBookmarked={false}
             />
             <Link to={`/single-blog-post/${_id}`} className="m-0">
-              <MiniButton
-                variant="success"
+              <Button
+                variant="outline"
                 label="Read More"
                 className="btn btn-sm"
                 icon={<FaArrowCircleRight />}

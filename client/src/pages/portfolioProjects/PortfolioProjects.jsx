@@ -1,104 +1,49 @@
-import { FaCircleRight, FaLayerGroup, FaListCheck } from "react-icons/fa6";
-import PageTitle from "../pageTitle/PageTitle";
+import { useEffect, useState } from "react";
 import {
+  FaLayerGroup,
+  // FaListCheck,
+  // FaCircleRight,
+  FaTools,
+  FaRegEye,
   FaGithub,
   FaExternalLinkAlt,
   FaTrashAlt,
-  FaRegEye,
-  FaChevronCircleRight,
-  FaTools,
+  FaBars,
+  FaTimes,
 } from "react-icons/fa";
-import Button from "../../components/buttons/Button";
-import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import api from "../../services/api";
+import Button from "../../components/buttons/Button";
 import MiniButton from "../../components/buttons/MiniButton";
-import Loader from "../../components/loader/Loader";
+import PageTitle from "../pageTitle/PageTitle";
 import SkillBadge from "../../components/skillBadge/SkillBadge";
+import Loader from "../../components/loader/Loader";
+import { FaCircleRight, FaListCheck } from "react-icons/fa6";
 
 const PortfolioProjects = () => {
   const [loading, setLoading] = useState(false);
+  const [projects, setProjects] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
-  const [isOpenDetailModal, setIsOpenDetailModal] = useState(false);
-  const [data, setData] = useState(null);
-  const [projectData, setProjectData] = useState({});
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+  const [modalData, setModalData] = useState(null);
+  const [modalProject, setModalProject] = useState(null);
+
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const baseURL = `${apiUrl}/uploads/`;
-  const [projects, setProjects] = useState([]);
 
-  const categories = [
-    "All",
-    ...new Set(
-      projects.flatMap((project) => project.screenshots.map((s) => s.category)),
-    ),
-  ];
-
-  const filterScreenshotsByCategory = (screenshots) => {
-    if (activeCategory === "All") return screenshots;
-    return screenshots.filter((group) => group.category === activeCategory);
-  };
-
-  // ---------------------------------------
-  // Effects for ESC, scroll, and focus trap
-  // ---------------------------------------
-  useEffect(() => {
-    if (!isOpenDetailModal) return;
-
-    // Lock background scroll
-    document.body.style.overflow = "hidden";
-
-    // Handle ESC key
-    const handleEsc = (e) => {
-      if (e.key === "Escape") setIsOpenDetailModal(false);
-    };
-    window.addEventListener("keydown", handleEsc);
-
-    // Focus trap
-    const modal = document.getElementById("modal");
-    if (modal) {
-      const focusableEls = modal.querySelectorAll(
-        'a, button, textarea, input, select, [tabindex]:not([tabindex="-1"])',
-      );
-      const firstEl = focusableEls[0];
-      const lastEl = focusableEls[focusableEls.length - 1];
-
-      const handleTab = (e) => {
-        if (e.key !== "Tab") return;
-        if (e.shiftKey) {
-          if (document.activeElement === firstEl) {
-            e.preventDefault();
-            lastEl.focus();
-          }
-        } else {
-          if (document.activeElement === lastEl) {
-            e.preventDefault();
-            firstEl.focus();
-          }
-        }
-      };
-
-      modal.addEventListener("keydown", handleTab);
-      firstEl?.focus();
-
-      // Cleanup
-      return () => {
-        window.removeEventListener("keydown", handleEsc);
-        modal.removeEventListener("keydown", handleTab);
-        document.body.style.overflow = "auto"; // restore scroll
-      };
-    }
-  }, [isOpenDetailModal]);
-
+  // Fetch projects
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         setLoading(true);
         const response = await api.get("/projects");
         const visibleProjects = response.data.filter(
-          (project) => project.visibility === "visible",
+          (p) => p.visibility === "visible",
         );
         setProjects(visibleProjects);
       } catch (error) {
-        console.error("Error in fetching data", error);
+        console.error("Failed to fetch projects", error);
       } finally {
         setLoading(false);
       }
@@ -106,32 +51,78 @@ const PortfolioProjects = () => {
     fetchProjects();
   }, []);
 
-  useEffect(() => {
-    if (projects.length > 0) {
-      setActiveCategory("All");
-    }
-  }, [projects]);
+  const categories = [
+    "All",
+    ...new Set(projects.flatMap((p) => p.screenshots.map((s) => s.category))),
+  ];
 
-  const handleOpenDetailModal = ({ item, project }) => {
-    setIsOpenDetailModal(true);
-    if ((item, project)) {
-      setData(item);
-      setProjectData(project);
-    }
+  const filteredScreenshots = (screenshots) =>
+    activeCategory === "All"
+      ? screenshots
+      : screenshots.filter((s) => s.category === activeCategory);
+
+  const openDetailModal = (item, project) => {
+    setModalData(item);
+    setModalProject(project);
+    setIsDetailModalOpen(true);
   };
-  console.log("Projects", projects);
+
+  const closeDetailModal = () => setIsDetailModalOpen(false);
+
   return (
-    <div>
+    <div className="relative">
+      <Helmet>
+        <title>Web-tech-services || Projects</title>
+      </Helmet>
+
       {loading && <Loader />}
 
-      <section className="max-w-7xl mx-auto lg:px-4 px-2">
-        <div className="grid lg:grid-cols-12 grid-cols-1 justify-between lg:gap-6 gap-2">
-          <div className="lg:col-span-3 col-span-12 lg:max-h-[38.4rem] max-h-[9.5rem] lg:overflow-y-auto overflow-y-auto sticky lg:top-[5.5rem] top-12 bg-base-200 dark:bg-slate-800 rounded-lg shadow z-50">
-            <h3 className="lg:text-2xl text-xl font-bold lg:px-4 lg:py-2 p-2 flex items-center gap-2 sticky top-0 z-50 bg-base-300 dark:border-slate-700 dark:bg-slate-800 ">
+      {/* Sidebar toggle for mobile */}
+      <div className="lg:hidden fixed top-[4.3rem] z-50 ml-2 w-full rounded-md">
+        <Button
+          icon={<FaBars />}
+          label="Categories"
+          size="sm"
+          onClick={() => setIsSidebarOpen(true)}
+          variant="outline"
+        />
+      </div>
+
+      {/* Mobile overlay */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-100 z-40 lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
+      <section className="max-w-7xl mx-auto lg:px-4 px-2 flex flex-col lg:flex-row gap-6 mt-8 lg:mt-0">
+        {/* Sidebar */}
+        <aside
+          className={`
+            fixed lg:static top-0 left-0 lg:z-10 z-50 h-full w-64 bg-base-200 dark:bg-slate-800 overflow-y-auto transform transition-transform duration-300 rounded-tl-sm
+            ${isSidebarOpen ? "translate-x-0 mt-16" : "-translate-x-full lg:mt-0 mt-16"} lg:translate-x-0 lg:h-auto lg:max-h-[calc(100vh-6rem)] lg:sticky lg:top-20
+          `}
+        >
+          <div className="flex items-center justify-between lg:hidden p-2 border-b dark:border-slate-700">
+            <h3 className="text-lg font-bold flex items-center gap-2">
               <FaLayerGroup className="text-amber-600" /> Categories
             </h3>
-
-            <div className="lg:min-h-screen min-h-10 sticky top-0 lg:px-4 px-2 lg:py-6 py-3 dark:border-slate-700 dark:bg-slate-900">
+            <Button
+              label="Close"
+              size="sm"
+              icon={<FaTimes />}
+              variant="outline"
+              onClick={() => setIsSidebarOpen(false)}
+            />
+          </div>
+          <div className="">
+            <div className="sticky top-0 hidden lg:block px-4 py-2 bg-base-300 dark:bg-gray-700 shadow-sm">
+              <h3 className="text-lg font-bold flex items-center gap-2">
+                <FaLayerGroup className="text-amber-600" /> Categories
+              </h3>
+            </div>
+            <div className="px-4 py-4">
               {categories.map((cat) => (
                 <button
                   key={cat}
@@ -140,196 +131,186 @@ const PortfolioProjects = () => {
                       ? "bg-emerald-600 text-white"
                       : "hover:bg-emerald-100 dark:hover:bg-emerald-100 dark:hover:text-gray-800"
                   }`}
-                  onClick={() => setActiveCategory(cat)}
+                  onClick={() => {
+                    setActiveCategory(cat);
+                    setIsSidebarOpen(false);
+                  }}
                 >
-                  <FaChevronCircleRight /> {cat}
+                  <FaListCheck /> {cat}
                 </button>
               ))}
             </div>
           </div>
-          <div className="lg:col-span-9 col-span-12">
-            <PageTitle
-              title="Portfolio of"
-              decoratedText="Projects"
-              subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
-              icon={FaLayerGroup}
-            />
-            {projects.map((project) => {
-              const filteredScreenshots = filterScreenshotsByCategory(
-                project.screenshots,
-              );
-              if (filteredScreenshots?.length === 0) return null;
+        </aside>
 
-              return (
-                <div key={project._id} className="lg:mb-10 mb-5">
-                  <div className="">
-                    <h2 className="lg:text-2xl text-sm font-bold text-gray-700 dark:text-slate-300 flex items-center gap-2">
-                      <FaLayerGroup className="text-amber-600" /> Name:{" "}
-                      {project.name}
-                    </h2>
-                  </div>
+        {/* Main content */}
+        <div className="flex-1 lg:ml-0">
+          <PageTitle
+            title="Portfolio of"
+            decoratedText="Projects"
+            subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
+            icon={FaLayerGroup}
+            dataLength={projects && projects?.length > 0 ? projects?.length : 0}
+          />
 
-                  {filteredScreenshots.map((group) => (
-                    <div key={group.id} className="">
-                      <div className="lg:pl-8">
-                        <h3 className="lg:text-xl font-bold text-gray-700 dark:text-slate-400 mb-4 flex items-center gap-2">
-                          <FaListCheck className="text-amber-600" /> Category:{" "}
-                          {group.category}
-                        </h3>
-                      </div>
-                      <div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-6 gap-4">
-                        {group.items.map((item) => (
-                          <div
-                            key={item.id}
-                            className="lg:col-span-6 col-span-12 relative group border dark:border-slate-700 rounded-lg shadow-sm hover:shadow-xl"
-                          >
-                            <figure>
-                              <img
-                                src={`${baseURL}${item.image}`}
-                                alt={item.caption}
-                                className="rounded w-full h-72 object-cover transition-transform duration-300 group-hover:scale-105"
-                              />
-                              <figcaption>
-                                {item.caption && (
-                                  <p className="mt-1 text-medium text-gray-600 dark:text-gray-400 p-2">
-                                    {item.caption}
-                                  </p>
-                                )}
+          {projects?.map((project) => {
+            const filtered = filteredScreenshots(project.screenshots);
+            if (!filtered || filtered.length === 0) return null;
+
+            return (
+              <div key={project?._id} className="">
+                <h2 className="lg:text-2xl text-sm font-bold text-gray-700 dark:text-slate-300 flex items-center gap-2 mb-4">
+                  <FaLayerGroup className="text-amber-600" /> {project.name}
+                </h2>
+
+                {filtered?.map((group) => (
+                  <div key={group.id} className="lg:mb-10 space-y-4">
+                    <h3 className="lg:text-xl font-bold text-gray-700 dark:text-slate-400 mb-4 flex items-center gap-2">
+                      <FaListCheck className="text-amber-600" />{" "}
+                      {group.category}
+                    </h3>
+                    <div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-6 gap-4">
+                      {group?.items?.map((item) => (
+                        <div
+                          key={item.id}
+                          className="lg:col-span-6 col-span-12 relative group border dark:border-slate-700 rounded-lg shadow-sm hover:shadow-xl"
+                        >
+                          <figure>
+                            <img
+                              src={`${baseURL}${item.image}`}
+                              alt={item.caption || project.name}
+                              className="rounded w-full h-72 object-cover transition-transform duration-300 group-hover:scale-100"
+                            />
+                            {item.caption && (
+                              <figcaption className="mt-1 text-medium text-gray-600 dark:text-gray-400 p-2">
+                                {item.caption}
                               </figcaption>
-                            </figure>
-
-                            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-amber-400 opacity-0 group-hover:opacity-100 transition">
-                              <Button
-                                variant="base"
-                                icon={<FaRegEye />}
-                                onClick={() =>
-                                  handleOpenDetailModal({ item, project })
-                                }
-                              >
-                                View Details
-                              </Button>
-                            </div>
+                            )}
+                          </figure>
+                          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100">
+                            <Button
+                              variant="base"
+                              icon={<FaRegEye />}
+                              onClick={() => openDetailModal(item, project)}
+                            >
+                              View Details
+                            </Button>
                           </div>
-                        ))}
-                      </div>
-                      <div className="lg:space-y-6 space-y-2 lg:pb-6 pb-2">
-                        <div className="">
-                          {project?.description && (
-                            <span className="mt-4 text-gray-600 dark:text-gray-300">
-                              {project?.description}
-                            </span>
-                          )}
                         </div>
-                        <div className="lg:flex grid  items-center gap-2">
-                          <h2 className="flex items-center gap-2 font-bold bg-base-100 text-base-content py-0.5 px-2 rounded-md border border-gray-400 dark:border-slate-600 dark:bg-gray-600 dark:text-base-100">
-                            <FaTools /> Tech Stacks Used ➡️
-                          </h2>
-                          {project && project?.techStacks?.length > 0 ? (
-                            project?.techStacks?.map((techStack, i) => (
-                              <SkillBadge key={i} label={techStack} />
-                            ))
-                          ) : (
-                            <p className="text-center text-gray-600 font-bold dark:text-base-100">
-                              No techStack is mentioned !
-                            </p>
-                          )}
-                        </div>
-                        <div className="lg:flex grid lg:gap-4 gap-2">
-                          {project.githubLink && (
-                            <a
-                              href={project?.githubLink}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="m-0"
-                            >
-                              <Button variant="outline" icon={<FaGithub />}>
-                                GitHub Source Code
-                              </Button>
-                            </a>
-                          )}
-                          {project.liveLink && (
-                            <a
-                              href={project?.liveLink}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="m-0"
-                            >
-                              <Button
-                                variant="base"
-                                icon={<FaExternalLinkAlt />}
-                                className="lg:text-medium text-xs"
-                              >
-                                Live Demo
-                              </Button>
-                            </a>
-                          )}
-                        </div>
-                      </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              );
-            })}
-          </div>
+                    {/* Project description & tech stack */}
+                    <div className="mt-4 flex flex-col lg:flex-row lg:gap-4 gap-2 items-start">
+                      {project.description && (
+                        <p className="text-gray-600 dark:text-gray-300">
+                          {project.description}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Tech Stacks */}
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h4 className="flex items-center gap-2 font-bold bg-base-100 text-base-content py-0.5 px-2 rounded-md border dark:border-slate-600 dark:bg-gray-600 dark:text-base-100">
+                        <FaTools /> Tech Stacks Used
+                      </h4>
+                      {project.techStacks && project.techStacks.length > 0 ? (
+                        project.techStacks.map((t, i) => (
+                          <SkillBadge key={i} label={t} />
+                        ))
+                      ) : (
+                        <p className="text-gray-600 dark:text-base-100">
+                          No techStack mentioned!
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Links */}
+                    <div className="flex lg:gap-4 gap-2 mt-2">
+                      {project.githubLink && (
+                        <a
+                          href={project.githubLink}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="m-0"
+                        >
+                          <Button variant="outline" icon={<FaGithub />}>
+                            GitHub
+                          </Button>
+                        </a>
+                      )}
+                      {project.liveLink && (
+                        <a
+                          href={project.liveLink}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="m-0"
+                        >
+                          <Button variant="base" icon={<FaExternalLinkAlt />}>
+                            Live Demo
+                          </Button>
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            );
+          })}
         </div>
       </section>
 
-      {/* Modal toggler panel */}
-      {isOpenDetailModal && (
+      {/* Detail Modal */}
+      {isDetailModalOpen && (
         <div
           id="modal"
-          className="fixed max-w-full mx-auto inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
         >
-          <div className="bg-white dark:bg-gray-800 lg:p-8 p-2 rounded-md max-w-3xl w-full  space-y-2">
-            <div className="mb-4 space-y-2">
-              <h2 className="lg:text-xl text-lg font-bold text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                <FaCircleRight className="dark:text-amber-500 text-indigo-500" />
-                Title: {projectData?.name}
-              </h2>
-            </div>
+          <div className="bg-white dark:bg-gray-800 max-w-3xl w-full rounded-md lg:p-8 p-4 space-y-4 max-h-screen overflow-y-auto">
+            <h2 className="lg:text-xl text-lg font-bold text-gray-700 dark:text-gray-300 flex items-center gap-2">
+              <FaCircleRight className="text-amber-500" /> {modalProject?.name}
+            </h2>
 
-            <div className="mb-2">
-              <figure>
-                <img
-                  src={`${baseURL}${data.image}`}
-                  alt={data.caption}
-                  className="w-full h-96 object-contain rounded-md mb-2 shadow hover:shadow-lg border border-stone-200 dark:border-slate-600"
-                />
-                {data.caption && (
-                  <figcaption>
-                    <p className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
-                      <FaCircleRight className="dark:text-amber-500 text-indigo-500" />{" "}
-                      {data.caption}
-                    </p>
-                  </figcaption>
-                )}
-              </figure>
-            </div>
-            <p className="text-medium text-gray-700 dark:text-gray-300">
-              Description: {projectData?.description}
-            </p>
+            <figure>
+              <img
+                src={`${baseURL}${modalData.image}`}
+                alt={modalData?.caption || modalProject?.name}
+                className="w-full h-96 object-contain rounded-md mb-2 shadow border dark:border-slate-600"
+              />
+              {modalData?.caption && (
+                <figcaption className="text-gray-700 dark:text-gray-300">
+                  {modalData.caption}
+                </figcaption>
+              )}
+            </figure>
 
-            <div className="lg:flex grid  items-center gap-2">
-              <h2 className="flex items-center gap-2 font-bold bg-base-100 text-base-content py-0.5 px-2 rounded-md border border-gray-400 dark:border-slate-600 dark:bg-gray-600 dark:text-base-100">
-                <FaTools /> Tech Stacks Used ➡️
-              </h2>
-              {projectData && projectData?.techStacks?.length > 0 ? (
-                projectData?.techStacks?.map((techStack, i) => (
-                  <SkillBadge key={i} label={techStack} />
+            {modalProject?.description && (
+              <p className="text-gray-700 dark:text-gray-300">
+                {modalProject.description}
+              </p>
+            )}
+
+            <div className="flex flex-wrap items-center gap-2">
+              <h4 className="flex items-center gap-2 font-bold bg-base-100 text-base-content py-0.5 px-2 rounded-md border dark:border-slate-600 dark:bg-gray-600 dark:text-base-100">
+                <FaTools /> Tech Stacks
+              </h4>
+              {modalProject?.techStacks &&
+              modalProject?.techStacks?.length > 0 ? (
+                modalProject?.techStacks?.map((t, i) => (
+                  <SkillBadge key={i} label={t} />
                 ))
               ) : (
-                <p className="text-center text-gray-600 font-bold dark:text-base-100">
-                  No techStack is mentioned !
+                <p className="text-gray-600 dark:text-base-100">
+                  No techStack mentioned!
                 </p>
               )}
             </div>
+
             <div className="flex justify-end pt-2">
               <MiniButton
                 label="Close"
                 icon={<FaTrashAlt />}
                 variant="danger"
-                onClick={() => setIsOpenDetailModal(false)}
-                className="outline-none focus:outline-none border-none"
+                onClick={closeDetailModal}
               />
             </div>
           </div>

@@ -55,7 +55,7 @@ const BlogPosts = () => {
       <PageTitle
         title="Blog"
         decoratedText="Posts"
-        dataLength={posts ? posts.length : 0}
+        dataLength={posts ? posts?.length : 0}
         subtitle="Explore my blog posts. Hello! I am Bishwajit Paul, a Passionate Web Developer.I specialize in creating dynamic and responsive websites that provide excellent user experiences. With a strong foundation in HTML, CSS, and JavaScript, and expertise in modern frameworks like React, Node.js, and Express, I build scalable and efficient web applications. My focus is on writing clean, maintainable code and delivering projects that exceed client expectations.I love solving complex problems and continuously improving my skills to stay updated with the latest industry trends. Whether it's front-end development, back-end APIs, or full-stack solutions, I am committed to building web experiences that are both visually appealing and highly functional.I like this introduction. What do you think about it?"
       />
 
@@ -109,6 +109,7 @@ const BlogPosts = () => {
           ) : (
             <p>No blog posts found.</p>
           )}
+
           {/* Pagination */}
           <Pagination
             totalPosts={filteredPosts.length}

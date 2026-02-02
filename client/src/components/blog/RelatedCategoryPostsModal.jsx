@@ -1,9 +1,9 @@
 import { FaArrowCircleRight, FaTimes } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
-import CTAButton from "../ctaButton/CTAButton";
 import Loader from "../loader/Loader";
 import fetchCategoryFilteredPosts from "../../services/fetchCategoryFilteredPosts";
+import Button from "../buttons/Button";
 
 const RelatedCategoryPostsModal = ({ categoryIds, onClose }) => {
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -46,11 +46,11 @@ const RelatedCategoryPostsModal = ({ categoryIds, onClose }) => {
             <FaTimes />
           </button>
         </div>
-        <div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-4 gap-2 justify-between lg:max-w-7xl">
+        <div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-4 gap-2 justify-between lg:max-w-7xl max-h-screen overflow-y-auto">
           {loading ? (
             <Loader />
-          ) : relatedPosts.length > 0 ? (
-            relatedPosts.map((post) => (
+          ) : relatedPosts?.length > 0 ? (
+            relatedPosts?.map((post) => (
               <div
                 key={post._id}
                 className="lg:col-span-3 relative col-span-12 shadow-md rounded-md dark:bg-slate-800 dark:text-base-300"
@@ -67,10 +67,12 @@ const RelatedCategoryPostsModal = ({ categoryIds, onClose }) => {
                     </h3>
                     <p>{post.content.substring(0, 120)}...</p>
                   </div>
-                  <div className="flex absolute bottom-1 items-center">
-                    <CTAButton
+                  <div className="flex absolute bottom-1 right-1 items-center">
+                    <Button
+                      variant="outline"
                       label="Read More"
-                      className="flex btn btn-sm items-center ml-2"
+                      size="sm"
+                      className=""
                       icon={<FaArrowCircleRight />}
                     />
                   </div>
