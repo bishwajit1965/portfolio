@@ -19,7 +19,6 @@ const ProjectUpdateForm = () => {
   const apiURL = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const baseURL = `${apiURL}/uploads/`;
   const { projectId } = useParams();
-
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errors, setErrors] = useState({});

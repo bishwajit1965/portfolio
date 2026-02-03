@@ -12,14 +12,15 @@ const ProjectVisibilityToggle = ({ projectId, initialVisibility }) => {
     initialVisibility === "visible" ? "visible" : "invisible",
   );
   console.log("dropdown value", dropdownValue);
-
+  const baseURL =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
   const handleVisibilitySubmit = async () => {
     setLoading(true);
     const newVisibility = dropdownValue; // Determine new visibility status
 
     try {
       const response = await axios.patch(
-        `http://localhost:5000/api/projects/visibility/${projectId}`,
+        `${baseURL}/projects/visibility/${projectId}`,
         {
           visibility: newVisibility,
         },
@@ -30,7 +31,7 @@ const ProjectVisibilityToggle = ({ projectId, initialVisibility }) => {
         setMessage(response?.data?.message);
         const timer = setTimeout(() => {
           setMessage("");
-        }, 3000);
+        }, 2000);
         return () => clearTimeout(timer);
       } else {
         setMessage("Failed to update project visibility.");
