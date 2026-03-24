@@ -12,7 +12,7 @@ const ContactMeSection = () => {
         subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
         icon={FaEnvelope}
       />
-      <div className="lg:max-w-7xl mx-auto lg:p-0 p-2">
+      <div className="lg:max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-12 grid-cols-1 justify-between lg:gap-8 gap-4 items-center mt-6">
           <div className="lg:col-span-5 col-span-12">
             <div className="space-y-2 text-gray-700 dark:text-gray-300 bg-base-200 dark:bg-slate-800 p-4 rounded-lg shadow-md relative">
@@ -58,7 +58,7 @@ const ContactMeSection = () => {
                   label="Download CV"
                   icon={<FaCloud size={20} />}
                   variant="amber"
-                  className="btn lg:btn-md btn-sm lg:w-40 w-36 lg:text-xl text-sm"
+                  className="btn lg:btn-md btn-sm lg:w-48 w-36 lg:text-xl text-sm"
                 />
               </a>
             </div>

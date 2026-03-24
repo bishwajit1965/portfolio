@@ -22,7 +22,7 @@ const TestimonialSection = () => {
         });
         setTestimonials(response.data.data);
       } catch (error) {
-        console.error("Error in fetching data", error);
+        console.error("Error fetching testimonials:", error);
       } finally {
         setLoading(false);
       }
@@ -31,33 +31,41 @@ const TestimonialSection = () => {
   }, []);
 
   return (
-    <section className="lg:max-w-7xl mx-auto min-h-96">
+    <section className="max-w-7xl mx-auto">
       {loading && <Loader />}
 
+      {/* Section Title */}
       <SectionTitle
         title="What"
         decoratedText="People Say"
-        subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
+        subtitle="Discover my journey in web development through feedback from collaborators and clients."
         icon={FaCommentAlt}
       />
 
-      <Swiper
-        modules={[Autoplay, Pagination]}
-        spaceBetween={20}
-        autoplay={{ delay: 4000, disableOnInteraction: false }}
-        pagination={{ clickable: true }}
-        breakpoints={{
-          640: { slidesPerView: 1 },
-          768: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-        }}
-      >
-        {testimonials.map((testimonialData) => (
-          <SwiperSlide key={testimonialData._id}>
-            <TestimonialCard testimonialData={testimonialData} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {testimonials.length === 0 && !loading ? (
+        <p className="text-center text-gray-500 dark:text-gray-400 mt-6">
+          No testimonials to display.
+        </p>
+      ) : (
+        <Swiper
+          modules={[Autoplay, Pagination]}
+          spaceBetween={20}
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          pagination={{ clickable: true }}
+          breakpoints={{
+            640: { slidesPerView: 1 },
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+          }}
+          className="mt-6 lg:mt-8"
+        >
+          {testimonials.map((testimonialData) => (
+            <SwiperSlide key={testimonialData._id}>
+              <TestimonialCard testimonialData={testimonialData} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
     </section>
   );
 };

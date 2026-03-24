@@ -8,7 +8,7 @@ const SuperAdminPageTitle = ({
 }) => {
   return (
     <div className="text-center border-b border-slate-300 shadow-sm bg-base-300 lg:py-3 py-2">
-      <h2 className="lg:text-2xl text-xl font-extrabold dark:text-emerald-400 flex items-center justify-center gap-2">
+      <h2 className="lg:text-2xl text-medium font-extrabold dark:text-emerald-400 flex items-center justify-center gap-2">
         {Icon ? (
           <Icon className="text-amber-600" size={24} />
         ) : (

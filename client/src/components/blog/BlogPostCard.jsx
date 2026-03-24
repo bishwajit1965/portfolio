@@ -43,27 +43,29 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
     <div className="grid grid-cols-12 gap-4 justify-between items-center border dark:border-slate-800 lg:mb-8 p-2 rounded-md bg-base-100 dark:bg-slate-900">
       <div className="lg:col-span-6 col-span-12">
         <div className="w-full lg:min-h-full">
-          {post.imageUrl && post.imageUrl.trim() !== "" && (
-            <LazyLoad height={200} offset={100} once>
-              <img
-                src={`${apiUrl}${imageUrl}`}
-                alt={post.title}
-                className={`lazy-image ${
-                  loaded ? "loaded" : ""
-                } w-full lg:min-h-full rounded-md`}
-                onLoad={() => setLoaded(true)}
-              />
-            </LazyLoad>
-          )}
+          <Link to={`/single-blog-post/${_id}`} className="m-0 p-0">
+            {post.imageUrl && post.imageUrl.trim() !== "" && (
+              <LazyLoad height={200} offset={100} once>
+                <img
+                  src={`${apiUrl}${imageUrl}`}
+                  alt={post.title}
+                  className={`lazy-image ${
+                    loaded ? "loaded" : ""
+                  } w-full lg:min-h-full rounded-md object-cover`}
+                  onLoad={() => setLoaded(true)}
+                />
+              </LazyLoad>
+            )}
+          </Link>
         </div>
       </div>
       <div className="lg:col-span-6 col-span-12">
         <div key={_id} className="lg:space-y-2">
-          <h2 className="lg:text-xl text-lg font-bold text-base-content/70 dark:text-gray-500">
+          <h2 className="lg:text-xl text-lg font-bold text-base-content/70 dark:text-slate-400">
             {title.slice(0, 60)}...
           </h2>
 
-          <p className="text-base-content/70 dark:text-gray-500 italic text-sm flex items-center flex-wrap gap-2">
+          <p className="text-base-content/70 dark:text-slate-400 italic text-sm lg:inline-flex items-center flex-wrap gap-2">
             <span className="font-bold">
               <FaUserAlt />
             </span>{" "}
@@ -77,24 +79,24 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
           </p>
 
           <div className="flex items-center gap-2">
-            <span className="text-base-content/70 dark:text-gray-500">
+            <span className="text-base-content/70 dark:text-slate-400">
               <FaLayerGroup />
             </span>
-            <span className="font-bold text-base-content/70 dark:text-gray-500 italic text-sm">
+            <span className="font-bold text-base-content/90 dark:text-slate-400 italic text-sm capitalize">
               {category ? getCategoryNames(category) : "No categories"}
             </span>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-base-content/70 dark:text-gray-500">
+            <span className="text-base-content/90 dark:text-slate-400">
               <FaTags />
             </span>
-            <span className="font-bold text-base-content/70 dark:text-gray-500 italic text-sm">
+            <span className="font-bold text-base-content/70 dark:text-slate-400 italic text-sm capitalize">
               {tag ? getTagNames(tag) : "No tags"}
             </span>
           </div>
 
-          <div className="text-gray-500 flex items-center gap-2">
+          <div className="text-base-content/90 dark:text-slate-400 flex items-center gap-2">
             <p
               dangerouslySetInnerHTML={{
                 __html: content
@@ -106,11 +108,13 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
 
           <div className="text-base-content dark:text-gray-500">
             <p className="text-base-content dark:text-gray-500">
-              <span className="text-base-content/70 font-bold dark:text-gray-500 underline italic">
+              <span className="text-base-content/90 font-bold dark:text-slate-400 underline italic">
                 Post Summary :
               </span>{" "}
               &nbsp;
-              {summary ? summary : autoSummary}
+              <span className="dark:text-slate-400">
+                {summary ? summary : autoSummary}
+              </span>
             </p>
           </div>
 

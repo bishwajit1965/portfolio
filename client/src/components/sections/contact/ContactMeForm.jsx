@@ -86,21 +86,21 @@ const ContactMeForm = () => {
   };
 
   return (
-    <div className="lg:max-w-7xl mx-auto bg-base-200 lg:py- rounded-md shadow-sm dark:bg-slate-800">
+    <div className="lg:max-w-7xl mx-auto bg-base-200 rounded-md shadow-sm dark:bg-slate-800">
       <div className="lg:max-w-5xl mx-auto p-4 rounded-lg shadow-md">
-        <div className="lg:p-8 p-2">
+        <div className="lg:p-8">
           {error && (
             <p className="text-red-500 p-1 border border-red-800 rounded-md text-sm">
               {error}
             </p>
           )}
           {successMessage && <p className="text-green-500">{successMessage}</p>}
-          <h2 className="lg:text-3xl text-lg font-bold flex items-center gap-2 mb-4 text-slate-600 dark:text-slate-300">
+          <h2 className="lg:text-3xl text-lg font-bold flex items-center gap-2 lg:mb-4 mb-2 text-slate-600 dark:text-slate-300">
             <FaEnvelopesBulk size={25} />
             Contact <span className="text-amber-600"> Me 24/7 </span>
           </h2>
           <form onSubmit={handleSubmit}>
-            <div className="mb-4">
+            <div className="lg:mb-4 mb-2">
               <label className="block text-sm font-medium text-gray-700">
                 Name:
               </label>
@@ -117,7 +117,7 @@ const ContactMeForm = () => {
                 <p className="text-red-500 text-sm">{errors.name}</p>
               )}
             </div>
-            <div className="mb-4">
+            <div className="lg:mb-4 mb-2">
               <label className="block text-sm font-medium text-gray-700">
                 Email:
               </label>
@@ -134,7 +134,7 @@ const ContactMeForm = () => {
                 <p className="text-red-500 text-sm">{errors.email}</p>
               )}
             </div>
-            <div className="mb-4">
+            <div className="lg:mb-4 mb-2">
               <label className="block text-sm font-medium text-gray-700">
                 Message:
               </label>
@@ -151,15 +151,6 @@ const ContactMeForm = () => {
               )}
             </div>
             <div className="lg:flex grid items-center justify-between lg:pt-4 pt-2">
-              {/* <CTAButton
-                type="submit" // Important for form submission
-                label={loading ? "Uploading..." : "Send Message"}
-                variant="primary" // Button variant for styling
-                disabled={loading} // Disable the button when loading
-                icon={<FaEnvelope />} // Add icon to the button
-                className="btn lg:btn-md btn-sm lg:w-44 w-full lg:text-lg text-sm" // Additional Tailwind CSS classes
-              /> */}
-
               <Button
                 type="submit"
                 icon={<FaEnvelopesBulk size={20} />}

@@ -13,6 +13,7 @@ import useBlogData from "../../hooks/useBlogData";
 import usePagination from "../../hooks/usePagination";
 import RandomLatestPosts from "../sections/randomLatestsPosts/RandomLatestPosts";
 import SocialMediaLinks from "../shared/socialMedia/SocialMediaLinks";
+import { FaBlog } from "react-icons/fa";
 
 const BlogPosts = () => {
   const { loading, posts, categories, tags, error } = useBlogData();
@@ -49,7 +50,7 @@ const BlogPosts = () => {
   return (
     <div className="lg:max-w-7xl mx-auto lg:p-0 p-2 mb-10">
       <Helmet>
-        <title>Web-tech-services || Blogs</title>
+        <title>Bishwajit.dev || Blogs</title>
       </Helmet>
       {loading && <Loader />}
       <PageTitle
@@ -57,6 +58,7 @@ const BlogPosts = () => {
         decoratedText="Posts"
         dataLength={posts ? posts?.length : 0}
         subtitle="Explore my blog posts. Hello! I am Bishwajit Paul, a Passionate Web Developer.I specialize in creating dynamic and responsive websites that provide excellent user experiences. With a strong foundation in HTML, CSS, and JavaScript, and expertise in modern frameworks like React, Node.js, and Express, I build scalable and efficient web applications. My focus is on writing clean, maintainable code and delivering projects that exceed client expectations.I love solving complex problems and continuously improving my skills to stay updated with the latest industry trends. Whether it's front-end development, back-end APIs, or full-stack solutions, I am committed to building web experiences that are both visually appealing and highly functional.I like this introduction. What do you think about it?"
+        icon={FaBlog}
       />
 
       {/* Search and Filters */}
@@ -120,39 +122,22 @@ const BlogPosts = () => {
         </div>
 
         {/* Sidebar Content */}
-        <div className="lg:col-span-3 col-span-12 px-2 sticky top-20 max-h-96 ">
-          <div className="bg-base-200 rounded-sm shadow-sm">
-            <SectionTitleSmall title="Follow" decoratedText="Us" />
+        <div className="lg:col-span-3 col-span-12 lg:px-0 px-2 sticky top-20 max-h-96">
+          <div className="bg-base-200 dark:bg-gray-800 rounded-sm shadow-sm">
+            <SectionTitleSmall title="Follow" decoratedText="Me" />
           </div>
           <div className="lg:mb-">
             <SocialMediaLinks />
           </div>
+
           <div className="">
-            <div className="bg-base-200 rounded-sm shadow-sm">
-              <SectionTitleSmall title="Popular" decoratedText="posts" />
-            </div>
-            <div className="lg:mb-">Popular posts here</div>
-          </div>
-          <div className="">
-            <div className="bg-base-200 rounded-sm shadow-sm">
+            <div className="bg-base-200 dark:bg-gray-800 rounded-sm shadow-sm">
               <SectionTitleSmall title="Recent" decoratedText="posts" />
             </div>
-            <div className="lg:mb-">
+            <div className="lg:mb-2">
               {/* Recent posts here */}
               <BlogsCarousel />
             </div>
-          </div>
-          <div className="">
-            <div className="bg-base-200 rounded-sm shadow-sm">
-              <SectionTitleSmall title="Users'" decoratedText="comments" />
-            </div>
-            <div className="lg:mb-6">Users comments here</div>
-          </div>
-          <div className="">
-            <div className="bg-base-200 rounded-sm shadow-sm">
-              <SectionTitleSmall title="Related" decoratedText="tags" />
-            </div>
-            <div className="lg:mb-6">Tags here</div>
           </div>
         </div>
       </div>

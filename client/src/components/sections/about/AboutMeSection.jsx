@@ -5,18 +5,22 @@ import {
   FaRocket,
 } from "react-icons/fa";
 import SkillBadge from "../../skillBadge/SkillBadge";
-import SectionTitle from "../../sectionTitle/SectionTitle";
 import { Link } from "react-router-dom";
 import Button from "../../buttons/Button";
 import { FaCheck, FaCloud } from "react-icons/fa6";
 import JourneyMilestones from "../parallax/JourneyMilestones";
 import AnimatedBackground from "../animatedBackground/AnimateBackground";
+import PageTitle from "../../../pages/pageTitle/PageTitle";
+import { Helmet } from "react-helmet-async";
 
 const AboutMeSection = () => {
   return (
     <section className="max-w-7xl mx-auto px-4 dark:text-slate-400 space-y-12">
+      <Helmet>
+        <title>Bishwajit.dev || About Me</title>
+      </Helmet>
       {/* Header */}
-      <SectionTitle
+      <PageTitle
         title="About"
         decoratedText="Me"
         subtitle="Full‑Stack MERN Developer focused on building scalable, maintainable, and production‑ready web applications."

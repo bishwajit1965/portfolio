@@ -3,8 +3,9 @@ import SuperAdImage from "/assets/bishwajit-1.jpg";
 import { SuperAdminAuthContext } from "../context/SuperAdminAuthProvider";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaBars, FaTimes } from "react-icons/fa";
 
-const SuperAdminNavBar = () => {
+const SuperAdminNavBar = ({ onBtnClick, onMenuClick, isOpen }) => {
   const navigate = useNavigate();
   const { user, logoutSuperAdmin } = useContext(SuperAdminAuthContext);
   console.log("User:", user);
@@ -17,10 +18,26 @@ const SuperAdminNavBar = () => {
 
   return (
     <div className="navbar bg-base-200 border-b border-slate-300 shadow-sm sticky top-0">
-      <div className="flex-1">
-        <img src={Logo} alt="" className="w-8 h-8 rounded-full" />
-        <a className="btn btn-ghost btn-sm text-xl font-bold ">
-          WEB-TECH_SERVICES
+      <div className="flex-1 space-x-1">
+        {isOpen ? (
+          <button
+            onClick={onBtnClick}
+            className="border border-base-300 rounded-sm shadow p-1 cursor-pointer"
+          >
+            <FaTimes size={20} />
+          </button>
+        ) : (
+          <button
+            onClick={onMenuClick}
+            className="lg:hidden border border-base-300 rounded-sm shadow p-1 cursor-pointer"
+          >
+            <FaBars size={20} />
+          </button>
+        )}
+
+        <img src={Logo} alt="Portfolio logo" className="w-8 h-8 rounded-full" />
+        <a className="btn btn-ghost btn-sm font-bold lg:text-xl text-sm p-0 m-0">
+          Nova Portfolio
         </a>
       </div>
       <div className="flex-none">

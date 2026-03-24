@@ -9,12 +9,12 @@ import TestimonialSection from "../../components/sections/testimonials/Testimoni
 
 const Home = () => {
   return (
-    <div className="lg:p-0 p-3">
+    <div className="lg:p-0 p-2">
       <Helmet>
-        <title>Web-tech || Home</title>
+        <title>Bishwajit.dev || Home</title>
       </Helmet>
 
-      <div className="lg:space-y-12 space-y-8">
+      <div className="lg:space-y-12 space-y-4">
         <HeroSection />
 
         <ProjectCarousel />

@@ -6,6 +6,7 @@ const {
 } = require("../controllers/blogPostController");
 
 const { isAuthenticated } = require("../middlewares/isAuthenticated");
+
 const router = express.Router();
 
 // Add a bookmark

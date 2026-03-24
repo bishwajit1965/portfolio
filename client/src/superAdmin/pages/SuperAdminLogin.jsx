@@ -1,13 +1,9 @@
-//import * as jwt from "jwt-decode"; // Fix import to use named import
-
 import { useContext, useState } from "react";
 
 import { FaSignInAlt } from "react-icons/fa";
 import { SuperAdminAuthContext } from "../context/SuperAdminAuthProvider";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-
-// import jwt_decode from "jwt-decode";
 
 const SuperAdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -31,7 +27,7 @@ const SuperAdminLogin = () => {
         const decodedToken = jwtDecode(token);
         console.log("Decoded token", decodedToken);
         if (decodedToken.role === "superAdmin") {
-          navigate("/super-admin/dashboard"); // Use navigate to redirect
+          navigate("/super-admin"); // Use navigate to redirect
         } else {
           setError("Access denied: invalid role.");
         }

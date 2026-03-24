@@ -154,7 +154,7 @@ const ManageNotice = () => {
         <div className="lg:col-span-4 col-span-12 flex lg:justify-center items-center"></div>
       </div>
       {/* Pass notices to notice table */}
-      <div className="p-2 shadow-sm">
+      <div className="p-2 shadow-sm w-full overflow-x-auto">
         {loading ? (
           <div className="text-center">
             <span className="loading loading-ring loading-lg"></span>

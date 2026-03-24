@@ -4,7 +4,6 @@ import AddCategories from "../superAdmin/manageCategories/AddCategories";
 import AddNotice from "../superAdmin/manageNotice/AddNotice";
 import AddProjectForm from "../superAdmin/manageProjects/AddProjectForm";
 import AddTag from "../superAdmin/manageTags/AddTag";
-import AdminDashboard from "../superAdmin/adminDashboard/AdminDashboard";
 import BlogPosts from "../components/blog/BlogPosts";
 import BookmarksPage from "../pages/bookmarksPage/BookmarksPage";
 import ComingSoon from "../components/blog/ComingSoon";
@@ -38,7 +37,8 @@ import ManageSkills from "../superAdmin/manageSkills/ManageSkills";
 import AddSkills from "../superAdmin/manageSkills/AddSkills";
 import PortfolioProjects from "../pages/portfolioProjects/PortfolioProjects";
 import AddTestimonialForm from "../superAdmin/manageTestimonials/AddTestimonialForm";
-
+const baseURL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -46,7 +46,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
+        index: true,
         element: <Home />,
       },
       {
@@ -66,7 +66,7 @@ const router = createBrowserRouter([
         element: <SingleBlogPost />,
         loader: async ({ params }) => {
           const postResponse = await fetch(
-            `http://localhost:5000/api/blogPosts/${params.postId}`,
+            `${baseURL}/blogPosts/${params.postId}`,
           );
           const post = await postResponse.json();
           return { post };
@@ -77,7 +77,7 @@ const router = createBrowserRouter([
         element: <NoticePage />,
       },
       {
-        path: "bookmarked-posts",
+        path: "/bookmarked-posts",
         element: <BookmarksPage />,
       },
       {
@@ -115,6 +115,7 @@ const router = createBrowserRouter([
     path: "/super-admin/login",
     element: <SuperAdminLogin />,
   },
+
   // Super admin dashboard routes (protected)
   {
     path: "/super-admin",
@@ -124,6 +125,10 @@ const router = createBrowserRouter([
       </RequireSuperAdmin>
     ),
     children: [
+      {
+        index: true, // 👈 THIS is the missing piece
+        element: <SuperAdminDashboard />,
+      },
       {
         path: "dashboard",
         element: <SuperAdminDashboard />,
@@ -143,10 +148,6 @@ const router = createBrowserRouter([
       {
         path: "view-project-details/:projectId",
         element: <ViewProjectDetails />,
-      },
-      {
-        path: "admin-dashboard",
-        element: <AdminDashboard />,
       },
       {
         path: "manage-users",

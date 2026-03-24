@@ -51,6 +51,12 @@ const createBlogPost = async (blogPostData) => {
 
     const parsedTags = typeof tag === "string" ? JSON.parse(tag) : tag;
 
+    const now = new Date();
+
+    const isPublished =
+      status === "published" &&
+      (!willPublishAt || new Date(willPublishAt) <= now);
+
     const newPost = {
       title,
       slug,
@@ -61,12 +67,15 @@ const createBlogPost = async (blogPostData) => {
       category: parsedCategories,
       tag: parsedTags,
       status: status || "draft", // Default status
-      willPublishAt: willPublishAt
-        ? new Date(willPublishAt).toISOString()
-        : null, // Scheduling,
-      isPublished: false, // Default as unpublished
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      isPublished, // Default as unpublished
+      willPublishAt: willPublishAt ? new Date(willPublishAt) : null,
+      // willPublishAt: willPublishAt
+      //   ? new Date(willPublishAt).toISOString()
+      //   : null, // Scheduling,
+      // createdAt: new Date().toISOString(),
+      // updatedAt: new Date().toISOString(),
     };
 
     const result = await db.collection("blogPosts").insertOne(newPost);
@@ -164,7 +173,7 @@ const updateBlogPost = async (id, updateData) => {
     const oldImagePath = path.join(
       __dirname,
       "../uploads",
-      path.basename(existingBlogPost.imageUrl)
+      path.basename(existingBlogPost.imageUrl),
     );
 
     // Delete the old image if it exists
@@ -211,17 +220,20 @@ const getRelatedPosts = async (categoryIds) => {
 
 // Blog post coming soon
 const comingSoon = async (req, res) => {
+  console.log("🚀 Coming soon route is hit");
   try {
     const db = getDB();
     const blogsCollection = db.collection("blogPosts");
+
     const result = await blogsCollection
       .find({
-        status: "draft",
+        status: "scheduled",
+        isPublished: false,
         willPublishAt: { $exists: true, $gt: new Date() },
-        project: { title: 1, willPublishAt: 1, imageUrl: 1 },
       })
-      .limit(5)
+      .project({ title: 1, willPublishAt: 1, imageUrl: 1 }) // <-- corrected
       .sort({ createdAt: -1 })
+      .limit(5)
       .toArray();
     return result;
   } catch (error) {
@@ -240,7 +252,7 @@ const addBookmarkToUser = async (userId, postId) => {
   userId = userExists._id;
   const result = await userCollection.updateOne(
     { _id: new ObjectId(userId) },
-    { $addToSet: { bookmarkedPosts: new ObjectId(postId) } }
+    { $addToSet: { bookmarkedPosts: new ObjectId(postId) } },
   ); //$addToSet prevents duplicate entries
   return result;
 };
@@ -251,7 +263,7 @@ const removeBookmark = async (id, postId) => {
   const userCollection = db.collection("users");
   const result = await userCollection.updateOne(
     { _id: new ObjectId(id) },
-    { $pull: { bookmarkedPosts: new ObjectId(postId) } }
+    { $pull: { bookmarkedPosts: new ObjectId(postId) } },
   );
   return result;
 };

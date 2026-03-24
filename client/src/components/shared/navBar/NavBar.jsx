@@ -33,9 +33,6 @@ const NavBar = () => {
     { id: 4, route: "/blog-posts", name: "Blogs" },
     { id: 5, route: "/portfolio-projects", name: "Projects" },
     { id: 6, route: "/blog-coming-soon", name: "Blog Coming Soon" },
-    // ...(user
-    //   ? [{ id: 7, route: "/bookmarked-posts", name: "Blogs Bookmarked" }]
-    //   : [user]),
     user ? { id: 7, route: "/bookmarked-posts", name: "Blogs Bookmarked" } : "",
     { id: 8, route: "/rss", name: "Rss" },
     {
@@ -95,7 +92,7 @@ const NavBar = () => {
               {routes.map((item) =>
                 item ? (
                   item.isThemeToggle ? ( // Check for the theme toggle button
-                    <li key={item.id}>
+                    <li key={item?.id}>
                       <button
                         className={`theme-toggle-btn items-center ml-3 ${theme}`}
                         onClick={toggleTheme}
@@ -104,32 +101,12 @@ const NavBar = () => {
                       </button>
                     </li>
                   ) : (
-                    <li key={item.id}>
+                    <li key={item?.id}>
                       <a href={item.route}>{item.name}</a>
                     </li>
                   )
                 ) : null,
               )}
-              {/* {routes.map((route) => (
-                <li key={route.id} className="">
-                  <NavLink
-                    to={route.route}
-                    className={({ isActive, isPending }) =>
-                      isPending ? "pending" : isActive ? "active" : ""
-                    }
-                  >
-                    {route.name}
-                  </NavLink>
-                </li>
-              ))}
-              <li>
-                <button
-                  className={`theme-toggle-btn items-center ${theme}`}
-                  onClick={toggleTheme}
-                >
-                  {theme === "light" ? <FaMoon /> : <FaSun />}
-                </button>
-              </li> */}
             </ul>
           </div>
 
@@ -143,7 +120,7 @@ const NavBar = () => {
         <div className="navbar-center hidden md:block lg:flex p-0 m-0">
           <ul className="menu-horizontal">
             {routes?.map((route) => (
-              <li key={route.id} className="p-0 m-0">
+              <li key={route?.id} className="p-0 m-0">
                 <NavLink
                   className={({ isActive, isPending }) =>
                     isPending ? "pending" : isActive ? "active" : ""

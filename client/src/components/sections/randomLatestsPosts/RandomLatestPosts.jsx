@@ -19,7 +19,7 @@ const RandomLatestPosts = () => {
 
   return (
     <div className="lg:max-w-7xl mx-auto lg:p-0 p-2 space-y-4 mb-6">
-      <div className="bg-base-300s rounded-mds">
+      <div className="bg-base-300s rounded-md lg:mt-0 mt-12">
         <SectionTitle
           title="Latest Random"
           decoratedText="Blog Posts"

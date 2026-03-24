@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 
-import CTAButton from "../ctaButton/CTAButton";
 import { FaFilePdf } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import Loader from "../loader/Loader";
 import PageTitle from "../../pages/pageTitle/PageTitle";
 import api from "../../services/api";
+import Button from "../buttons/Button";
+import { FaMessage } from "react-icons/fa6";
 
 const NoticePage = () => {
   const [notices, setNotices] = useState([]);
@@ -43,13 +44,14 @@ const NoticePage = () => {
   return (
     <div className="lg:max-w-7xl mx-auto lg:p-0 p-2 mb-10">
       <Helmet>
-        <title>Web-tech-services || Notices</title>
+        <title>Bishwajit.dev || Notices</title>
       </Helmet>
 
       {loading && <Loader />}
 
       <PageTitle
         title="Latest Notices from"
+        icon={FaMessage}
         decoratedText="Super Admin"
         subtitle="You are most welcome here. Keep yourself updated of the latest development of out policies, need, and information."
         dataLength={notices.length > 0 ? notices.length : "None"}
@@ -85,9 +87,10 @@ const NoticePage = () => {
                     })}
                   </td>
                   <td className="lg:col-span-1 flex justify-end">
-                    <CTAButton
+                    <Button
                       onClick={() => handleDownloadPdf(notice._id)}
                       label="Download PDF"
+                      variant="outline"
                       icon={<FaFilePdf />}
                       className="btn btn-sm"
                     />

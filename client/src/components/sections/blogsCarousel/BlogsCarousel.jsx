@@ -57,7 +57,7 @@ const BlogsCarousel = () => {
                 >
                   <img
                     src={`${apiUrl}${slide.imageUrl}`}
-                    className="w-full h-full object-cover rounded-md shadow-md lg:min-h-40 min-h-60"
+                    className="w-full h-auto object-fill rounded-md shadow-md object-center lg:min-h-56 min-h-60"
                     alt={slide.title}
                   />
                 </Link>

@@ -72,7 +72,7 @@ const PortfolioProjects = () => {
   return (
     <div className="relative">
       <Helmet>
-        <title>Web-tech-services || Projects</title>
+        <title>Bishwajit.dev || Projects</title>
       </Helmet>
 
       {loading && <Loader />}
@@ -179,10 +179,10 @@ const PortfolioProjects = () => {
                             <img
                               src={`${baseURL}${item.image}`}
                               alt={item.caption || project.name}
-                              className="rounded w-full h-72 object-cover transition-transform duration-300 group-hover:scale-100"
+                              className="rounded-t-md w-full h-72 object-cover transition-transform duration-300 group-hover:scale-100"
                             />
                             {item.caption && (
-                              <figcaption className="mt-1 text-medium text-gray-600 dark:text-gray-400 p-2">
+                              <figcaption className="text-medium border-t border-gray-300 text-center text-gray-600 dark:text-gray-700 p-1.5 rounded-b-md bg-base-200">
                                 {item.caption}
                               </figcaption>
                             )}
@@ -263,7 +263,7 @@ const PortfolioProjects = () => {
       {isDetailModalOpen && (
         <div
           id="modal"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black dark:bg-opacity-100 bg-opacity-50"
         >
           <div className="bg-white dark:bg-gray-800 max-w-3xl w-full rounded-md lg:p-8 p-4 space-y-4 max-h-screen overflow-y-auto">
             <h2 className="lg:text-xl text-lg font-bold text-gray-700 dark:text-gray-300 flex items-center gap-2">

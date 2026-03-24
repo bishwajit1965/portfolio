@@ -2,32 +2,29 @@ import { FaCheckCircle } from "react-icons/fa";
 
 const SkillCard = ({ skill }) => {
   const { skillName, level, category } = skill;
+
   return (
-    <div className="border border-slate-300 dark:border-slate-700 shadow-sm rounded-md p-2 mb-2">
-      <h2 className="font-bold flex items-center flex-wrap">
+    <div className="border border-slate-300 dark:border-slate-700 shadow-md rounded-xl p-4 flex flex-col h-full transition-transform duration-300 hover:scale-105">
+      <h3 className="font-bold text-lg flex items-center mb-2">
         <FaCheckCircle className="text-blue-700 dark:text-amber-400 mr-2" />
-        Skill: {skillName}
-      </h2>
-      <p>
-        <span className="font-bold flex items-center">
-          <FaCheckCircle className="text-blue-700 dark:text-amber-400 mr-2" />
-          Level: {level}
-        </span>{" "}
+        {skillName}
+      </h3>
+
+      <p className="flex items-center mb-2">
+        <FaCheckCircle className="text-blue-700 dark:text-amber-400 mr-2" />
+        Level: <span className="font-medium ml-1">{level}</span>
       </p>
-      <p>
-        <span className="font-bold flex items-center flex-wrap lg:space-y-0 space-y-4">
-          <FaCheckCircle className="text-blue-700 dark:text-amber-400 mr-2" />
-          Category:{" "}
-          {category.map((cat, index) => (
-            <span
-              className="ml-1 px-2 py-1 mr-2 border text-xs border-blue-900 rounded-md bg-blue-600 dark:bg-amber-600 text-white"
-              key={index}
-            >
-              {cat}
-            </span>
-          ))}
-        </span>
-      </p>
+
+      <div className="flex flex-wrap gap-2 mt-auto">
+        {category.map((cat, index) => (
+          <span
+            key={index}
+            className="px-2 py-1 border text-xs rounded-md bg-blue-600 dark:bg-amber-600 text-white border-blue-900 dark:border-amber-400"
+          >
+            {cat}
+          </span>
+        ))}
+      </div>
     </div>
   );
 };

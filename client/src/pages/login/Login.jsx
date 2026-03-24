@@ -98,7 +98,7 @@ const Login = () => {
   return (
     <>
       <Helmet>
-        <title>Web-tech-services || Login</title>
+        <title>Bishwajit.dev || Login</title>
       </Helmet>
       <div className="hero min-h-screen bg-base-200 dark:bg-slate-900">
         <div className="hero-content flex-col md:flex-row-reverse">

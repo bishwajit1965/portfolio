@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import CountdownTimer from "./CountDownTimer";
+import { FaCalendarCheck, FaUser } from "react-icons/fa";
 
 const ComingSoonCard = ({ post }) => {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -32,26 +33,29 @@ const ComingSoonCard = ({ post }) => {
           alt={post.title || "Coming soon"}
           className="w-full h-96 object-cover rounded-md"
         />
-        <div className="lg:space-y-2 lg:my-6 lg:px-4 px-2">
-          <h2 className="text-3xl font-bold dark:text-gray-500">
+        <div className="lg:space-y-3 space-y-2 lg:my-6 lg:px-4 px-2">
+          <h2 className="lg:text-4xl text-lg lg:mt-4 mt-2 font-bold dark:text-gray-500">
             {title || "Coming Soon"}
           </h2>
-          <p className="text-gray-500 italic text-lg">
-            Author: {author || "Author not available"}
+          <p className="text-gray-500 italic lg:text-lg text-sm font-bold flex items-center gap-2">
+            <FaUser /> Author: &nbsp;
+            {author}
           </p>
-          <p className="text-gray-500 italic text-lg">
-            Will Publish on:{" "}
+          <p className="text-gray-500 italic lg:text-lg text-sm font-bold flex items-center gap-2">
+            <FaCalendarCheck /> Will Publish on:{" "}
             {new Date(willPublishAt ? willPublishAt : "").toLocaleDateString(
               "en-GB",
               {
                 day: "numeric",
                 month: "long",
                 year: "numeric",
-              }
+              },
             )}
           </p>
           <p className="text-gray-500 italic text-lg">
-            <span className="text-gray-500 italic text-lg">Summary:</span>
+            <span className="text-gray-500 italic text-lg">
+              Summary: &nbsp;
+            </span>
             {summary ? summary : autoSummary || "N/A"}
           </p>
 

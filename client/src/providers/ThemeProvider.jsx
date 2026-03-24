@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import LoadingSpinner from "../components/loadingSpinner/LoadingSpinner";
 
 // Create the theme context
 export const ThemeContext = createContext();
@@ -21,7 +22,7 @@ const ThemeProvider = ({ children }) => {
   }, []);
 
   if (isLoading) {
-    return <div className="loading loading-infinity loading-lg"></div>;
+    return <LoadingSpinner />;
   }
 
   const toggleTheme = () => {

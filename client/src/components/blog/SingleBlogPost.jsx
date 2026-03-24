@@ -1,4 +1,4 @@
-import { FaComment, FaEye, FaLink } from "react-icons/fa6";
+import { FaComment, FaEye, FaLink, FaTags, FaUser } from "react-icons/fa6";
 import {
   Link,
   useLoaderData,
@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 
 import CommentsForm from "../comments/CommentsForm";
 import CommentsList from "../comments/CommentsList";
-import { FaHome } from "react-icons/fa";
+import { FaCalendarAlt, FaHome, FaLayerGroup } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import LikeButton from "./LikeButton";
 import Loader from "../loader/Loader";
@@ -21,6 +21,7 @@ import SocialShare from "../socialLinkShare/SocialShare";
 import api from "../../services/commentsApi";
 import useAuth from "../../hooks/useAuth";
 import Button from "../buttons/Button";
+import LazyLoad from "react-lazyload";
 
 const SingleBlogPost = () => {
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -29,6 +30,7 @@ const SingleBlogPost = () => {
   const { postId } = useParams();
   const { post } = useLoaderData();
   const [categories, setCategories] = useState([]);
+  const [loaded, setLoaded] = useState(false);
   const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(false);
   const [comments, setComments] = useState([]);
@@ -223,7 +225,7 @@ const SingleBlogPost = () => {
   return (
     <div className="lg:max-w-7xl mx-auto lg:p-0 p-2">
       <Helmet>
-        <title>Web-tech-services || Single Blog</title>
+        <title>Bishwajit.dev || Single Blog</title>
       </Helmet>
       {/*Loader Spinner */}
       {loading && <Loader />}
@@ -234,24 +236,31 @@ const SingleBlogPost = () => {
       />
       <div className="grid lg:grid-cols-12 justify-between gap-4 mb-8">
         <div className="lg:col-span-12 col-span-12">
-          {post.imageUrl && post.imageUrl.trim() !== "" && (
-            <img
-              src={`${apiUrl}${post.imageUrl}`}
-              alt={post.title}
-              className="rounded-md shadow-md w-full object-cover h-72 lg:h-[480px] object-center"
-            />
-          )}
+          <Link to="/blog-posts" className="m-0">
+            {post.imageUrl && post.imageUrl.trim() !== "" && (
+              <LazyLoad height={480} offset={300} once>
+                <img
+                  src={`${apiUrl}${post.imageUrl}`}
+                  alt={post.title}
+                  className={`rounded-md shadow-md w-full object-fill h-auto  object-center ${
+                    loaded ? "loaded" : ""
+                  }`}
+                  onLoad={() => setLoaded(true)}
+                />
+              </LazyLoad>
+            )}
+          </Link>
         </div>
         <div className="lg:col-span-12 col-span-12 lg:p-4 p-2 lg:space-y-2 space-y-1 border-slate-200 lg:border rounded-md shadow-sm dark:border-slate-700">
           <h2 className="lg:text-3xl text-lg font-bold capitalize text-slate-500 dark:text-slate-400 lg:mb-6 mb-4">
             {post?.title}
           </h2>
-          <p className="italic text-slate-500 dark:text-slate-400 font-bold">
-            Author: {post.author}
+          <p className="italic text-slate-500 dark:text-slate-400 font-bold inline-flex items-center gap-2 mr-4">
+            <FaUser /> Author: {post.author}
           </p>
 
-          <p className="italic text-slate-500 dark:text-slate-400 font-bold">
-            Published on:{" "}
+          <p className="italic text-slate-500 dark:text-slate-400 font-bold inline-flex items-center gap-2">
+            <FaCalendarAlt /> Published on:{" "}
             {new Date(post?.createdAt).toLocaleDateString("en-GB", {
               day: "numeric",
               month: "long",
@@ -261,8 +270,8 @@ const SingleBlogPost = () => {
 
           {/* Display Categories */}
           <div className="mr-2 lg:flex grid items-center">
-            <span className="font-bold text-slate-500 dark:text-slate-400">
-              Categories:&nbsp;
+            <span className="font-bold text-slate-500 dark:text-slate-400 inline-flex items-center gap-2">
+              <FaLayerGroup /> &nbsp;
             </span>
             <span className="font-bold lg:flex grid items-center text-slate-500 dark:text-slate-400">
               {post?.category
@@ -273,10 +282,10 @@ const SingleBlogPost = () => {
 
           {/* Display Tags */}
           <div className=" lg:flex grid items-center">
-            <span className="font-bold text-slate-500 dark:text-slate-400">
-              Tags:&nbsp;
+            <span className="font-bold text-slate-500 dark:text-slate-400 inline-flex items-center gap-2">
+              <FaTags /> &nbsp;
             </span>{" "}
-            <span className="font-bold lg:flex grid items-center text-slate-500 dark:text-slate-400">
+            <span className="font-bold lg:flex grid items-center text-slate-500 dark:text-slate-400 capitalize">
               {post.tag ? getTagNames(post.tag) : "No tags"}
             </span>
           </div>
@@ -329,7 +338,7 @@ const SingleBlogPost = () => {
         title="Readers'"
         subtitle="If you are not logged in, you will be redirected to login page. After login, you will be taken to the blog post you were in. Now click the span Add Comment button, a comment box will open and you will be able to add comment now."
         decoratedText="Comments"
-        dataLength={comments ? comments.length : 0}
+        dataLength={comments ? comments?.length : 0}
         icon={FaComment}
       />
 

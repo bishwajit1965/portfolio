@@ -4,6 +4,7 @@ import MiniButton from "../../components/buttons/MiniButton";
 
 const RssPostCard = ({ post }) => {
   const { link, title, description, pubDate } = post;
+  console.log("Post", post);
 
   return (
     <div className="lg:col-span-4 col-span-12 border dark:border-slate-700 rounded-md p-2 relative shadow-md dark:bg-slate-900">
@@ -23,7 +24,7 @@ const RssPostCard = ({ post }) => {
           label="Read More"
           className="btn btn-sm"
           icon={<FaArrowCircleRight />}
-          variant="base"
+          variant="success"
         />
       </Link>
     </div>

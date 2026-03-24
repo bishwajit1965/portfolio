@@ -1,22 +1,22 @@
 import ContactMeForm from "./ContactMeForm";
 import { Helmet } from "react-helmet-async";
-import SectionTitle from "../../sectionTitle/SectionTitle";
-import { FaEnvelope } from "react-icons/fa";
 import CTAButton from "../../ctaButton/CTAButton";
-import { FaCloud } from "react-icons/fa6";
+import PageTitle from "../../../pages/pageTitle/PageTitle";
+import { FaEnvelope, FaCloud } from "react-icons/fa";
 
 const ContactMe = () => {
   return (
     <div className="">
       <Helmet>
-        <title>Web-tech-services || Contact</title>
+        <title>Bishwajit.dev || Contact</title>
       </Helmet>
-      <SectionTitle
+      <PageTitle
         title="Contact"
+        icon={FaEnvelope}
         decoratedText="Me 24/7"
         subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
-        icon={FaEnvelope}
       />
+
       <div className="lg:max-w-7xl mx-auto lg:p-0 p-2">
         <div className="grid lg:grid-cols-12 grid-cols-1 justify-between lg:gap-8 gap-4 items-center mt-6">
           <div className="lg:col-span-5 col-span-12">
@@ -57,7 +57,7 @@ const ContactMe = () => {
                   label="Download CV"
                   icon={<FaCloud size={20} />}
                   variant="amber"
-                  className="btn lg:btn-md btn-sm lg:w-40 w-36 lg:text-xl text-sm"
+                  className="btn lg:btn-md btn-sm lg:w-48 w-36 lg:text-xl text-sm"
                 />
               </a>
 

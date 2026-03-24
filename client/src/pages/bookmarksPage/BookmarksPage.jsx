@@ -44,7 +44,7 @@ const BookmarksPage = () => {
   return (
     <div className="lg:max-w-7xl mx-auto lg:p-0 p-2 mb-10">
       <Helmet>
-        <title>Web-tech-services || Bookmarked</title>
+        <title>Bishwajit.dev || Bookmarked</title>
       </Helmet>
       {loading && <Loader />}
       <PageTitle

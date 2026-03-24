@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import Loader from "../../components/loader/Loader";
 import PageTitle from "../pageTitle/PageTitle";
 import RssPostCard from "./RssPostCard";
+import { FaRss } from "react-icons/fa";
 const baseUrl =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
 const RssPage = () => {
@@ -42,22 +43,23 @@ const RssPage = () => {
   return (
     <div className="lg:max-w-7xl mx-auto lg:p-0 p-2 mb-10">
       <Helmet>
-        <title>Web-tech-services || Rss posts</title>
+        <title>Bishwajit.dev || Rss posts</title>
       </Helmet>
       {loading && <Loader />}
       <PageTitle
         title="Rss Blog"
+        icon={FaRss}
         decoratedText="Posts"
         dataLength={rssPosts.length}
         subtitle="All RSS Blog posts are displayed here."
       />
 
       <div className="grid lg:grid-cols-12 grid-cols-1 gap-4 justify-between">
-        {rssPosts?.length > 0
-          ? rssPosts.map((post, index) => (
-              <RssPostCard key={index} post={post} />
-            ))
-          : "No rss post to display."}
+        {rssPosts?.length > 0 ? (
+          rssPosts.map((post, index) => <RssPostCard key={index} post={post} />)
+        ) : (
+          <div className="flex w-full">No rss post to display.</div>
+        )}
       </div>
     </div>
   );

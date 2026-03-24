@@ -2,6 +2,7 @@ const express = require("express");
 const authMiddleware = require("../middlewares/authMiddleware");
 const {
   getAllUsers,
+  getUsersForSuperAdmin,
   updateUserRole,
 } = require("../controllers/userController");
 
@@ -11,6 +12,8 @@ const router = express.Router();
 
 // Route to get all users (accessible by super-admin)
 router.get("/", verifyRole("superAdmin"), getAllUsers);
+
+router.get( "/users", getUsersForSuperAdmin );
 
 router.get("/", getAllUsers);
 

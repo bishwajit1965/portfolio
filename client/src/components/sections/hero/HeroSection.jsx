@@ -1,37 +1,112 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import CTAButton from "../../ctaButton/CTAButton";
-import { FaArrowRight, FaCloud } from "react-icons/fa";
+import { FaArrowRight, FaCloud, FaMailBulk } from "react-icons/fa";
 import SocialMediaLinks from "../../shared/socialMedia/SocialMediaLinks";
+import TypingEffect from "./TypeEffect";
+import HeroButton from "../../buttons/HeroButton";
 
 const HeroSection = () => {
+  const textVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: (i = 1) => ({
+      opacity: 1,
+      x: 0,
+      transition: { delay: i * 0.3, type: "spring", stiffness: 50 },
+    }),
+  };
+
+  const imageVariants = {
+    hidden: { opacity: 0, y: 50, scale: 0.95 },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.8 } },
+    hover: {
+      rotateY: 5,
+      rotateX: 5,
+      scale: 1.02,
+      transition: { duration: 0.5 },
+    },
+  };
+
+  const badgeVariants = {
+    pulse: {
+      scale: [1, 1.1, 1],
+      transition: { duration: 1.5, repeat: Infinity },
+    },
+  };
+
   return (
-    <section className="min-h-[70vh] flex items-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 rounded-b-xl px-6 py-12">
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-12 grid-cols-1 gap-10 items-center">
+    <section className="lg:min-h-[75vh] flex items-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 rounded-b-xl px-4 sm:px-6 lg:px-12 py-6 lg:py-12 overflow-hidden">
+      <div className="max-w-7xl mx-auto grid lg:grid-cols-12 grid-cols-1 gap-6 lg:gap-12 items-center">
         {/* LEFT: Text Content */}
-        <div className="lg:col-span-7 text-center lg:text-left space-y-6">
-          <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-slate-100">
-            Hi, I’m <span className="text-amber-500">Bishwajit Paul</span>
-          </h1>
+        <div className="lg:col-span-7 text-center lg:text-left space-y-4 sm:space-y-6 lg:space-y-6">
+          <motion.h1
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-slate-100 leading-tight"
+            custom={0}
+            initial="hidden"
+            animate="visible"
+            variants={textVariants}
+          >
+            Hi, I’m{" "}
+            <span className="text-amber-500">
+              Bishwajit <span className="text-amber-600">Paul</span>
+            </span>
+          </motion.h1>
 
-          <h2 className="text-xl md:text-2xl font-bold text-slate-600 dark:text-slate-300">
-            <span className="text-orange-500 font-extrabold mr-2">MERN</span>
-            Full-Stack Web Developer
-          </h2>
+          <motion.h2
+            className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-bold text-slate-700 dark:text-slate-300"
+            custom={1}
+            initial="hidden"
+            animate="visible"
+            variants={textVariants}
+          >
+            <span className="text-orange-500 font-extrabold mr-2">
+              A Learner
+            </span>
+            of Modern Web Apps
+          </motion.h2>
 
-          <p className="max-w-xl mx-auto lg:mx-0 text-base md:text-lg text-slate-600 dark:text-slate-400">
+          <motion.h2
+            className="text-lg sm:text-xl md:text-2xl font-semibold text-slate-700 dark:text-slate-300"
+            custom={1}
+            initial="hidden"
+            animate="visible"
+            variants={textVariants}
+          >
+            <TypingEffect
+              words={[
+                "MERN Full-Stack Web Developer",
+                "MongoDB Learner",
+                "React Developer",
+                "Node.js Enthusiast",
+              ]}
+            />
+          </motion.h2>
+
+          <motion.p
+            className="max-w-xl mx-auto lg:mx-0 text-base sm:text-lg md:text-lg text-slate-600 dark:text-slate-400"
+            custom={2}
+            initial="hidden"
+            animate="visible"
+            variants={textVariants}
+          >
             I build scalable, user-focused web applications — dashboards,
             authentication systems, and production-ready platforms from backend
             to frontend.
-          </p>
+          </motion.p>
 
-          {/* CTA */}
-          <div className="flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
+          {/* CTA Buttons */}
+          <motion.div
+            className="flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4 pt-4 sm:pt-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2 }}
+          >
             <Link to="/portfolio-projects">
               <CTAButton
                 label="View Projects"
                 icon={<FaArrowRight size={18} />}
                 variant="info"
-                className="btn btn-md w-44 text-lg"
+                className="w-40 sm:w-44 lg:w-48 text-sm sm:text-base lg:text-lg hover:scale-105 transition-transform duration-300 border-emerald-500 hover:bg-emerald-600"
               />
             </Link>
 
@@ -43,126 +118,61 @@ const HeroSection = () => {
                 label="Download CV"
                 icon={<FaCloud size={18} />}
                 variant="outline"
-                className="btn btn-md w-44"
+                className="w-40 sm:w-44 lg:w-48 text-sm sm:text-base lg:text-lg hover:scale-105 transition-transform duration-300 bg-blue-500 border-blue-600 text-white hover:bg-blue-600"
               />
             </a>
-          </div>
+
+            <HeroButton
+              href="/contact-me"
+              icon={<FaMailBulk />}
+              label="Contact Me"
+              className="w-40 py-1.5 sm:w-44 lg:w-44 text-sm sm:text-base lg:text-lg"
+            />
+          </motion.div>
         </div>
 
         {/* RIGHT: Image Card */}
-        <div className="lg:col-span-5 flex justify-center">
-          <div className="relative w-72 md:w-80 bg-slate-300 dark:bg-slate-800 p-4 rounded-xl shadow-lg">
-            {/* Availability badge */}
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow lg:w-36 w-36">
+        <motion.div
+          className="lg:col-span-5 flex justify-center mt-6 lg:mt-0"
+          initial="hidden"
+          animate="visible"
+          whileHover="hover"
+          variants={imageVariants}
+        >
+          <div className="relative w-64 sm:w-72 md:w-80 lg:w-96 bg-slate-300 dark:bg-slate-800 p-4 rounded-xl shadow-lg">
+            <motion.div
+              className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-500 text-white text-xs sm:text-xs font-semibold py-1 rounded-full shadow w-36 sm:w-40 text-center"
+              variants={badgeVariants}
+              animate="pulse"
+            >
               Open to Opportunities
-            </div>
+            </motion.div>
 
             <figure>
               <img
                 src="https://i.ibb.co.com/Gv6zHk5d/Gemini-Generated-Image-7h0z6s7h0z6s7h0z.png"
                 alt="Bishwajit Paul"
-                className="rounded-xl border border-slate-400 dark:border-slate-600 shadow-md object-cover"
+                className="rounded-xl border border-slate-400 dark:border-slate-600 shadow-md object-cover w-full"
               />
-              <figcaption className="mt-3 text-center text-sm text-slate-600 dark:text-slate-400">
+              <figcaption className="mt-3 text-center text-sm sm:text-base text-slate-600 dark:text-slate-400">
                 Full-Stack MERN Developer
               </figcaption>
             </figure>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Social links (de-emphasized) */}
-        <div className="lg:col-span-12 flex justify-center">
+        {/* Social links */}
+        <motion.div
+          className="lg:col-span-12 flex justify-center lg:mt-6 mt-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.5 }}
+        >
           <SocialMediaLinks />
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 };
 
 export default HeroSection;
-
-// import { Link } from "react-router-dom";
-// import CTAButton from "../../ctaButton/CTAButton";
-// import { FaArrowRight, FaCloud } from "react-icons/fa";
-// import SocialMediaLinks from "../../shared/socialMedia/SocialMediaLinks";
-
-// const HeroSection = () => {
-//   return (
-//     <section className="min-h-[70vh] flex items-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 rounded-b-xl p-6">
-//       <div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-8 gap-4 items-center justify-between">
-//         <div className="lg:col-span-9 col-span-12">
-//           <div className="lg:space-y-6 space-y-2 text-center">
-//             <h1 className="lg:text-4xl text-xl md:text-5xl font-extrabold text-slate-900 dark:text-slate-100">
-//               Hi, I’m <span className="text-amber-500">Bishwajit Paul</span>
-//             </h1>
-
-//             <h2 className="lg:text-2xl text-lg md:text-2xl font-bold text-slate-600 dark:text-slate-300">
-//               <span className="lg:text-3xl text-xl font-extrabold text-orange-500 mr-2">
-//                 MERN
-//               </span>
-//               Full-Stack Web Developer
-//             </h2>
-
-//             <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 lg:mx-32 mx-0">
-//               I build clean, scalable, and user-focused web applications using
-//               modern technologies — from solid backends to polished frontends.
-//             </p>
-
-//             <div className="lg:flex grid justify-center lg:gap-4 gap-2 pt-4 lg:space-x-12">
-//               <Link to="/portfolio-projects">
-//                 <CTAButton
-//                   label="View Projects"
-//                   icon={<FaArrowRight size={20} />}
-//                   variant="info"
-//                   className="btn lg:btn-md btn-sm lg:w-40 w-36 lg:text-lg text-sm"
-//                 />
-//               </Link>
-
-//               <a
-//                 href="/assets/cv-bishwajit-paul.pdf"
-//                 download="cv-bishwajit-paul.pdf"
-//               >
-//                 <CTAButton
-//                   label="Download CV"
-//                   icon={<FaCloud size={20} />}
-//                   variant="amber"
-//                   className="btn lg:btn-md btn-sm lg:w-40 w-36 lg:text-xl text-sm"
-//                 />
-//               </a>
-//             </div>
-//             <div className="flex justify-center">
-//               <SocialMediaLinks />
-//             </div>
-//           </div>
-//         </div>
-//         <div className="lg:col-span-3 col-span-12 bg-slate-300 dark:bg-gray-800 relative shadow-xl p-4 rounded-md lg:h-[23.5rem] h-[17.5rem] lg:order-none order-first">
-//           <Link to="/contact-me">
-//             <div className="absolute right-4 top-4 bottom-4 w-full hover:skew-y-9 bg-slate-400 dark:bg-slate-600 lg:min-h-96 skew-x-9 p-4 shadow-xl rounded-md lg:h-[21.5rem] h-[15.5rem] hover:animate-pulses">
-//               <div className="bg-slate-300 dark:bg-slate-700 p-4 rounded-md relative">
-//                 <figure className="relative">
-//                   <img
-//                     src="https://i.ibb.co.com/Gv6zHk5d/Gemini-Generated-Image-7h0z6s7h0z6s7h0z.png"
-//                     alt="developer"
-//                     className="rounded-xl hover:rounded-full hover:border-8 shadow-lg lg:h-auto w-full object-contain border-8 border-gray-400 dark:border-slate-500"
-//                   />
-//                   <figcaption className="absolute bottom-0 left-0 right-0 bg-gray-800 opacity-60 text-base-100 lg:text-[14px] text-xs py-1 px-2 rounded-b-xl hover:opacity-100 text-center">
-//                     Bishwajit Paul, Full-stack MERN Developer
-//                   </figcaption>
-//                 </figure>
-//               </div>
-
-//               <div className="w-44 bg-slate-400 rounded-full absolute lg:left-[15px] lg:top-[16px] p-1 top-[16px] right-[15px] flex items-center justify-center border border-slate-300 shadow-lg">
-//                 <div className="w-44 rounded-full text-black bg-slate-300 shadow dark:text-slate border border-slate-400 flex items-center justify-center text-sm gap-1">
-//                   <span className="w-3 h-3 rounded-full bg-purple-500 animate-pulse text-black"></span>{" "}
-//                   Open to Opportunities
-//                 </div>
-//               </div>
-//             </div>
-//           </Link>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default HeroSection;

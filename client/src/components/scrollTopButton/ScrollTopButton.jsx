@@ -14,7 +14,7 @@ const ScrollTopButton = () => {
 
   // Checks if the user has scrolled down
   const checkScrollPosition = () => {
-    if (window.scrollY > 800) {
+    if (window.scrollY > 1080) {
       setShowButton(true); // Show the button if scrolled more thn 1080px
     } else {
       setShowButton(false); // Hide the button if scrolled less than 1080px

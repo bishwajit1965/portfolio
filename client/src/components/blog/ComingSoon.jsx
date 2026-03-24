@@ -19,7 +19,7 @@ const ComingSoon = () => {
       .then((response) => response.json())
       .then((data) => {
         const publishedPosts = data.filter(
-          (post) => post.status === "draft" && post.willPublishAt > now,
+          (post) => post.status === "scheduled" && post.willPublishAt > now,
         );
         setPosts(publishedPosts);
       })
@@ -32,18 +32,19 @@ const ComingSoon = () => {
   return (
     <div className="lg:max-w-7xl mx-auto lg:p-0 p-2 mb-10">
       <Helmet>
-        <title>Web-tech-services || Coming Soon</title>
+        <title>Bishwajit.dev ||Posts Coming Soon</title>
       </Helmet>
       {loading && <Loader />}
 
       <PageTitle
         title="Posts"
         subtitle="Hope you will enjoy the posts very much as those are informative and instructive as well."
-        decoratedText={`${"Coming Soon: "}${posts?.length}`}
+        decoratedText="Coming Soon:"
+        dataLength={posts ? posts.length : 0}
       />
 
       <div className="" data-cy="coming-soon-posts">
-        {posts.length === 0 ? (
+        {posts?.length === 0 ? (
           <p className="text-center font-bold text-red-600">
             No upcoming posts at this moment.
           </p>

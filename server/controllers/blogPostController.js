@@ -96,7 +96,7 @@ const editBlogPost = async (req, res) => {
       const previousImagePath = path.join(
         __dirname,
         "../uploads",
-        path.basename(existingBlogPost.imageUrl)
+        path.basename(existingBlogPost.imageUrl),
       );
 
       try {
@@ -181,10 +181,12 @@ const getCategoryRelatedPosts = async (req, res) => {
 
 // Blog post coming soon
 const blogPostComingSoon = async (req, res) => {
+  console.log("🚀 Coming soon route is hit");
   try {
     const result = await comingSoon();
     return res.status(200).json(result);
   } catch (error) {
+    console.error("Coming soon controller error:", error);
     res
       .status(500)
       .json({ message: "Server error in fetching coming soon blog post." });

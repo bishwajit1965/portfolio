@@ -32,9 +32,9 @@ const RelatedCategoryPostsModal = ({ categoryIds, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
-      <div className="bg-white p-4 rounded shadow-lg">
+      <div className="bg-base-100 dark:bg-slate-800 p-4 rounded shadow-md">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-bold">
+          <h2 className="lg:text-lg text-sm font-bold">
             Category Related Blog Posts:{" "}
             {relatedPosts ? relatedPosts.length : ""}
           </h2>
@@ -46,14 +46,14 @@ const RelatedCategoryPostsModal = ({ categoryIds, onClose }) => {
             <FaTimes />
           </button>
         </div>
-        <div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-4 gap-2 justify-between lg:max-w-7xl max-h-screen overflow-y-auto">
+        <div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-4 gap-2 justify-between lg:max-w-7xl max-h-[36rem] lg:overflow-y-auto overflow-y-auto">
           {loading ? (
             <Loader />
           ) : relatedPosts?.length > 0 ? (
             relatedPosts?.map((post) => (
               <div
                 key={post._id}
-                className="lg:col-span-3 relative col-span-12 shadow-md rounded-md dark:bg-slate-800 dark:text-base-300"
+                className="lg:col-span-3 relative col-span-12 shadow-md rounded-md dark:bg-slate-800 dark:text-base-300 border dark:border-slate-700"
               >
                 <a href={`/single-blog-post/${post._id}`}>
                   <img
@@ -65,9 +65,17 @@ const RelatedCategoryPostsModal = ({ categoryIds, onClose }) => {
                     <h3 className="text-base font-bold">
                       {post.title.substring(0, 62)}
                     </h3>
-                    <p>{post.content.substring(0, 120)}...</p>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html: post?.content
+                          ? post?.content
+                          : "No content to display...",
+                      }}
+                      className="text-slate-500 dark:text-slate-400"
+                    ></p>
+                    {/* <p>{post.content.substring(0, 120)}...</p> */}
                   </div>
-                  <div className="flex absolute bottom-1 right-1 items-center">
+                  <div className="flex absolute bottom-2 right-2 items-center">
                     <Button
                       variant="outline"
                       label="Read More"

@@ -181,11 +181,11 @@ const AddBlogPost = () => {
     formData.append("content", content);
     formData.append(
       "category",
-      JSON.stringify(selectedCategories.map((cat) => cat.value))
+      JSON.stringify(selectedCategories.map((cat) => cat.value)),
     );
     formData.append(
       "tag",
-      JSON.stringify(selectedTags.map((tag) => tag.value))
+      JSON.stringify(selectedTags.map((tag) => tag.value)),
     );
     formData.append("status", status);
     formData.append("willPublishAt", willPublishAt);
@@ -334,6 +334,7 @@ const AddBlogPost = () => {
                     onChange={(selected) => setStatus(selected.value)}
                     options={[
                       { value: "draft", label: "Draft" },
+                      { value: "scheduled", label: "Scheduled" },
                       { value: "published", label: "Published" },
                     ]}
                   />

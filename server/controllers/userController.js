@@ -20,6 +20,28 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const getUsersForSuperAdmin = async (req, res) => {
+  try {
+    const userModel = new User();
+    const users = await userModel.countDocuments();
+    // Optional: Users by role
+    const rolesAggregation = await users.aggregate([
+      { $group: { _id: "$role", count: { $sum: 1 } } },
+    ]);
+
+    const usersByRole = {};
+    rolesAggregation.forEach((r) => {
+      usersByRole[r._id] = r.count;
+    });
+    res
+      .status(200)
+      .json({ success: true, message: "Users fetched successfully.", users });
+  } catch (error) {
+    console.error("Dashboard stats error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 // Update a user's role (only super-admin can access this)
 const updateUserRole = async (req, res) => {
   const { id } = req.params;
@@ -73,4 +95,9 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = { getAllUsers, updateUserRole, deleteUser };
+module.exports = {
+  getAllUsers,
+  getUsersForSuperAdmin,
+  updateUserRole,
+  deleteUser,
+};
