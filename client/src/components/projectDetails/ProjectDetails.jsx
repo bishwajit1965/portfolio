@@ -177,7 +177,7 @@ const ProjectDetails = () => {
                       <img
                         src={`${baseURL}${item.image}`}
                         alt={item.caption}
-                        className="rounded-t-md w-full h-48 object-cover cursor-pointer bg-gray-900"
+                        className="w-full h-48 object-cover cursor-pointer bg-gray-900"
                       />
                     </Link>
                     {item.caption && (
