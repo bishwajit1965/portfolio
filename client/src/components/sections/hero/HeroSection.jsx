@@ -5,6 +5,7 @@ import { FaArrowRight, FaCloud, FaMailBulk } from "react-icons/fa";
 import SocialMediaLinks from "../../shared/socialMedia/SocialMediaLinks";
 import TypingEffect from "./TypeEffect";
 import HeroButton from "../../buttons/HeroButton";
+import heroImage from "../../../assets/hero-1.png";
 
 const HeroSection = () => {
   const textVariants = {
@@ -24,13 +25,6 @@ const HeroSection = () => {
       rotateX: 5,
       scale: 1.02,
       transition: { duration: 0.5 },
-    },
-  };
-
-  const badgeVariants = {
-    pulse: {
-      scale: [1, 1.1, 1],
-      transition: { duration: 1.5, repeat: Infinity },
     },
   };
 
@@ -140,23 +134,33 @@ const HeroSection = () => {
           variants={imageVariants}
         >
           <div className="relative w-64 sm:w-72 md:w-80 lg:w-96 bg-slate-300 dark:bg-slate-800 p-4 rounded-xl shadow-lg">
-            <motion.div
-              className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-500 text-white text-xs sm:text-xs font-semibold py-1 rounded-full shadow w-36 sm:w-40 text-center"
-              variants={badgeVariants}
-              animate="pulse"
-            >
-              Open to Opportunities
+            <motion.div className="w-44 z-10 bg-emerald-400 rounded-full absolute lg:left-[12px] lg:top-[8] p-1 top-[8px] right-[15px] flex items-center justify-center border border-emerald-300 shadow-lg">
+              <div className="w-44 rounded-full text-black bg-emerald-300 shadow dark:text-slate border border-emerald-400 flex items-center justify-center text-sm gap-1">
+                <span className="w-3 h-3 rounded-full bg-purple-500 animate-pulse text-black"></span>{" "}
+                Open to Opportunities
+              </div>
             </motion.div>
 
             <figure>
               <img
+                src={heroImage}
+                alt="Bishwajit Paul"
+                className="rounded-xl border border-slate-400 dark:border-slate-600 shadow-md object-cover w-full relative"
+              />
+              {/* <img
                 src="https://i.ibb.co.com/Gv6zHk5d/Gemini-Generated-Image-7h0z6s7h0z6s7h0z.png"
                 alt="Bishwajit Paul"
                 className="rounded-xl border border-slate-400 dark:border-slate-600 shadow-md object-cover w-full"
-              />
+              /> */}
               <figcaption className="mt-3 text-center text-sm sm:text-base text-slate-600 dark:text-slate-400">
-                Full-Stack MERN Developer
+                Full-Stack{" "}
+                <span className="text-gray-900 font-bold dark:text-amber-500">
+                  MERN Developer
+                </span>
               </figcaption>
+              <div className="absolute lg:bottom-[3.5rem] bottom-[3.2rem] lg:right-4.5 right-5 h-9 w-9 bg-emerald-500 border-2 border-emerald-400 rounded-full flex items-center justify-center text-base-100 font-semibold">
+                BP
+              </div>
             </figure>
           </div>
         </motion.div>

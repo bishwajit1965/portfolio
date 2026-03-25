@@ -11,10 +11,10 @@ const HobbySection = () => {
   if (data.length === 0) return null;
   return (
     <>
-      <h2 className="text-2xl font-bold mb-2 dark:text-green-400">
+      <h2 className="lg:text-2xl text-lg font-bold mb-2 dark:text-green-400">
         My hobbies
       </h2>
-      <div className="border border-slate-300 dark:border-slate-700 space-y-2 rounded-md lg:p-3 p-3 shadow-md">
+      <div className="border border-slate-300 dark:border-slate-700 space-y-2 rounded-md lg:p-2 p-2 shadow-md">
         {data.length > 0
           ? data
               .slice(0, 5)

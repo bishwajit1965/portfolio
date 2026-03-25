@@ -7,10 +7,13 @@ const SectionTitle = ({
   dataLength,
 }) => {
   return (
-    <div className="text-center lg:py-6 py-4 mb-4 lg:space-y-4 space-y-2">
-      <h2 className="flex items-center justify-center gap-2 text-xl lg:text-3xl font-extrabold text-amber-600 dark:text-emerald-400">
+    <div className="text-center lg:py-6 py-4 lg:mb-4 mb-2 lg:space-y-4 space-y-2">
+      <h2 className="lg:flex grid items-center justify-center gap-2 text-lg lg:text-3xl font-extrabold text-amber-600 dark:text-emerald-400">
         {Icon && (
-          <Icon className="text-amber-600 dark:text-emerald-400" size={24} />
+          <Icon
+            className="text-amber-600 dark:text-emerald-400 hidden lg:block"
+            size={24}
+          />
         )}
         {title && <span>{title}</span>}
         {decoratedText && (

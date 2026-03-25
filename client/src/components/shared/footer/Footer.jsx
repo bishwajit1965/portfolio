@@ -85,10 +85,10 @@ const Footer = () => {
 
       {/* BOTTOM BAR */}
       <footer className="bg-slate-800 text-slate-400 border-t border-slate-700 lg:px-28 px-6 py-3">
-        <div className="flex flex-col md:flex-row justify-between items-center text-sm">
-          <div className="flex items-center gap-2">
+        <div className="lg:flex grid flex-col md:flex-row justify-between items-center text-sm">
+          <div className="lg:flex grid items-center gap-2">
             <img src={Logo} alt="Logo" className="w-6 h-6" />
-            <span className="items-center flex gap-2">
+            <span className="items-center lg:flex grid gap-2">
               © {currentYear} <CopyrightText />
             </span>
           </div>

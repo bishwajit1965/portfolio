@@ -14,13 +14,6 @@ const handleCreateComment = async (req, res) => {
     const { postId, content, authorId, authorEmail, author, photoUrl } =
       req.body;
 
-    console.log("Request Body:", req.body);
-    // console.log("Request User:", req.user);
-    // Check if user ID is available
-
-    // if (!req.user || !req.user.uid) {
-    //   return res.status(401).json({ message: "User is not authenticated" });
-    // }
     const newComment = {
       postId: new ObjectId(postId),
       // userId: req.user.uid || userId,
@@ -60,7 +53,7 @@ const getAllComments = async (req, res) => {
 const handleFetchComment = async (req, res) => {
   try {
     const { postId } = req.params;
-    console.log("postId from params:", postId);
+
     const comments = await fetchCommentsByPostId(postId);
     console.log("Comments:", comments);
     res.status(200).json({
@@ -78,9 +71,6 @@ const updateCommentStatus = async (req, res) => {
   const { id } = req.params;
   const updatedData = req.body;
   try {
-    console.log("Received ID for update:", id);
-    console.log("Updated Data:", updatedData);
-
     const updatedComment = await updateComment(id, updatedData);
 
     if (updatedComment.modifiedCount > 0) {

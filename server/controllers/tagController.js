@@ -39,7 +39,7 @@ const getTags = async (req, res) => {
     res.status(200).json(tags);
   } catch (error) {
     console.error(error);
-    res, status(500).json({ message: "Error in fetching tags." });
+    (res, status(500).json({ message: "Error in fetching tags." }));
   }
 };
 
@@ -47,9 +47,6 @@ const updateTagById = async (req, res) => {
   const { id } = req.params;
   const updatedData = req.body;
   try {
-    console.log("Received ID for update:", id);
-    console.log("Updated Data:", updatedData);
-
     const updatedTag = await updateTag(id, updatedData);
 
     if (updatedTag.modifiedCount > 0) {

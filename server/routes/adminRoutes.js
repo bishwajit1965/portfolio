@@ -17,7 +17,7 @@ router.get(
   // verifyToken,
   verifyRole("superAdmin"),
   verifySuperAdmin,
-  getAllUsers
+  getAllUsers,
 );
 
 // Route to update a user's role (Super Admin access only)
@@ -25,7 +25,7 @@ router.patch(
   "/users/:id/role",
   // verifyToken,
   // verifySuperAdmin,
-  updateUserRole
+  updateUserRole,
 );
 
 // Route to delete a user (Super Admin access only)
@@ -33,7 +33,7 @@ router.delete(
   "/users/:id",
   // verifyToken,
   // verifyRole("superAdmin"),
-  deleteUser
+  deleteUser,
 );
 
 module.exports = router;

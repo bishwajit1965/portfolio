@@ -3,6 +3,7 @@ import SectionTitle from "../../sectionTitle/SectionTitle";
 import useFetchCollection from "../../../hooks/useFetchCollection";
 import { useMemo } from "react";
 import { FaLandmark } from "react-icons/fa";
+import Loader from "../../loader/Loader";
 
 const JourneyMilestones = () => {
   // Memoize query parameters to avoid unnecessary re-renders
@@ -16,7 +17,12 @@ const JourneyMilestones = () => {
   console.log("Fetched milestone data:", data);
 
   // Loading state
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
 
   // Error state
   if (error) return <div>Error: {error.message}</div>;

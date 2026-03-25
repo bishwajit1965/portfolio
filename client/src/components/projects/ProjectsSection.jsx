@@ -6,7 +6,7 @@ import api from "../../services/api";
 import Button from "../buttons/Button";
 
 const ProjectsSection = () => {
-  const INITIAL_VISIBLE = 2;
+  const INITIAL_VISIBLE = 4;
   const [projects, setProjects] = useState([]);
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
 

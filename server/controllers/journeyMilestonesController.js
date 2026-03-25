@@ -5,7 +5,7 @@ const createJourneyMilestone = async (req, res) => {
     const milestoneData = req.body;
     const result = await journeyMilestones.create(milestoneData);
     const createdMilestone = { ...milestoneData, _id: result.insertedId };
-    console.log("created Journey Milestone:", createdMilestone);
+
     res.status(201).json({
       message: "Journey milestone created successfully!",
       result: createdMilestone,
@@ -44,7 +44,7 @@ const updateJourneyMilestone = async (req, res) => {
     const milestoneData = req.body;
     const result = await journeyMilestones.updateById(
       req.params.id,
-      milestoneData
+      milestoneData,
     );
     if (result.modifiedCount === 0) {
       return res

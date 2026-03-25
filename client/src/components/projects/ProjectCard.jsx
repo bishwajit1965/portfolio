@@ -13,7 +13,7 @@ const ProjectCard = ({ project }) => {
   };
 
   return (
-    <div className="border dark:border-slate-700 rounded-md shadow-md bg-base-100 dark:bg-slate-900 relative min-h-[33rem]">
+    <div className="border dark:border-slate-700 rounded-md shadow-md bg-base-100 dark:bg-slate-900 relative min-h-[35rem]">
       <div className="space-y-2 dark:text-gray-400">
         <img
           src={imageUrl}

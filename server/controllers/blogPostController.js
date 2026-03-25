@@ -181,7 +181,6 @@ const getCategoryRelatedPosts = async (req, res) => {
 
 // Blog post coming soon
 const blogPostComingSoon = async (req, res) => {
-  console.log("🚀 Coming soon route is hit");
   try {
     const result = await comingSoon();
     return res.status(200).json(result);
@@ -196,7 +195,6 @@ const blogPostComingSoon = async (req, res) => {
 // Add bookmark
 const addBookmarkToPost = async (req, res) => {
   const { userId, postId } = req.body;
-  console.log("Incoming request body:", req.body); // Log incoming data
 
   try {
     const result = await addBookmarkToUser(userId, postId);
@@ -230,7 +228,6 @@ const removeBookmarkFromPost = async (req, res) => {
 // Fetch bookmarked posts
 const fetchBookmarkedPostsForUser = async (req, res) => {
   const userId = req.user.id;
-  console.log("User ID in fetchBookmarkedPostsForUser:", userId);
 
   try {
     const bookmarkedPosts = await fetchBookmarkedPosts(userId);

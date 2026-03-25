@@ -35,7 +35,7 @@ const getTestimonialById = async (req, res) => {
 const getAllTestimonials = async (req, res) => {
   try {
     const testimonials = await getTestimonials();
-    console.log("Testimonials", testimonials);
+
     res.status(200).json({
       success: true,
       message: "Testimonials fetched successfully!",
@@ -47,7 +47,6 @@ const getAllTestimonials = async (req, res) => {
 };
 
 const updateTestimonialById = async (req, res) => {
-  console.log("🎯 Edit testimonial method is hit");
   try {
     const { id } = req.params;
     console.log("Id", id);

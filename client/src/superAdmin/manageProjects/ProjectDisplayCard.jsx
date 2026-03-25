@@ -20,14 +20,14 @@ const ProjectDisplayCard = ({ project, handleDelete }) => {
   };
 
   return (
-    <div className="border dark:border-slate-700 rounded-md shadow-md p-2 bg-base-100 dark:bg-slate-900 relative min-h-72">
+    <div className="border dark:border-slate-700 rounded-md shadow-md bg-base-100 dark:bg-slate-900 relative min-h-96">
       <div className="">
         <img
           src={imageUrl}
           alt={project.name}
-          className="rounded-t-md lg:h-60 lg:w-full mb-4"
+          className="rounded-t-md lg:h-auto lg:w-full object-fill"
         />
-        <div className="h-60 space-y-2">
+        <div className="min-h-[21rem] space-y-2 p-2">
           <h2 className="font-bold">{name}</h2>
           <p>{type}</p>
           <p>{description}</p>
@@ -47,7 +47,7 @@ const ProjectDisplayCard = ({ project, handleDelete }) => {
         </div>
       </div>
 
-      <div className="absolute bottom-2 space-x-1 lg:space-x-2">
+      <div className="absolute bottom-1.5 space-y-2 space-x-1 lg:space-x-2 p-2">
         <MiniButton
           onClick={() => handleEdit()}
           variant="success"

@@ -3,6 +3,8 @@ import SectionTitle from "../../../components/sectionTitle/SectionTitle";
 import { FaEnvelope } from "react-icons/fa";
 import CTAButton from "../../ctaButton/CTAButton";
 import { FaCloud } from "react-icons/fa6";
+import heroImage from "../../../assets/hero-1.png";
+
 const ContactMeSection = () => {
   return (
     <div>
@@ -19,10 +21,16 @@ const ContactMeSection = () => {
               {/* You can add an image or illustration here if desired */}
               <figure>
                 <img
+                  src={heroImage}
+                  alt="Bishwajit Paul"
+                  className="rounded-xl border border-slate-400 dark:border-slate-600 shadow-md object-cover w-full relative"
+                />
+
+                {/* <img
                   src="https://i.ibb.co.com/Gv6zHk5d/Gemini-Generated-Image-7h0z6s7h0z6s7h0z.png"
                   alt="Contact Me Illustration"
                   className="w-full h-auto object-cover rounded-lg shadow-md"
-                />
+                /> */}
 
                 <figcaption>
                   <h2 className="lg:text-lg text-sm font-semibold text-center mt-1">
@@ -37,6 +45,10 @@ const ContactMeSection = () => {
                     </span>
                   </h2>
                 </figcaption>
+
+                <div className="absolute lg:bottom-[14.8rem] bottom-[14rem] lg:right-7 right-5 h-9 w-9 bg-emerald-500 border-2 border-emerald-400 rounded-full flex items-center justify-center text-base-100 font-semibold">
+                  BP
+                </div>
               </figure>
               <p>
                 I am always open to discussing new opportunities, creative
@@ -44,8 +56,8 @@ const ContactMeSection = () => {
                 you have any questions! I am here to help and answer.
               </p>
 
-              <div className="w-44 bg-slate-400 rounded-full absolute lg:left-[15px] lg:top-[8] p-1 top-[8px] right-[15px] flex items-center justify-center border border-slate-300 shadow-lg">
-                <div className="w-44 rounded-full text-black bg-slate-300 shadow dark:text-slate border border-slate-400 flex items-center justify-center text-sm gap-1">
+              <div className="w-44 bg-emerald-400 rounded-full absolute lg:left-[15px] lg:top-[8] p-1 top-[8px] right-[15px] flex items-center justify-center border border-emerald-300 shadow-lg">
+                <div className="w-44 rounded-full text-black bg-emerald-300 shadow dark:text-slate border border-emerald-400 flex items-center justify-center text-sm gap-1">
                   <span className="w-3 h-3 rounded-full bg-purple-500 animate-pulse text-black"></span>{" "}
                   Open to Opportunities
                 </div>

@@ -5,7 +5,7 @@ const createFeaturedProject = async (req, res) => {
   try {
     const projectData = req.body;
     const result = await featuredProject.create(projectData);
-    console.log("REsult:", result);
+    
     const createdProject = { ...projectData, _id: result.insertedId };
     console.log("Created project", createdProject);
     res.status(201).json({

@@ -40,7 +40,6 @@ const superAdminLogin = async (req, res) => {
 };
 
 const getDashboardStats = async (req, res) => {
-  console.log("🚀 Get dashboard status controller method is hit!!!");
   try {
     const totalUsers = await User.countDocuments();
     const totalProjects = await Project.countDocuments();

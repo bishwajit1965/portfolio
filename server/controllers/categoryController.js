@@ -41,19 +41,14 @@ const updateCategory = async (req, res) => {
   const { id } = req.params;
   const updatedData = req.body;
   try {
-    console.log("Received ID for update:", id);
-    console.log("Updated Data:", updatedData);
-
     const updatedCategory = await Category.updateCategory(id, updatedData);
 
     if (updatedCategory.modifiedCount > 0) {
-      console.log("Category updated successfully.");
       res.status(200).json({
         message: "Category updated successfully!",
         updatedCategory,
       });
     } else {
-      console.log("No category updated, document not found.");
       res.status(400).json({ message: "Category data not found." });
     }
   } catch (error) {
@@ -79,7 +74,6 @@ const deleteCategory = async (req, res) => {
 // Callback function that runs after a category is created
 const onCategoryCreated = (category) => {
   // You can perform any action here (e.g., logging, further updates, etc.)
-  console.log(`New Category Created: ${category.name}`);
   // Add any other actions that should be performed when a category is created
   // For example, update related posts, notify admins, etc.
 };
