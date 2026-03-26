@@ -50,7 +50,7 @@ const ProjectCarousel = () => {
       <div className="grid grid-cols-12 gap-6 mt-8">
         {/* LEFT: Featured Project */}
         <div className="col-span-12 lg:col-span-7">
-          <div className="relative h-80 rounded-xl overflow-hidden shadow-md group">
+          <div className="relative h-80s rounded-xl overflow-hidden shadow-md group">
             {loading && (
               <div className="flex items-center justify-center h-full text-sm opacity-70">
                 Loading featured projects…
@@ -62,14 +62,14 @@ const ProjectCarousel = () => {
                 <img
                   src={`${apiUrl}/uploads/${activeProject.image}`}
                   alt={activeProject.name}
-                  className="w-full h-full object-cover"
+                  className="w-full lg:h-80 h-auto lg:object-fill object-cover"
                 />
 
                 {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
 
                 {/* Project info */}
-                <div className="absolute bottom-4 left-4 right-4 text-white space-y-1">
+                <div className="absolute bottom-4 left-4 right-4 text-white space-y-2">
                   <h3 className="text-xl font-bold">{activeProject.name}</h3>
                   <p className="text-sm opacity-80">
                     {activeProject.type || "Web Application"}
@@ -77,9 +77,14 @@ const ProjectCarousel = () => {
 
                   <Link
                     to={`/project-details/${activeProject._id}`}
-                    className="inline-block mt-2"
+                    className="inline-block mt-2 m-0"
                   >
-                    <Button label="View Project" size="sm" variant="outline" />
+                    <Button
+                      label="View Project"
+                      icon={<FaEye />}
+                      size="sm"
+                      variant="outline"
+                    />
                   </Link>
                 </div>
               </>

@@ -8,7 +8,7 @@ const SectionTitle = ({
 }) => {
   return (
     <div className="text-center lg:py-6 py-4 lg:mb-4 mb-2 lg:space-y-4 space-y-2">
-      <h2 className="lg:flex grid items-center justify-center gap-2 text-lg lg:text-3xl font-extrabold text-amber-600 dark:text-emerald-400">
+      <h2 className="flex flex-wrap items-center justify-center gap-2 text-lg lg:text-3xl font-extrabold text-amber-600 dark:text-emerald-400">
         {Icon && (
           <Icon
             className="text-amber-600 dark:text-emerald-400 hidden lg:block"
@@ -28,7 +28,7 @@ const SectionTitle = ({
 
       {/* Subtitle */}
       {subtitle && (
-        <p className="text-sm lg:text-md font-serif max-w-2xl mx-auto text-gray-700 dark:text-emerald-400">
+        <p className="text-base lg:text-md font-serif max-w-2xl mx-auto text-gray-700 dark:text-emerald-400">
           {subtitle}
         </p>
       )}

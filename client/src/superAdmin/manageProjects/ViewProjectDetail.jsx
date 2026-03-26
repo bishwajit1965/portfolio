@@ -63,9 +63,9 @@ const ViewProjectDetails = () => {
         </div>
 
         <div className="bg-base-100 p-2 lg:col-span-6 space-y-2 rounded-md dark:bg-slate-800">
-          <div className=" ">
+          <div className="">
             {projectDetails?.screenshots?.map((category) => (
-              <div key={category.id} className=" ">
+              <div key={category.id} className="">
                 <h2 className="text-lg font-bold lg:mt-6 mt-4 mb-2 text-gray-700 dark:text-slate-300 flex items-center gap-2 bg-base-300 lg:p-2 p-1 rounded-t-md">
                   <FaArrowCircleDown /> {category.category}
                 </h2>
@@ -77,7 +77,7 @@ const ViewProjectDetails = () => {
                         <img
                           src={`${baseURL}${item.image}`}
                           alt={item.caption}
-                          className="w-full h-40 object-contain rounded-md mb-2 shadow-md border dark:border-slate-600"
+                          className="w-full lg:h-40 h-auto lg:object-fill object-cover rounded-md mb-2 shadow-md border dark:border-slate-600"
                         />
                         {item?.caption && (
                           <figcaption className=" font-semibold">

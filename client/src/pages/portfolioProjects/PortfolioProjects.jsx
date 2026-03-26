@@ -176,11 +176,11 @@ const PortfolioProjects = () => {
                             <img
                               src={`${baseURL}${item.image}`}
                               alt={item.caption || project.name}
-                              className="rounded-t-md w-full h-72 object-cover transition-transform duration-300 group-hover:scale-100"
+                              className="rounded-t-md w-full lg:h-64 h-auto lg:object-fill object-cover transition-transform duration-300 group-hover:scale-100"
                             />
                             {item.caption && (
                               <figcaption className="text-medium border-t border-gray-300 text-center text-gray-600 dark:text-gray-700 p-1.5 rounded-b-md bg-base-200">
-                                {item.caption}
+                                {item.caption.slice(0, 60) + " ..."}
                               </figcaption>
                             )}
                           </figure>
@@ -271,7 +271,7 @@ const PortfolioProjects = () => {
               <img
                 src={`${baseURL}${modalData.image}`}
                 alt={modalData?.caption || modalProject?.name}
-                className="w-full h-96 object-contain rounded-md mb-2 shadow border dark:border-slate-600"
+                className="w-full lg:h-72 lg:object-fill h-auto object-cover rounded-md mb-2 shadow border dark:border-slate-600"
               />
               {modalData?.caption && (
                 <figcaption className="text-gray-700 dark:text-gray-300">

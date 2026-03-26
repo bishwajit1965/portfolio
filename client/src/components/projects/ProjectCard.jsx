@@ -13,14 +13,14 @@ const ProjectCard = ({ project }) => {
   };
 
   return (
-    <div className="border dark:border-slate-700 rounded-md shadow-md bg-base-100 dark:bg-slate-900 relative min-h-[35rem]">
-      <div className="space-y-2 dark:text-gray-400">
+    <div className="border dark:border-slate-700 rounded-md shadow-md dark:bg-slate-900 min-h-[37rem] hover:shadow-xl">
+      <div className="dark:text-gray-400">
         <img
           src={imageUrl}
           alt={project.name}
-          className="rounded-t-md min-h-80 lg:w-full object-fill mb-4 border shadow-sm hover:shadow-lg"
+          className="rounded-t-md lg:min-h-72 lg:w-full object-cover shadow-sm"
         />
-        <div className="p-2 space-y-2">
+        <div className="p-2 lg:space-y-4 space-y-2">
           <h2 className="font-bold">{name}</h2>
           <p>{type}</p>
           <p>{description}</p>
@@ -41,18 +41,17 @@ const ProjectCard = ({ project }) => {
               </p>
             )}
           </div>
+          <div className="">
+            <MiniButton
+              type="submit"
+              variant="success"
+              label="View Details"
+              icon={<FaEye />}
+              className=""
+              onClick={viewProjectDetails}
+            />
+          </div>
         </div>
-      </div>
-
-      <div className="absolute bottom-2 left-2 space-x-2 lg:space-x-4 pt-2">
-        <MiniButton
-          type="submit"
-          variant="success"
-          label="View Details"
-          icon={<FaEye />}
-          className=""
-          onClick={viewProjectDetails}
-        />
       </div>
     </div>
   );

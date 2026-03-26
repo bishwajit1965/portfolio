@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import CTAButton from "../../ctaButton/CTAButton";
 import PageTitle from "../../../pages/pageTitle/PageTitle";
 import { FaEnvelope, FaCloud } from "react-icons/fa";
+import heroImage from "../../../assets/hero-1.png";
 
 const ContactMe = () => {
   return (
@@ -24,10 +25,14 @@ const ContactMe = () => {
               {/* You can add an image or illustration here if desired */}
               <figure>
                 <img
+                  src={heroImage}
+                  className="w-full h-auto object-cover rounded-lg shadow-md relative"
+                />
+                {/* <img
                   src="https://i.ibb.co.com/Gv6zHk5d/Gemini-Generated-Image-7h0z6s7h0z6s7h0z.png"
                   alt="Contact Me Illustration"
                   className="w-full h-auto object-cover rounded-lg shadow-md"
-                />
+                /> */}
 
                 <figcaption>
                   <h2 className="lg:text-lg text-sm font-semibold text-center mt-1">
@@ -42,6 +47,9 @@ const ContactMe = () => {
                     </span>
                   </h2>
                 </figcaption>
+                <div className="absolute lg:bottom-[14.8rem] bottom-[14rem] lg:right-7 right-5 h-9 w-9 bg-emerald-500 border-2 border-emerald-400 rounded-full flex items-center justify-center text-base-100 font-semibold">
+                  BP
+                </div>
               </figure>
               <p>
                 I am always open to discussing new opportunities, creative

@@ -9,7 +9,7 @@ import {
   FaTools,
   FaTrashAlt,
 } from "react-icons/fa";
-import { FaCircleRight, FaReadme, FaSourcetree } from "react-icons/fa6";
+import { FaReadme, FaSourcetree } from "react-icons/fa6";
 
 import api from "../../services/api";
 import PageTitle from "../../pages/pageTitle/PageTitle";
@@ -100,12 +100,12 @@ const ProjectDetails = () => {
 
       {/* Main info + image */}
       <div className="grid lg:grid-cols-12 gap-6 rounded-md">
-        <div className="lg:col-span-8 col-span-12 bg-base-100 border dark:border-gray-700 dark:bg-gray-800 rounded-md shadow-sm">
+        <div className="lg:col-span-8 col-span-12 bg-base-100 border dark:border-gray-700 rounded-md shadow-sm">
           <Link to="/" className="m-0 cursor-pointer">
             <img
               src={`${baseURL}${project.image}`}
               alt={project.name}
-              className="rounded-t-md w-full h-[26rem] border shadow-sm object-cover"
+              className="rounded-t-md w-full h-auto border shadow-sm lg:object-fill object-cover lg:p-0 p-1"
             />
           </Link>
           <figcaption className="text-center text-gray-800 dark:text-gray-800 font-medium py-1 bg-base-300 rounded-b-md border-t border-gray-300">
@@ -152,7 +152,13 @@ const ProjectDetails = () => {
               </p>
             )}
           </div>
-          <Button href="/" label="Go Home" className="p-0 m-0 mt-4" />
+          <Button
+            href="/"
+            icon={<FaHome />}
+            label="Go Home"
+            variant="outline"
+            className="p-0 m-0 mt-4"
+          />
         </div>
       </div>
 
@@ -167,17 +173,17 @@ const ProjectDetails = () => {
               <h3 className="flex items-center gap-2 font-semibold text-gray-700 dark:text-gray-400">
                 <FaListOl /> {category.category}
               </h3>
-              <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 rounded-md">
+              <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 rounded-t-md">
                 {category.items.map((item, idx) => (
                   <div
                     key={idx}
-                    className="relative group shadow-md rounded-b-md hover:shadow-xl bg-gray-500"
+                    className="relative group shadow-md rounded-t-md hover:shadow-xl"
                   >
                     <Link to="/" className="m-0 cursor-pointer">
                       <img
                         src={`${baseURL}${item.image}`}
                         alt={item.caption}
-                        className="rounded-t-md w-full h-48 object-cover cursor-pointer bg-gray-900"
+                        className="rounded-t-md w-full lg:h-60 h-auto lg:object-fill object-cover cursor-pointer lg:p-0 p-1 bg-base-100 border border-gray-300 dark:border-gray-300"
                       />
                     </Link>
                     {item.caption && (
@@ -240,8 +246,8 @@ const ProjectDetails = () => {
           className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 dark:bg-opacity-100 z-50 p-4"
         >
           <div className="bg-white dark:bg-gray-800 rounded-md shadow-lg max-w-3xl w-full p-6 space-y-4">
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-400 flex items-center gap-2">
-              <FaCircleRight /> {modalData.caption}
+            <h2 className="lg:text-2xl font-bold text-gray-800 dark:text-gray-400 ">
+              {modalData.caption}
             </h2>
             <img
               src={`${baseURL}${modalData.image}`}
