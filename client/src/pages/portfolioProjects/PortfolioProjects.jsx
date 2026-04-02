@@ -174,13 +174,14 @@ const PortfolioProjects = () => {
                         >
                           <figure>
                             <img
-                              src={`${baseURL}${item.image}`}
+                              src={item.image.url || `${baseURL}${item.image}`} // Handle both URL and filename cases
+                              // src={`${baseURL}${item.image}`}
                               alt={item.caption || project.name}
                               className="rounded-t-md w-full lg:h-64 h-auto lg:object-fill object-cover transition-transform duration-300 group-hover:scale-100"
                             />
                             {item.caption && (
                               <figcaption className="text-medium border-t border-gray-300 text-center text-gray-600 dark:text-gray-700 p-1.5 rounded-b-md bg-base-200">
-                                {item.caption.slice(0, 60) + " ..."}
+                                {item.caption.slice(0, 55) + " ..."}
                               </figcaption>
                             )}
                           </figure>
@@ -269,7 +270,7 @@ const PortfolioProjects = () => {
 
             <figure>
               <img
-                src={`${baseURL}${modalData.image}`}
+                src={modalData?.image?.url || `${baseURL}${modalData?.image}`}
                 alt={modalData?.caption || modalProject?.name}
                 className="w-full lg:h-72 lg:object-fill h-auto object-cover rounded-md mb-2 shadow border dark:border-slate-600"
               />

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 import { FaEdit } from "react-icons/fa";
-import axios from "axios";
 import MiniButton from "../../components/buttons/MiniButton";
+import api from "../../services/api";
 
 const ProjectVisibilityToggle = ({ projectId, initialVisibility }) => {
   const [visibility, setVisibility] = useState(initialVisibility);
@@ -19,7 +19,7 @@ const ProjectVisibilityToggle = ({ projectId, initialVisibility }) => {
     const newVisibility = dropdownValue; // Determine new visibility status
 
     try {
-      const response = await axios.patch(
+      const response = await api.patch(
         `${baseURL}/projects/visibility/${projectId}`,
         {
           visibility: newVisibility,

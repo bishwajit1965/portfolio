@@ -26,6 +26,12 @@ const ProjectDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const baseURL = `${apiUrl}/uploads/`;
+  const getImageSrc = (img) => {
+    if (!img) return "";
+    if (typeof img === "string" && img.startsWith("http")) return img;
+    if (img.url) return img.url;
+    return `${baseURL}${img}`;
+  };
 
   // Fetch project details
   useEffect(() => {
@@ -103,7 +109,8 @@ const ProjectDetails = () => {
         <div className="lg:col-span-8 col-span-12 bg-base-100 border dark:border-gray-700 rounded-md shadow-sm">
           <Link to="/" className="m-0 cursor-pointer">
             <img
-              src={`${baseURL}${project.image}`}
+              src={getImageSrc(project.image)}
+              // src={`${baseURL}${project.image}`}
               alt={project.name}
               className="rounded-t-md w-full h-auto border shadow-sm lg:object-fill object-cover lg:p-0 p-1"
             />
@@ -181,7 +188,7 @@ const ProjectDetails = () => {
                   >
                     <Link to="/" className="m-0 cursor-pointer">
                       <img
-                        src={`${baseURL}${item.image}`}
+                        src={getImageSrc(item.image)}
                         alt={item.caption}
                         className="rounded-t-md w-full lg:h-60 h-auto lg:object-fill object-cover cursor-pointer lg:p-0 p-1 bg-base-100 border border-gray-300 dark:border-gray-300"
                       />
@@ -250,7 +257,7 @@ const ProjectDetails = () => {
               {modalData.caption}
             </h2>
             <img
-              src={`${baseURL}${modalData.image}`}
+              src={getImageSrc(modalData.image)}
               alt={modalData.caption}
               className="w-full h-auto object-cover rounded-md shadow"
             />

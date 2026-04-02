@@ -2,6 +2,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.9.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -15,6 +16,7 @@
     "node-cron": "^3.0.3",
     "nodemon": "^3.1.4",
     "pdfkit": "^0.15.2",
+    "streamifier": "^0.1.1",
     "xmlbuilder2": "^3.1.1"
   }
 }

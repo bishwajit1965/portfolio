@@ -4,19 +4,28 @@ import SkillBadge from "../skillBadge/SkillBadge";
 import MiniButton from "../buttons/MiniButton";
 
 const ProjectCard = ({ project }) => {
-  const imageUrl = `http://localhost:5000/uploads/${project.image}`;
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const baseURL = `${apiUrl}/uploads/`;
+  // const imageUrl = `${baseURL}${project.image}`;
   const { _id, name, type, description } = project;
   const navigate = useNavigate();
 
   const viewProjectDetails = () => {
     navigate(`project-details/${_id}`);
   };
+  const getImageSrc = (img) => {
+    if (!img) return "";
+    if (typeof img === "string" && img.startsWith("http")) return img;
+    if (img.url) return img.url;
+    return `${baseURL}${img}`;
+  };
 
   return (
     <div className="border dark:border-slate-700 rounded-md shadow-md dark:bg-slate-900 min-h-[37rem] hover:shadow-xl">
       <div className="dark:text-gray-400">
         <img
-          src={imageUrl}
+          src={getImageSrc(project.image)}
+          // src={imageUrl || imageUrl.url} // Handle both URL and filename cases
           alt={project.name}
           className="rounded-t-md lg:min-h-72 lg:w-full object-cover shadow-sm"
         />

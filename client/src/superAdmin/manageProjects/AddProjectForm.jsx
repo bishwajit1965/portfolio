@@ -1,4 +1,4 @@
-import { FaSave, FaPlus, FaTrash, FaSpinner } from "react-icons/fa";
+import { FaSave, FaPlus, FaTrash, FaSpinner, FaHome } from "react-icons/fa";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import api from "../../services/api";
@@ -6,6 +6,7 @@ import Button from "../../components/buttons/Button";
 import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import { FaCirclePlus } from "react-icons/fa6";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const AddProjectForm = () => {
   const [formData, setFormData] = useState({
@@ -20,21 +21,18 @@ const AddProjectForm = () => {
   });
 
   const [loading, setLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
   const [errors, setErrors] = useState({});
 
-  // Basic fields
-  const handleChange = (field, value) => {
+  // Basic field update
+  const handleChange = (field, value) =>
     setFormData({ ...formData, [field]: value });
-  };
 
   // Categories
-  const addCategory = () => {
+  const addCategory = () =>
     setFormData({
       ...formData,
       categories: [...formData.categories, { name: "", screenshots: [] }],
     });
-  };
 
   const removeCategory = (index) => {
     const updated = [...formData.categories];
@@ -73,6 +71,7 @@ const AddProjectForm = () => {
     setFormData({ ...formData, categories: updated });
   };
 
+  // TechStacks
   const addTechStack = () =>
     setFormData({ ...formData, techStacks: [...formData.techStacks, ""] });
 
@@ -95,9 +94,7 @@ const AddProjectForm = () => {
     if (!formData.type) newErrors.type = "Type is required";
     if (!formData.description)
       newErrors.description = "Description is required";
-
     if (!formData.githubLink) newErrors.githubLink = "GitHub link is required";
-
     if (!formData.liveLink) newErrors.liveLink = "Live link is required";
 
     if (formData.categories.length === 0)
@@ -119,51 +116,70 @@ const AddProjectForm = () => {
     return newErrors;
   };
 
+  // Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 1️⃣ Validate form
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      const timer = setTimeout(() => {
-        setErrors({});
-      }, 3000);
-      return () => clearTimeout(timer);
+      setTimeout(() => setErrors({}), 3000);
+      return;
     }
 
-    setLoading(true);
     try {
+      setLoading(true);
+
       const data = new FormData();
 
+      // -------------------------------
       // Basic fields
-      data.append("name", formData.name);
-      data.append("type", formData.type);
-      data.append("description", formData.description);
-      data.append("githubLink", formData.githubLink);
-      data.append("liveLink", formData.liveLink);
+      // -------------------------------
+      ["name", "type", "description", "githubLink", "liveLink"].forEach(
+        (field) => data.append(field, formData[field]),
+      );
 
+      // -------------------------------
       // Main image
-      if (formData.mainImage) data.append("mainImage", formData.mainImage);
+      // -------------------------------
+      if (formData.mainImage) {
+        data.append("mainImage", formData.mainImage);
+      }
 
-      // Screenshots + categories
+      // -------------------------------
+      // Screenshots (structured)
+      // -------------------------------
+      const screenshotsMeta = [];
+
       formData.categories.forEach((cat) => {
         cat.screenshots.forEach((shot) => {
-          if (shot.file) data.append("screenshots", shot.file); // all screenshot files
-          data.append("categoryNames", cat.name); // parallel array
-          data.append("captions", shot.caption || ""); // parallel array
+          if (shot.file) {
+            // file goes separately
+            data.append("screenshotFiles", shot.file);
+
+            // meta goes into array
+            screenshotsMeta.push({
+              category: cat.name,
+              caption: shot.caption || "",
+            });
+          }
         });
       });
 
-      // TechStacks
-      formData?.techStacks?.forEach((techStack) => {
-        data.append("techStacks", techStack); // parallel array
-      });
+      // send metadata as JSON
+      data.append("screenshotsMeta", JSON.stringify(screenshotsMeta));
 
-      // 2️⃣ Send to backend
+      // -------------------------------
+      // Tech stacks
+      // -------------------------------
+      formData.techStacks.forEach((tech) => data.append("techStacks", tech));
+
+      // -------------------------------
+      // API call
+      // -------------------------------
       const res = await api.post("/projects", data);
 
-      if (res.status === 201) {
+      if (res.status === 200 || res.status === 201) {
         Swal.fire({
           title: "Success!",
           text: "Project added successfully.",
@@ -171,7 +187,8 @@ const AddProjectForm = () => {
           timer: 2000,
           showConfirmButton: false,
         });
-        setSuccessMessage("Project added successfully!");
+
+        // reset form
         setFormData({
           name: "",
           type: "",
@@ -180,9 +197,10 @@ const AddProjectForm = () => {
           liveLink: "",
           mainImage: null,
           categories: [],
+          techStacks: [],
         });
+
         setErrors({});
-        setTimeout(() => setSuccessMessage(""), 3000);
       }
     } catch (err) {
       console.error(err);
@@ -191,11 +209,73 @@ const AddProjectForm = () => {
       setLoading(false);
     }
   };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const validationErrors = validateForm();
+  //   if (Object.keys(validationErrors).length > 0) {
+  //     setErrors(validationErrors);
+  //     setTimeout(() => setErrors({}), 3000);
+  //     return;
+  //   }
+
+  //   try {
+  //     setLoading(true);
+  //     const data = new FormData();
+
+  //     // Basic fields
+  //     ["name", "type", "description", "githubLink", "liveLink"].forEach(
+  //       (field) => data.append(field, formData[field]),
+  //     );
+
+  //     if (formData.mainImage) data.append("mainImage", formData.mainImage);
+
+  //     // Categories + screenshots
+  //     formData.categories.forEach((cat) => {
+  //       cat.screenshots.forEach((shot) => {
+  //         if (shot.file) data.append("screenshotFiles", shot.file);
+  //         data.append("categoryNames", cat.name);
+  //         data.append("captions", shot.caption || "");
+  //       });
+  //     });
+
+  //     // Tech stacks
+  //     formData.techStacks.forEach((tech) => data.append("techStacks", tech));
+
+  //     const res = await api.post("/projects", data);
+
+  //     if (res.status === 200 || res.status === 201) {
+  //       Swal.fire({
+  //         title: "Success!",
+  //         text: "Project added successfully.",
+  //         icon: "success",
+  //         timer: 2000,
+  //         showConfirmButton: false,
+  //       });
+  //       setFormData({
+  //         name: "",
+  //         type: "",
+  //         description: "",
+  //         githubLink: "",
+  //         liveLink: "",
+  //         mainImage: null,
+  //         categories: [],
+  //         techStacks: [],
+  //       });
+  //       setErrors({});
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //     setErrors({ general: "Failed to add project" });
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <>
       <Helmet>
-        <title>Web-tech-services || Add project</title>
+        <title>Bishwajit.dev || Add project</title>
       </Helmet>
 
       <SuperAdminPageTitle
@@ -211,7 +291,6 @@ const AddProjectForm = () => {
         className="mx-auto p-4 rounded shadow bg-base-100"
       >
         {errors.general && <p className="text-red-500">{errors.general}</p>}
-        {successMessage && <p className="text-green-500">{successMessage}</p>}
 
         {/* Basic fields */}
         {["name", "type", "description", "githubLink", "liveLink"].map(
@@ -241,6 +320,7 @@ const AddProjectForm = () => {
           ),
         )}
 
+        {/* Main Image */}
         <div className="my-4">
           <input
             type="file"
@@ -253,7 +333,7 @@ const AddProjectForm = () => {
           />
         </div>
 
-        {/* Categories */}
+        {/* Categories + Screenshots */}
         {formData.categories.map((cat, ci) => (
           <div key={ci} className="mb-4 border p-2 rounded bg-gray-50">
             <div className="flex justify-between items-center gap-2">
@@ -267,9 +347,8 @@ const AddProjectForm = () => {
               <Button
                 icon={<FaTrash />}
                 variant="danger"
-                md
-                label="Delete"
                 size="sm"
+                label="Delete"
                 onClick={() => removeCategory(ci)}
               />
             </div>
@@ -277,7 +356,6 @@ const AddProjectForm = () => {
               <p className="text-red-500 text-sm">{errors[`category-${ci}`]}</p>
             )}
 
-            {/* Screenshots */}
             {cat.screenshots.map((shot, si) => (
               <div key={si} className="flex gap-2 mt-2 items-center space-y-2">
                 <input
@@ -316,7 +394,6 @@ const AddProjectForm = () => {
             />
           </div>
         ))}
-
         <Button
           icon={<FaPlus />}
           variant="outline"
@@ -328,13 +405,12 @@ const AddProjectForm = () => {
         {/* TechStacks */}
         <div className="my-2">
           <label className="font-bold block">Tech Stacks</label>
-          {formData?.techStacks?.map((techStack, i) => (
+          {formData.techStacks.map((techStack, i) => (
             <div key={i} className="flex gap-2 items-center space-y-2">
               <input
-                key={i}
                 type="text"
                 name="techStacks"
-                placeholder="Tech Stacks"
+                placeholder="Tech Stack"
                 value={techStack}
                 onChange={(e) =>
                   updateArrayField("techStacks", i, e.target.value)
@@ -350,7 +426,6 @@ const AddProjectForm = () => {
               />
             </div>
           ))}
-
           <Button
             variant="outline"
             type="button"
@@ -362,17 +437,32 @@ const AddProjectForm = () => {
             Add Tech Stack
           </Button>
         </div>
-
-        <div
-          className={`${loading ? "cursor-not-allowed opacity-50 bg-red-200 rounded-md" : ""} mt-4`}
-        >
+        <div className="divider">Form Fields End</div>
+        {/* Submit */}
+        <div className="lg:flex grid gap-4">
           <Button
             type="submit"
             variant="base"
-            icon={loading ? <FaSpinner /> : <FaSave />}
+            size="md"
+            icon={
+              loading ? (
+                <FaSpinner size={18} className="animate-spin" />
+              ) : (
+                <FaSave size={18} />
+              )
+            }
             label={loading ? "Adding..." : "Add Project"}
             disabled={loading}
           />
+          <Link to="/super-admin/manage-projects">
+            <Button
+              type="submit"
+              variant="outline"
+              size="md"
+              label="View Projects"
+              icon={<FaHome />}
+            />
+          </Link>
         </div>
       </form>
     </>

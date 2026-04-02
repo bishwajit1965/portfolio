@@ -54,7 +54,7 @@ const registerUser = async (req, res) => {
       uid,
       name,
       photoUrl,
-      role: "user" || role,
+      role: role || "user",
       createdAt: new Date() || createdAt,
     };
     const newUser = await userModel.createUser(userData);
@@ -153,7 +153,6 @@ const loginUser = async (req, res) => {
         _id: user._id,
         email: user.email,
         role: user.role,
-        password: user.password,
       },
     });
   } catch (error) {

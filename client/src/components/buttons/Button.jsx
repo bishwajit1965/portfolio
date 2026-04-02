@@ -8,7 +8,7 @@ const variantStyles = {
     "bg-base-100 border border-gray-600 dark:border-slate-600 text-gray-600 hover:bg-gray-600 hover:text-white dark:bg-slate-600 dark:text-gray-300 dark:shadow-lg dark:hover:bg-slate-900 dark:hover:text-base-100 focus:ring-gray-600",
 
   outline:
-    "bg-base-100 border border-emerald-600 dark:border-slate-600 text-emerald-600 hover:bg-emerald-600 hover:text-white dark:bg-slate-600 dark:text-gray-300 dark:shadow-lg dark:hover:bg-slate-900 dark:hover:text-base-100 focus:ring-emerald-600",
+    "bg-base-100 border border-emerald-600 dark:border-slate-600 text-emerald-600 hover:bg-emerald-600 hover:text-white dark:bg-slate-600 dark:text-gray-300 dark:shadow-lg dark:hover:bg-slate-900 dark:hover:text-base-100 focus:ring-emerald-600 focus:ring-2 focus:ring-offset-2",
 
   ghost: "text-emerald-600 hover:bg-emerald-100",
 
@@ -19,6 +19,7 @@ const variantStyles = {
 };
 
 const SIZES = {
+  xs: "h-6 px-1 text-xs",
   sm: "h-8 px-2 text-sm",
   md: "h-10 px-3 text-base",
   lg: "h-12 px-5 text-lg",

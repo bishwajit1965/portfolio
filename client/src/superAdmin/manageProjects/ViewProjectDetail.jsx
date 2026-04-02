@@ -18,7 +18,7 @@ const ViewProjectDetails = () => {
   });
   console.log("Project details:", projectDetails);
 
-  const imageUrl = `http://localhost:5000/uploads/${projectDetails.image}`;
+  const imageUrl = `${apiUrl}${projectDetails.image}`;
 
   useEffect(() => {
     const fetchProjectDetails = async () => {
@@ -48,7 +48,7 @@ const ViewProjectDetails = () => {
         <div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-4 gap-2">
           <div className="lg:col-span-6 col-span-12 bg-base-100   rounded-md">
             <img
-              src={imageUrl}
+              src={projectDetails?.image?.url || imageUrl}
               alt={projectDetails.name}
               className="h-60 w-full object-contain rounded-md"
             />
@@ -75,7 +75,7 @@ const ViewProjectDetails = () => {
                     <div key={index} className="lg:col-span-3 col-span-12">
                       <figure>
                         <img
-                          src={`${baseURL}${item.image}`}
+                          src={item?.image?.url || `${baseURL}${item.image}`}
                           alt={item.caption}
                           className="w-full lg:h-40 h-auto lg:object-fill object-cover rounded-md mb-2 shadow-md border dark:border-slate-600"
                         />

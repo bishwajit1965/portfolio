@@ -5,11 +5,13 @@ import SkillBadge from "../../components/skillBadge/SkillBadge";
 import MiniButton from "../../components/buttons/MiniButton";
 
 const ProjectDisplayCard = ({ project, handleDelete }) => {
-  const baseURL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-  const coverImage = project?.image;
-  const imageUrl = `${baseURL}/uploads/${coverImage}`;
-  const { _id, name, type, description, visibility, techStacks } = project;
-
+  const { _id, name, type, description, visibility, techStacks, image } =
+    project;
+  const getImageSrc = (img) => {
+    if (!img) return "";
+    if (typeof img === "string" && img.startsWith("http")) return img;
+    if (img.url) return img.url;
+  };
   const navigate = useNavigate();
   const handleEdit = () => {
     navigate(`/super-admin/edit-project-details/${_id}`);
@@ -23,7 +25,7 @@ const ProjectDisplayCard = ({ project, handleDelete }) => {
     <div className="border dark:border-slate-700 rounded-md shadow-md bg-base-100 dark:bg-slate-900 relative min-h-96">
       <div className="">
         <img
-          src={imageUrl}
+          src={getImageSrc(image)}
           alt={project.name}
           className="rounded-t-md lg:h-auto lg:w-full object-fill"
         />

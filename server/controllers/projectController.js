@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+const { ObjectId } = require("mongodb");
 const {
   addProject,
   getProjectById,
@@ -7,72 +9,126 @@ const {
   deleteProject,
 } = require("../models/projectModel");
 
-const fs = require("fs");
-const { ObjectId } = require("mongodb");
-const path = require("path");
+// Constants for Cloudinary paths
+const mainPath = process.env.PROJECT_MAIN_PATH;
+const screenshotsPath = process.env.PROJECT_SCREENSHOTS_PATH;
 
+// Utility functions for image handling
+const { uploadImage, deleteImage } = require("../utils/upload.service");
+
+/***=====================================
+ * Project Controller methods:
+ *=======================================*/
+// Create a new project with main image and multiple screenshots
 const createProject = async (req, res) => {
   try {
-    const { name, type, description, githubLink, liveLink } = req.body;
+    const {
+      name,
+      type,
+      description,
+      githubLink,
+      liveLink,
+      visibility = "visible",
+      techStacks,
+    } = req.body;
 
     const mainImageFile = req.files?.mainImage?.[0];
-    const screenshotFiles = req.files?.screenshots || [];
+    const screenshotFiles = req.files?.screenshotFiles || [];
 
-    // Category names and captions sent as parallel arrays
-    const categoryNames = req.body.categoryNames || [];
-    const captions = req.body.captions || [];
+    // -------------------------------
+    // Upload main image
+    // -------------------------------
+    const mainImageData = mainImageFile
+      ? await uploadImage(mainImageFile, mainPath)
+      : null;
 
-    // Rebuild screenshots structure
+    // -------------------------------
+    // Parse structured metadata
+    // -------------------------------
+    let screenshotsMeta = [];
+
+    try {
+      screenshotsMeta = JSON.parse(req.body.screenshotsMeta || "[]");
+    } catch (err) {
+      console.error("❌ Failed to parse screenshotsMeta");
+      screenshotsMeta = [];
+    }
+
+    // -------------------------------
+    // Upload screenshots with metadata
+    // -------------------------------
+    const uploadedScreenshots = await Promise.all(
+      screenshotFiles.map(async (file, i) => {
+        const meta = screenshotsMeta[i] || {};
+
+        return {
+          id: new ObjectId().toString(),
+          category: meta.category || "General",
+          image: await uploadImage(file, screenshotsPath),
+          caption: meta.caption || "",
+        };
+      }),
+    );
+
+    // -------------------------------
+    // Group screenshots by category
+    // -------------------------------
     const categoriesMap = {};
 
-    screenshotFiles.forEach((file, i) => {
-      const category = categoryNames[i] || "General";
-      const caption = captions[i] || "";
+    uploadedScreenshots.forEach((item) => {
+      if (!categoriesMap[item.category]) {
+        categoriesMap[item.category] = [];
+      }
 
-      if (!categoriesMap[category]) categoriesMap[category] = [];
-      categoriesMap[category].push({
-        id: new ObjectId().toString(),
-        image: file.filename,
-        caption,
+      categoriesMap[item.category].push({
+        id: item.id,
+        image: item.image,
+        caption: item.caption,
       });
     });
 
     const screenshots = Object.entries(categoriesMap).map(
       ([category, items]) => ({
-        id: new ObjectId().toString(), // id for the category group
+        id: new ObjectId().toString(),
         category,
-        items, // siblings of category
+        items,
       }),
     );
 
-    // ✅ Tech Stacks (flat array)
-    const techStacks = Array.isArray(req.body.techStacks)
-      ? req.body.techStacks.filter(Boolean)
-      : req.body.techStacks
-        ? [req.body.techStacks]
+    // -------------------------------
+    // Normalize tech stacks
+    // -------------------------------
+    const normalizedTechStacks = Array.isArray(techStacks)
+      ? techStacks.filter(Boolean)
+      : techStacks
+        ? [techStacks]
         : [];
 
+    // -------------------------------
+    // Save Project
+    // -------------------------------
     const projectData = {
       name,
       type,
       description,
       githubLink,
       liveLink,
-      image: mainImageFile?.filename || null,
-      visibility: "visible",
+      visibility,
+      image: mainImageData,
       screenshots,
-      techStacks,
+      techStacks: normalizedTechStacks,
       createdAt: new Date(),
     };
-    console.log("Project data", projectData);
-    await addProject(projectData);
+
+    const project = await addProject(projectData);
 
     res.status(201).json({
       message: "Project created successfully",
-      data: projectData,
+      data: project,
     });
   } catch (error) {
-    console.error("Error in createProject:", error);
+    console.error("❌ Error in createProject:", error);
+
     res.status(500).json({
       message: "Failed to create project",
       error: error.message,
@@ -102,111 +158,109 @@ const getProjects = async (req, res) => {
   }
 };
 
+/**
+ * Update project including:
+ * - Main image replacement
+ * - Screenshot addition or replacement
+ */
 const updateProjectById = async (req, res) => {
   try {
     const { id } = req.params;
-    const existingProject = await getProjectById(id);
+    const project = await getProjectById(id);
 
-    if (!existingProject) {
-      return res.status(404).json({ message: "Project not found" });
-    }
+    if (!project) return res.status(404).json({ message: "Project not found" });
 
-    /* ----------------------------------
-       1️⃣ Update main fields
-    ---------------------------------- */
-    const {
-      name,
-      type,
-      description,
-      githubLink,
-      liveLink,
-      visibility,
-      techStacks,
-    } = req.body;
-
+    // -----------------------------
+    // BASIC FIELDS
+    // -----------------------------
     const updateFields = {
-      name,
-      type,
-      description,
-      githubLink,
-      liveLink,
-      visibility,
-      techStacks: Array.isArray(techStacks) ? techStacks : [techStacks],
+      name: req.body.name,
+      type: req.body.type,
+      description: req.body.description,
+      githubLink: req.body.githubLink,
+      liveLink: req.body.liveLink,
+      visibility: req.body.visibility,
+      techStacks: Array.isArray(req.body.techStacks)
+        ? req.body.techStacks
+        : req.body.techStacks
+          ? [req.body.techStacks]
+          : [],
     };
 
-    /* ----------------------------------
-       2️⃣ Main image update
-    ---------------------------------- */
+    // -----------------------------
+    // MAIN IMAGE
+    // -----------------------------
     if (req.files?.mainImage?.[0]) {
-      const newMainImage = req.files.mainImage[0].filename;
+      const file = req.files.mainImage[0];
+      if (project.image?.public_id) await deleteImage(project.image.public_id);
+      const uploaded = await uploadImage(file, "portfolio/projects/main");
+      updateFields.image = uploaded;
+    }
 
-      if (existingProject.image) {
-        const oldPath = path.join(
-          __dirname,
-          "../uploads",
-          existingProject.image,
-        );
-        fs.unlink(oldPath, () => {});
+    // -----------------------------
+    // SCREENSHOTS (FULL REBUILD)
+    // -----------------------------
+    let screenshots = [];
+
+    // Parse payload
+    let payload = req.body.screenshotsPayload;
+    if (Array.isArray(payload)) payload = payload[0];
+    if (typeof payload === "string") payload = JSON.parse(payload);
+
+    const files = req.files?.screenshotFiles || [];
+    let fileIndex = 0;
+
+    for (const cat of payload) {
+      const newCategory = {
+        id: cat.id || new ObjectId().toString(),
+        category: cat.category || "Uncategorized",
+        items: [],
+      };
+
+      for (const item of cat.items) {
+        let imageData = null;
+
+        // 1️⃣ New file upload
+        if (item.hasNewFile && files[fileIndex]) {
+          const file = files[fileIndex];
+          fileIndex++;
+          imageData = await uploadImage(file, "portfolio/projects/screenshots");
+        }
+        // 2️⃣ Existing file
+        else {
+          const oldItem = project.screenshots
+            ?.flatMap((c) => c.items)
+            ?.find((i) => i.id === item.id);
+          imageData = oldItem?.image || null;
+        }
+
+        newCategory.items.push({
+          id: item.id || new ObjectId().toString(),
+          image: imageData,
+          caption: item.caption || "",
+        });
       }
 
-      updateFields.image = newMainImage;
+      screenshots.push(newCategory);
     }
 
-    /* ----------------------------------
-       3️⃣ Screenshot handling (FIXED)
-    ---------------------------------- */
-    if (req.files?.screenshots?.length > 0) {
-      const captions = Array.isArray(req.body.captions)
-        ? req.body.captions
-        : [req.body.captions];
+    updateFields.screenshots = screenshots;
 
-      const categories = Array.isArray(req.body.categories)
-        ? req.body.categories
-        : [req.body.categories];
-
-      req.files.screenshots.forEach((file, idx) => {
-        const category = categories[idx] || "Uncategorized";
-
-        const newItem = {
-          id: new ObjectId().toString(),
-          image: file.filename,
-          caption: captions[idx] || "",
-        };
-
-        const categoryIndex = existingProject.screenshots.findIndex(
-          (s) => s.category === category,
-        );
-
-        if (categoryIndex !== -1) {
-          existingProject.screenshots[categoryIndex].items.push(newItem);
-        } else {
-          existingProject.screenshots.push({
-            id: new ObjectId().toString(),
-            category,
-            items: [newItem],
-          });
-        }
-      });
-
-      updateFields.screenshots = existingProject.screenshots;
-    }
-
-    /* ----------------------------------
-       4️⃣ Update database
-    ---------------------------------- */
+    // -----------------------------
+    // UPDATE DATABASE
+    // -----------------------------
     const result = await updateProject(id, updateFields);
 
-    if (result.modifiedCount === 1) {
-      return res.status(200).json({
-        message: "Project updated successfully",
-        data: updateFields,
-      });
-    }
-
-    res.status(400).json({ message: "No changes were made" });
+    return res.status(200).json({
+      message: "Project updated successfully",
+      result,
+    });
   } catch (error) {
-    console.error("UpdateProject error:", error);
-    res.status(500).json({ message: "Failed to update project" });
+    console.error("updateProjectById error:", error);
+    res.status(500).json({
+      message: "Failed to update project",
+      error: error.message,
+    });
   }
 };
 
@@ -236,16 +290,126 @@ const updateProjectVisibility = async (req, res) => {
   }
 };
 
+/**
+ * Delete a single image (main or screenshot) from a project
+ * @route DELETE /projects/:projectId/image
+ * @body { imageId, type: 'main' | 'screenshot', category? }
+ */
+
+/**
+ * Delete an image from a project
+ * @param {string} projectId - Project _id
+ * @param {string} type - "main" or "screenshot"
+ * @param {string} imageId - required for screenshot
+ * @param {string} category - required for screenshot
+ */
+const deleteProjectImage = async (req, res) => {
+  try {
+    const { projectId } = req.params;
+    const { type, imageId, category } = req.body;
+
+    const project = await getProjectById(projectId);
+    if (!project) return res.status(404).json({ message: "Project not found" });
+
+    if (type === "main") {
+      if (!project.image?.public_id)
+        return res.status(400).json({ message: "No main image to delete" });
+
+      await deleteImage(project.image.public_id);
+
+      const result = await updateProject(projectId, { image: null });
+      return res
+        .status(200)
+        .json({ message: "Main image deleted successfully", data: result });
+    }
+
+    if (type === "screenshot") {
+      if (!category || !imageId)
+        return res
+          .status(400)
+          .json({ message: "category and imageId required for screenshot" });
+
+      const catIndex = project.screenshots.findIndex(
+        (s) => s.category === category,
+      );
+      if (catIndex === -1)
+        return res.status(404).json({ message: "Category not found" });
+
+      const itemIndex = project.screenshots[catIndex].items.findIndex(
+        (i) => i.id === imageId,
+      );
+      if (itemIndex === -1)
+        return res.status(404).json({ message: "Screenshot not found" });
+
+      // Delete image from cloud
+      const oldImage = project.screenshots[catIndex].items[itemIndex].image;
+      if (oldImage?.public_id) await deleteImage(oldImage.public_id);
+
+      // Remove from DB
+      project.screenshots[catIndex].items.splice(itemIndex, 1);
+
+      // If category has no items left, remove the category
+      if (project.screenshots[catIndex].items.length === 0) {
+        project.screenshots.splice(catIndex, 1);
+      }
+
+      const result = await updateProject(projectId, {
+        screenshots: project.screenshots,
+      });
+      return res
+        .status(200)
+        .json({ message: "Screenshot deleted successfully", data: result });
+    }
+
+    res
+      .status(400)
+      .json({ message: "Invalid type. Must be 'main' or 'screenshot'" });
+  } catch (error) {
+    console.error("deleteProjectImage error:", error);
+    res
+      .status(500)
+      .json({ message: "Failed to delete image", error: error.message });
+  }
+};
+
 const deleteProjectById = async (req, res) => {
   try {
-    const result = await deleteProject(req.params.id);
+    const { id } = req.params;
+
+    const project = await getProjectById(id);
+    if (!project) return res.status(404).json({ message: "Project not found" });
+
+    // 1️⃣ Delete main image
+    if (project.image?.public_id) {
+      await deleteImage(project.image.public_id);
+    }
+
+    // 2️⃣ Delete all screenshots
+    if (project.screenshots?.length) {
+      for (const cat of project.screenshots) {
+        for (const item of cat.items) {
+          if (item.image?.public_id) {
+            await deleteImage(item.image.public_id);
+          }
+        }
+      }
+    }
+
+    // 3️⃣ Delete project from DB
+    const result = await deleteProject(id);
+
     if (result.deletedCount > 0) {
-      res.status(200).json({ message: "Project deleted successfully" });
+      return res
+        .status(200)
+        .json({ message: "Project and all images deleted successfully" });
     } else {
-      res.status(404).json({ message: "Project not found" });
+      return res.status(404).json({ message: "Project not found" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Failed to delete project", error });
+    console.error("deleteProjectById error:", error);
+    res
+      .status(500)
+      .json({ message: "Failed to delete project", error: error.message });
   }
 };
 
@@ -253,7 +417,8 @@ module.exports = {
   createProject,
   getProject,
   getProjects,
-  updateProjectById,
   updateProjectVisibility,
+  updateProjectById,
+  deleteProjectImage,
   deleteProjectById,
 };

@@ -42,8 +42,7 @@ const updateProject = async (id, updateData) => {
     .findOne({ _id: objectId });
   if (!existingProject) throw new Error("Project not found");
 
-  // Do NOT handle filesystem here
-  // Model only updates DB
+  // Directly update all fields including screenshots
   return db
     .collection("projects")
     .updateOne({ _id: objectId }, { $set: updateData });
