@@ -10,9 +10,15 @@ const ProjectCarousel = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const getImageSrc = (img) => {
+    if (!img) return "";
+    if (typeof img === "string" && img.startsWith("http")) return img;
+    if (img.url) return img.url;
+  };
+
   const baseUrl =
     import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  // const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   useEffect(() => {
     fetch(`${baseUrl}/projects`)
@@ -60,7 +66,7 @@ const ProjectCarousel = () => {
             {!loading && activeProject && (
               <>
                 <img
-                  src={`${apiUrl}/uploads/${activeProject.image}`}
+                  src={getImageSrc(activeProject.image)}
                   alt={activeProject.name}
                   className="w-full lg:h-80 h-auto lg:object-fill object-cover"
                 />

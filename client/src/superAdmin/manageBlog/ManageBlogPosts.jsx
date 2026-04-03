@@ -15,11 +15,14 @@ const ManageBlogPosts = () => {
   const [blogPosts, setBlogPosts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedBlogPost, setSelectedBlogPost] = useState(null);
-
+  const [pageLoading, setPageLoading] = useState(false);
+  useEffect(() => {
+    console.log("Modal loading state changed:", loading);
+  }, [loading]);
   // Fetch blog posts on component mount
   useEffect(() => {
     const fetchData = async () => {
@@ -49,7 +52,7 @@ const ManageBlogPosts = () => {
         } else {
           const errorResponse = await blogPostsResponse.json();
           setErrorMessage(
-            errorResponse.message || "Failed to fetch blog posts"
+            errorResponse.message || "Failed to fetch blog posts",
           );
         }
 
@@ -64,7 +67,7 @@ const ManageBlogPosts = () => {
         } else {
           const errorResponse = await categoriesResponse.json();
           setErrorMessage(
-            errorResponse.message || "Failed to fetch categories."
+            errorResponse.message || "Failed to fetch categories.",
           );
         }
 
@@ -83,7 +86,7 @@ const ManageBlogPosts = () => {
       } catch (error) {
         setErrorMessage("Something went wrong. Please try again.", error);
       } finally {
-        setLoading(false);
+        setPageLoading(false);
       }
     };
 
@@ -127,6 +130,7 @@ const ManageBlogPosts = () => {
 
   const handleUpdateBlogPost = async (formData, hasImage) => {
     try {
+      setLoading(true);
       const token = localStorage.getItem("token");
       const headers = {
         Authorization: `Bearer ${token}`,
@@ -160,7 +164,7 @@ const ManageBlogPosts = () => {
           method: "PATCH",
           headers,
           body: requestBody,
-        }
+        },
       );
 
       if (!response.ok) throw new Error("Failed to update blog post.");
@@ -183,6 +187,8 @@ const ManageBlogPosts = () => {
       setShowUpdateModal(false);
     } catch (error) {
       Swal.fire("Error!", error.message || "Update failed.", "error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -211,13 +217,13 @@ const ManageBlogPosts = () => {
           if (!response.ok) {
             const errorData = await response.json();
             throw new Error(
-              errorData.message || "Failed to delete the blog post."
+              errorData.message || "Failed to delete the blog post.",
             );
           }
 
           // Update the UI by removing the deleted blog post
           setBlogPosts((prevBlogPosts) =>
-            prevBlogPosts.filter((blog) => blog._id !== postId)
+            prevBlogPosts.filter((blog) => blog._id !== postId),
           );
 
           // Show success message
@@ -244,7 +250,7 @@ const ManageBlogPosts = () => {
     });
   };
 
-  if (loading) return <LoadingSpinner color="blue-800" />;
+  if (pageLoading) return <LoadingSpinner color="blue-800" />;
 
   if (errorMessage)
     return <div className="text-center text-red-500">{errorMessage}</div>;
@@ -294,6 +300,7 @@ const ManageBlogPosts = () => {
               tags={tags}
               onClose={() => setShowUpdateModal(false)}
               onUpdate={handleUpdateBlogPost}
+              loading={loading}
             />
           )}
         </div>

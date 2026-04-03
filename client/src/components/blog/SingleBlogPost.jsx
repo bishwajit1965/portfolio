@@ -24,7 +24,7 @@ import Button from "../buttons/Button";
 import LazyLoad from "react-lazyload";
 
 const SingleBlogPost = () => {
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  // const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const baseUrl =
     import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
   const { postId } = useParams();
@@ -43,7 +43,11 @@ const SingleBlogPost = () => {
   const [token, setToken] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentCategoryIds, setCurrentCategoryIds] = useState([]);
-
+  const getImageSrc = (img) => {
+    if (!img) return "";
+    if (typeof img === "string" && img.startsWith("http")) return img;
+    if (img.url) return img.url;
+  };
   const handleOpenModal = () => {
     console.log("Opening related post modal"); // Debug log
     setCurrentCategoryIds(post.category || []); // Ensure category is set
@@ -240,7 +244,7 @@ const SingleBlogPost = () => {
             {post.imageUrl && post.imageUrl.trim() !== "" && (
               <LazyLoad height={480} offset={300} once>
                 <img
-                  src={`${apiUrl}${post.imageUrl}`}
+                  src={getImageSrc(post.imageUrl)}
                   alt={post.title}
                   className={`rounded-md shadow-md w-full object-fill h-auto  object-center ${
                     loaded ? "loaded" : ""

@@ -8,12 +8,12 @@ const RootLayout = () => {
       <div className="w-full mx-auto sticky top-0 z-50">
         <NavBar />
       </div>
-      <main className="lg:pt- pt-">
+      <main className="">
         <div className="lg:max-w-full mx-auto">
           <Outlet />
         </div>
       </main>
-      <div className="w-full mt-16">
+      <div className="w-full lg:mt-4 mt-0">
         <Footer />
       </div>
     </div>

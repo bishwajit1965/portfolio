@@ -1,20 +1,29 @@
 import { FaArrowAltCircleRight, FaCalendarAlt, FaUser } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import Button from "../../components/buttons/Button";
+import BookmarkButton from "../../components/bookmarkButton/BookmarkButton";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const BookmarkedPostCard = ({ post }) => {
   const { title, content, author, summary, imageUrl, updatedAt, _id } = post;
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  // const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const { user } = useContext(AuthContext);
+  const loggedInUserId = user ? user.uid : null;
 
+  const getImageSrc = (img) => {
+    if (!img) return "";
+    if (typeof img === "string" && img.startsWith("http")) return img;
+    if (img.url) return img.url;
+  };
   return (
     <div className="lg:col-span-4 col-span-12 bg-base-100 dark:bg-slate-900 rounded-md shadow-md relative lg:min-h-[32rem]">
       <img
-        src={`${apiUrl}${imageUrl}`}
+        src={getImageSrc(imageUrl)}
         alt={title}
-        className="h-56 rounded-t-md w-full object-cover"
+        className="h-auto rounded-t-md w-full object-cover"
       />
 
-      <div className="p-2 py-4 space-y-2">
+      <div className="p-2 py-4 space-y-2 lg:min-h-72 min-h-80">
         <h1 className="lg:text-xl text-lg font-semibold text-gray-600 dark:text-gray-400">
           {title.slice(0, 30)}
         </h1>{" "}
@@ -47,16 +56,23 @@ const BookmarkedPostCard = ({ post }) => {
           className="text-sm text-slate-600 dark:text-slate-400"
         />
       </div>
-      <div className="absolute p-2">
-        <Link to={`/single-blog-post/${_id}`} className="m-0">
+      <div className="absolute bottom-1 p-2 ">
+        <div className="flex items-center gap-2">
           <Button
+            href={`/single-blog-post/${_id}`}
             label="Read More"
             variant="outline"
-            size="sm"
+            size="md"
             icon={<FaArrowAltCircleRight />}
-            className="btn btn-sm"
+            className="lg:py-1.5 py-3 lg:text-lg text-xs"
           />
-        </Link>
+          <BookmarkButton
+            postId={_id}
+            userId={loggedInUserId}
+            initialBookmarked={true}
+            className="py-0 lg:text-lg text-xs btn btn-xs"
+          />
+        </div>
       </div>
     </div>
   );

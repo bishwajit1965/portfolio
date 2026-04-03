@@ -28,11 +28,11 @@ const SuperAdminLayout = () => {
           />
         )}
         <div
-          className={`lg:col-span-3 col-span-6 bg-base-200 p-2 rounded-b-sm fixed inset-y-0 left-0 w-64 transform transition-transform duration-300 lg:static lg:translate-x-0 lg:w-auto z-40 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+          className={`lg:col-span-2 col-span-6 bg-base-200 p-2 rounded-b-sm fixed inset-y-0 left-0 w-64 transform transition-transform duration-300 lg:static lg:translate-x-0 lg:w-auto z-40 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
         >
           <SideNav user={user} />
         </div>
-        <div className="lg:col-span-9 col-span-6 border border-b rounded-lg">
+        <div className="lg:col-span-10 col-span-6 border border-b rounded-lg">
           <Outlet />
 
           <SuperAdminFooter />

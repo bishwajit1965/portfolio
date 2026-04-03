@@ -12,9 +12,14 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
   const { user } = useContext(AuthContext);
   const loggedInUserId = user ? user.uid : null;
   console.log(loggedInUserId);
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  // const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const [loaded, setLoaded] = useState(false);
   const [autoSummary, setAutoSummary] = useState("");
+  const getImageSrc = (img) => {
+    if (!img) return "";
+    if (typeof img === "string" && img.startsWith("http")) return img;
+    if (img.url) return img.url;
+  };
   const {
     _id,
     author,
@@ -40,18 +45,18 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
   }, [content]);
 
   return (
-    <div className="grid grid-cols-12 gap-4 justify-between items-center border dark:border-slate-800 lg:mb-8 p-2 rounded-md bg-base-100 dark:bg-slate-900">
+    <div className="grid grid-cols-12 lg:gap-8 gap-4 justify-between items-center border dark:border-slate-800 lg:mb-8 p-2 rounded-md bg-base-100 dark:bg-slate-900">
       <div className="lg:col-span-6 col-span-12">
         <div className="w-full lg:min-h-full">
           <Link to={`/single-blog-post/${_id}`} className="m-0 p-0">
             {post.imageUrl && post.imageUrl.trim() !== "" && (
               <LazyLoad height={200} offset={100} once>
                 <img
-                  src={`${apiUrl}${imageUrl}`}
+                  src={getImageSrc(imageUrl)}
                   alt={post.title}
                   className={`lazy-image ${
                     loaded ? "loaded" : ""
-                  } w-full lg:min-h-full rounded-md object-cover`}
+                  } w-full h-auto rounded-md object-fill object-center`}
                   onLoad={() => setLoaded(true)}
                 />
               </LazyLoad>
@@ -118,20 +123,21 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
             </p>
           </div>
 
-          <div className="mt-1 flex justify-end space-x-4">
+          <div className="my-2 flex justify-end space-x-4">
             <BookmarkButton
               postId={_id}
               userId={loaded ? loggedInUserId : null}
               initialBookmarked={false}
             />
-            <Link to={`/single-blog-post/${_id}`} className="m-0">
-              <Button
-                variant="outline"
-                label="Read More"
-                className="btn btn-sm"
-                icon={<FaArrowCircleRight />}
-              />
-            </Link>
+
+            <Button
+              href={`/single-blog-post/${_id}`}
+              variant="outline"
+              label="Read More"
+              size="md"
+              className="py-1.5"
+              icon={<FaArrowCircleRight />}
+            />
           </div>
         </div>
       </div>

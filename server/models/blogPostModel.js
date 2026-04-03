@@ -71,11 +71,6 @@ const createBlogPost = async (blogPostData) => {
       updatedAt: new Date(),
       isPublished, // Default as unpublished
       willPublishAt: willPublishAt ? new Date(willPublishAt) : null,
-      // willPublishAt: willPublishAt
-      //   ? new Date(willPublishAt).toISOString()
-      //   : null, // Scheduling,
-      // createdAt: new Date().toISOString(),
-      // updatedAt: new Date().toISOString(),
     };
 
     const result = await db.collection("blogPosts").insertOne(newPost);

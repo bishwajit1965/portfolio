@@ -4,7 +4,7 @@ import CountdownTimer from "./CountDownTimer";
 import { FaCalendarCheck, FaUser } from "react-icons/fa";
 
 const ComingSoonCard = ({ post }) => {
-  const apiUrl = import.meta.env.VITE_API_URL;
+  // const apiUrl = import.meta.env.VITE_API_URL;
   const [autoSummary, setAutoSummary] = useState("");
   const { _id, author, title, summary, content, imageUrl, willPublishAt } =
     post;
@@ -21,15 +21,17 @@ const ComingSoonCard = ({ post }) => {
     }
   }, [content]);
 
+  const getImageSrc = (img) => {
+    if (!img) return "";
+    if (typeof img === "string" && img.startsWith("http")) return img;
+    if (img.url) return img.url;
+  };
+
   return (
     <div className="lg:col-span-12 col-span-12 lg:my-6 my-4 bg-base-100 dark:bg-slate-800 dark:text-base-200 shadow-md rounded-b-md pb-1">
       <div key={_id}>
         <img
-          src={
-            imageUrl
-              ? `${apiUrl}${imageUrl}`
-              : "https://via.placeholder.com/400"
-          }
+          src={getImageSrc(imageUrl)}
           alt={post.title || "Coming soon"}
           className="w-full h-96 object-cover rounded-md"
         />

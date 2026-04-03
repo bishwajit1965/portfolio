@@ -1,10 +1,18 @@
-import { FaEdit, FaTimesCircle } from "react-icons/fa";
+import { FaEdit, FaSpinner, FaTimesCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
 import Select from "react-select";
+import Button from "../../components/buttons/Button";
 
-const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
-  const apiUrl = import.meta.env.VITE_API_URL;
+const UpdateBlogModal = ({
+  blog,
+  categories,
+  tags,
+  onClose,
+  onUpdate,
+  loading,
+}) => {
+  // const apiUrl = import.meta.env.VITE_API_URL;
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState(null);
   const [selectedTags, setSelectedTags] = useState(null);
@@ -20,6 +28,12 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
     status: "",
     updatedAt: "",
   });
+
+  const getImageSrc = (img) => {
+    if (!img) return "";
+    if (typeof img === "string" && img.startsWith("http")) return img;
+    if (img.url) return img.url;
+  };
 
   // Preselected categories and tags
   useEffect(() => {
@@ -44,7 +58,7 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
       )
         .map((categoryId) => {
           const matchedCategory = categories.find(
-            (category) => category.value === categoryId
+            (category) => category.value === categoryId,
           );
           return matchedCategory
             ? { value: matchedCategory.value, label: matchedCategory.label }
@@ -78,7 +92,7 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
 
@@ -97,15 +111,18 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
 
     const imageUrl = formData.get("imageUrl");
     const hasImage = imageUrl && imageUrl.size > 0; // Check if an image is provided
-
-    if (hasImage) {
-      // Include image along with categories and tags
-      formData.append("category", JSON.stringify(updatedData.category));
-      formData.append("tag", JSON.stringify(updatedData.tag));
-      onUpdate(formData, true);
-    } else {
-      // Send the updated fields without image
-      onUpdate(updatedData, false);
+    try {
+      if (hasImage) {
+        // Include image along with categories and tags
+        formData.append("category", JSON.stringify(updatedData.category));
+        formData.append("tag", JSON.stringify(updatedData.tag));
+        await onUpdate(formData, true);
+      } else {
+        // Send the updated fields without image
+        await onUpdate(updatedData, false);
+      }
+    } catch (error) {
+      console.error("Error updating blog post:", error);
     }
   };
 
@@ -189,7 +206,7 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
               <div className="">
                 {formData.imageUrl && !selectedImage && (
                   <img
-                    src={`${apiUrl}${blog.imageUrl}`}
+                    src={getImageSrc(formData.imageUrl)}
                     alt={blog.title}
                     width="100"
                     className="w-28 h-10 rounded-sm"
@@ -252,24 +269,28 @@ const UpdateBlogModal = ({ blog, categories, tags, onClose, onUpdate }) => {
             </select>
           </div>
 
-          <div style={styles.buttonGroup}>
-            <button
-              className="flex items-center btn btn-sm"
+          <div className="flex justify-end gap-4">
+            <Button
+              className={loading ? "cursor-not-allowed" : ""}
               type="submit"
-              style={styles.buttonPrimary}
-            >
-              <FaEdit />
-              Update
-            </button>
-            <button
-              className="flex items-center btn btn-sm"
+              variant="base"
+              size="sm"
+              label={loading ? "Updating..." : "Update Post"}
+              icon={
+                loading ? <FaSpinner className="animate-spin" /> : <FaEdit />
+              }
+              disabled={loading}
+            />
+
+            <Button
+              className=""
+              variant="outline"
+              size="sm"
               type="button"
               onClick={onClose}
-              style={styles.buttonSecondary}
-            >
-              <FaTimesCircle />
-              Cancel
-            </button>
+              label="Cancel"
+              icon={<FaTimesCircle />}
+            />
           </div>
         </form>
       </div>

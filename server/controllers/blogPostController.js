@@ -2,6 +2,12 @@ const fs = require("fs");
 const path = require("path");
 const { ObjectId } = require("mongodb");
 
+// Constants for Cloudinary paths
+const blogPath = process.env.PORTFOLIO_BLOG_PATH || "portfolio_blog";
+
+// Utility functions for image handling
+const { uploadImage, deleteImage } = require("../utils/upload.service");
+
 const {
   createBlogPost,
   getBlogPost,
@@ -21,11 +27,13 @@ const {
 const addBlogPost = async (req, res) => {
   const blogPostData = req.body;
 
-  if (req.file) {
-    blogPostData.imageUrl = `/uploads/${req.file.filename}`;
-  }
-
   try {
+    if (req.file) {
+      const uploaded = await uploadImage(req.file, blogPath);
+
+      blogPostData.imageUrl = uploaded.url;
+      blogPostData.publicId = uploaded.public_id;
+    }
     const newPost = await createBlogPost(blogPostData);
     res
       .status(201)
@@ -70,71 +78,45 @@ const getOnlyPublishedBlogPosts = async (req, res) => {
 const editBlogPost = async (req, res) => {
   try {
     const { id } = req.params;
-    let updateData = req.body;
 
-    // Validate ID format
-    if (!ObjectId.isValid(id)) {
-      return res.status(400).json({ error: "Invalid ID format." });
+    const existingPost = await getBlogPost(id);
+    if (!existingPost) {
+      return res.status(404).json({ message: "Post not found" });
     }
 
-    const objectId = new ObjectId(id);
+    let updateData = { ...req.body };
 
-    // Validate existing blog post
-    const existingBlogPost = await getBlogPost(objectId);
-
-    if (!existingBlogPost) {
-      return res.status(404).json({ error: "Blog post not found" });
-    }
-
-    // Handle image upload (if a new image is provided)
-    let imagePath = existingBlogPost.imageUrl; // Default to existing image
-
+    // ✅ If new image is uploaded
     if (req.file) {
-      imagePath = `/uploads/${req.file.filename}`; // Update with new image
-
-      // Delete the old image if it exists
-      const previousImagePath = path.join(
-        __dirname,
-        "../uploads",
-        path.basename(existingBlogPost.imageUrl),
-      );
-
-      try {
-        if (fs.existsSync(previousImagePath)) {
-          fs.unlinkSync(previousImagePath);
-        }
-      } catch (err) {
-        console.error("Error deleting old image:", err);
+      // 1. Delete old image from Cloudinary
+      if (existingPost.publicId) {
+        await deleteImage(existingPost.publicId);
       }
+
+      // 2. Upload new image (buffer-based)
+      const uploaded = await uploadImage(req.file, blogPath);
+
+      // 3. Update fields
+      updateData.imageUrl = uploaded.url;
+      updateData.publicId = uploaded.public_id;
     }
 
-    // Only set `imageUrl` if a new image is uploaded
-    if (req.file) {
-      updateData.imageUrl = imagePath;
-    } else {
-      delete updateData.imageUrl; // Remove the field to avoid overwriting with undefined
-    }
-
-    // Update blog post in the database
+    // 4. Update DB
     const result = await updateBlogPost(id, updateData);
 
-    if (result.modifiedCount === 1 || result.matchedCount === 1) {
-      return res.status(200).json({
-        message: "Blog post updated successfully.",
-        data: { ...existingBlogPost, ...updateData },
-      });
-    } else {
-      return res.status(400).json({ message: "Failed to update blog post" });
-    }
+    return res.status(200).json({
+      message: "Blog post updated successfully",
+      result,
+    });
   } catch (error) {
-    console.error("Error in updating blog post:", error);
-    return res
-      .status(500)
-      .json({ message: "An error occurred while updating blog post" });
+    console.error("Update error:", error);
+    return res.status(500).json({
+      message: "Error updating blog post",
+      error: error.message,
+    });
   }
 };
 
-// Fetch random latest post for home page
 const getRandomBlogPosts = async (req, res) => {
   try {
     const latestPosts = await randomPosts();
@@ -201,7 +183,11 @@ const addBookmarkToPost = async (req, res) => {
     if (result.modifiedCount > 0) {
       res.status(200).json({ message: "Bookmark added successfully.", result });
     } else {
-      res.status(400).json({ message: "Failed to add bookmark." });
+      res.status(400).json({
+        message: "This post is already in your bookmarks.",
+        alreadyBookmarked: true,
+        result,
+      });
     }
   } catch (error) {
     res.status(500).json({ message: "Server error in adding bookmark." });
@@ -243,8 +229,17 @@ const fetchBookmarkedPostsForUser = async (req, res) => {
 // Delete blog post
 const removeBlogPost = async (req, res) => {
   const { id } = req.params;
-
   try {
+    // Fetch the blog post first to get the image public_id
+    const blog = await getBlogPost(id);
+    if (!blog) return res.status(404).json({ message: "Blog post not found." });
+
+    // Delete image from Cloudinary if exists
+    if (blog.imageUrl && blog.public_id) {
+      await deleteImage(blog.public_id);
+    }
+
+    // Delete the blog post from DB
     const deletedCount = await deleteBlogPost(id);
 
     if (deletedCount > 0) {

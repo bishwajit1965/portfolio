@@ -48,11 +48,13 @@ const BlogPosts = () => {
   } = usePagination(filteredPosts, postsPerPage);
 
   return (
-    <div className="lg:max-w-7xl mx-auto lg:p-0 p-2 mb-10">
+    <div className="lg:max-w-7xl mx-auto">
       <Helmet>
         <title>Bishwajit.dev || Blogs</title>
       </Helmet>
       {loading && <Loader />}
+
+      {/* <div className="inset-0 bg-black opacity-0"></div> */}
       <PageTitle
         title="Blog"
         decoratedText="Posts"

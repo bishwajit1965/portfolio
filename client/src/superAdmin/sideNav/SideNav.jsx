@@ -6,9 +6,9 @@ const SideNav = ({ user }) => {
     <div className="sticky top-20">
       <div className="border-b border-slate-300 mb-2 pb-2">
         <h2 className="lg:text-xl text-[18p7] font-bold flex items-center gap-2">
-          <FaCogs /> Super Admin Dashboard
+          <FaCogs /> Super Admin DB
         </h2>
-        <p className="text-sm flex items-center gap-2">
+        <p className="text-xs flex items-center gap-2">
           <FaMailBulk />
           {user && user?.email} || {user.role}
         </p>
@@ -23,51 +23,43 @@ const SideNav = ({ user }) => {
 
         <li className="flex items-center hover:bg-base-300 py-1">
           <FaArrowAltCircleRight />
-          <NavLink to="/super-admin/manage-projects">
-            Projects Management
-          </NavLink>
+          <NavLink to="/super-admin/manage-projects">Projects</NavLink>
         </li>
         <li className="flex items-center hover:bg-base-300 py-1">
           <FaArrowAltCircleRight />
-          <NavLink to="/super-admin/manage-testimonials">
-            Testimonials Management
-          </NavLink>
+          <NavLink to="/super-admin/manage-testimonials">Testimonials</NavLink>
         </li>
         <li className="flex items-center hover:bg-base-300 py-1">
           <FaArrowAltCircleRight />
-          <NavLink to="/super-admin/manage-users">Users Management</NavLink>
+          <NavLink to="/super-admin/manage-users">Users</NavLink>
         </li>
         <li className="flex items-center hover:bg-base-300 py-1">
           <FaArrowAltCircleRight />
-          <NavLink to="/super-admin/manage-hobby">Hobby Management</NavLink>
+          <NavLink to="/super-admin/manage-hobby">Hobbies</NavLink>
         </li>
         <li className="flex items-center hover:bg-base-300 py-1">
           <FaArrowAltCircleRight />
-          <NavLink to="/super-admin/manage-blogs">Blogs Management</NavLink>
+          <NavLink to="/super-admin/manage-blogs">Blogs</NavLink>
         </li>
         <li className="flex items-center hover:bg-base-300 py-1">
           <FaArrowAltCircleRight />
-          <NavLink to="/super-admin/manage-categories">
-            Categories Management
-          </NavLink>
+          <NavLink to="/super-admin/manage-categories">Categories</NavLink>
         </li>
         <li className="flex items-center hover:bg-base-300 py-1">
           <FaArrowAltCircleRight />
-          <NavLink to="/super-admin/manage-comments">
-            Comments Management
-          </NavLink>
+          <NavLink to="/super-admin/manage-comments">Comments</NavLink>
         </li>
         <li className="flex items-center hover:bg-base-300 py-1">
           <FaArrowAltCircleRight />
-          <NavLink to="/super-admin/manage-tags">Tags Management</NavLink>
+          <NavLink to="/super-admin/manage-tags">Tags</NavLink>
         </li>
         <li className="flex items-center hover:bg-base-300 py-1">
           <FaArrowAltCircleRight />
-          <NavLink to="/super-admin/manage-notices">Notice Management</NavLink>
+          <NavLink to="/super-admin/manage-notices">Notice</NavLink>
         </li>
         <li className="flex items-center hover:bg-base-300 py-1">
           <FaArrowAltCircleRight />
-          <NavLink to="/super-admin/manage-skills">Skills Management</NavLink>
+          <NavLink to="/super-admin/manage-skills">Skills</NavLink>
         </li>
       </ul>
     </div>

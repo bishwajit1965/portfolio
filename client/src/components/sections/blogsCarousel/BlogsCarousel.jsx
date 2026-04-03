@@ -8,7 +8,12 @@ const BlogsCarousel = () => {
 
   const baseUrl =
     import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  // const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const getImageSrc = (img) => {
+    if (!img) return "";
+    if (typeof img === "string" && img.startsWith("http")) return img;
+    if (img.url) return img.url;
+  };
 
   useEffect(() => {
     fetch(`${baseUrl}/blogPosts/random-latest`)
@@ -37,9 +42,9 @@ const BlogsCarousel = () => {
   };
 
   return (
-    <div className="grid grid-cols-12 gap- justify-between lg:min-h-40 min-h-60 mt-6">
+    <div className="grid grid-cols-12 justify-between lg:min-h-56 min-h-56 mt-6">
       <div className="lg:col-span-12 col-span-12">
-        <div className="carousel w-full lg:h-40 h-60 relative overflow-hidden">
+        <div className="carousel w-full lg:min-h-56 min-h-56 relative overflow-hidden">
           {slides.map((slide, index) => (
             <div
               key={slide._id}
@@ -56,8 +61,8 @@ const BlogsCarousel = () => {
                   className="m-0 w-full"
                 >
                   <img
-                    src={`${apiUrl}${slide.imageUrl}`}
-                    className="w-full h-auto object-fill rounded-md shadow-md object-center lg:min-h-56 min-h-60"
+                    src={getImageSrc(slide.imageUrl)}
+                    className="w-full min-h-56 object-fill rounded-md shadow-md object-center"
                     alt={slide.title}
                   />
                 </Link>

@@ -6,10 +6,14 @@ import fetchCategoryFilteredPosts from "../../services/fetchCategoryFilteredPost
 import Button from "../buttons/Button";
 
 const RelatedCategoryPostsModal = ({ categoryIds, onClose }) => {
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  // const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const [relatedPosts, setRelatedPosts] = useState([]);
   const [loading, setLoading] = useState(true); // Track loading state
-
+  const getImageSrc = (img) => {
+    if (!img) return "";
+    if (typeof img === "string" && img.startsWith("http")) return img;
+    if (img.url) return img.url;
+  };
   console.log("related posts:", relatedPosts);
 
   useEffect(() => {
@@ -57,7 +61,7 @@ const RelatedCategoryPostsModal = ({ categoryIds, onClose }) => {
               >
                 <a href={`/single-blog-post/${post._id}`}>
                   <img
-                    src={`${apiUrl}${post.imageUrl}`}
+                    src={getImageSrc(post.imageUrl)}
                     alt=""
                     className="h-32 w-full rounded-t-md mt-[-25px]"
                   />
