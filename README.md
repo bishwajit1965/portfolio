@@ -1,23 +1,29 @@
 # 🚀 Bishwajit Paul | Developer Portfolio
 
-A **modern, full-stack developer portfolio** showcasing real-world projects, skills, and web development expertise.
-Built as a **solo project** with focus on clean UI, scalable architecture, and smooth user experience.
+A **modern, full-stack developer portfolio + content platform** showcasing real-world projects, blogs, and system-level features.
+Built as a **solo MERN application** with focus on scalability, clean architecture, and production-style implementation.
 
 ---
 
 ## ✨ Highlights
 
-- 🧑‍💻 **About / Bio section** – professional intro & background
-- 🛠️ **Skills & Tech Stack** – interactive badges & categories
+- 🧑‍💻 **About / Bio section** – professional intro, journey, and milestones
+- 🛠️ **Skills & Tech Stack** – structured and categorized tech display
 - 📂 **Projects Showcase**
   - 🖼️ Multiple screenshots per project (category-based)
-  - 💻 Tech stack listing per project
+  - 💻 Tech stack per project
   - 🔗 GitHub & Live demo links
-  - 🔐 Admin panel to manage visibility & content
-- 🖼️ **Image Uploads** – supports multiple screenshots
+  - 🔐 Admin-controlled visibility system
+- 📝 **Full Blog Platform**
+  - Category & tag-based filtering
+  - Blog detail pages with structured content
+- 🔖 **Bookmark System** – save & manage favorite blogs
+- 📡 **RSS Feed Integration** – external content consumption
+- 📢 **Notice System** – admin-controlled announcements
+- 🖼️ **Image Uploads** – multiple screenshots with captions
 - 📱 **Responsive Design** – mobile, tablet, desktop
-- 🌙 **Dark Mode** – toggle for user preference
-- ⚡ **Smooth UX** – loading states, modals, toasts
+- 🌙 **Dark Mode** – user preference toggle
+- ⚡ **Smooth UX** – loaders, modals, toasts
 
 ---
 
@@ -35,6 +41,27 @@ Built as a **solo project** with focus on clean UI, scalable architecture, and s
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white)
 ![Multer](https://img.shields.io/badge/Multer-FF2D20?style=flat-square&logoColor=white)
+
+- **React Query** – server state management & caching
+
+### Authentication
+
+- **JWT Authentication**
+  - Access Token + Refresh Token strategy
+  - Persistent login & session handling
+
+### System Architecture
+
+- Role-Based Access Control (RBAC)
+- Separation of **Public / User / Admin APIs**
+- Modular and scalable folder structure
+
+### File Handling
+
+- **Multer** for image uploads
+- Planned migration to **cloud/CDN storage**
+
+---
 
 ### Others
 
@@ -70,9 +97,14 @@ server/
 
 ## 📸 Projects & Screenshots
 
-- Supports **category-wise screenshots**: UI, Dashboard, Mobile View
-- Each screenshot includes **image + caption + category + tech stacks**
-- Clean and scalable presentation for each project
+- Supports **category-wise screenshots** (UI, Dashboard, Mobile)
+- Each screenshot includes:
+  - Image
+  - Caption
+  - Category
+  - Tech Stack
+  - Designed for **scalable project presentation**
+  - Clean and scalable presentation for each project
 
 ---
 
@@ -82,15 +114,15 @@ server/
 - 👁️ **Visibility flags for projects** → soft delete / easy control
 - 🧑‍💻 **Solo-friendly architecture** → maintainable & extendable
 - 🎨 **UI-first mindset** → clarity and polished experience
+- 🔄 **Separation of concerns** → maintainable architecture
 
----
+## 🚀 Future Enhancements
 
-## 🚀 Optional Enhancements (Future Scope)
-
-- 🔍 SEO optimization (meta tags, OG tags, keywords)
-- ⚡ Server-side rendering or pre-rendering
+- 🔍 SEO optimization (meta tags, OG tags)
+- ⚡ SSR (Server-side rendering) / pre-rendering
 - 📊 Analytics integration
 - ✉️ Contact form with email service
+- ☁️ Cloud image storage (Cloudinary / S3)
 - 👥 CMS-style role separation for admin users
 
 ---
@@ -115,5 +147,5 @@ node index.js
 
 - Built & maintained by a solo developer
 - End-to-end design, development, and integration handled independently.
-
-- This portfolio reflects real project experience, not tutorial code.
+- on real-world application architecture and scalable systems
+- This project reflects practical development experience — including debugging, system design, and feature implementation — not tutorial-based code.

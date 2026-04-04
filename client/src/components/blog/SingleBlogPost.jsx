@@ -49,13 +49,11 @@ const SingleBlogPost = () => {
     if (img.url) return img.url;
   };
   const handleOpenModal = () => {
-    console.log("Opening related post modal"); // Debug log
     setCurrentCategoryIds(post.category || []); // Ensure category is set
     setIsModalOpen(true); // Set the modal to open
   };
 
   const handleCloseModal = () => {
-    console.log("Closing related post modal");
     setIsModalOpen(false);
   };
 
@@ -143,9 +141,6 @@ const SingleBlogPost = () => {
     };
     fetchComments();
   }, [postId]);
-
-  console.log("Comments fetched in single blog post", comments);
-  console.log("Post Id", postId);
 
   // Like related code
   useEffect(() => {

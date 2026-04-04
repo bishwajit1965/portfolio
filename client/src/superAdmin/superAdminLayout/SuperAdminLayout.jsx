@@ -10,7 +10,7 @@ const SuperAdminLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
     <div className="lg:max-w-full mx-auto">
-      <div className="header bg-slate-300 sticky top-0 z-50">
+      {/* <div className="header bg-slate-300 sticky top-0 z-50">
         <SuperAdminNavBar
           logoutSuperAdmin={logoutSuperAdmin}
           loading={loading}
@@ -19,7 +19,7 @@ const SuperAdminLayout = () => {
           onBtnClick={() => setIsSidebarOpen(false)}
           isOpen={isSidebarOpen}
         />
-      </div>
+      </div> */}
       <div className="grid lg:grid-cols-12 gap-2 justify-between">
         {isSidebarOpen && (
           <div
@@ -33,6 +33,16 @@ const SuperAdminLayout = () => {
           <SideNav user={user} />
         </div>
         <div className="lg:col-span-10 col-span-6 border border-b rounded-lg">
+          <div className="header bg-slate-300 sticky top-0 z-50">
+            <SuperAdminNavBar
+              logoutSuperAdmin={logoutSuperAdmin}
+              loading={loading}
+              user={user}
+              onMenuClick={() => setIsSidebarOpen(true)}
+              onBtnClick={() => setIsSidebarOpen(false)}
+              isOpen={isSidebarOpen}
+            />
+          </div>
           <Outlet />
 
           <SuperAdminFooter />

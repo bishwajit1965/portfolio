@@ -51,7 +51,7 @@ const updateTestimonialById = async (req, res) => {
     const { id } = req.params;
     console.log("Id", id);
     const testimonialData = req.body;
-    console.log("REQ>BODY", testimonialData);
+
     const result = await updateTestimonial(id, testimonialData);
     if (result.matchedCount > 0) {
       res.status(200).json({

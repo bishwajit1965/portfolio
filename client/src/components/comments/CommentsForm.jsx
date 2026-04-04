@@ -7,7 +7,6 @@ const CommentsForm = ({ postId, onSubmitComment }) => {
   const { user } = useAuth();
   const [content, setContent] = useState("");
   const [error, setError] = useState("");
-  console.log("User data in form:", user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

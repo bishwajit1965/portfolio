@@ -10,7 +10,7 @@ const baseUrl =
 const RssPage = () => {
   const [rssPosts, setRssPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  console.log("Rss posts", rssPosts);
+
   useEffect(() => {
     setLoading(true);
     fetch(`${baseUrl}/rss`) // Replace with your RSS route

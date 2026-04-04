@@ -14,7 +14,6 @@ const RelatedCategoryPostsModal = ({ categoryIds, onClose }) => {
     if (typeof img === "string" && img.startsWith("http")) return img;
     if (img.url) return img.url;
   };
-  console.log("related posts:", relatedPosts);
 
   useEffect(() => {
     const fetchPosts = async () => {

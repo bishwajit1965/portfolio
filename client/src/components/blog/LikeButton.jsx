@@ -32,7 +32,6 @@ const LikeButton = ({ postId, token }) => {
         console.error("Failed to fetch likes:", error);
       } finally {
         setLoading(false);
-        console.log("Data fetched, loading complete");
       }
     };
 

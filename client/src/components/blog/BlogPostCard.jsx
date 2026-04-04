@@ -11,8 +11,7 @@ import Button from "../buttons/Button";
 const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
   const { user } = useContext(AuthContext);
   const loggedInUserId = user ? user.uid : null;
-  console.log(loggedInUserId);
-  // const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
   const [loaded, setLoaded] = useState(false);
   const [autoSummary, setAutoSummary] = useState("");
   const getImageSrc = (img) => {

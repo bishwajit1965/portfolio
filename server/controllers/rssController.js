@@ -42,8 +42,6 @@ const generatedRssFeed = async (req, res) => {
         .up();
     });
 
-    console.log("posts", posts);
-
     res.set("Content-Type", "text/xml");
     res.send(feed.end({ prettyPrint: true }));
   } catch (error) {
