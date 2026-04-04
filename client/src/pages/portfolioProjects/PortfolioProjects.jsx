@@ -208,9 +208,16 @@ const PortfolioProjects = () => {
 
                     {/* Tech Stacks */}
                     <div className="flex flex-wrap items-center gap-2">
-                      <h4 className="flex items-center gap-2 font-bold bg-base-100 text-base-content py-0.5 px-2 rounded-md border dark:border-slate-600 dark:bg-gray-600 dark:text-base-100">
-                        <FaTools /> Tech Stacks Used
-                      </h4>
+                      <div className="flex items-center gap-2 font-bold bg-base-100 text-base-content rounded-md border dark:border-slate-600 dark:bg-gray-600 dark:text-base-100">
+                        <span className="bg-base-300 flex items-center gap-2 rounded-md shadow-sm dark:bg-gray-700 text-base-content">
+                          <span className="bg-emerald-500 py-1 px-2 rounded-l-md text-white">
+                            <FaTools size={20} />
+                          </span>
+                          <span className="px-1 text-base-content dark:text-gray-300">
+                            Tech Stacks
+                          </span>
+                        </span>{" "}
+                      </div>
                       {project.techStacks && project.techStacks.length > 0 ? (
                         project.techStacks.map((t, i) => (
                           <SkillBadge key={i} label={t} />

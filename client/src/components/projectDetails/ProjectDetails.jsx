@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
+  FaArrowCircleDown,
+  FaArrowCircleUp,
   FaExternalLinkAlt,
   FaGithub,
   FaHome,
@@ -24,6 +26,7 @@ const ProjectDetails = () => {
   const [project, setProject] = useState(null);
   const [modalData, setModalData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isExtended, setIsExtended] = useState(false);
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const baseURL = `${apiUrl}/uploads/`;
   const getImageSrc = (img) => {
@@ -106,21 +109,20 @@ const ProjectDetails = () => {
 
       {/* Main info + image */}
       <div className="grid lg:grid-cols-12 gap-6 rounded-md">
-        <div className="lg:col-span-8 col-span-12 bg-base-100 border dark:border-gray-700 rounded-md shadow-sm">
+        <div className="lg:col-span-8 col-span-12 bg-base-100 border dark:border-gray-700 rounded-md shadow-sm hover:shadow-xl transition">
           <Link to="/" className="m-0 cursor-pointer">
             <img
               src={getImageSrc(project.image)}
-              // src={`${baseURL}${project.image}`}
               alt={project.name}
-              className="rounded-t-md w-full h-auto border shadow-sm lg:object-fill object-cover lg:p-0 p-1"
+              className="rounded-t-md w-full h-auto shadow-sm lg:object-fill object-fill lg:p-0 p-1"
             />
           </Link>
           <figcaption className="text-center text-gray-800 dark:text-gray-800 font-medium py-1 bg-base-300 rounded-b-md border-t border-gray-300">
-            Main Project Image
+            Main Project Image {project.type ? `- ${project.type}` : ""}
           </figcaption>
         </div>
 
-        <div className="lg:col-span-4 col-span-12 lg:space-y-4 space-y-2 dark:text-gray-400 bg-base-100 border dark:border-gray-700 dark:bg-gray-800 rounded-md lg:p-4 p-2 shadow-sm">
+        <div className="lg:col-span-4 col-span-12 lg:space-y-5 space-y-2 dark:text-gray-400 bg-base-100 border dark:border-gray-700 dark:bg-gray-800 rounded-md lg:p-4 p-2 shadow-sm hover:shadow-xl transition">
           <h2 className="text-lg lg:text-xl font-extrabold text-gray-800 dark:text-gray-400">
             {project.name}
           </h2>
@@ -130,12 +132,27 @@ const ProjectDetails = () => {
             </span>{" "}
             {project.type}
           </p>
-          <p>
-            <span className="font-semibold text-gray-700 dark:text-gray-400">
-              Description:
-            </span>{" "}
-            {project.description}
-          </p>
+          <div className="lg:max-h-36 overflow-y-auto rounded-md flex flex-wrap gap-2 border dark:border-gray-700 dark:bg-gray-800 text-base-content p-2 bg-base-200">
+            <p className="text-gray-700 dark:text-gray-400">
+              <span className="font-semibold text-gray-700 dark:text-gray-400">
+                Description:
+              </span>{" "}
+              {isExtended
+                ? project.description
+                : project.description.slice(0, 125) + "..."}
+            </p>
+            <button
+              onClick={() => setIsExtended((prev) => !prev)}
+              className="text-sm text-blue-500 hover:link"
+            >
+              {isExtended ? "Show Less" : "Show More"}
+              {isExtended ? (
+                <FaArrowCircleUp className="inline ml-1" />
+              ) : (
+                <FaArrowCircleDown className="inline ml-1" />
+              )}
+            </button>
+          </div>
 
           {/* Tech stacks */}
 
@@ -147,25 +164,26 @@ const ProjectDetails = () => {
                 </span>
                 <span className="px-1.5 text-sm">Tech Stacks</span>
               </span>
-              {/* <FaTools /> Tech Stacks */}
             </h3>
             {project?.techStacks?.length > 0 ? (
               project.techStacks.map((tech, idx) => (
                 <SkillBadge key={idx} label={tech} />
               ))
             ) : (
-              <p className="text-gray-500 dark:text-gray-400">
+              <p className="text-gray-500 text-center dark:text-gray-400">
                 No tech stacks listed.
               </p>
             )}
           </div>
-          <Button
-            href="/"
-            icon={<FaHome />}
-            label="Go Home"
-            variant="outline"
-            className="p-0 m-0 mt-4"
-          />
+          <div className="flex justify-end">
+            <Button
+              href="/"
+              icon={<FaHome />}
+              label="Go Home"
+              variant="outline"
+              className="p-0 m-0 mt-4"
+            />
+          </div>
         </div>
       </div>
 
@@ -190,12 +208,12 @@ const ProjectDetails = () => {
                       <img
                         src={getImageSrc(item.image)}
                         alt={item.caption}
-                        className="rounded-t-md w-full lg:h-60 h-auto lg:object-fill object-cover cursor-pointer lg:p-0 p-1 bg-base-100 border border-gray-300 dark:border-gray-300"
+                        className="rounded-t-md w-full lg:h-56 h-auto lg:object-fill object-cover cursor-pointer lg:p-0 p-1 bg-base-100 border border-gray-300 dark:border-gray-300"
                       />
                     </Link>
                     {item.caption && (
                       <p className="text-center text-gray-600 dark:text-gray-700 p-1 border-t bg-gray-200 dark:bg-base-300 rounded-b-md">
-                        {item.caption}
+                        {item.caption.slice(0, 45)}...
                       </p>
                     )}
                     <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-25 opacity-0 group-hover:opacity-100 transition rounded-md">
