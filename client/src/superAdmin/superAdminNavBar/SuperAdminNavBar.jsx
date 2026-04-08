@@ -3,7 +3,13 @@ import SuperAdImage from "/assets/bishwajit-1.jpg";
 import { SuperAdminAuthContext } from "../context/SuperAdminAuthProvider";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaBars, FaTimes } from "react-icons/fa";
+import {
+  FaBars,
+  FaMailBulk,
+  FaSignOutAlt,
+  FaTimes,
+  FaUser,
+} from "react-icons/fa";
 
 const SuperAdminNavBar = ({ onBtnClick, onMenuClick, isOpen }) => {
   const navigate = useNavigate();
@@ -12,7 +18,6 @@ const SuperAdminNavBar = ({ onBtnClick, onMenuClick, isOpen }) => {
 
   const handleLogOut = () => {
     logoutSuperAdmin();
-
     navigate("/super-admin/login");
   };
 
@@ -80,8 +85,16 @@ const SuperAdminNavBar = ({ onBtnClick, onMenuClick, isOpen }) => {
             role="button"
             className="btn btn-ghost btn-circle avatar"
           >
-            <div className="w-10 rounded-full">
-              {user ? <img src={SuperAdImage} alt={user.email} /> : "Login"}
+            <div className="w-10 h-10 overscroll-y-auto rounded-full">
+              {user ? (
+                <img
+                  src={SuperAdImage}
+                  alt={user.email}
+                  className="w-10 h-10 overscroll-y-auto rounded-full"
+                />
+              ) : (
+                "Login"
+              )}
             </div>
           </div>
           <ul
@@ -89,16 +102,19 @@ const SuperAdminNavBar = ({ onBtnClick, onMenuClick, isOpen }) => {
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
             <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
+              <p>
+                <FaUser /> {user.role}
+              </p>
+            </li>
+            <li>
+              <p className="flex items-center">
+                <FaMailBulk /> {user.email}
+              </p>
+            </li>
+            <li>
+              <a onClick={handleLogOut} className="m-0">
+                <FaSignOutAlt /> Logout
               </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <a onClick={handleLogOut}>Logout</a>
             </li>
           </ul>
         </div>

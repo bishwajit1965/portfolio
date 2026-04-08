@@ -5,7 +5,6 @@ import { FaPlusCircle } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
 import { NavLink } from "react-router-dom";
-import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import Swal from "sweetalert2";
 import UpdateBlogModal from "./UpdateBlogModal";
 
@@ -256,56 +255,49 @@ const ManageBlogPosts = () => {
     return <div className="text-center text-red-500">{errorMessage}</div>;
 
   return (
-    <>
+    <div>
       <Helmet>
         <title>Web-tech-services || Manage Blogs</title>
       </Helmet>
 
-      <div>
-        <SuperAdminPageTitle
-          title="Manage"
-          decoratedText="Blog Posts"
-          subtitle="Super admin can only manage all blog posts"
+      <div className="lg:flex lg:items-start items-center justify-between lg:mb-2 bg-base-200 p-2 shadow-sm">
+        <NavLink to="/super-admin/add-blog-post" className="m-0">
+          <button className="btn btn-xs btn-primary">
+            <FaPlusCircle />
+            Add Blog Post
+          </button>
+        </NavLink>
+
+        <h2 className="text-xl font-bold text-center">
+          Blog posts List:{" "}
+          <span className="text-orange-700">
+            {blogPosts.length > 0 ? blogPosts.length : "No post uploaded yet"}
+          </span>
+        </h2>
+      </div>
+
+      <div className="">
+        {/* Pass blog post to BlogPostTable */}
+        <BlogsTable
+          blogPosts={blogPosts}
+          categories={categories}
+          tags={tags}
+          onEdit={handleEditBlogPost}
+          onDelete={handleDeleteBlogPost}
         />
-        <div className="lg:flex lg:items-start items-center justify-between lg:mb-4 bg-base-200 p-2 shadow-sm">
-          <NavLink to="/super-admin/add-blog-post" className="m-0">
-            <button className="btn btn-xs btn-primary">
-              <FaPlusCircle />
-              Add Blog Post
-            </button>
-          </NavLink>
 
-          <h2 className="text-xl font-bold text-center lg:ml-">
-            Blog posts List:{" "}
-            <span className="text-orange-700">
-              {blogPosts.length > 0 ? blogPosts.length : "No post uploaded yet"}
-            </span>
-          </h2>
-        </div>
-
-        <div className="p-2">
-          {/* Pass blog post to BlogPostTable */}
-          <BlogsTable
-            blogPosts={blogPosts}
+        {showUpdateModal && selectedBlogPost && (
+          <UpdateBlogModal
+            blog={selectedBlogPost}
             categories={categories}
             tags={tags}
-            onEdit={handleEditBlogPost}
-            onDelete={handleDeleteBlogPost}
+            onClose={() => setShowUpdateModal(false)}
+            onUpdate={handleUpdateBlogPost}
+            loading={loading}
           />
-
-          {showUpdateModal && selectedBlogPost && (
-            <UpdateBlogModal
-              blog={selectedBlogPost}
-              categories={categories}
-              tags={tags}
-              onClose={() => setShowUpdateModal(false)}
-              onUpdate={handleUpdateBlogPost}
-              loading={loading}
-            />
-          )}
-        </div>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 

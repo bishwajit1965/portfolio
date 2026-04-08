@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import {
   FaLayerGroup,
   FaTools,
@@ -9,6 +10,7 @@ import {
   FaBars,
   FaTimes,
 } from "react-icons/fa";
+
 import { Helmet } from "react-helmet-async";
 import api from "../../services/api";
 import Button from "../../components/buttons/Button";
@@ -17,10 +19,13 @@ import PageTitle from "../pageTitle/PageTitle";
 import SkillBadge from "../../components/skillBadge/SkillBadge";
 import Loader from "../../components/loader/Loader";
 import { FaCircleRight, FaListCheck } from "react-icons/fa6";
+import { ICONS } from "./ReactIcons";
+import { normalizeKey } from "./ReactIcons";
 
 const PortfolioProjects = () => {
   const [loading, setLoading] = useState(false);
   const [projects, setProjects] = useState([]);
+  const [categories, setCategories] = useState(["All"]);
   const [activeCategory, setActiveCategory] = useState("All");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
@@ -28,6 +33,14 @@ const PortfolioProjects = () => {
   const [modalProject, setModalProject] = useState(null);
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const baseURL = `${apiUrl}/uploads/`;
+
+  // Manage Images
+  const getImageSrc = (img) => {
+    if (!img) return "";
+    if (typeof img === "string" && img.startsWith("http")) return img;
+    if (img.url) return img.url;
+    return `${baseURL}${img}`;
+  };
 
   // Fetch projects
   useEffect(() => {
@@ -48,10 +61,19 @@ const PortfolioProjects = () => {
     fetchProjects();
   }, []);
 
-  const categories = [
-    "All",
-    ...new Set(projects.flatMap((p) => p.screenshots.map((s) => s.category))),
-  ];
+  useEffect(() => {
+    if (projects.length > 0) {
+      const cats = [
+        "All",
+        ...new Set(
+          projects.flatMap((p) => p.screenshots.map((s) => s.category)),
+        ),
+      ];
+      setCategories(cats);
+    }
+  }, [projects]);
+
+  console.log("Categories", categories);
 
   const filteredScreenshots = (screenshots) =>
     activeCategory === "All"
@@ -116,26 +138,38 @@ const PortfolioProjects = () => {
           <div className="">
             <div className="sticky top-0 hidden lg:block px-4 py-2 bg-base-300 dark:bg-gray-700 shadow-sm">
               <h3 className="text-lg font-bold flex items-center gap-2">
-                <FaLayerGroup className="text-amber-600" /> Categories
+                <FaLayerGroup className="text-amber-600" />
+                Portfolio Categories
               </h3>
             </div>
             <div className="px-4 py-4">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  className={`w-full text-left px-3 py-2 rounded mb-2 font-medium flex items-center gap-2 ${
-                    activeCategory === cat
-                      ? "bg-emerald-600 text-white"
-                      : "hover:bg-emerald-100 dark:hover:bg-emerald-100 dark:hover:text-gray-800"
-                  }`}
-                  onClick={() => {
-                    setActiveCategory(cat);
-                    setIsSidebarOpen(false);
-                  }}
-                >
-                  <FaListCheck /> {cat}
-                </button>
-              ))}
+              {categories.length > 1 ? (
+                categories.map((cat) => {
+                  const iconKey = normalizeKey(cat);
+                  const Icon = ICONS[iconKey] || ICONS.default;
+
+                  return (
+                    <button
+                      key={cat}
+                      className={`w-full text-left px-3 py-2 rounded mb-2 font-medium flex items-center gap-2 ${
+                        activeCategory === cat
+                          ? "bg-emerald-600 text-white border-l-4 border-emerald-300 transition-all transition-x-0"
+                          : "hover:bg-emerald-100 dark:hover:bg-emerald-100 dark:hover:text-gray-800"
+                      }`}
+                      onClick={() => {
+                        setActiveCategory(cat);
+                        setIsSidebarOpen(false);
+                      }}
+                    >
+                      <Icon /> {cat}
+                    </button>
+                  );
+                })
+              ) : (
+                <div className="">
+                  <p>No categories found!</p>
+                </div>
+              )}
             </div>
           </div>
         </aside>
@@ -143,7 +177,7 @@ const PortfolioProjects = () => {
         {/* Main content */}
         <div className="flex-1 lg:ml-0">
           <PageTitle
-            title="Portfolio of"
+            title="Portfolio of "
             decoratedText="Projects"
             subtitle="Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
             icon={FaLayerGroup}
@@ -174,10 +208,9 @@ const PortfolioProjects = () => {
                         >
                           <figure>
                             <img
-                              src={item.image.url || `${baseURL}${item.image}`} // Handle both URL and filename cases
-                              // src={`${baseURL}${item.image}`}
+                              src={getImageSrc(item.image.url || item.image)}
                               alt={item.caption || project.name}
-                              className="rounded-t-md w-full lg:h-64 h-auto lg:object-fill object-cover transition-transform duration-300 group-hover:scale-100"
+                              className="rounded-t-md w-full lg:h-64 h-auto lg:object-fill object-cover border hover:border-2 transition-transform duration-300 group-hover:scale-100"
                             />
                             {item.caption && (
                               <figcaption className="text-medium border-t border-gray-300 text-center text-gray-600 dark:text-gray-700 p-1.5 rounded-b-md bg-base-200">
@@ -277,9 +310,9 @@ const PortfolioProjects = () => {
 
             <figure>
               <img
-                src={modalData?.image?.url || `${baseURL}${modalData?.image}`}
+                src={getImageSrc(modalData?.image?.url || modalData?.image)}
                 alt={modalData?.caption || modalProject?.name}
-                className="w-full lg:h-72 lg:object-fill h-auto object-cover rounded-md mb-2 shadow border dark:border-slate-600"
+                className="w-full lg:h-auto lg:object-fill h-auto  object-cover rounded-md mb-2 shadow hover:shadow-mg border hover:border-2 hover: border-base-300 dark:border-slate-600 transition-all duration:300"
               />
               {modalData?.caption && (
                 <figcaption className="text-gray-700 dark:text-gray-300">

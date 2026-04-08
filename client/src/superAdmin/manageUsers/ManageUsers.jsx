@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import Avatar from "/assets/Avatar-Profile-PNG-Photos.png";
 import DataTable from "react-data-table-component";
 import { FaEdit } from "react-icons/fa";
-import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import Swal from "sweetalert2";
 import api from "../../services/api";
 
@@ -157,12 +156,6 @@ const ManageUsers = () => {
 
   return (
     <div className="dashboard">
-      <SuperAdminPageTitle
-        title="Manage"
-        decoratedText="Users"
-        subtitle="Manage users here. Assign role and do others. It is for super admin only."
-      />
-
       <div className="table-container">
         {loading ? (
           <div className="text-center">

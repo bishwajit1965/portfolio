@@ -1,5 +1,4 @@
 import { FaPlusCircle } from "react-icons/fa";
-import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import apiRequest from "../utils/apiRequest";
@@ -131,12 +130,6 @@ const ManageSkills = () => {
 
   return (
     <div>
-      <SuperAdminPageTitle
-        title="Manage"
-        decoratedText="Skills"
-        subtitle="Super admin only!"
-      />
-
       <div className="flex lg:justify-start items-center justify-between lg:mb-2 bg-base-200 p-2 shadow-sm">
         <NavLink to="/super-admin/add-skills" className="m-0">
           <button className="btn btn-xs btn-primary">

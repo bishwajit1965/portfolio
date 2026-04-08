@@ -35,6 +35,7 @@ const ProjectDetails = () => {
     if (img.url) return img.url;
     return `${baseURL}${img}`;
   };
+  const description = project?.description || "";
 
   // Fetch project details
   useEffect(() => {
@@ -114,7 +115,7 @@ const ProjectDetails = () => {
             <img
               src={getImageSrc(project.image)}
               alt={project.name}
-              className="rounded-t-md w-full h-auto shadow-sm lg:object-fill object-fill lg:p-0 p-1"
+              className="rounded-t-md w-full h-auto shadow-sm hover:shadow-md lg:object-fill object-fill lg:p-0 p-1 border hover:border-4 transition-all"
             />
           </Link>
           <figcaption className="text-center text-gray-800 dark:text-gray-800 font-medium py-1 bg-base-300 rounded-b-md border-t border-gray-300">
@@ -132,14 +133,16 @@ const ProjectDetails = () => {
             </span>{" "}
             {project.type}
           </p>
-          <div className="lg:max-h-36 overflow-y-auto rounded-md flex flex-wrap gap-2 border dark:border-gray-700 dark:bg-gray-800 text-base-content p-2 bg-base-200">
+          <div className="lg:max-h-[7.4rem] overflow-y-auto rounded-md flex flex-wrap gap-2 border dark:border-gray-700 dark:bg-gray-800 text-base-content p-2 bg-base-200">
             <p className="text-gray-700 dark:text-gray-400">
               <span className="font-semibold text-gray-700 dark:text-gray-400">
                 Description:
               </span>{" "}
               {isExtended
-                ? project.description
-                : project.description.slice(0, 125) + "..."}
+                ? description
+                : description.length > 122
+                  ? description.slice(0, 122) + "..."
+                  : description}
             </p>
             <button
               onClick={() => setIsExtended((prev) => !prev)}
@@ -208,7 +211,7 @@ const ProjectDetails = () => {
                       <img
                         src={getImageSrc(item.image)}
                         alt={item.caption}
-                        className="rounded-t-md w-full lg:h-56 h-auto lg:object-fill object-cover cursor-pointer lg:p-0 p-1 bg-base-100 border border-gray-300 dark:border-gray-300"
+                        className="rounded-t-md w-full lg:h-56 h-auto lg:object-fill object-cover cursor-pointer lg:p-0 p-1 bg-base-100 border border-base-300 hover:border-4 transition-all shadow hover:shadow-md dark:border-gray-300"
                       />
                     </Link>
                     {item.caption && (
@@ -277,7 +280,7 @@ const ProjectDetails = () => {
             <img
               src={getImageSrc(modalData.image)}
               alt={modalData.caption}
-              className="w-full h-auto object-cover rounded-md shadow"
+              className="w-full h-auto object-cover rounded-md shadow border border-base-300 hover:border-4 hover:shadow-md transition-all"
             />
             <p className="text-gray-700 dark:text-gray-300">
               {project.description}

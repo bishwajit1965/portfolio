@@ -100,7 +100,7 @@ const HeroSection = () => {
                 label="View Projects"
                 icon={<FaArrowRight size={18} />}
                 variant="info"
-                className="w-40 sm:w-44 lg:w-48 text-sm sm:text-base lg:text-lg hover:scale-105 transition-transform duration-300 border-emerald-500 hover:bg-emerald-600"
+                className="w-40 sm:w-44 lg:w-44 text-sm sm:text-base lg:text-lg hover:scale-105 transition-transform duration-300 border-emerald-500 hover:bg-emerald-600"
               />
             </Link>
 
@@ -112,7 +112,7 @@ const HeroSection = () => {
                 label="Download CV"
                 icon={<FaCloud size={18} />}
                 variant="outline"
-                className="w-40 sm:w-44 lg:w-48 text-sm sm:text-base lg:text-lg hover:scale-105 transition-transform duration-300 bg-blue-500 border-blue-600 text-white hover:bg-blue-600"
+                className="w-40 sm:w-44 lg:w-40 text-sm sm:text-base lg:text-lg hover:scale-105 transition-transform duration-300 bg-blue-500 border-blue-600 text-white hover:bg-blue-600"
               />
             </a>
 
@@ -120,7 +120,7 @@ const HeroSection = () => {
               href="/contact-me"
               icon={<FaMailBulk />}
               label="Contact Me"
-              className="w-40 py-1.5 sm:w-44 lg:w-44 text-sm sm:text-base lg:text-lg"
+              className="w-40 py-1.5 sm:w-44 lg:w-40 text-sm sm:text-base lg:text-lg"
             />
           </motion.div>
         </div>

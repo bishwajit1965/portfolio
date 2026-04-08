@@ -10,7 +10,6 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import api from "../../services/api";
-import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import Button from "../../components/buttons/Button";
 import MiniButton from "../../components/buttons/MiniButton";
 import Swal from "sweetalert2";
@@ -243,13 +242,12 @@ const ProjectUpdateForm = () => {
         <title>Web-tech-services || Edit Project</title>
       </Helmet>
 
-      <SuperAdminPageTitle title="Super Admin" decoratedText="Update Project" />
-
       <div className="lg:p-4 p-2 mt-2 dark:bg-slate-900 rounded-lg shadow-md space-y-6">
         {/* Header */}
         <div>
           <h2 className="lg:text-2xl text-lg font-bold mb-2 flex items-center border-b pb-2">
-            <FaEdit className="mr-2" /> Update Project
+            <FaEdit className="mr-2" /> Update Project{" "}
+            <span className="text-amber-600">&nbsp; {formData?.type} </span>
           </h2>
         </div>
 
@@ -493,7 +491,9 @@ const ProjectUpdateForm = () => {
               type="submit"
               variant="base"
               disabled={loading}
-              icon={loading ? <FaSpinner /> : <FaEdit />}
+              icon={
+                loading ? <FaSpinner className="animate-spin" /> : <FaEdit />
+              }
               size="md"
             >
               {loading ? "Updating..." : "Update Project"}

@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { NavLink } from "react-router-dom";
 import ProjectDisplayCard from "./ProjectDisplayCard";
-import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import api from "../../services/api";
 import Swal from "sweetalert2";
 import Button from "../../components/buttons/Button";
@@ -78,49 +77,42 @@ const ManageProjects = () => {
   };
 
   return (
-    <>
+    <div>
       <Helmet>
-        <title>Web-tech-services || Manage Projects</title>
+        <title>Bishwajit.dev || Manage Projects</title>
       </Helmet>
-      <div>
-        <SuperAdminPageTitle
-          title="Manage"
-          decoratedText="Projects"
-          subtitle="Only super admin can manage projects!"
-        />
 
-        <div className="flex lg:justify-start justify-between items-center lg:mb-4 bg-base-200 p-2 shadow-sm">
-          <NavLink to="/super-admin/add-project" className="m-0">
-            <button className="btn btn-xs btn-primary">
-              <FaPlusCircle />
-              Add Project
-            </button>
-          </NavLink>
+      <div className="flex lg:justify-between justify-between items-center bg-base-200 p-2 shadow-sm">
+        <NavLink to="/super-admin/add-project" className="m-0">
+          <button className="btn btn-xs btn-primary">
+            <FaPlusCircle />
+            Add Project
+          </button>
+        </NavLink>
 
-          <h2 className="text-xl font-bold text-center lg:ml-72">
-            Total Projects:{" "}
-            {projects.length > 0
-              ? projects.length
-              : "No project is uploaded yet"}
-          </h2>
-        </div>
+        <h2 className="text-xl font-bold text-center">
+          Total Projects:{" "}
+          {projects.length > 0 ? projects.length : "No project is uploaded yet"}
+        </h2>
+      </div>
 
-        <div className="text-center">
-          {loading && <span className="loading loading-ring loading-lg"></span>}
-        </div>
+      <div className="text-center">
+        {loading && <span className="loading loading-ring loading-lg"></span>}
+      </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-between mt-2">
-          {projects.slice(0, visibleCount).map((project) => (
-            <ProjectDisplayCard
-              key={project._id}
-              project={project}
-              handleDelete={handleDelete}
-            />
-          ))}
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-between p-2">
+        {projects.slice(0, visibleCount).map((project) => (
+          <ProjectDisplayCard
+            key={project._id}
+            project={project}
+            handleDelete={handleDelete}
+          />
+        ))}
+      </div>
 
-        {/* Show More or Show Less Button */}
-        <div className="flex justify-center lg:mt-5 mt-2 pb-6">
+      {/* Show More or Show Less Button */}
+      <div className="lg:mt-6">
+        <div className="flex justify-center">
           {visibleCount < projects?.length ? (
             <Button
               label="Show More"
@@ -140,7 +132,7 @@ const ManageProjects = () => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

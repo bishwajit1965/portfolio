@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 import { FaPlusCircle } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import Swal from "sweetalert2";
 import TagTable from "./TagTable";
 import UpdateTagModal from "./UpdateTagModal";
@@ -63,7 +62,7 @@ const ManageTags = () => {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           body: JSON.stringify(updatedTag),
-        }
+        },
       );
 
       if (response.ok) {
@@ -85,7 +84,7 @@ const ManageTags = () => {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
-          }
+          },
         );
 
         if (fetchTagsResponse.ok) {
@@ -114,7 +113,7 @@ const ManageTags = () => {
 
   const handleDeleteTag = async (tagId) => {
     const confirmed = window.confirm(
-      "Are you sure you want to delete this project?"
+      "Are you sure you want to delete this project?",
     );
     if (confirmed) {
       try {
@@ -137,11 +136,6 @@ const ManageTags = () => {
 
   return (
     <div>
-      <SuperAdminPageTitle
-        title="Manage"
-        decoratedText="Tags"
-        subtitle="Super admin only!"
-      />
       <div className="flex lg:justify-start justify-between items-center lg:mb-4 bg-base-200 p-2 shadow-sm">
         <NavLink to="/super-admin/add-tag" className="m-0 lg:mr-6">
           <button className="btn btn-xs btn-primary">

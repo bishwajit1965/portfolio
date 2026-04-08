@@ -5,14 +5,20 @@ import DataTable from "react-data-table-component";
 import { useState } from "react";
 
 const BlogsTable = ({ blogPosts = [], onEdit, onDelete }) => {
-  const apiUrl = "http://localhost:5000";
   const [filterText, setFilterText] = useState("");
+
+  // Optimize image source
+  const getImageSrc = (img) => {
+    if (!img) return "";
+    if (typeof img === "string" && img.startsWith("http")) return img;
+    if (img.url) return img.url;
+  };
 
   // Filtered categories calculated directly from props and input
   const filteredBlogPosts = blogPosts.filter(
     (blogPost) =>
       typeof blogPost.title === "string" &&
-      blogPost.title.toLowerCase().includes(filterText.toLowerCase())
+      blogPost.title.toLowerCase().includes(filterText.toLowerCase()),
   );
 
   const columns = [
@@ -20,20 +26,20 @@ const BlogsTable = ({ blogPosts = [], onEdit, onDelete }) => {
       name: "Photo",
       selector: (row) => (
         <img
-          src={row.imageUrl ? `${apiUrl}${row.imageUrl}` : Avatar}
+          src={getImageSrc(row.imageUrl ? row.imageUrl : Avatar)}
           alt={row.title || "Default Avatar"}
           onError={(e) => (e.target.src = Avatar)} // Fallback to Avatar on error
           style={{
-            width: "80px",
-            height: "40px",
-            padding: "4px",
+            width: "90px",
+            height: "35px",
+            padding: "2px",
             borderRadius: "5%",
             objectFit: "cover",
           }}
         />
       ),
       sortable: true,
-      width: "90px",
+      width: "80px",
     },
     {
       name: "Blog Title",
@@ -97,13 +103,15 @@ const BlogsTable = ({ blogPosts = [], onEdit, onDelete }) => {
   ];
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Filter blog post..."
-        value={filterText}
-        onChange={(e) => setFilterText(e.target.value)}
-        className="input input-bordered input-sm form-control mb-2"
-      />
+      <div className="ml-2">
+        <input
+          type="text"
+          placeholder="Filter blog post..."
+          value={filterText}
+          onChange={(e) => setFilterText(e.target.value)}
+          className="input input-bordered input-sm form-control mb-2"
+        />
+      </div>
       <DataTable
         columns={columns}
         data={filteredBlogPosts} // Use filtered data here

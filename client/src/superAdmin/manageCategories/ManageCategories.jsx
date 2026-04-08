@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import CategoryTable from "./CategoryTable";
 import { FaPlusCircle } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import Swal from "sweetalert2";
 import UpdateCategoryModal from "./UpdateCategoryModal";
 
@@ -141,11 +140,11 @@ const ManageCategories = () => {
     return <div className="text-center text-red-500">{errorMessage}</div>;
   return (
     <div>
-      <SuperAdminPageTitle
+      {/* <SuperAdminPageTitle
         title="Manage"
         decoratedText="Categories"
         subtitle="Super admin only!"
-      />
+      /> */}
       <div className="flex lg:justify-start items-center justify-between lg:mb-4 bg-base-200 p-2 shadow-sm">
         <NavLink to="/super-admin/add-categories" className="m-0">
           <button className="btn btn-xs btn-primary">

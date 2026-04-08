@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import CommentsTable from "./CommentsTable";
-import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import Swal from "sweetalert2";
 import UpdateCommentsModal from "./UpdateCommentsModal";
 import apiRequest from "../utils/apiRequest";
@@ -134,11 +133,6 @@ const ManageComments = () => {
 
   return (
     <div>
-      <SuperAdminPageTitle
-        title="Manage"
-        decoratedText="Comments"
-        subtitle="Super admin only!"
-      />
       <div className="flex lg:justify-center items-center lg:mb-4 bg-base-200 p-2 shadow-sm">
         <h2 className="text-xl font-bold flex items-center">
           Comments List: {comments?.length > 0 ? comments?.length : 0}

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import NoticeTable from "./NoticeTable";
-import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import Swal from "sweetalert2";
 import UpdateNoticeModal from "./UpdateNoticeModal";
 import apiRequest from "../utils/apiRequest";
@@ -131,11 +130,6 @@ const ManageNotice = () => {
 
   return (
     <div>
-      <SuperAdminPageTitle
-        title="Manage"
-        decoratedText="Notices"
-        subtitle="Super admin only!"
-      />
       <div className="grid lg:grid-cols-12 lg:justify-between items-center justify-between lg:mb-4 bg-base-200 shadow-sm p-2">
         <div className="lg:col-span-4 col-span-12">
           <NavLink to="/super-admin/add-notice" className="m-0">

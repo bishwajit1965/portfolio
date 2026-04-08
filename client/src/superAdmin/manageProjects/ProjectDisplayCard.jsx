@@ -36,7 +36,7 @@ const ProjectDisplayCard = ({ project, handleDelete }) => {
         <img
           src={getImageSrc(image)}
           alt={project.name}
-          className="rounded-t-md lg:h-56 h-60 lg:w-full object-fill"
+          className="rounded-t-md lg:h-56 h-60 lg:w-full object-fill shadow-sm"
         />
         <div className="lg:min-h-[23rem] min-h-[27rem] space-y-2 p-2">
           <h2 className="font-bold">{name}</h2>

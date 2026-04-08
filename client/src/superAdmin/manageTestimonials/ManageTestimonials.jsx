@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import { FaEdit, FaPlusCircle, FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import DataTable from "react-data-table-component";
@@ -277,11 +276,6 @@ const ManageTestimonials = () => {
 
   return (
     <div>
-      <SuperAdminPageTitle
-        title="Manage"
-        decoratedText="Testimonials"
-        subtitle="Super admin only!"
-      />
       <div className="flex justify-between items-center lg:mb-4 bg-base-200 p-2 shadow-sm">
         <MiniButton
           onClick={handleAddTestimonialFormToggle}
