@@ -46,11 +46,11 @@ const ProjectDisplayCard = ({ project, handleDelete }) => {
           alt={project.name}
           className="rounded-t-md lg:h-56 h-60 lg:w-full object-fill shadow-sm"
         />
-        <div className="lg:min-h-[23rem] min-h-[27rem] space-y-2 p-2">
+        <div className="lg:min-h-[26rem] min-h-[27rem] space-y-2 p-2">
           <h2 className="font-bold">{name}</h2>
           <p>{type}</p>
           <p>{category}</p>
-          <div className="lg:max-h-24 max-h-32 items-center overflow-hidden overflow-y-auto">
+          <div className="lg:max-h-26 max-h-32 items-center overflow-hidden overflow-y-auto">
             <p>
               {isExtended
                 ? description
