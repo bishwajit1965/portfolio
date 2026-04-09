@@ -25,9 +25,8 @@ const ProjectCard = ({ project }) => {
       <div className="dark:text-gray-400">
         <img
           src={getImageSrc(project.image)}
-          // src={imageUrl || imageUrl.url} // Handle both URL and filename cases
           alt={project.name}
-          className="rounded-t-md lg:min-h-72 lg:w-full object-cover shadow-sm"
+          className="rounded-t-md lg:min-h-80 lg:w-full lg:object-fill object-cover shadow-sm"
         />
         <div className="p-2 lg:space-y-4 space-y-2">
           <h2 className="font-bold">{name}</h2>

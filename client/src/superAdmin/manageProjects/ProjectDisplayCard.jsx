@@ -13,8 +13,16 @@ import MiniButton from "../../components/buttons/MiniButton";
 import { useState } from "react";
 
 const ProjectDisplayCard = ({ project, handleDelete }) => {
-  const { _id, name, type, description, visibility, techStacks, image } =
-    project;
+  const {
+    _id,
+    name,
+    type,
+    category,
+    description,
+    visibility,
+    techStacks,
+    image,
+  } = project;
   const [isExtended, setIsExtended] = useState(false);
   const getImageSrc = (img) => {
     if (!img) return "";
@@ -41,6 +49,7 @@ const ProjectDisplayCard = ({ project, handleDelete }) => {
         <div className="lg:min-h-[23rem] min-h-[27rem] space-y-2 p-2">
           <h2 className="font-bold">{name}</h2>
           <p>{type}</p>
+          <p>{category}</p>
           <div className="lg:max-h-24 max-h-32 items-center overflow-hidden overflow-y-auto">
             <p>
               {isExtended

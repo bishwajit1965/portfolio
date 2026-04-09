@@ -25,6 +25,7 @@ const createProject = async (req, res) => {
     const {
       name,
       type,
+      projectLabel,
       description,
       githubLink,
       liveLink,
@@ -110,6 +111,7 @@ const createProject = async (req, res) => {
     const projectData = {
       name,
       type,
+      projectLabel,
       description,
       githubLink,
       liveLink,
@@ -176,6 +178,7 @@ const updateProjectById = async (req, res) => {
     const updateFields = {
       name: req.body.name,
       type: req.body.type,
+      projectLabel: req.body.projectLabel,
       description: req.body.description,
       githubLink: req.body.githubLink,
       liveLink: req.body.liveLink,

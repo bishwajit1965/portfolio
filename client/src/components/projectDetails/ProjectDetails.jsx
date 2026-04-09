@@ -115,7 +115,7 @@ const ProjectDetails = () => {
             <img
               src={getImageSrc(project.image)}
               alt={project.name}
-              className="rounded-t-md w-full h-auto shadow-sm hover:shadow-md lg:object-fill object-fill lg:p-0 p-1 border hover:border-4 transition-all"
+              className="rounded-t-md w-full h-auto shadow-sm hover:shadow-md lg:object-fill object-fill lg:p-0 p-1 border hover:border-2 transition-all"
             />
           </Link>
           <figcaption className="text-center text-gray-800 dark:text-gray-800 font-medium py-1 bg-base-300 rounded-b-md border-t border-gray-300">

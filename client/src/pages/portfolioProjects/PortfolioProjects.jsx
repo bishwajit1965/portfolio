@@ -9,6 +9,7 @@ import {
   FaTrashAlt,
   FaBars,
   FaTimes,
+  FaHome,
 } from "react-icons/fa";
 
 import { Helmet } from "react-helmet-async";
@@ -142,34 +143,79 @@ const PortfolioProjects = () => {
                 Portfolio Categories
               </h3>
             </div>
-            <div className="px-4 py-4">
-              {categories.length > 1 ? (
-                categories.map((cat) => {
-                  const iconKey = normalizeKey(cat);
-                  const Icon = ICONS[iconKey] || ICONS.default;
 
-                  return (
-                    <button
-                      key={cat}
-                      className={`w-full text-left px-3 py-2 rounded mb-2 font-medium flex items-center gap-2 ${
-                        activeCategory === cat
-                          ? "bg-emerald-600 text-white border-l-4 border-emerald-300 transition-all transition-x-0"
-                          : "hover:bg-emerald-100 dark:hover:bg-emerald-100 dark:hover:text-gray-800"
-                      }`}
-                      onClick={() => {
-                        setActiveCategory(cat);
-                        setIsSidebarOpen(false);
-                      }}
-                    >
-                      <Icon /> {cat}
-                    </button>
-                  );
-                })
-              ) : (
-                <div className="">
+            <div className="px- py-2">
+              {/* ALL */}
+              <div className="px-2 mt-2">
+                <button
+                  className={`w-full text-left px-2 py-1.5 mb-3 rounded ${
+                    activeCategory === "All"
+                      ? "bg-emerald-600 text-white flex items-center gap-1"
+                      : "hover:bg-emerald-100 flex items-center gap-1"
+                  }`}
+                  onClick={() => {
+                    setActiveCategory("All");
+                  }}
+                >
+                  <FaHome /> All Projects
+                </button>
+              </div>
+
+              <div className="px-3">
+                {projects && projects.length > 0 ? (
+                  Object.entries(
+                    projects.reduce((acc, project) => {
+                      const label = project.projectLabel || "Other";
+
+                      if (!acc[label]) acc[label] = [];
+
+                      project.screenshots?.forEach((s) => {
+                        if (s?.category && !acc[label].includes(s.category)) {
+                          acc[label].push(s.category);
+                        }
+                      });
+
+                      return acc;
+                    }, {}),
+                  ).map(([parent, cats]) => (
+                    <div key={parent}>
+                      {/* 🔷 Parent Label */}
+                      <p className="text-normal font-bold text-gray-700 dark:text-gray-300 my-1">
+                        {parent}
+                      </p>
+
+                      {/* 🔹 Categories */}
+                      <div className="px-2">
+                        {cats.map((cat) => {
+                          const safeCat = cat || "default";
+                          const iconKey = normalizeKey(safeCat);
+                          const Icon = ICONS[iconKey] || ICONS.default;
+
+                          return (
+                            <button
+                              key={cat}
+                              className={`w-full p-0 text-left py-1.5 px-2 rounded mb-1 font-medium flex items-center gap-1.5 ${
+                                activeCategory === cat
+                                  ? "bg-emerald-600 text-white border-l-4 border-emerald-300 text-sm"
+                                  : "hover:bg-emerald-100 dark:hover:text-gray-800"
+                              }`}
+                              onClick={() => {
+                                setActiveCategory(cat);
+                                setIsSidebarOpen(false);
+                              }}
+                            >
+                              <Icon />
+                              {cat}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))
+                ) : (
                   <p>No categories found!</p>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </aside>
@@ -208,9 +254,9 @@ const PortfolioProjects = () => {
                         >
                           <figure>
                             <img
-                              src={getImageSrc(item.image.url || item.image)}
+                              src={getImageSrc(item.image.url)}
                               alt={item.caption || project.name}
-                              className="rounded-t-md w-full lg:h-64 h-auto lg:object-fill object-cover border hover:border-2 transition-transform duration-300 group-hover:scale-100"
+                              className="rounded-t-md w-full lg:h-64 h-auto lg:object-fill object-cover border hover:border-2 transition-transform duration-300 group-hover:scale-100 dark:border-gray-800"
                             />
                             {item.caption && (
                               <figcaption className="text-medium border-t border-gray-300 text-center text-gray-600 dark:text-gray-700 p-1.5 rounded-b-md bg-base-200">

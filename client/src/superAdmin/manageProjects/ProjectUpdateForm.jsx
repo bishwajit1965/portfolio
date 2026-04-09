@@ -26,6 +26,7 @@ const ProjectUpdateForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     type: "",
+    projectLabel: "",
     description: "",
     githubLink: "",
     liveLink: "",
@@ -160,6 +161,7 @@ const ProjectUpdateForm = () => {
     // Basic fields
     dataToSend.append("name", formData.name);
     dataToSend.append("type", formData.type);
+    dataToSend.append("projectLabel", formData.projectLabel);
     dataToSend.append("description", formData.description);
     dataToSend.append("githubLink", formData.githubLink);
     dataToSend.append("liveLink", formData.liveLink);
@@ -279,6 +281,15 @@ const ProjectUpdateForm = () => {
                 <input
                   name="type"
                   value={formData.type}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded-md dark:bg-slate-800"
+                />
+              </div>
+              <div className="mb-3">
+                <label className="text-sm">Project Label</label>
+                <input
+                  name="projectLabel"
+                  value={formData.projectLabel}
                   onChange={handleChange}
                   className="w-full p-2 border rounded-md dark:bg-slate-800"
                 />

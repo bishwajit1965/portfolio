@@ -4,7 +4,7 @@ import {
   FaShoppingCart,
   FaFileAlt,
   FaCogs,
-  FaBlogger,
+  // FaBlogger,
   FaTachometerAlt,
 } from "react-icons/fa";
 import { FaListCheck } from "react-icons/fa6";
@@ -47,16 +47,26 @@ import { FaListCheck } from "react-icons/fa6";
   "Tested validation",
 ];
 
+[
+  "All",
+  "Portfolio System",
+  "Portfolio Admin Panel",
+  "Portfolio Blogs",
+  "Portfolio Pages",
+  "Nova Admin Dashboard",
+  "E-Commerce Platform",
+  "Blog Platform",
+];
+
 export const ICONS = {
   all: FaHome,
-  portfoliohomepage: FaHome,
+  portfoliosystem: FaTachometerAlt,
   portfolioadminpanel: FaCogs,
   portfolioblogs: FaBlog,
   portfoliopages: FaFileAlt,
   novaadmindashboard: FaTachometerAlt,
-  novacartecommerce: FaShoppingCart,
-  blogmongooseproject: FaBlog,
-  testdebugsuccessful: FaBlogger,
+  ecommerceplatform: FaShoppingCart,
+  blogplatform: FaBlog,
   default: FaListCheck,
 };
 

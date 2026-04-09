@@ -3,8 +3,6 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import api from "../../services/api";
 import Button from "../../components/buttons/Button";
-import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
-import { FaCirclePlus } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
@@ -12,6 +10,7 @@ const AddProjectForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     type: "",
+    projectLabel: "",
     description: "",
     githubLink: "",
     liveLink: "",
@@ -91,10 +90,16 @@ const AddProjectForm = () => {
   const validateForm = () => {
     const newErrors = {};
     if (!formData.name) newErrors.name = "Name is required";
+
     if (!formData.type) newErrors.type = "Type is required";
+
+    if (!formData.projectLabel) newErrors.type = "Project label is required";
+
     if (!formData.description)
       newErrors.description = "Description is required";
+
     if (!formData.githubLink) newErrors.githubLink = "GitHub link is required";
+
     if (!formData.liveLink) newErrors.liveLink = "Live link is required";
 
     if (formData.categories.length === 0)
@@ -135,9 +140,14 @@ const AddProjectForm = () => {
       // -------------------------------
       // Basic fields
       // -------------------------------
-      ["name", "type", "description", "githubLink", "liveLink"].forEach(
-        (field) => data.append(field, formData[field]),
-      );
+      [
+        "name",
+        "type",
+        "projectLabel",
+        "description",
+        "githubLink",
+        "liveLink",
+      ].forEach((field) => data.append(field, formData[field]));
 
       // -------------------------------
       // Main image
@@ -192,6 +202,7 @@ const AddProjectForm = () => {
         setFormData({
           name: "",
           type: "",
+          projectLabel: "",
           description: "",
           githubLink: "",
           liveLink: "",
@@ -209,81 +220,12 @@ const AddProjectForm = () => {
       setLoading(false);
     }
   };
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   const validationErrors = validateForm();
-  //   if (Object.keys(validationErrors).length > 0) {
-  //     setErrors(validationErrors);
-  //     setTimeout(() => setErrors({}), 3000);
-  //     return;
-  //   }
-
-  //   try {
-  //     setLoading(true);
-  //     const data = new FormData();
-
-  //     // Basic fields
-  //     ["name", "type", "description", "githubLink", "liveLink"].forEach(
-  //       (field) => data.append(field, formData[field]),
-  //     );
-
-  //     if (formData.mainImage) data.append("mainImage", formData.mainImage);
-
-  //     // Categories + screenshots
-  //     formData.categories.forEach((cat) => {
-  //       cat.screenshots.forEach((shot) => {
-  //         if (shot.file) data.append("screenshotFiles", shot.file);
-  //         data.append("categoryNames", cat.name);
-  //         data.append("captions", shot.caption || "");
-  //       });
-  //     });
-
-  //     // Tech stacks
-  //     formData.techStacks.forEach((tech) => data.append("techStacks", tech));
-
-  //     const res = await api.post("/projects", data);
-
-  //     if (res.status === 200 || res.status === 201) {
-  //       Swal.fire({
-  //         title: "Success!",
-  //         text: "Project added successfully.",
-  //         icon: "success",
-  //         timer: 2000,
-  //         showConfirmButton: false,
-  //       });
-  //       setFormData({
-  //         name: "",
-  //         type: "",
-  //         description: "",
-  //         githubLink: "",
-  //         liveLink: "",
-  //         mainImage: null,
-  //         categories: [],
-  //         techStacks: [],
-  //       });
-  //       setErrors({});
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //     setErrors({ general: "Failed to add project" });
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   return (
     <>
       <Helmet>
         <title>Bishwajit.dev || Add project</title>
       </Helmet>
-
-      <SuperAdminPageTitle
-        title="Add"
-        decoratedText="New Project"
-        subtitle="Super admin can manage projects!"
-        icon={FaCirclePlus}
-      />
 
       <form
         onSubmit={handleSubmit}
@@ -293,32 +235,37 @@ const AddProjectForm = () => {
         {errors.general && <p className="text-red-500">{errors.general}</p>}
 
         {/* Basic fields */}
-        {["name", "type", "description", "githubLink", "liveLink"].map(
-          (field) => (
-            <div key={field} className="mb-2">
-              <label className="block font-medium capitalize">{field}:</label>
-              {field !== "description" ? (
-                <input
-                  type={field.includes("Link") ? "url" : "text"}
-                  value={formData[field]}
-                  onChange={(e) => handleChange(field, e.target.value)}
-                  className="mt-1 file-input-bordered block w-full border p-2 rounded capitalize"
-                  placeholder={field}
-                />
-              ) : (
-                <textarea
-                  value={formData.description}
-                  onChange={(e) => handleChange(field, e.target.value)}
-                  placeholder={field}
-                  className="mt-1 block w-full border p-2 rounded capitalize"
-                />
-              )}
-              {errors[field] && (
-                <p className="text-red-500 text-sm">{errors[field]}</p>
-              )}
-            </div>
-          ),
-        )}
+        {[
+          "name",
+          "type",
+          "projectLabel",
+          "description",
+          "githubLink",
+          "liveLink",
+        ].map((field) => (
+          <div key={field} className="mb-2">
+            <label className="block font-medium capitalize">{field}:</label>
+            {field !== "description" ? (
+              <input
+                type={field.includes("Link") ? "url" : "text"}
+                value={formData[field]}
+                onChange={(e) => handleChange(field, e.target.value)}
+                className="mt-1 file-input-bordered block w-full border p-2 rounded capitalize"
+                placeholder={field}
+              />
+            ) : (
+              <textarea
+                value={formData.description}
+                onChange={(e) => handleChange(field, e.target.value)}
+                placeholder={field}
+                className="mt-1 block w-full border p-2 rounded capitalize"
+              />
+            )}
+            {errors[field] && (
+              <p className="text-red-500 text-sm">{errors[field]}</p>
+            )}
+          </div>
+        ))}
 
         {/* Main Image */}
         <div className="my-4">
