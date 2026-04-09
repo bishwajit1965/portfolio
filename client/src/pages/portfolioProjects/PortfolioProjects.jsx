@@ -259,7 +259,7 @@ const PortfolioProjects = () => {
                               className="rounded-t-md w-full lg:h-64 h-auto lg:object-fill object-cover border hover:border-2 transition-transform duration-300 group-hover:scale-100 dark:border-gray-800"
                             />
                             {item.caption && (
-                              <figcaption className="text-medium border-t border-gray-300 text-center text-gray-600 dark:text-gray-700 p-1.5 rounded-b-md bg-base-200">
+                              <figcaption className="text-medium border-t border-gray-300 text-center text-gray-600 dark:text-base-300 dark:border-gray-800 dark:bg-gray-700 p-1.5 rounded-b-md bg-base-200">
                                 {item.caption.slice(0, 55) + " ..."}
                               </figcaption>
                             )}
