@@ -111,11 +111,11 @@ const ProjectDetails = () => {
       {/* Main info + image */}
       <div className="grid lg:grid-cols-12 gap-6 rounded-md">
         <div className="lg:col-span-8 col-span-12 bg-base-100 border dark:border-gray-700 rounded-md shadow-sm hover:shadow-xl transition">
-          <Link to="/" className="m-0 cursor-pointer">
+          <Link to="/" className="m-0 cursor-pointer rounded-t-lg">
             <img
               src={getImageSrc(project.image)}
               alt={project.name}
-              className="rounded-t-sm w-full h-auto shadow-sm hover:shadow-md lg:object-fill object-fill lg:p-0 p-1 border dark:border-gray-700 hover:border-2 transition-all"
+              className="rounded-t-lg w-full lg:min-h-[28.5rem] shadow-sm hover:shadow-md lg:object-cover object-fill lg:p-0 p-1 border dark:border-gray-700 hover:border-2 transition-all"
             />
           </Link>
           <figcaption className="text-center text-gray-800 dark:text-gray-800 font-medium py-1 bg-base-300 rounded-b-md border-t border-gray-300">
@@ -140,8 +140,8 @@ const ProjectDetails = () => {
               </span>{" "}
               {isExtended
                 ? description
-                : description.length > 122
-                  ? description.slice(0, 122) + "..."
+                : description.length > 110
+                  ? description.slice(0, 110) + "..."
                   : description}
             </p>
             <button
@@ -158,7 +158,6 @@ const ProjectDetails = () => {
           </div>
 
           {/* Tech stacks */}
-
           <div className="flex flex-wrap gap-2 items-center dark:text-gray-400">
             <h3 className="flex items-center gap-2 font-semibold bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-400 rounded-md border border-gray-300 dark:border-gray-600">
               <span className="flex items-center rounded-md bg-gray-300 dark:bg-gray-700 dark:text-base-100 shadow-sm">
@@ -184,7 +183,7 @@ const ProjectDetails = () => {
               icon={<FaHome />}
               label="Go Home"
               variant="outline"
-              className="p-0 m-0 mt-4"
+              className="p-0 m-0 mt-2"
             />
           </div>
         </div>

@@ -28,7 +28,7 @@ const ProjectCard = ({ project }) => {
           alt={project.name}
           className="rounded-t-md lg:min-h-80 lg:w-full lg:object-fill object-cover shadow-sm"
         />
-        <div className="p-2 lg:space-y-4 space-y-2">
+        <div className="lg:p-6 p-2 lg:space-y-4 space-y-2">
           <h2 className="font-bold">{name}</h2>
           <p>{type}</p>
           <p>{description}</p>
