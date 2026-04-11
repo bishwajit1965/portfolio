@@ -279,7 +279,7 @@ const ProjectDetails = () => {
             <img
               src={getImageSrc(modalData.image)}
               alt={modalData.caption}
-              className="w-full h-auto object-cover rounded-md shadow border border-base-300 hover:border-4 hover:shadow-md transition-all"
+              className="w-full h-auto object-cover rounded-md shadow border border-base-300 dark:border-gray-700 hover:border-4 hover:shadow-md transition-all"
             />
             <p className="text-gray-700 dark:text-gray-300">
               {project.description}
