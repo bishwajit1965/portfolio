@@ -110,7 +110,7 @@ const ProjectDetails = () => {
 
       {/* Main info + image */}
       <div className="grid lg:grid-cols-12 gap-6 rounded-md">
-        <div className="lg:col-span-8 col-span-12 bg-base-100 border dark:border-gray-700 rounded-md shadow-sm hover:shadow-xl transition">
+        <div className="lg:col-span-8 col-span-12 border dark:border-gray-700 rounded-md shadow-sm hover:shadow-xl transition">
           <Link to="/" className="m-0 cursor-pointer rounded-t-lg">
             <img
               src={getImageSrc(project.image)}
