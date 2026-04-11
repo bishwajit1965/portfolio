@@ -115,7 +115,7 @@ const ProjectDetails = () => {
             <img
               src={getImageSrc(project.image)}
               alt={project.name}
-              className="rounded-t-md w-full h-auto shadow-sm hover:shadow-md lg:object-fill object-fill lg:p-0 p-1 border hover:border-2 transition-all"
+              className="rounded-t-sm w-full h-auto shadow-sm hover:shadow-md lg:object-fill object-fill lg:p-0 p-1 border dark:border-gray-700 hover:border-2 transition-all"
             />
           </Link>
           <figcaption className="text-center text-gray-800 dark:text-gray-800 font-medium py-1 bg-base-300 rounded-b-md border-t border-gray-300">
@@ -201,17 +201,17 @@ const ProjectDetails = () => {
               <h3 className="flex items-center gap-2 font-semibold text-gray-700 dark:text-gray-400">
                 <FaListOl /> {category.category}
               </h3>
-              <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 rounded-t-md">
+              <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 rounded-t-lg">
                 {category.items.map((item, idx) => (
                   <div
                     key={idx}
-                    className="relative group shadow-md rounded-t-md hover:shadow-xl"
+                    className="relative group shadow-md rounded-t-lg hover:shadow-xl"
                   >
                     <Link to="/" className="m-0 cursor-pointer">
                       <img
                         src={getImageSrc(item.image)}
                         alt={item.caption}
-                        className="rounded-t-md w-full lg:h-56 h-auto lg:object-fill object-cover cursor-pointer lg:p-0 p-1 bg-base-100 border border-base-300 hover:border-4 transition-all shadow hover:shadow-md dark:border-gray-300"
+                        className="rounded-t-lg w-full lg:h-56 h-auto lg:object-fill object-cover cursor-pointer lg:p-0 p-1 border border-base-300 dark:border-gray-700 hover:border-4 transition-all shadow hover:shadow-md"
                       />
                     </Link>
                     {item.caption && (
@@ -222,7 +222,7 @@ const ProjectDetails = () => {
                     <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-25 opacity-0 group-hover:opacity-100 transition rounded-md">
                       <Button
                         icon={<FaRegEye />}
-                        variant="base"
+                        variant="success"
                         onClick={() => {
                           setModalData(item);
                           setIsModalOpen(true);

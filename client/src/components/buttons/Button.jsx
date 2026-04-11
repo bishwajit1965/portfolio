@@ -4,6 +4,8 @@ const baseStyle =
 const variantStyles = {
   base: "bg-emerald-600 text-white hover:bg-emerald-700 justify-center flex dark:bg-slate-600 dark:text-gray-300 dark:shadow-lg dark:hover:bg-slate-900 dark:hover:text-base-100",
 
+  success: "bg-green-600 text-white hover:text-base-300 hover:bg-green-700",
+
   darkOutline:
     "bg-base-100 border border-gray-600 dark:border-slate-600 text-gray-600 hover:bg-gray-600 hover:text-white dark:bg-slate-600 dark:text-gray-300 dark:shadow-lg dark:hover:bg-slate-900 dark:hover:text-base-100 focus:ring-gray-600",
 

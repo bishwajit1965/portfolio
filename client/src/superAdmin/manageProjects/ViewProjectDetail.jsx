@@ -2,7 +2,6 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { FaArrowCircleDown, FaHome } from "react-icons/fa";
-import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import api from "../../services/api";
 import Button from "../../components/buttons/Button";
 const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -38,23 +37,17 @@ const ViewProjectDetails = () => {
 
   return (
     <div>
-      <SuperAdminPageTitle
-        title="Project Detail"
-        subtitle={
-          "Discover my journey in web development, explore the projects I've crafted, and let's build something amazing together."
-        }
-      />
       <div className="lg:p-2 p-2 rounded-md border dark:border-slate-600 shadow-lg">
         <div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-4 gap-2">
           <div className="lg:col-span-6 col-span-12 bg-base-100   rounded-md">
             <img
               src={projectDetails?.image?.url || imageUrl}
               alt={projectDetails.name}
-              className="h-60 w-full object-contain rounded-md"
+              className="h-auto w-full object-cover rounded-md"
             />
           </div>
-          <div className="lg:col-span-6 col-span-12 lg:p-6 p-2">
-            <h2 className="font-bold lg:text-3xl text-lg text-gray-600 dark:text-slate-200 lg:mt-6 mt-2">
+          <div className="lg:col-span-6 col-span-12 lg:p-6 p-2 lg:space-y-4 spacey">
+            <h2 className="font-bold lg:text-2xl text-lg text-gray-600 dark:text-slate-200 lg:mt-6 mt-2">
               {projectDetails.name}
             </h2>
             <p>{projectDetails.type}</p>
