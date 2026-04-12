@@ -118,7 +118,7 @@ const ProjectDetails = () => {
               className="rounded-t-lg w-full lg:min-h-[28.5rem] shadow-sm hover:shadow-md lg:object-cover object-fill lg:p-0 p-1 border dark:border-gray-700 hover:border-2 transition-all"
             />
           </Link>
-          <figcaption className="text-center text-gray-800 dark:text-gray-800 font-medium py-1 bg-base-300 rounded-b-md border-t border-gray-300">
+          <figcaption className="text-center text-gray-800 dark:text-gray-400 font-medium py-1 bg-base-300 dark:bg-gray-700 rounded-b-md border-t border-gray-300 dark:border-gray-700">
             Main Project Image {project.type ? `- ${project.type}` : ""}
           </figcaption>
         </div>
@@ -214,7 +214,7 @@ const ProjectDetails = () => {
                       />
                     </Link>
                     {item.caption && (
-                      <p className="text-center text-gray-600 dark:text-gray-700 p-1 border-t bg-gray-200 dark:bg-base-300 rounded-b-md">
+                      <p className="text-center text-gray-600 dark:text-gray-400 p-1 border-t border-base-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-700 rounded-b-md">
                         {item.caption.slice(0, 45)}...
                       </p>
                     )}

@@ -138,7 +138,7 @@ const PortfolioProjects = () => {
           </div>
           <div className="">
             <div className="sticky top-0 hidden lg:block px-4 py-2 bg-base-300 dark:bg-gray-700 shadow-sm">
-              <h3 className="text-lg font-bold flex items-center gap-2">
+              <h3 className="text-lg font-bold flex items-center gap-2 text-gray-800 dark:text-gray-400">
                 <FaLayerGroup className="text-amber-600" />
                 Portfolio Categories
               </h3>
@@ -151,7 +151,7 @@ const PortfolioProjects = () => {
                   className={`w-full text-left px-2 py-1.5 mb-3 rounded ${
                     activeCategory === "All"
                       ? "bg-emerald-600 text-white flex items-center gap-1"
-                      : "hover:bg-emerald-100 flex items-center gap-1"
+                      : "hover:bg-emerald-100 flex items-center gap-1 text-gray-800 dark:text-gray-400"
                   }`}
                   onClick={() => {
                     setActiveCategory("All");
@@ -180,7 +180,7 @@ const PortfolioProjects = () => {
                   ).map(([parent, cats]) => (
                     <div key={parent}>
                       {/* 🔷 Parent Label */}
-                      <p className="text-normal font-bold text-gray-700 dark:text-gray-300 my-1">
+                      <p className="text-normal font-bold text-gray-800 dark:text-gray-300 my-1">
                         {parent}
                       </p>
 
@@ -197,7 +197,7 @@ const PortfolioProjects = () => {
                               className={`w-full p-0 text-left py-1.5 px-2 rounded mb-1 font-medium flex items-center gap-1.5 ${
                                 activeCategory === cat
                                   ? "bg-emerald-600 text-white border-l-4 border-emerald-300 text-sm"
-                                  : "hover:bg-emerald-100 dark:hover:text-gray-800"
+                                  : "hover:bg-emerald-100 dark:hover:text-gray-800 text-gray-700 dark:text-gray-400"
                               }`}
                               onClick={() => {
                                 setActiveCategory(cat);
@@ -236,7 +236,7 @@ const PortfolioProjects = () => {
 
             return (
               <div key={project?._id} className="">
-                <h2 className="lg:text-2xl text-sm font-bold text-gray-700 dark:text-slate-300 flex items-center gap-2 mb-4">
+                <h2 className="lg:text-2xl text-sm font-bold text-gray-700 dark:text-gray-400 flex items-center gap-2 mb-4">
                   <FaLayerGroup className="text-amber-600" /> {project.name}
                 </h2>
 
@@ -259,14 +259,14 @@ const PortfolioProjects = () => {
                               className="rounded-t-md w-full lg:h-64 h-auto lg:object-fill object-cover border hover:border-2 transition-transform duration-300 group-hover:scale-100 dark:border-gray-800"
                             />
                             {item.caption && (
-                              <figcaption className="text-medium border-t border-gray-300 text-center text-gray-600 dark:text-base-300 dark:border-gray-800 dark:bg-gray-700 p-1.5 rounded-b-md bg-base-200">
+                              <figcaption className="text-medium border-t border-gray-300 text-center text-gray-600 dark:text-gray-400 dark:border-gray-800 dark:bg-gray-700 p-1.5 rounded-b-md bg-base-200">
                                 {item.caption.slice(0, 55) + " ..."}
                               </figcaption>
                             )}
                           </figure>
                           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100">
                             <Button
-                              variant="base"
+                              variant="success"
                               icon={<FaRegEye />}
                               onClick={() => openDetailModal(item, project)}
                             >
@@ -279,7 +279,7 @@ const PortfolioProjects = () => {
                     {/* Project description & tech stack */}
                     <div className="mt-4 flex flex-col lg:flex-row lg:gap-4 gap-2 items-start">
                       {project.description && (
-                        <p className="text-gray-600 dark:text-gray-300">
+                        <p className="text-gray-600 dark:text-gray-400">
                           {project.description}
                         </p>
                       )}
@@ -292,7 +292,7 @@ const PortfolioProjects = () => {
                           <span className="bg-emerald-500 py-1 px-2 rounded-l-md text-white">
                             <FaTools size={20} />
                           </span>
-                          <span className="px-1 text-base-content dark:text-gray-300">
+                          <span className="px-1 text-base-content dark:text-gray-400">
                             Tech Stacks
                           </span>
                         </span>{" "}
@@ -350,7 +350,7 @@ const PortfolioProjects = () => {
           className="fixed inset-0 z-50 flex items-center justify-center bg-black dark:bg-opacity-100 bg-opacity-50"
         >
           <div className="bg-white dark:bg-gray-800 max-w-3xl w-full rounded-md lg:p-8 p-4 space-y-4 max-h-screen overflow-y-auto">
-            <h2 className="lg:text-xl text-lg font-bold text-gray-700 dark:text-gray-300 flex items-center gap-2">
+            <h2 className="lg:text-xl text-lg font-bold text-gray-700 dark:text-gray-400 flex items-center gap-2">
               <FaCircleRight className="text-amber-500" /> {modalProject?.name}
             </h2>
 
@@ -361,21 +361,26 @@ const PortfolioProjects = () => {
                 className="w-full lg:h-auto lg:object-fill h-auto  object-cover rounded-md mb-2 shadow hover:shadow-mg border hover:border-2 hover: border-base-300 dark:border-slate-600 transition-all duration:300"
               />
               {modalData?.caption && (
-                <figcaption className="text-gray-700 dark:text-gray-300">
+                <figcaption className="text-gray-700 dark:text-gray-400">
                   {modalData.caption}
                 </figcaption>
               )}
             </figure>
 
             {modalProject?.description && (
-              <p className="text-gray-700 dark:text-gray-300">
+              <p className="text-gray-700 dark:text-gray-400">
                 {modalProject.description}
               </p>
             )}
 
             <div className="flex flex-wrap items-center gap-2">
-              <h4 className="flex items-center gap-2 font-bold bg-base-100 text-base-content py-0.5 px-2 rounded-md border dark:border-slate-600 dark:bg-gray-600 dark:text-base-100">
-                <FaTools /> Tech Stacks
+              <h4 className="flex items-center gap-2 font-bold bg-base-100 text-base-content rounded-md border dark:border-slate-600 dark:bg-gray-600 dark:text-base-100">
+                <span className="bg-emerald-500 px-2 py-1.5 rounded-l-md">
+                  <FaTools />
+                </span>
+                <span className="pr-1.5 text-gray-700 dark:text-gray-400">
+                  Tech Stacks
+                </span>
               </h4>
               {modalProject?.techStacks &&
               modalProject?.techStacks?.length > 0 ? (
