@@ -5,12 +5,14 @@ import SuperAdminNavBar from "../superAdminNavBar/SuperAdminNavBar";
 import { useContext, useState } from "react";
 import SuperAdminFooter from "../superAdminDashboard/SuperAdminFooter";
 import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
+import { AdminThemeContext } from "../../providers/AdminThemeProvider";
 
 const SuperAdminLayout = () => {
   const { loading, user, logoutSuperAdmin } = useContext(SuperAdminAuthContext);
+  const { adminTheme, toggleAdminTheme } = useContext(AdminThemeContext);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
-    <div className="lg:max-w-full mx-auto">
+    <div className="lg:max-w-full mx-auto bg-base-100 admin-dark:bg-gray-800">
       <div className="grid lg:grid-cols-12 justify-between">
         {isSidebarOpen && (
           <div
@@ -23,7 +25,7 @@ const SuperAdminLayout = () => {
         >
           <SideNav user={user} />
         </div>
-        <div className="lg:col-span-10 col-span-6 border border-b rounded-lg relative">
+        <div className="lg:col-span-10 col-span-6 border border-b admin-dark:border-slate-600 relative">
           <div className="header bg-slate-300 sticky top-0 z-50">
             <SuperAdminNavBar
               logoutSuperAdmin={logoutSuperAdmin}
@@ -32,10 +34,12 @@ const SuperAdminLayout = () => {
               onMenuClick={() => setIsSidebarOpen(true)}
               onBtnClick={() => setIsSidebarOpen(false)}
               isOpen={isSidebarOpen}
+              adminTheme={adminTheme}
+              toggleAdminTheme={toggleAdminTheme}
             />
-            <SuperAdminPageTitle />
+            <SuperAdminPageTitle adminTheme={adminTheme} />
           </div>
-          <div className="mb-16">
+          <div className="mb-12">
             <Outlet />
           </div>
 

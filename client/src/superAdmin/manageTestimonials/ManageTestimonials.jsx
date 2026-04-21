@@ -5,6 +5,7 @@ import DataTable from "react-data-table-component";
 import api from "../../services/api";
 import UpdateTestimonialModal from "./UpdateTestimonialModal";
 import MiniButton from "../../components/buttons/MiniButton";
+import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
 
 const ManageTestimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -45,28 +46,28 @@ const ManageTestimonials = () => {
   // Define columns for DataTable
   const columns = [
     {
-      name: "S.No",
+      name: "S.No", // Serial number column
       selector: (row, index) => (currentPage - 1) * rowsPerPage + index + 1, // Serial number
-      width: "50px",
+      width: "75px",
       sortable: true,
     },
     {
       name: "Name",
       selector: (row) => row.name,
       sortable: true,
-      width: "90px",
+      width: "120px",
     },
     {
       name: "Designation",
       selector: (row) => row.designation,
       sortable: true,
-      width: "90px",
+      width: "100px",
     },
     {
       name: "Company",
       selector: (row) => row.company,
       sortable: true,
-      width: "90px",
+      width: "100px",
     },
     {
       name: "Photo",
@@ -90,13 +91,13 @@ const ManageTestimonials = () => {
       name: "Rating",
       selector: (row) => row.rating,
       sortable: true,
-      width: "60px",
+      width: "83px",
     },
     {
       name: "Project Name",
       selector: (row) => row.projectName,
       sortable: true,
-      width: "80px",
+      width: "124px",
     },
     {
       name: "Testimonial",
@@ -276,27 +277,16 @@ const ManageTestimonials = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center lg:mb-4 bg-base-200 p-2 shadow-sm">
-        <MiniButton
-          onClick={handleAddTestimonialFormToggle}
-          icon={<FaPlusCircle />}
-          variant="default"
-          label="Add Testimonial"
-          className=""
-        />
+      <SuperAdminPageSubHeader
+        title="Testimonials"
+        decoratedText="Management Table"
+        dataLength={testimonials.length}
+        variant="success"
+        buttonLabel="Add Testimonial"
+        icon={<FaPlusCircle />}
+        onButtonClick={handleAddTestimonialFormToggle}
+      />
 
-        <div className="lg:block hidden">
-          <h2 className="lg:text-xl text-lg font-bold text-center   text-base-content">
-            Hello
-          </h2>
-        </div>
-
-        <div className="">
-          <h2 className="lg:text-xl text-lg font-bold text-center   text-base-content">
-            Testimonials: {testimonials?.length > 0 ? testimonials?.length : 0}
-          </h2>
-        </div>
-      </div>
       <div className="table-container">
         {loading ? (
           <div className="text-center">
@@ -304,7 +294,7 @@ const ManageTestimonials = () => {
           </div>
         ) : (
           <DataTable
-            title={testimonials.length > 0 ? "Testimonials List" : ""}
+            // title={testimonials.length > 0 ? "Testimonials List" : ""}
             columns={columns}
             data={testimonials}
             pagination
@@ -315,6 +305,9 @@ const ManageTestimonials = () => {
             paginationPerPage={rowsPerPage} // Set rows per page
             highlightOnHover
             dense
+            pointerOnHover
+            responsive
+            striped
           />
         )}
       </div>

@@ -57,7 +57,7 @@ const ProjectVisibilityToggle = ({ projectId, initialVisibility }) => {
       {/* Select value */}
       <di className="flex items-center mt-2 ml-[-8px] gap-2">
         <select
-          className="select select-xs border"
+          className="select select-xs border admin-dark:border-slate-600 admin-dark:bg-gray-800 admin-dark:text-slate-300"
           name="visibility"
           id="visibility"
           value={dropdownValue}
@@ -73,7 +73,7 @@ const ProjectVisibilityToggle = ({ projectId, initialVisibility }) => {
           size="sm"
           disabled={loading}
           variant="success"
-          label={loading ? "Updating..." : "Update Project Visibility"}
+          label={loading ? "Updating..." : "Update Visibility"}
           icon={<FaEdit />}
           className=""
         />

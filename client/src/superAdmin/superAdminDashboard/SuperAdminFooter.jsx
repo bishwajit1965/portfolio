@@ -1,7 +1,7 @@
 const SuperAdminFooter = () => {
   const year = new Date().getFullYear();
   return (
-    <div className="text-center text-sm bg-base-300 p-2 border-t">
+    <div className="text-center text-sm bg-base-300 text-slate-700 p-2 border-t admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600">
       <p className="text-sm">
         &copy;
         {year} All rights reserved against Web tech Services

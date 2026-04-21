@@ -100,20 +100,20 @@ const UpdateTestimonialModal = ({
   };
 
   return (
-    <div style={styles.modalOverlay}>
+    <div style={styles.modalOverlay} className="">
       <div
         style={styles.modalContent}
-        className="lg:max-w-3xl w-full space-y-2"
+        className="lg:max-w-3xl w-full space-y-2 bg-base-100 admin-dark:bg-gray-800 admin-dark:text-slate-300 rounded-md shadow-lg"
       >
         <div className="flex items-center justify-between">
-          <h2 className="text-xl text-slate-600 font-bold flex items-center gap-2">
+          <h2 className="text-xl text-slate-600 font-bold flex items-center gap-2 admin-dark:text-slate-300">
             {selectedTestimonial ? <FaEdit /> : <FaSave />}
             {selectedTestimonial ? "Edit Testimonial" : "Add Testimonial"}
           </h2>
 
           <button
             onClick={onClose}
-            className="lg:h-8 lg:w-8 h-6 w-6 rounded-full bg-base-300 flex items-center justify-center p-2 hover:bg-base-200 hover:text-red-500 shadow-sm"
+            className="lg:h-8 lg:w-8 h-6 w-6 rounded-full bg-base-200 flex items-center justify-center p-2 hover:bg-base-200 hover:text-red-500 shadow-sm text-slate-800 admin-dark:bg-gray-700 admin-dark:text-slate-300 admin-dark:hover:bg-gray-600 admin-dark:hover:text-red-500"
           >
             <FaTimes size={16} />
           </button>
@@ -131,8 +131,8 @@ const UpdateTestimonialModal = ({
                 placeholder="Name"
                 value={formData?.name}
                 onChange={handleChange}
-                className="input input-bordered input-sm w-full col-span-2"
-                style={styles.input}
+                className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
+                // style={styles.input}
               />
               <input
                 type="text"
@@ -140,8 +140,8 @@ const UpdateTestimonialModal = ({
                 placeholder="Designation"
                 value={formData.designation}
                 onChange={handleChange}
-                className="input input-bordered input-sm w-full col-span-2"
-                style={styles.input}
+                className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
+                // style={styles.input}
               />
             </div>
 
@@ -152,8 +152,8 @@ const UpdateTestimonialModal = ({
                 placeholder="Company"
                 value={formData.company}
                 onChange={handleChange}
-                className="input input-bordered input-sm w-full col-span-2"
-                style={styles.input}
+                className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
+                // style={styles.input}
               />
 
               <input
@@ -162,8 +162,8 @@ const UpdateTestimonialModal = ({
                 placeholder="Project Name"
                 value={formData.projectName}
                 onChange={handleChange}
-                className="input input-bordered input-sm w-full col-span-2"
-                style={styles.input}
+                className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
+                // style={styles.input}
               />
             </div>
             <div className="lg:flex grid items-center justify-between gap-2">
@@ -173,8 +173,8 @@ const UpdateTestimonialModal = ({
                 placeholder="Email"
                 value={formData.email}
                 onChange={handleChange}
-                className="input input-bordered input-sm w-full col-span-2"
-                style={styles.input}
+                className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
+                // style={styles.input}
               />
 
               <input
@@ -183,8 +183,8 @@ const UpdateTestimonialModal = ({
                 placeholder="Location"
                 value={formData.location}
                 onChange={handleChange}
-                className="input input-bordered input-sm w-full col-span-2"
-                style={styles.input}
+                className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
+                // style={styles.input}
               />
             </div>
 
@@ -194,8 +194,8 @@ const UpdateTestimonialModal = ({
                 name="date"
                 value={formData.date}
                 onChange={handleChange}
-                className="input input-bordered input-sm w-full col-span-2"
-                style={styles.input}
+                className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
+                // style={styles.input}
               />
               <input
                 type="number"
@@ -204,8 +204,8 @@ const UpdateTestimonialModal = ({
                 max={5}
                 value={formData.rating}
                 onChange={handleChange}
-                className="input input-bordered input-sm w-full col-span-2"
-                style={styles.input}
+                className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
+                // style={styles.input}
               />
             </div>
 
@@ -216,8 +216,8 @@ const UpdateTestimonialModal = ({
                 min={1}
                 value={formData.order}
                 onChange={handleChange}
-                className="input input-bordered input-sm w-full col-span-2"
-                style={styles.input}
+                className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
+                // style={styles.input}
               />
               <input
                 type="text"
@@ -225,8 +225,8 @@ const UpdateTestimonialModal = ({
                 placeholder="Photo URL"
                 value={formData.photo}
                 onChange={handleChange}
-                className="input input-bordered input-sm w-full col-span-2"
-                style={styles.input}
+                className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
+                // style={styles.input}
               />
             </div>
 
@@ -235,19 +235,19 @@ const UpdateTestimonialModal = ({
               placeholder="Testimonial text"
               value={formData.testimonial}
               onChange={handleChange}
-              className="textarea textarea-bordered w-full"
+              className="textarea textarea-bordered input w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600 mt-1"
               rows={4}
               required
             />
 
             <div className="flex justify-start">
-              <label className="flex items-center gap-2">
+              <label className="flex items-center gap-2 text-slate-700 admin-dark:text-slate-300">
                 <input
                   type="checkbox"
                   name="isVisible"
                   checked={formData.isVisible}
                   onChange={handleChange}
-                  style={styles.input}
+                  // style={styles.input}
                 />
                 Visible
               </label>
@@ -255,7 +255,9 @@ const UpdateTestimonialModal = ({
 
             {/* Social Links */}
             <div>
-              <label className="font-bold block">Social Links</label>
+              <label className="font-bold block text-slate-700 admin-dark:text-slate-300">
+                Social Links
+              </label>
               {formData.socialLinks.map((link, i) => (
                 <input
                   key={i}
@@ -267,8 +269,8 @@ const UpdateTestimonialModal = ({
                     updateArrayField("socialLinks", i, e.target.value)
                   }
                   //   onChange={(e) => handleChange(e, i)}
-                  className="input input-bordered input-sm w-full mt-1"
-                  style={styles.input}
+                  className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600 mt-2"
+                  // style={styles.input}
                 />
               ))}
               <MiniButton
@@ -284,7 +286,9 @@ const UpdateTestimonialModal = ({
 
             {/* Tags */}
             <div>
-              <label className="font-bold block">Tags</label>
+              <label className="font-bold block text-slate-700 admin-dark:text-slate-300">
+                Tags
+              </label>
               {formData.tags.map((tag, i) => (
                 <input
                   key={i}
@@ -294,8 +298,8 @@ const UpdateTestimonialModal = ({
                   value={tag}
                   //   onChange={(e) => handleChange(e, i, "tags")}
                   onChange={(e) => updateArrayField("tags", i, e.target.value)}
-                  className="input input-bordered input-sm w-full mt-1"
-                  style={styles.input}
+                  className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600 mt-2"
+                  // style={styles.input}
                 />
               ))}
               <MiniButton
@@ -341,6 +345,7 @@ const UpdateTestimonialModal = ({
 };
 
 // Simple inline styles for demonstration; consider using CSS or styled-components
+
 const styles = {
   modalOverlay: {
     position: "fixed",
@@ -355,7 +360,7 @@ const styles = {
     zIndex: 1000,
   },
   modalContent: {
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     padding: "24px",
     borderRadius: "8px",
     width: "700px",

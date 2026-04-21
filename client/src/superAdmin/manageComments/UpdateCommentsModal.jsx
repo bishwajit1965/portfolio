@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { FaEdit, FaTimes } from "react-icons/fa";
+import MiniButton from "../../components/buttons/MiniButton";
 
 const UpdateCommentsModal = ({ comment, onClose, onUpdate }) => {
   const [status, setStatus] = useState("");
@@ -21,47 +23,53 @@ const UpdateCommentsModal = ({ comment, onClose, onUpdate }) => {
 
   return (
     <div style={styles.modalOverlay}>
-      <div style={styles.modalContent}>
+      <div
+        style={styles.modalContent}
+        className="admin-dark:bg-slate-800 admin-dark:text-slate-300 bg-base-100 space-y-4"
+      >
         <form onSubmit={handleSubmit}>
-          <div style={styles.formGroup}>
-            <label htmlFor="TagName" className="font-bold">
-              Comment status:
-            </label>
-            {/* <input
-              type="text"
-              id="TagName"
-              name="status"
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-              style={styles.input}
-              required
-            /> */}
+          <div style={styles.formGroup} className="space-y-2">
+            <h2 className="text-lg font-bold flex items-center gap-2 admin-dark:text-slate-300 text-slate-700 border-b-2 pb-1 admin-dark:border-slate-600 border-slate-300">
+              <FaEdit /> Update Comment Status
+            </h2>
+
             <div className="">
-              <select
-                id="status"
-                name="status"
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                style={styles.select}
-                className="w-full border my-4 p-2"
-                required
+              <label
+                htmlFor="TagName"
+                className="font-medium admin-dark:text-slate-300 text-slate-700"
               >
-                <option value="approved">Approved</option>
-                <option value="draft">Draft</option>
-              </select>
+                Comment status:
+              </label>
+              <div className="">
+                <select
+                  id="status"
+                  name="status"
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                  style={styles.select}
+                  className="w-full select-sm py-1 border select-bordered rounded-md form-control bg-base-100 text-slate-700 admin-dark:bg-slate-600 admin-dark:text-slate-300"
+                  required
+                >
+                  <option value="approved">Approved</option>
+                  <option value="draft">Draft</option>
+                </select>
+              </div>
             </div>
           </div>
-          <div style={styles.buttonGroup}>
-            <button type="submit" style={styles.buttonPrimary}>
-              Update
-            </button>
-            <button
+          <div className="flex items-center gap-2 justify-end">
+            <MiniButton
+              type="submit"
+              variant="success"
+              label="Update Comment Status"
+              icon={<FaEdit />}
+            />
+            <MiniButton
               type="button"
+              variant="warning"
+              label="Cancel"
+              icon={<FaTimes />}
               onClick={onClose}
-              style={styles.buttonSecondary}
-            >
-              Cancel
-            </button>
+            />
           </div>
         </form>
       </div>
@@ -83,7 +91,7 @@ const styles = {
     zIndex: 1000,
   },
   modalContent: {
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     padding: "24px",
     borderRadius: "8px",
     width: "400px",

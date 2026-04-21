@@ -130,18 +130,19 @@ const ManageSkills = () => {
 
   return (
     <div>
-      <div className="flex lg:justify-start items-center justify-between lg:mb-2 bg-base-200 p-2 shadow-sm">
+      <div className="flex lg:justify-between items-center justify-between lg:mb-2 bg-base-200 text-slate-700 p-2 shadow-sm admin-dark:bg-slate-800 admin-dark:text-slate-300 border-b admin-dark:border-slate-600">
         <NavLink to="/super-admin/add-skills" className="m-0">
           <button className="btn btn-xs btn-primary">
             <FaPlusCircle />
             Add New Skill
           </button>
         </NavLink>
-      </div>
-      <div className="lg:col-span-4 col-span-12 flex lg:justify-center items-center">
-        <h2 className="text-xl font-bold">
-          Skills List: {skills?.length > 0 ? skills?.length : 0}
-        </h2>
+
+        <div className="lg:col-span-4 col-span-12 flex lg:justify-center items-center">
+          <span className="text-xl font-bold">
+            Skills: {skills?.length > 0 ? skills?.length : 0}
+          </span>
+        </div>
       </div>
 
       {/* Pass skills to skills notice table */}
@@ -150,12 +151,14 @@ const ManageSkills = () => {
           <span className="loading loading-ring loading-lg"></span>
         </div>
       ) : (
-        <SkillsTable
-          skills={skills}
-          onEdit={handleEditSkills}
-          onUpdate={handleUpdateSkills}
-          onDelete={handleDeleteSkills}
-        />
+        <div className="px-4">
+          <SkillsTable
+            skills={skills}
+            onEdit={handleEditSkills}
+            onUpdate={handleUpdateSkills}
+            onDelete={handleDeleteSkills}
+          />
+        </div>
       )}
 
       {showSkillsUpdateModal && selectedSkill && (

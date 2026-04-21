@@ -39,18 +39,18 @@ const ProjectDisplayCard = ({ project, handleDelete }) => {
   };
 
   return (
-    <div className="border dark:border-slate-700 rounded-md shadow-md bg-base-100 dark:bg-slate-900 relative">
+    <div className="border admin-dark:border-slate-700 rounded-md shadow-md bg-base-100 admin-dark:bg-slate-800 admin-dark:text-slate-300 relative">
       <div className="rounded-t-md">
         <img
           src={getImageSrc(image)}
           alt={project.name}
-          className="rounded-t-md lg:h-56 h-60 lg:w-full object-fill shadow-sm"
+          className="rounded-t-md lg:h-56 h-44 lg:w-full lg:object-cover object-fill shadow-sm"
         />
-        <div className="lg:min-h-[26rem] min-h-[27rem] space-y-2 p-2">
+        <div className="lg:min-h-[26rem] min-h-[33rem] space-y-2 p-2">
           <h2 className="font-bold">{name}</h2>
           <p>{type}</p>
           <p>{category}</p>
-          <div className="lg:max-h-26 max-h-32 items-center overflow-hidden overflow-y-auto">
+          <div className="lg:max-h-26 max-h-33 items-center overflow-hidden overflow-y-auto">
             <p>
               {isExtended
                 ? description
@@ -60,7 +60,7 @@ const ProjectDisplayCard = ({ project, handleDelete }) => {
             </p>
             <button
               onClick={() => setIsExtended((prev) => !prev)}
-              className="text-sm text-blue-500 hover:link cursor-pointer"
+              className="text-sm text-blue-500 admin-dark:text-green-400 hover:link cursor-pointer"
             >
               {isExtended ? "Show Less" : "Show More"}
               {isExtended ? (
@@ -73,7 +73,7 @@ const ProjectDisplayCard = ({ project, handleDelete }) => {
 
           {/* Tech stacks */}
           <div className="flex flex-wrap gap-2 items-center">
-            <span className="bg-gray-300 rounded-md flex items-center gap-1 text-sm font-medium dark:bg-gray-800 border dark:border-gray-700 dark:text-gray-400">
+            <span className="bg-gray-300 rounded-md flex items-center gap-1 text-sm font-medium admin-dark:bg-gray-800 border admin-dark:border-gray-700 text-slate-700 admin-dark:text-gray-400">
               <span className="bg-emerald-500 px-2 py-1 rounded-l-md">
                 <FaTools size={16} className="text-white" />{" "}
               </span>{" "}

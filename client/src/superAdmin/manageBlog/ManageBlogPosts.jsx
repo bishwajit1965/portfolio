@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 
 import BlogsTable from "./BlogsTable";
-import { FaPlusCircle } from "react-icons/fa";
+import { FaCloudUploadAlt } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
-import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import UpdateBlogModal from "./UpdateBlogModal";
+import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
+import { useNavigate } from "react-router-dom";
 
 const ManageBlogPosts = () => {
   const baseUrl =
@@ -18,7 +19,11 @@ const ManageBlogPosts = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedBlogPost, setSelectedBlogPost] = useState(null);
+  const [filterText, setFilterText] = useState("");
   const [pageLoading, setPageLoading] = useState(false);
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     console.log("Modal loading state changed:", loading);
   }, [loading]);
@@ -125,6 +130,11 @@ const ManageBlogPosts = () => {
     console.log("Edit button clicked for:", blog);
     setSelectedBlogPost(blog);
     setShowUpdateModal(true);
+  };
+
+  const handleAddBlogPostFormToggle = () => {
+    // Logic for opening modal and editing category
+    navigate("/super-admin/add-blog-post");
   };
 
   const handleUpdateBlogPost = async (formData, hasImage) => {
@@ -260,21 +270,17 @@ const ManageBlogPosts = () => {
         <title>Web-tech-services || Manage Blogs</title>
       </Helmet>
 
-      <div className="lg:flex lg:items-start items-center justify-between lg:mb-2 bg-base-200 p-2 shadow-sm">
-        <NavLink to="/super-admin/add-blog-post" className="m-0">
-          <button className="btn btn-xs btn-primary">
-            <FaPlusCircle />
-            Add Blog Post
-          </button>
-        </NavLink>
-
-        <h2 className="text-xl font-bold text-center">
-          Blog posts List:{" "}
-          <span className="text-orange-700">
-            {blogPosts.length > 0 ? blogPosts.length : "No post uploaded yet"}
-          </span>
-        </h2>
-      </div>
+      <SuperAdminPageSubHeader
+        title="Blog Posts"
+        decoratedText="Management Table"
+        dataLength={blogPosts.length}
+        variant="success"
+        buttonLabel="Add Blog Post"
+        icon={<FaCloudUploadAlt size={20} />}
+        searchBox={true}
+        setFilterText={setFilterText}
+        onButtonClick={handleAddBlogPostFormToggle}
+      />
 
       <div className="">
         {/* Pass blog post to BlogPostTable */}
@@ -284,6 +290,7 @@ const ManageBlogPosts = () => {
           tags={tags}
           onEdit={handleEditBlogPost}
           onDelete={handleDeleteBlogPost}
+          filterText={filterText}
         />
 
         {showUpdateModal && selectedBlogPost && (

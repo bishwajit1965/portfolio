@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-
 import CommentsTable from "./CommentsTable";
 import Swal from "sweetalert2";
 import UpdateCommentsModal from "./UpdateCommentsModal";
 import apiRequest from "../utils/apiRequest";
+import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
+import { useNavigate } from "react-router-dom";
 
 const ManageComments = () => {
   const [comments, setComments] = useState([]);
@@ -11,7 +12,12 @@ const ManageComments = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedComment, setSelectedComment] = useState(null);
-  console.log("Comments:", comments);
+  const [filterText, setFilterText] = useState("");
+  const navigate = useNavigate();
+
+  const handleAddCategoryFormToggle = () => {
+    navigate("/super-admin/add-comment");
+  };
 
   // Fetch comments on component mount
   useEffect(() => {
@@ -133,11 +139,14 @@ const ManageComments = () => {
 
   return (
     <div>
-      <div className="flex lg:justify-center items-center lg:mb-4 bg-base-200 p-2 shadow-sm">
-        <h2 className="text-xl font-bold flex items-center">
-          Comments List: {comments?.length > 0 ? comments?.length : 0}
-        </h2>
-      </div>
+      <SuperAdminPageSubHeader
+        title="Comments"
+        decoratedText="Management Table"
+        dataLength={comments.length}
+        searchBox={true}
+        setFilterText={setFilterText}
+        onButtonClick={handleAddCategoryFormToggle}
+      />
 
       <div className="p-2 shadow-sm">
         {/* Pass tags to TagTable */}
@@ -146,11 +155,14 @@ const ManageComments = () => {
             <span className="loading loading-ring loading-lg"></span>
           </div>
         ) : (
-          <CommentsTable
-            comments={comments}
-            onEdit={handleEditComment}
-            onDelete={handleDeleteComment}
-          />
+          <div className="px-4">
+            <CommentsTable
+              comments={comments}
+              onEdit={handleEditComment}
+              onDelete={handleDeleteComment}
+              filterText={filterText}
+            />
+          </div>
         )}
 
         {showUpdateModal && selectedComment && (

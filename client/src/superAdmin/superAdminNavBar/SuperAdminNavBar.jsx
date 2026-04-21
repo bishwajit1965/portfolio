@@ -6,12 +6,20 @@ import { useNavigate } from "react-router-dom";
 import {
   FaBars,
   FaMailBulk,
+  FaMoon,
   FaSignOutAlt,
+  FaSun,
   FaTimes,
   FaUser,
 } from "react-icons/fa";
 
-const SuperAdminNavBar = ({ onBtnClick, onMenuClick, isOpen }) => {
+const SuperAdminNavBar = ({
+  onBtnClick,
+  onMenuClick,
+  isOpen,
+  adminTheme,
+  toggleAdminTheme,
+}) => {
   const navigate = useNavigate();
   const { user, logoutSuperAdmin } = useContext(SuperAdminAuthContext);
   console.log("User:", user);
@@ -22,8 +30,10 @@ const SuperAdminNavBar = ({ onBtnClick, onMenuClick, isOpen }) => {
   };
 
   return (
-    <div className="navbar bg-base-200 border-b border-slate-300 shadow-sm sticky top-0">
-      <div className="flex-1 space-x-1">
+    <div
+      className={`navbar py-0 px-0 border-b-2 border-slate-300 admin-dark:border-slate-600 shadow-sm ${adminTheme === "admin-light" ? "bg-base-200 text-slate-800" : "bg-gray-800 text-slate-300"} sticky top-0 z-50`}
+    >
+      <div className="flex-1 space-x-1 justify-between items-center">
         {isOpen ? (
           <button
             onClick={onBtnClick}
@@ -39,11 +49,29 @@ const SuperAdminNavBar = ({ onBtnClick, onMenuClick, isOpen }) => {
             <FaBars size={20} />
           </button>
         )}
-
-        <img src={Logo} alt="Portfolio logo" className="w-8 h-8 rounded-full" />
-        <a className="btn btn-ghost btn-sm font-bold lg:text-xl text-sm p-0 m-0">
-          Nova Portfolio
-        </a>
+        <div className="flex items-center gap-2">
+          <img
+            src={Logo}
+            alt="Portfolio logo"
+            className="w-8 h-8 rounded-full"
+          />
+          <a className="btn btn-ghost btn-sm font-bold lg:text-xl text-sm p-0 m-0">
+            Bishwajit.dev • Portfolio
+          </a>
+        </div>
+        <div className="">
+          <span onClick={toggleAdminTheme} className=" ">
+            {adminTheme === "admin-light" ? (
+              <span className="text-md cursor-pointer">
+                <FaMoon />
+              </span>
+            ) : (
+              <span className="text-md cursor-pointer">
+                <FaSun className="" />
+              </span>
+            )}
+          </span>
+        </div>
       </div>
       <div className="flex-none">
         <div className="dropdown dropdown-end">
@@ -99,7 +127,7 @@ const SuperAdminNavBar = ({ onBtnClick, onMenuClick, isOpen }) => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 admin-dark:bg-slate-700 admin-dark:text-slate-300 rounded-box z-[1] mt-3 w-52 p-2 shadow admin-dark:shadow-lg"
           >
             <li>
               <p>

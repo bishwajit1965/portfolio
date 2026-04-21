@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
+import MiniButton from "../../components/buttons/MiniButton";
 
 const UpdateCategoryModal = ({ category, onClose, onUpdate }) => {
   const [name, setName] = useState("");
@@ -21,16 +22,19 @@ const UpdateCategoryModal = ({ category, onClose, onUpdate }) => {
   };
 
   return (
-    <div style={styles.modalOverlay}>
-      <div style={styles.modalContent}>
-        <div className="border-b mb-2 pb-1">
-          <h2 className="lg:text-xl font-extrabold flex items-center gap-2">
+    <div style={styles.modalOverlay} className="admin-dark:bg-gray-800">
+      <div
+        style={styles.modalContent}
+        className="admin-dark:bg-slate-800 bg-base-100 text-base-content admin-dark:text-slate-300 space-y-4 rounded-lg shadow-lg p-6 w-full max-w-md"
+      >
+        <div className="border-b admin-dark:border-slate-600 border-slate-300 mb-2 pb-1">
+          <h2 className="lg:text-xl font-extrabold flex items-center gap-2 admin-dark:text-slate-300 text-slate-600">
             <FaEdit />
             Update Category
           </h2>
         </div>
         <form onSubmit={handleSubmit}>
-          <div style={styles.formGroup}>
+          <div style={styles.formGroup} className="">
             <label htmlFor="categoryName">Category Name:</label>
             <input
               type="text"
@@ -38,21 +42,28 @@ const UpdateCategoryModal = ({ category, onClose, onUpdate }) => {
               name="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              style={styles.input}
+              // style={styles.input}
               required
+              className="input input-bordered input-sm form-control max- w-full mb-2 admin-dark:bg-slate-700 admin-dark:text-slate-300"
             />
           </div>
-          <div style={styles.buttonGroup}>
-            <button type="submit" style={styles.buttonPrimary}>
-              Update
-            </button>
-            <button
+          <div style={styles.buttonGroups} className="flex justify-end gap-2">
+            <MiniButton
+              type="submit"
+              variant="success"
+              icon={<FaEdit />}
+              label="Update"
+              // style={styles.buttonPrimary}
+            />
+
+            <MiniButton
               type="button"
+              variant="warning"
               onClick={onClose}
-              style={styles.buttonSecondary}
+              // style={styles.buttonSecondary}
             >
               Cancel
-            </button>
+            </MiniButton>
           </div>
         </form>
       </div>
@@ -75,7 +86,7 @@ const styles = {
     zIndex: 1000,
   },
   modalContent: {
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     padding: "24px",
     borderRadius: "8px",
     width: "400px",

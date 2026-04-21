@@ -2,11 +2,8 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 import Avatar from "/assets/Avatar-Profile-PNG-Photos.png";
 import DataTable from "react-data-table-component";
-import { useState } from "react";
 
-const BlogsTable = ({ blogPosts = [], onEdit, onDelete }) => {
-  const [filterText, setFilterText] = useState("");
-
+const BlogsTable = ({ blogPosts = [], onEdit, onDelete, filterText }) => {
   // Optimize image source
   const getImageSrc = (img) => {
     if (!img) return "";
@@ -30,8 +27,8 @@ const BlogsTable = ({ blogPosts = [], onEdit, onDelete }) => {
           alt={row.title || "Default Avatar"}
           onError={(e) => (e.target.src = Avatar)} // Fallback to Avatar on error
           style={{
-            width: "90px",
-            height: "35px",
+            width: "130px",
+            height: "40px",
             padding: "2px",
             borderRadius: "5%",
             objectFit: "cover",
@@ -45,19 +42,19 @@ const BlogsTable = ({ blogPosts = [], onEdit, onDelete }) => {
       name: "Blog Title",
       selector: (row) => row.title,
       sortable: true,
-      width: "130px",
+      width: "370px",
     },
     {
       name: "Summary",
       selector: (row) => row.summary,
       sortable: true,
-      width: "130px",
+      width: "220px",
     },
     {
       name: "Author",
       selector: (row) => row.author,
       sortable: true,
-      width: "100px",
+      width: "120px",
     },
     {
       name: "Status",
@@ -103,15 +100,6 @@ const BlogsTable = ({ blogPosts = [], onEdit, onDelete }) => {
   ];
   return (
     <div>
-      <div className="ml-2">
-        <input
-          type="text"
-          placeholder="Filter blog post..."
-          value={filterText}
-          onChange={(e) => setFilterText(e.target.value)}
-          className="input input-bordered input-sm form-control mb-2"
-        />
-      </div>
       <DataTable
         columns={columns}
         data={filteredBlogPosts} // Use filtered data here

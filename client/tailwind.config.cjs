@@ -11,5 +11,10 @@ module.exports = {
       },
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [
+    require("daisyui"),
+    function ({ addVariant }) {
+      addVariant("admin-dark", ".admin-dark &");
+    },
+  ],
 };

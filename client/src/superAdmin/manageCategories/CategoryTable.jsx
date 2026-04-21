@@ -1,16 +1,13 @@
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 import DataTable from "react-data-table-component";
-import { useState } from "react";
 
-const CategoryTable = ({ categories = [], onEdit, onDelete }) => {
-  const [filterText, setFilterText] = useState("");
-
+const CategoryTable = ({ categories = [], onEdit, onDelete, filterText }) => {
   // Filtered categories calculated directly from props and input
   const filteredCategories = categories.filter(
     (category) =>
       typeof category.name === "string" &&
-      category.name.toLowerCase().includes(filterText.toLowerCase())
+      category.name.toLowerCase().includes(filterText.toLowerCase()),
   );
 
   const columns = [
@@ -18,11 +15,13 @@ const CategoryTable = ({ categories = [], onEdit, onDelete }) => {
       name: "Category Name",
       selector: (row) => row.name,
       sortable: true,
+      width: "180px",
     },
     {
       name: "Created At",
       selector: (row) => new Date(row.createdAt).toLocaleDateString(),
       sortable: true,
+      width: "280px",
     },
     {
       name: "Updated At",
@@ -31,6 +30,7 @@ const CategoryTable = ({ categories = [], onEdit, onDelete }) => {
           ? new Date(row.updatedAt).toLocaleDateString()
           : "Not updated",
       sortable: true,
+      width: "280px",
     },
     {
       name: "Actions",
@@ -50,18 +50,12 @@ const CategoryTable = ({ categories = [], onEdit, onDelete }) => {
           </button>
         </>
       ),
+      width: "380px",
     },
   ];
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Filter categories..."
-        value={filterText}
-        onChange={(e) => setFilterText(e.target.value)}
-        className="input input-bordered input-sm form-control mb-2"
-      />
       <DataTable
         columns={columns}
         data={filteredCategories} // Use filtered data here

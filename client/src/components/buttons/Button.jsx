@@ -2,17 +2,19 @@ const baseStyle =
   "px-2 py-1 font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm dark:shadow-lg transform transition-transform duration-300 inline-block text-center";
 
 const variantStyles = {
-  base: "bg-emerald-600 text-white hover:bg-emerald-700 justify-center flex dark:bg-slate-600 dark:text-gray-300 dark:shadow-lg dark:hover:bg-slate-900 dark:hover:text-base-100",
+  base: "bg-emerald-600 text-white hover:bg-emerald-700 justify-center flex dark:bg-slate-600 dark:text-gray-300 dark:shadow-lg dark:hover:bg-slate-900 dark:hover:text-base-100 admin-dark:bg-slate-600 admin-dark:text-gray-300 admin-dark:shadow-lg admin-dark:hover:bg-slate-900 admin-dark:hover:text-base-100",
 
-  success: "bg-green-600 text-white hover:text-base-300 hover:bg-green-700",
+  success:
+    "bg-green-600 text-white hover:text-base-300 hover:bg-green-700 shadow-sm dark:bg-green-600 dark:text-gray-300 dark:shadow-lg dark:hover:bg-green-700 dark:hover:text-base-100 admin-dark:bg-green-600 admin-dark:text-gray-300 admin-dark:shadow-lg admin-dark:hover:bg-green-700 admin-dark:hover:text-base-100",
 
   darkOutline:
     "bg-base-100 border border-gray-600 dark:border-slate-600 text-gray-600 hover:bg-gray-600 hover:text-white dark:bg-slate-600 dark:text-gray-300 dark:shadow-lg dark:hover:bg-slate-900 dark:hover:text-base-100 focus:ring-gray-600",
 
   outline:
-    "bg-base-100 border border-emerald-600 dark:border-slate-600 text-emerald-600 hover:bg-emerald-600 hover:text-white dark:bg-slate-600 dark:text-gray-300 dark:shadow-lg dark:hover:bg-slate-900 dark:hover:text-base-100 focus:ring-emerald-600 focus:ring-2 focus:ring-offset-2",
+    "bg-base-100 border border-emerald-600 dark:border-slate-600 text-emerald-600 hover:bg-emerald-600 hover:text-white dark:bg-slate-600 dark:text-gray-300 dark:shadow-lg dark:hover:bg-slate-900 dark:hover:text-base-100 focus:ring-emerald-600 focus:ring-2 focus:ring-offset-2 focus:ring-emerald-600 admin-dark:bg-emerald-600 admin-dark:text-gray-300 admin-dark:shadow-lg admin-dark:hover:bg-emerald-400 admin-dark:hover:text-base-100",
 
-  ghost: "text-emerald-600 hover:bg-emerald-100",
+  ghost:
+    "text-emerald-600 hover:bg-emerald-100 dark:text-gray-300 dark:hover:bg-slate-700 dark:hover:text-base-100 admin-dark:text-gray-300 admin-dark:hover:bg-slate-700 admin-dark:hover:text-base-100",
 
   danger: "bg-red-600 text-white hover:bg-red-700",
 

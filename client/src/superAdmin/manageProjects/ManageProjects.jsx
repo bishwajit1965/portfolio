@@ -6,17 +6,23 @@ import {
 import { useEffect, useState } from "react";
 
 import { Helmet } from "react-helmet-async";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ProjectDisplayCard from "./ProjectDisplayCard";
 import api from "../../services/api";
 import Swal from "sweetalert2";
 import Button from "../../components/buttons/Button";
+import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
 
 const ManageProjects = () => {
   const STEP = 3;
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState([]);
-  const [visibleCount, setVisibleCount] = useState(STEP); // State to control the number of visible project
+  const [ visibleCount, setVisibleCount ] = useState( STEP ); // State to control the number of visible project
+  const navigate = useNavigate();
+
+   const handleAddProjectFormToggle = () => {
+    navigate("/super-admin/add-project");
+  };
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -77,30 +83,29 @@ const ManageProjects = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen admin-dark:bg-gray-800">
       <Helmet>
         <title>Bishwajit.dev || Manage Projects</title>
       </Helmet>
 
-      <div className="flex lg:justify-between justify-between items-center bg-base-200 p-2 shadow-sm">
-        <NavLink to="/super-admin/add-project" className="m-0">
-          <button className="btn btn-xs btn-primary">
-            <FaPlusCircle />
-            Add Project
-          </button>
-        </NavLink>
+        <SuperAdminPageSubHeader
+        title="Projects"
+        decoratedText="Management Table"
+        dataLength={projects.length}
+        variant="success"
+        buttonLabel="Add Project"
+        icon={<FaPlusCircle />}
+        size="lg"
+        onButtonClick={handleAddProjectFormToggle}
+      />
 
-        <h2 className="text-xl font-bold text-center">
-          Total Projects:{" "}
-          {projects.length > 0 ? projects.length : "No project is uploaded yet"}
-        </h2>
-      </div>
+
 
       <div className="text-center">
         {loading && <span className="loading loading-ring loading-lg"></span>}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-between p-2">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-4 gap-2 justify-between p-4">
         {projects.slice(0, visibleCount).map((project) => (
           <ProjectDisplayCard
             key={project._id}
@@ -111,7 +116,7 @@ const ManageProjects = () => {
       </div>
 
       {/* Show More or Show Less Button */}
-      <div className="lg:mt-6">
+      <div className="flex justify-center mb-8 mt-2">
         <div className="flex justify-center">
           {visibleCount < projects?.length ? (
             <Button

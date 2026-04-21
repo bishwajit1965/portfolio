@@ -5,7 +5,6 @@ import CKEditorComponent from "../textEditor/CKEditorComponent";
 import { Helmet } from "react-helmet-async";
 import { NavLink } from "react-router-dom";
 import Select from "react-select";
-import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
 import Swal from "sweetalert2";
 import apiRequest from "../utils/apiRequest";
 import categoryApi from "../utils/categoryApi";
@@ -239,12 +238,6 @@ const AddBlogPost = () => {
       </Helmet>
 
       <div>
-        <SuperAdminPageTitle
-          title="Add"
-          decoratedText="Blog Posts"
-          subtitle="Super admin can only manage all blog posts"
-        />
-
         <div className="flex lg:justify-start items-center justify-between lg:mb-4 bg-base-200 p-2 shadow-sm">
           <NavLink to="/super-admin/manage-blogs" className="m-0">
             <button className="btn btn-xs btn-primary">

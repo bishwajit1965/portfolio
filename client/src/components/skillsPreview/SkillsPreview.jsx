@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import useFetchCollection from "../../hooks/useFetchCollection";
-import { FaCheckCircle } from "react-icons/fa";
+import { FaTools } from "react-icons/fa";
 import SectionTitle from "../sectionTitle/SectionTitle";
 
 const SkillsSkeleton = () => (
@@ -25,7 +25,7 @@ const SkillsPreview = () => {
         title="My"
         decoratedText="Skills"
         subtitle="A quick look at the tools and technologies I work with."
-        icon={FaCheckCircle}
+        icon={FaTools}
       />
 
       {loading ? (
@@ -39,7 +39,7 @@ const SkillsPreview = () => {
             >
               {/* Skill name + level */}
               <h3 className="flex items-center gap-2 font-semibold lg:text-xl  text-sm text-gray-700 dark:text-gray-400">
-                <FaCheckCircle size={16} /> {skill.skillName}
+                <FaTools size={16} /> {skill.skillName}
               </h3>
               <p className="text-base text-gray-500 dark:text-gray-400">
                 {skill.level}

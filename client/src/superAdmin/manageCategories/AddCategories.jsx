@@ -1,14 +1,19 @@
-import { FaHome, FaPlusCircle } from "react-icons/fa";
+import { FaArrowAltCircleRight, FaPlusCircle } from "react-icons/fa";
 
-import { NavLink } from "react-router-dom";
-import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
 
 const AddCategories = ({ onCategoryCreated }) => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
+
+  const handleRedirectCategoryFormToggle = () => {
+    navigate("/super-admin/manage-categories");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,20 +61,15 @@ const AddCategories = ({ onCategoryCreated }) => {
 
   return (
     <div>
-      <SuperAdminPageTitle
-        title="Add"
-        decoratedText="Categories"
-        subtitle="Super admin only!"
+      <SuperAdminPageSubHeader
+        title="Add New"
+        decoratedText="Category"
+        variant="success"
+        buttonLabel="Manage Categories"
+        icon={<FaArrowAltCircleRight />}
+        onButtonClick={handleRedirectCategoryFormToggle}
       />
 
-      <div className="flex lg:justify-start items-center justify-between lg:mb-4 bg-base-200 p-2 shadow-sm">
-        <NavLink to="/super-admin/manage-categories" className="m-0">
-          <button className="btn btn-xs rounded-full text-white btn-success">
-            <FaHome />
-            Manage Categories
-          </button>
-        </NavLink>
-      </div>
       <div className="my-2 max-w-md mx-auto">
         <div className="">
           {/* Display error messages */}
@@ -92,7 +92,7 @@ const AddCategories = ({ onCategoryCreated }) => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            className="input input-bordered input-sm form-control max- w-full mb-2"
+            className="input input-bordered input-sm form-control max- w-full mb-2 admin-dark:bg-slate-700 admin-dark:text-slate-300"
           />
 
           <button className="btn btn-sm btn-primary rounded-full shadow-md">

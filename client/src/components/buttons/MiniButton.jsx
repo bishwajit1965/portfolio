@@ -1,21 +1,21 @@
 const baseStyle =
-  "py-1 font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm transform transition-transform duration-300 inline-block flex items-center text-center";
+  "py-1 font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm transform transition-transform duration-300 inline-block flex items-center text-center justify-center disabled:opacity-50 disabled:cursor-not-allowed";
 
 const variantStyles = {
   base: `
     bg-base-100 border border-slate-600 text-slate-800
     hover:bg-slate-800 hover:text-white
-    shadow-am dark:bg-slate-600 dark:text-gray-300 dark:shadow-md dark:hover:bg-slate-900 dark:hover:text-base-100
+    shadow-am dark:bg-slate-600 dark:text-gray-300 dark:shadow-md dark:hover:bg-slate-900 dark:hover:text-base-100 admin-dark:bg-slate-600 admin-dark:text-gray-300 admin-dark:shadow-md admin-dark:hover:bg-slate-900 admin-dark:hover:text-base-100
   `,
   default: `
     bg-emerald-600 border border-emerald-700 text-base-100
     hover:bg-emerald-800 hover:text-white
-    shadow-md dark:bg-emerald-600 dark:text-gray-300 dark:shadow-md dark:hover:bg-emerald-900 dark:hover:text-base-100
+    shadow-md dark:bg-emerald-600 dark:text-gray-300 dark:shadow-md dark:hover:bg-emerald-900 dark:hover:text-base-100 admin-dark:bg-emerald-600 admin-dark:text-gray-300 admin-dark:shadow-md admin-dark:hover:bg-emerald-900 admin-dark:hover:text-base-100
   `,
   outline: `
     border border-slate-600 dark:border-slate-400 text-slate-600 dark:text-slate-400
     hover:bg-slate-600 hover:text-white
-    shadow-sm
+    shadow-sm dark:shadow-md dark:hover:bg-slate-900 dark:hover:text-base-100 admin-dark:shadow-md admin-dark:hover:bg-slate-900 admin-dark:hover:text-base-100
   `,
   ghost: `
     text-slate-600
@@ -24,7 +24,7 @@ const variantStyles = {
   rounded: `
     border border-slate-600 text-slate-800
     hover:bg-slate-600 hover:text-white
-    rounded-full shadow-md
+    rounded-full shadow-md dark:border-slate-400 dark:text-slate-300 dark:shadow-md dark:hover:bg-slate-900 dark:hover:text-base-100 admin-dark:border-slate-400 admin-dark:text-slate-300 admin-dark:shadow-md admin-dark:hover:bg-slate-900 admin-dark:hover:text-base-100
   `,
   danger: `
     text-base-100 bg-red-500
@@ -33,7 +33,7 @@ const variantStyles = {
   success: `
     bg-base-100 border border-emerald-600 text-emerald-600
     hover:bg-emerald-600 hover:text-white
-    shadow-sm dark:bg-emerald-600 dark:text-gray-300 dark:shadow-md dark:hover:bg-emerald-700 dark:hover:text-base-100
+    shadow-sm dark:bg-emerald-600 dark:text-gray-300 dark:shadow-md dark:hover:bg-emerald-700 dark:hover:text-base-100 admin-dark:bg-emerald-600 admin-dark:text-gray-300 admin-dark:shadow-md admin-dark:hover:bg-emerald-700 admin-dark:hover:text-base-100
   `,
   warning: `
     text-base-100 bg-amber-600

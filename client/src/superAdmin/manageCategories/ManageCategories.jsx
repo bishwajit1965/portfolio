@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-
 import CategoryTable from "./CategoryTable";
-import { FaPlusCircle } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { FaCloudUploadAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import UpdateCategoryModal from "./UpdateCategoryModal";
+import { Helmet } from "react-helmet-async";
+import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
+import { useNavigate } from "react-router-dom";
 
 const ManageCategories = () => {
   const [loading, setLoading] = useState(false);
@@ -12,6 +13,8 @@ const ManageCategories = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [filterText, setFilterText] = useState("");
+  const navigate = useNavigate();
 
   const baseUrl =
     import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
@@ -53,6 +56,10 @@ const ManageCategories = () => {
     console.log("Edit button clicked for:", category);
     setSelectedCategory(category);
     setShowUpdateModal(true);
+  };
+
+  const handleAddCategoryFormToggle = () => {
+    navigate("/super-admin/add-categories");
   };
 
   const handleUpdateCategory = async (updatedCategory) => {
@@ -140,25 +147,21 @@ const ManageCategories = () => {
     return <div className="text-center text-red-500">{errorMessage}</div>;
   return (
     <div>
-      {/* <SuperAdminPageTitle
-        title="Manage"
-        decoratedText="Categories"
-        subtitle="Super admin only!"
-      /> */}
-      <div className="flex lg:justify-start items-center justify-between lg:mb-4 bg-base-200 p-2 shadow-sm">
-        <NavLink to="/super-admin/add-categories" className="m-0">
-          <button className="btn btn-xs btn-primary">
-            <FaPlusCircle />
-            Add Category
-          </button>
-        </NavLink>
-        <h2 className="text-xl font-bold text-center lg:ml-72">
-          Category List:{" "}
-          {categories.length > 0
-            ? categories.length
-            : "No category uploaded yet"}
-        </h2>
-      </div>
+      <Helmet>
+        <title>Manage Categories • Super Admin Dashboard</title>
+      </Helmet>
+
+      <SuperAdminPageSubHeader
+        title="Categories"
+        decoratedText="Management Table"
+        dataLength={categories.length}
+        variant="success"
+        buttonLabel="Add Category"
+        icon={<FaCloudUploadAlt size={20} />}
+        searchBox={true}
+        setFilterText={setFilterText}
+        onButtonClick={handleAddCategoryFormToggle}
+      />
 
       <div className="p-2">
         {/* Pass categories to CategoryTable */}
@@ -169,6 +172,8 @@ const ManageCategories = () => {
         ) : (
           <CategoryTable
             categories={categories}
+            filterText={filterText}
+            setFilterText={setFilterText}
             onEdit={handleEditCategory}
             onDelete={handleDeleteCategory}
           />

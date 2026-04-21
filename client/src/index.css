@@ -30,12 +30,15 @@
 body {
   margin: 0;
   font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
-/* Light Theme */
+/* Front End Light Theme */
 body.light {
   background-color: #ffffff;
   color: #000000;
@@ -44,13 +47,99 @@ body.light {
 /* Dark Theme */
 body.dark {
   background-color: #121212;
+  color: #f0f0f0;
+}
+
+/*-------------------------
+Admin panel light theme
+---------------------------*/
+.admin-dark .rdt_Table {
+  background-color: #121212 !important;
+  width: 100%;
+}
+
+.admin-dark .rdt_TableHeadRow {
+  background-color: #1c2533 !important;
+  font-weight: 1000 !important;
   color: #ffffff;
 }
+
+.admin-dark .rdt_TableBody {
+  background-color: #1e293b;
+  width: 100%;
+  color: #e5e7eb;
+}
+
+.admin-dark .rdt_TableRow {
+  background-color: #1e293b !important;
+  color: #e5e7eb;
+}
+.admin-dark .rdt_TableCell div {
+  background-color: transparent !important;
+  color: inherit !important;
+}
+.admin-dark .rdt_TableRow:nth-child(even) {
+  background-color: #111827;
+}
+
+.admin-dark .rdt_TableRow:hover {
+  background-color: #111827 !important;
+  color: #e5e7eb;
+  border: #111827 1px solid !important;
+}
+
+.admin-dark .rdt_Pagination {
+  background-color: #1c2533 !important;/* #111827 */
+  padding: 0rem 0rem !important;
+  color: #e5e7eb;
+}
+.admin-dark .rdt_Pagination button {
+  color: #e5e7eb !important;
+  background-color: transparent;
+}
+
+/* active buttons */
+.admin-dark .rdt_Pagination button:not(:disabled) {
+  color: #e5e7eb !important;
+  opacity: 1;
+}
+
+/* disabled buttons (inactive state) */
+.admin-dark .rdt_Pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* SVG inside buttons */
+.admin-dark .rdt_Pagination svg {
+  fill: currentColor !important;
+}
+
 .swal2-confirm {
   background-color: green;
 }
 .swal2-cancel {
   background-color: #81c212;
+}
+
+/* Swal Dark Mode To Assign Roles */
+.admin-dark .admin-swal {
+  background-color: #1e293b !important;
+  color: #e5e7eb !important;
+}
+
+.admin-dark .admin-swal .swal2-select {
+  background-color: #0f172a;
+  color: #e5e7eb;
+  border: 1px solid #445267;
+}
+
+.admin-dark .admin-swal .swal2-confirm {
+  background-color: #10b981 !important;
+}
+
+.admin-dark .admin-swal .swal2-cancel {
+  background-color: #ef4444 !important;
 }
 
 /* CKEditor */

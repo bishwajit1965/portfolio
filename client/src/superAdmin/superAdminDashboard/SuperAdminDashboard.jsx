@@ -133,7 +133,7 @@ const SuperAdminDashboard = () => {
   );
 
   return (
-    <div className="p-2">
+    <div className="p-4">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card title="Users" value={totalUsers} icon="👤" />
         <Card title="Projects" value={totalProjects} icon="🚀" />
@@ -142,8 +142,10 @@ const SuperAdminDashboard = () => {
       </div>
 
       <div className="grid md:grid-cols-3 gap-4 my-4">
-        <div className="bg-white p-4 rounded shadow">
-          <h2 className="font-bold mb-2">User Growth</h2>
+        <div className="bg-white admin-dark:bg-slate-800 border admin-dark:border-slate-600 p-4 rounded shadow">
+          <h2 className="font-bold mb-2 admin-dark:text-slate-300">
+            User Growth
+          </h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={userGrowth}>
               {renderColoredBars(userGrowth, 0)}
@@ -154,7 +156,7 @@ const SuperAdminDashboard = () => {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white p-4 rounded shadow">
+        <div className="bg-white admin-dark:bg-slate-800 admin-dark:text-slate-300 border admin-dark:border-slate-600 p-4 rounded shadow">
           <h2 className="font-bold mb-2">Blog Growth</h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={blogGrowth}>
@@ -166,7 +168,7 @@ const SuperAdminDashboard = () => {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white p-4 rounded shadow">
+        <div className="bg-white admin-dark:bg-slate-800 admin-dark:text-slate-300 border admin-dark:border-slate-600 p-4 rounded shadow">
           <h2 className="font-bold mb-2">Project Growth</h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={projectGrowth}>
@@ -181,7 +183,7 @@ const SuperAdminDashboard = () => {
 
       {/* Pie Charts */}
       <div className="grid md:grid-cols-2 gap-4 my-4">
-        <div className="bg-white p-4 rounded shadow">
+        <div className="bg-white admin-dark:bg-slate-800 admin-dark:text-slate-300 border admin-dark:border-slate-600 p-4 rounded shadow">
           <h2 className="font-bold mb-2">Users by Role</h2>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
@@ -206,7 +208,7 @@ const SuperAdminDashboard = () => {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white p-4 rounded shadow">
+        <div className="bg-white admin-dark:bg-slate-800 admin-dark:text-slate-300 border admin-dark:border-slate-600 p-4 rounded shadow">
           <h2 className="font-bold mb-2">Projects by Status</h2>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
@@ -232,7 +234,7 @@ const SuperAdminDashboard = () => {
 
       {/* Recent Lists */}
       <div className="grid md:grid-cols-3 gap-4 my-4">
-        <div className="bg-white p-4 rounded shadow">
+        <div className="bg-white admin-dark:bg-slate-800 admin-dark:text-slate-300 border admin-dark:border-slate-600 p-4 rounded shadow">
           <h2 className="text-lg font-bold mb-2 flex items-center gap-2 underline">
             <FaUser size={16} />
             Recent Users
@@ -244,7 +246,7 @@ const SuperAdminDashboard = () => {
           ))}
         </div>
 
-        <div className="bg-white p-4 rounded shadow">
+        <div className="bg-white admin-dark:bg-slate-800 admin-dark:text-slate-300 border admin-dark:border-slate-600 p-4 rounded shadow">
           <h2 className="font-bold mb-2 flex items-center gap-2 tex-lg underline">
             <FaBlog size={16} /> Recent Blogs
           </h2>
@@ -255,7 +257,7 @@ const SuperAdminDashboard = () => {
           ))}
         </div>
 
-        <div className="bg-white p-4 rounded shadow">
+        <div className="bg-white admin-dark:bg-gray-800 admin-dark:text-slate-300 border admin-dark:border-slate-600 p-4 rounded shadow">
           <h2 className="font-bold mb-2 flex items-center gap-2 text-lg underline">
             <FaList size={16} /> Recent Projects
           </h2>
@@ -272,9 +274,11 @@ const SuperAdminDashboard = () => {
 };
 
 const Card = ({ title, value, icon }) => (
-  <div className="bg-white rounded-xl shadow-md p-5 flex justify-between items-center hover:shadow-lg transition">
+  <div className="bg-white admin-dark:bg-slate-800 admin-dark:text-slate-300 rounded-xl shadow-md p-5 flex justify-between items-center hover:shadow-lg transition border border-gray-300 admin-dark:border-slate-600">
     <div>
-      <p className="text-gray-500 text-sm font-semibold">{title}</p>
+      <p className="text-gray-500 admin-dark:text-slate-300 text-sm font-semibold">
+        {title}
+      </p>
       <h2 className="text-2xl font-bold">{value}</h2>
     </div>
     <span className="text-3xl">{icon}</span>

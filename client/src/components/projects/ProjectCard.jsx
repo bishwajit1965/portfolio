@@ -33,7 +33,7 @@ const ProjectCard = ({ project }) => {
           <p>{type}</p>
           <p>{description}</p>
           <div className="lg:flex lg:flex-wrap grid items-center gap-2 dark:text-gray-400">
-            <h2 className="flex items-center gap-2 font-semibold bg-base-100 text-base-content rounded-md border border-gray-300 dark:border-slate-600 dark:bg-gray-600 dark:text-gray-400 pr-2">
+            <h2 className="flex items-center gap-2 font-semibold bg-base-300 text-base-content rounded-md border border-gray-300 dark:border-slate-600 dark:bg-gray-600 dark:text-gray-400 pr-2">
               <span className="bg-emerald-500 text-base-100 py-1.5 px-2 rounded-l-md">
                 <FaTools />
               </span>

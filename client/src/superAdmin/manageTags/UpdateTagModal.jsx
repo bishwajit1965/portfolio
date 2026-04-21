@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { FaEdit, FaTimes } from "react-icons/fa";
+import MiniButton from "../../components/buttons/MiniButton";
 
 const UpdateTagModal = ({ tag, onClose, onUpdate }) => {
   const [name, setName] = useState("");
@@ -20,9 +22,18 @@ const UpdateTagModal = ({ tag, onClose, onUpdate }) => {
   };
 
   return (
-    <div style={styles.modalOverlay}>
-      <div style={styles.modalContent}>
-        <h2>Update Tag</h2>
+    <div
+      style={styles.modalOverlay}
+      className="admin-dark:bg-gray-800 admin-dark:text-slate-300"
+    >
+      <div
+        style={styles.modalContent}
+        className="admin-dark:bg-gray-800 admin-dark:text-slate-300 space-y-4 rounded-lg shadow-lg p-6 w-full max-w-md"
+      >
+        <h2 className="admin-dark:text-slate-300 text-slate-600 flex items-center gap-2">
+          <FaEdit />
+          Update Tag
+        </h2>
         <form onSubmit={handleSubmit}>
           <div style={styles.formGroup}>
             <label htmlFor="TagName">Tag Name:</label>
@@ -32,21 +43,28 @@ const UpdateTagModal = ({ tag, onClose, onUpdate }) => {
               name="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              style={styles.input}
+              // style={styles.input}
               required
+              className="input input-bordered input-sm form-control max- w-full mb-2 admin-dark:bg-slate-700 admin-dark:text-slate-300"
             />
           </div>
-          <div style={styles.buttonGroup}>
-            <button type="submit" style={styles.buttonPrimary}>
-              Update
-            </button>
-            <button
+          <div className="flex items-center gap-2">
+            <MiniButton
+              type="submit"
+              variant="success"
+              label="Update"
+              icon={<FaEdit />}
+              // style={styles.buttonPrimary}
+            />
+
+            <MiniButton
               type="button"
+              variant="warning"
+              label="Cancel"
+              icon={<FaTimes />}
               onClick={onClose}
-              style={styles.buttonSecondary}
-            >
-              Cancel
-            </button>
+              // style={styles.buttonSecondary}
+            />
           </div>
         </form>
       </div>
@@ -69,7 +87,7 @@ const styles = {
     zIndex: 1000,
   },
   modalContent: {
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     padding: "24px",
     borderRadius: "8px",
     width: "400px",

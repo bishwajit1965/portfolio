@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 
-import { FaPlusCircle } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { FaCloudUploadAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import TagTable from "./TagTable";
 import UpdateTagModal from "./UpdateTagModal";
+import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
 
 const ManageTags = () => {
   const [tags, setTags] = useState([]);
@@ -12,7 +13,13 @@ const ManageTags = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedTag, setSelectedTag] = useState(null);
-  console.log("tags", tags);
+  const [filterText, setFilterText] = useState("");
+  const navigate = useNavigate();
+
+  const handleAddCategoryFormToggle = () => {
+    navigate("/super-admin/add-tag");
+  };
+
   // Fetch tags on component mount
   useEffect(() => {
     const fetchTags = async () => {
@@ -136,18 +143,17 @@ const ManageTags = () => {
 
   return (
     <div>
-      <div className="flex lg:justify-start justify-between items-center lg:mb-4 bg-base-200 p-2 shadow-sm">
-        <NavLink to="/super-admin/add-tag" className="m-0 lg:mr-6">
-          <button className="btn btn-xs btn-primary">
-            <FaPlusCircle />
-            Add Tag
-          </button>
-        </NavLink>
-
-        <h2 className="text-xl font-bold text-center lg:ml-80">
-          Tag List: {tags.length > 0 ? tags.length : "No tag uploaded yet"}
-        </h2>
-      </div>
+      <SuperAdminPageSubHeader
+        title="Tags"
+        decoratedText="Management Table"
+        dataLength={tags.length}
+        variant="success"
+        buttonLabel="Add Tag"
+        icon={<FaCloudUploadAlt size={20} />}
+        searchBox={true}
+        setFilterText={setFilterText}
+        onButtonClick={handleAddCategoryFormToggle}
+      />
 
       <div className="p-2 shadow-sm">
         {/* Pass tags to TagTable */}
@@ -160,6 +166,7 @@ const ManageTags = () => {
             tags={tags}
             onEdit={handleEditTag}
             onDelete={handleDeleteTag}
+            filterText={filterText}
           />
         )}
 

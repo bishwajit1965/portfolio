@@ -1,17 +1,15 @@
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
-
 import Avatar from "/assets/Avatar-Profile-PNG-Photos.png";
 import DataTable from "react-data-table-component";
-import { useState } from "react";
 
-const CommentsTable = ({ comments = [], onEdit, onDelete }) => {
-  const [filterText, setFilterText] = useState("");
+const CommentsTable = ({ comments = [], onEdit, onDelete, filterText }) => {
+  // const [filterText, setFilterText] = useState("");
 
   // Filtered comments calculated directly from props and input
   const filteredComments = comments.filter(
     (comment) =>
       typeof comment.author === "string" &&
-      comment.author.toLowerCase().includes(filterText.toLowerCase())
+      comment.author.toLowerCase().includes(filterText.toLowerCase()),
   );
 
   const columns = [
@@ -86,13 +84,6 @@ const CommentsTable = ({ comments = [], onEdit, onDelete }) => {
   ];
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Filter comment..."
-        value={filterText}
-        onChange={(e) => setFilterText(e.target.value)}
-        className="input input-bordered input-sm form-control mb-2"
-      />
       <DataTable
         columns={columns}
         data={filteredComments} // Use filtered data here

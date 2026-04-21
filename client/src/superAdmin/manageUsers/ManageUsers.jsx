@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-
 import Avatar from "/assets/Avatar-Profile-PNG-Photos.png";
 import DataTable from "react-data-table-component";
-import { FaEdit } from "react-icons/fa";
+import { FaUserCog } from "react-icons/fa";
 import Swal from "sweetalert2";
 import api from "../../services/api";
+import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
+import MiniButton from "../../components/buttons/MiniButton";
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]); // Users data
@@ -12,7 +13,7 @@ const ManageUsers = () => {
   const [totalRows, setTotalRows] = useState(0); // Total number of users
   const [currentPage, setCurrentPage] = useState(1); // Current page
   const [rowsPerPage, setRowsPerPage] = useState(10); // Rows per page
-  console.log("Total users:", users);
+  const [filterText, setFilterText] = useState(""); // Filter text for search
 
   // Function to fetch users data from the backend with pagination
   const fetchUsers = async (page, limit) => {
@@ -24,13 +25,12 @@ const ManageUsers = () => {
         },
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }, // Attach the JWT token
       });
-      console.log("Responses:", response);
+
       // Update the users and pagination state
       setUsers(response?.data?.data); // Use the data field from the backend response
-      setTotalRows(response?.data?.data); // Set total number of rows for pagination
+      setTotalRows(response?.data?.length); // Set total number of rows for pagination
     } catch (error) {
-      console.error("Failed to fetch users", error);
-      Swal.fire("Error", "Failed to fetch users data", "error");
+      Swal.fire("Error", "Failed to fetch users data", "error", error);
     } finally {
       setLoading(false); // Stop the loading spinner
     }
@@ -41,6 +41,12 @@ const ManageUsers = () => {
     fetchUsers(currentPage, rowsPerPage); // Fetch users with current pagination
   }, [currentPage, rowsPerPage]);
 
+  const filteredUsers = users.filter(
+    (user) =>
+      typeof user.email === "string" &&
+      user.email.toLowerCase().includes(filterText.toLowerCase()),
+  );
+
   // Define columns for DataTable
   const columns = [
     {
@@ -50,20 +56,14 @@ const ManageUsers = () => {
       sortable: true,
     },
     {
-      name: "Name",
-      selector: (row) => row.name,
-      sortable: true,
-    },
-    {
       name: "Photo",
-      selector: (row) => (
+      cell: (row) => (
         <img
-          src={row.photoUrl || Avatar}
+          src={row?.photoUrl || Avatar}
           alt={row.name}
           style={{ width: "35px", height: "35px", borderRadius: "50%" }}
         />
       ),
-      sortable: true,
     },
     {
       name: "Email",
@@ -78,12 +78,14 @@ const ManageUsers = () => {
     {
       name: "Actions",
       cell: (row) => (
-        <button
-          className="btn btn-xs btn-primary"
+        <MiniButton
+          type="submit"
+          label="Assign Role"
+          variant="success"
+          icon={<FaUserCog />}
+          className=" "
           onClick={() => handleAssignRole(row._id)}
-        >
-          <FaEdit /> Assign Role
-        </button>
+        />
       ),
     },
   ];
@@ -98,6 +100,9 @@ const ManageUsers = () => {
         admin: "Admin",
         editor: "Editor",
         user: "User",
+      },
+      customClass: {
+        popup: "admin-swal",
       },
       inputPlaceholder: "Select a role",
       showCancelButton: true,
@@ -156,6 +161,14 @@ const ManageUsers = () => {
 
   return (
     <div className="dashboard">
+      <SuperAdminPageSubHeader
+        title="Users"
+        decoratedText="Management Table"
+        dataLength={users.length}
+        searchBox={true}
+        setFilterText={setFilterText}
+      />
+
       <div className="table-container">
         {loading ? (
           <div className="text-center">
@@ -163,9 +176,8 @@ const ManageUsers = () => {
           </div>
         ) : (
           <DataTable
-            title="Users List"
             columns={columns}
-            data={users}
+            data={filteredUsers}
             pagination
             paginationServer
             paginationTotalRows={totalRows} // Total rows fetched from backend
