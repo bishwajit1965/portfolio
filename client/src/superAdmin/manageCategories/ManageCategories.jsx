@@ -15,6 +15,9 @@ const ManageCategories = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
+  const handleClearSearchText = () => {
+    setFilterText("");
+  };
 
   const baseUrl =
     import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
@@ -162,6 +165,10 @@ const ManageCategories = () => {
         searchBox={true}
         setFilterText={setFilterText}
         onButtonClick={handleAddCategoryFormToggle}
+        // For refreshing search input field
+        filterText={filterText} //important for clearing field
+        refreshButton={true}
+        onRefreshBtnClick={handleClearSearchText}
       />
 
       <div className="p-2">

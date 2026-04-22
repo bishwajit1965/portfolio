@@ -24,9 +24,18 @@ const ManageBlogPosts = () => {
 
   const navigate = useNavigate();
 
+  const handleAddBlogPostFormToggle = () => {
+    navigate("/super-admin/add-blog-post");
+  };
+
+  const handleClearSearchText = () => {
+    setFilterText("");
+  };
+
   useEffect(() => {
     console.log("Modal loading state changed:", loading);
   }, [loading]);
+
   // Fetch blog posts on component mount
   useEffect(() => {
     const fetchData = async () => {
@@ -130,11 +139,6 @@ const ManageBlogPosts = () => {
     console.log("Edit button clicked for:", blog);
     setSelectedBlogPost(blog);
     setShowUpdateModal(true);
-  };
-
-  const handleAddBlogPostFormToggle = () => {
-    // Logic for opening modal and editing category
-    navigate("/super-admin/add-blog-post");
   };
 
   const handleUpdateBlogPost = async (formData, hasImage) => {
@@ -281,6 +285,10 @@ const ManageBlogPosts = () => {
         searchBox={true}
         setFilterText={setFilterText}
         onButtonClick={handleAddBlogPostFormToggle}
+        // For refreshing search input field
+        filterText={filterText} //important for clearing field
+        refreshButton={true}
+        onRefreshBtnClick={handleClearSearchText}
       />
 
       <div className="">
