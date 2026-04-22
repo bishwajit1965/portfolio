@@ -2,7 +2,15 @@ import { useEffect, useState } from "react";
 import { FaEdit, FaTimesCircle } from "react-icons/fa";
 
 import Select from "react-select";
-const UpdateSkillsModal = ({ skill, onClose, onUpdate }) => {
+import Button from "../../components/buttons/Button";
+
+const UpdateSkillsModal = ({
+  skill,
+  onClose,
+  onUpdate,
+  isDark,
+  customStyles,
+}) => {
   const [selectedTools, setSelectedTools] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [formData, setFormData] = useState({
@@ -42,7 +50,7 @@ const UpdateSkillsModal = ({ skill, onClose, onUpdate }) => {
 
       setSelectedTools(skill?.tools?.map((t) => ({ value: t, label: t })));
       setSelectedCategories(
-        skill?.category?.map((c) => ({ value: c, label: c }))
+        skill?.category?.map((c) => ({ value: c, label: c })),
       );
     }
   }, [skill]);
@@ -71,116 +79,143 @@ const UpdateSkillsModal = ({ skill, onClose, onUpdate }) => {
     onUpdate(updatedSkillsData, false);
   };
   return (
-    <div style={styles.modalOverlay}>
-      <div style={styles.modalContent}>
-        <div className="my-4 border-b pb-2">
-          <h2 className="lg:text-xl font-extrabold flex items-center gap-2">
-            {" "}
-            <FaEdit /> Update Skills
-          </h2>
+    <div style={styles.modalOverlay} className="admin-dark:bg-slate-800">
+      <div
+        style={styles.modalContent}
+        className="admin-dark:bg-slate-800 admin-dark:text-slate-300 max-w-lg"
+      >
+        <div className="lg:max-w-lg flex mx-auto border rounded-xl shadow-md hover:shadow-lg lg:p-6 p-2 bg-base-100 admin-dark:bg-slate-800 admin-dark:text-slate-300 admin-dark:border-slate-600 text-slate-600 admin-dark:shadow-lg admin-dark:hover:shadow-xl transition-shadow duration-300">
+          <form
+            onSubmit={handleSubmit}
+            method="POST"
+            className="w-full admin-dark:bg-slate-800 admin-dark:text-slate-300"
+          >
+            {/* Form Header */}
+            <div className="border-b-2 pb-2 mb-4 border-slate-200 admin-dark:border-slate-600">
+              <h2 className="lg:text-xl font-extrabold flex items-center gap-2">
+                <FaEdit /> Update Skills
+              </h2>
+            </div>
+
+            {/* Skill name */}
+            <label className="form-control w-full">
+              <div className="label">
+                <span className="label-text admin-dark:text-slate-300">
+                  Skill name:
+                </span>
+              </div>
+              <input
+                type="text"
+                id="skillName"
+                name="skillName"
+                value={formData.skillName}
+                onChange={handleInputChange}
+                required
+                className="input input-bordered input-sm form-control max- w-full mb-2 admin-dark:bg-slate-700 admin-dark:text-slate-300"
+              />
+            </label>
+
+            {/* Level */}
+            <label className="form-control">
+              <div className="label">
+                <span className="label-text admin-dark:text-slate-300">
+                  Skills level:
+                </span>
+              </div>
+              <input
+                type="text"
+                id="level"
+                name="level"
+                value={formData.level}
+                onChange={handleInputChange}
+                className="input input-bordered input-sm form-control max- w-full mb-2 admin-dark:bg-slate-700 admin-dark:text-slate-300"
+                required
+              />
+            </label>
+
+            {/* Experience */}
+            <label className="form-control w-full">
+              <div className="label">
+                <span className="label-text admin-dark:text-slate-300">
+                  Experience:
+                </span>
+              </div>
+              <input
+                type="text"
+                id="experience"
+                cols="56"
+                rows="4"
+                name="experience"
+                value={formData.experience}
+                onChange={handleInputChange}
+                className="input input-bordered input-sm form-control max- w-full mb-2 admin-dark:bg-slate-700 admin-dark:text-slate-300"
+                required
+              />
+            </label>
+
+            {/* Tools Multi-Select */}
+            <label className="form-control">
+              <div className="label">
+                <span className="label-text admin-dark:text-slate-300">
+                  Skill Tools:
+                </span>
+              </div>
+              <Select
+                id="tools"
+                name="tools"
+                isMulti
+                options={toolOptions}
+                value={selectedTools}
+                onChange={setSelectedTools}
+                className="form-control py-1 rounded-md admin-dark dark:relative"
+                styles={customStyles(isDark)}
+              />
+            </label>
+
+            <label className="form-control">
+              <div className="label">
+                <span className="label-text admin-dark:text-slate-300">
+                  Categories:
+                </span>
+              </div>
+              <Select
+                id="category"
+                name="category"
+                isMulti
+                options={categoryOptions}
+                value={selectedCategories}
+                onChange={setSelectedCategories}
+                styles={customStyles(isDark)}
+                className="form-control py-1 rounded-md"
+              />
+            </label>
+
+            <div className="dark:admin-dark dark:relative z-10 flex items-center justify-end gap-2 mt-4">
+              <Button
+                type="submit"
+                label="Save Changes"
+                variant="success"
+                size="sm"
+                icon={<FaEdit />}
+              />
+
+              <Button
+                type="button"
+                onClick={onClose}
+                label="Cancel"
+                variant="warning"
+                size="sm"
+                icon={<FaTimesCircle />}
+              />
+            </div>
+          </form>
         </div>
-        <form onSubmit={handleSubmit} method="POST">
-          {/* Skill name */}
-          <div style={styles.formGroup}>
-            <label htmlFor="title">Skill name:</label>
-            <input
-              type="text"
-              id="skillName"
-              name="skillName"
-              value={formData.skillName}
-              onChange={handleInputChange}
-              style={styles.input}
-              required
-              className="input-sm"
-            />
-          </div>
-
-          {/* Level */}
-          <div style={styles.formGroup}>
-            <label htmlFor="summary">Level:</label>
-            <input
-              type="text"
-              id="level"
-              name="level"
-              value={formData.level}
-              onChange={handleInputChange}
-              style={styles.input}
-              className="input-sm"
-              required
-            />
-          </div>
-
-          {/* Experience */}
-          <div style={styles.formGroup}>
-            <label htmlFor="experience">Experience:</label>
-            <input
-              type="text"
-              id="experience"
-              cols="56"
-              rows="4"
-              name="experience"
-              value={formData.experience}
-              onChange={handleInputChange}
-              style={styles.textarea}
-              className="w-full border p-2 text-xs rounded-b-md mb-[-10px]"
-              required
-            />
-          </div>
-
-          {/* Tools Multi-Select */}
-          <div style={styles.formGroup}>
-            <label htmlFor="tools">Tools:</label>
-            <Select
-              id="tools"
-              name="tools"
-              isMulti
-              options={toolOptions}
-              value={selectedTools}
-              onChange={setSelectedTools}
-              placeholder="Select categories"
-              className="w-full"
-            />
-          </div>
-
-          {/* Category Multi-Select */}
-          <div style={styles.formGroup}>
-            <label htmlFor="category">Category:</label>
-            <Select
-              id="category"
-              name="category"
-              isMulti
-              options={categoryOptions}
-              value={selectedCategories}
-              onChange={setSelectedCategories}
-              placeholder="Select tags"
-              className="w-full"
-            />
-          </div>
-
-          <div style={styles.buttonGroup}>
-            <button
-              className="flex items-center btn btn-sm"
-              type="submit"
-              style={styles.buttonPrimary}
-            >
-              <FaEdit />
-              Update
-            </button>
-            <button
-              className="flex items-center btn btn-sm"
-              type="button"
-              onClick={onClose}
-              style={styles.buttonSecondary}
-            >
-              <FaTimesCircle />
-              Cancel
-            </button>
-          </div>
-        </form>
       </div>
     </div>
   );
 };
+
+export default UpdateSkillsModal;
 
 // Simple inline styles for demonstration; consider using CSS or styled-components
 const styles = {
@@ -197,7 +232,7 @@ const styles = {
     zIndex: 1000,
   },
   modalContent: {
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     padding: "25px",
     borderRadius: "8px",
     width: "700px",
@@ -241,5 +276,3 @@ const styles = {
     paddingBottom: "20px",
   },
 };
-
-export default UpdateSkillsModal;

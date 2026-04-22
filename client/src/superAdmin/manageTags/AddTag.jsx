@@ -1,14 +1,25 @@
-import { FaHome, FaPlusCircle } from "react-icons/fa";
+import {
+  FaArrowAltCircleRight,
+  FaCloudUploadAlt,
+  FaTimes,
+} from "react-icons/fa";
 
-import { NavLink } from "react-router-dom";
-import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
+import Button from "../../components/buttons/Button";
 
 const AddTag = () => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
+  const apiURL = import.meta.env.VITE_API_BASE_URL || "http:localhost:5000/api";
+
+  const handleAddTagFormToggle = () => {
+    navigate("/super-admin/manage-tags");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +28,7 @@ const AddTag = () => {
     setErrorMessage("");
     setSuccessMessage("");
     try {
-      const response = await fetch("http://localhost:5000/api/tags", {
+      const response = await fetch(`${apiURL}/tags`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,20 +62,16 @@ const AddTag = () => {
   };
   return (
     <div>
-      <SuperAdminPageTitle
-        title="Add"
+      <SuperAdminPageSubHeader
+        title="Add New"
         decoratedText="Tags"
-        subtitle="Super admin only!"
+        buttonLabel="Manage Tags"
+        variant="success"
+        icon={<FaArrowAltCircleRight size={20} />}
+        labelIcon={<FaCloudUploadAlt />}
+        onButtonClick={handleAddTagFormToggle}
       />
 
-      <div className="flex lg:justify-start items-center justify-between lg:mb-4 bg-base-200 p-2 shadow-sm">
-        <NavLink to="/super-admin/manage-tags" className="m-0">
-          <button className="btn btn-xs rounded-full text-white btn-success">
-            <FaHome />
-            Manage Tags
-          </button>
-        </NavLink>
-      </div>
       <div className="my-2 max-w-md mx-auto">
         <div className="">
           {/* Display error messages */}
@@ -77,28 +84,42 @@ const AddTag = () => {
             <p className="text-sm text-green-500">{successMessage}</p>
           )}
         </div>
-        <form onSubmit={handleSubmit}>
-          <div className="label">
-            <span className="label-text font-bold">Tag name:</span>
-          </div>
-          <input
-            type="text"
-            placeholder="Tag name..."
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            className="input input-bordered input-sm form-control max- w-full mb-2"
-          />
+        <div className="lg:p-8 p-2 border border-slate-300 admin-dark:border-slate-600 rounded-xl lg:mt-10 mt-2 shadow-lg hover:shadow-2xl">
+          <form onSubmit={handleSubmit} className="space-y-2">
+            <input
+              type="text"
+              placeholder="Tag name..."
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="input input-bordered input-sm form-control w-full mb-2 admin-dark:bg-slate-700 admin-dark:border-slate-600 border-slate-300"
+            />
 
-          <button className="btn btn-sm btn-primary rounded-full shadow-md">
-            {loading ? (
-              <span className="loading loading-spinner loading-xs"></span>
-            ) : (
-              <FaPlusCircle />
-            )}
-            {loading ? " Uploading..." : " Add Tag"}
-          </button>
-        </form>
+            <div className="admin-dark:admin-dark dark:relative flex items-center gap-2 justify-end">
+              <Button
+                type="submit"
+                variant="success"
+                size="sm"
+                label={loading ? " Uploading..." : " Add Tag"}
+                disabled={loading}
+                icon={
+                  loading ? (
+                    <span className="loading loading-spinner loading-xs"></span>
+                  ) : (
+                    <FaCloudUploadAlt />
+                  )
+                }
+              />
+              <Button
+                type="button"
+                variant="warning"
+                size="sm"
+                icon={<FaTimes />}
+                label="Cancel"
+              />
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ const SuperAdminPageSubHeader = ({
   decoratedText,
   buttonLabel,
   icon,
+  labelIcon,
   variant = "base",
   onButtonClick,
   searchBox = false,
@@ -14,9 +15,9 @@ const SuperAdminPageSubHeader = ({
   setFilterText,
 }) => {
   return (
-    <div className="flex justify-between items-center lg:mb-2 mb-2 bg-base-200 p-2 shadow-sm admin-dark:bg-slate-800 admin-dark:text-slate-300 border-b border-slate-300 admin-dark:border-slate-600 w-[100%]">
+    <div className="grid lg:grid-cols-12 grid-cols-1 justify-between lg:gap-2 gap-2 items-center lg:mb-2 mb-2 bg-base-200 p-2 shadow-sm admin-dark:bg-slate-800 admin-dark:text-slate-300 border-b border-slate-300 admin-dark:border-slate-600 w-full">
       {/* Top Bar */}
-      <div className="flex mx-auto w-[33.3%]">
+      <div className="lg:col-span-3 col-span-12">
         {/* Button */}
         {buttonLabel && (
           <MiniButton
@@ -27,10 +28,15 @@ const SuperAdminPageSubHeader = ({
           />
         )}
       </div>
-      <div className="flex mx-auto w-[33.3%]">
+      <div className="lg:col-span-6 col-span-12">
         {/* Title + Count */}
         {title && (
-          <h2 className="lg:text-lg text-sm font-bold text-center flex-1 text-base-content admin-dark:text-slate-300 gap-2 flex items-center justify-center">
+          <h2 className="lg:text-xl text-sm font-bold text-center lg:flex-1 flex-full text-base-content admin-dark:text-slate-300 gap-2 flex items-center justify-center">
+            {labelIcon && (
+              <span className="text-slate-600 admin-dark:text-slate-300">
+                {labelIcon}
+              </span>
+            )}
             {title}
             {decoratedText && (
               <span className="admin-dark:text-amber-400 text-amber-600">
@@ -42,7 +48,7 @@ const SuperAdminPageSubHeader = ({
       </div>
 
       {/* Optional empty state */}
-      <div className="flex mx-auto w-[33.3%] justify-end">
+      <div className="lg:col-span-3 col-span-12justify-end">
         <div className="flex items-center justify-between gap-4">
           <div className="">
             {/* Search */}
@@ -53,7 +59,7 @@ const SuperAdminPageSubHeader = ({
                   placeholder=" Search text..."
                   value={filterText}
                   onChange={(e) => setFilterText(e.target.value)}
-                  className="input input-bordered input-sm w-full transition-all focus:outline-none admin-dark:bg-slate-700 admin-dark:border-slate-600 text-base-content/80 admin-dark:text-slate-300 pl-6"
+                  className="input input-bordered input-sm w-full transition-all focus:outline-none admin-dark:bg-slate-700 admin-dark:border-slate-600 text-base-content/80 admin-dark:text-slate-300 lg:pl-6"
                 />
                 <span>
                   <FaSearch className="absolute top-[9px] left-2 flex transition-all z-5 items-center text-base-content/30  admin-dark:text-slate-500" />

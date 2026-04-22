@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import CategoryTable from "./CategoryTable";
-import { FaCloudUploadAlt } from "react-icons/fa";
+import { FaCloudUploadAlt, FaDatabase } from "react-icons/fa";
 import Swal from "sweetalert2";
 import UpdateCategoryModal from "./UpdateCategoryModal";
 import { Helmet } from "react-helmet-async";
@@ -158,6 +158,7 @@ const ManageCategories = () => {
         variant="success"
         buttonLabel="Add Category"
         icon={<FaCloudUploadAlt size={20} />}
+        labelIcon={<FaDatabase />}
         searchBox={true}
         setFilterText={setFilterText}
         onButtonClick={handleAddCategoryFormToggle}

@@ -2,25 +2,32 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 import DataTable from "react-data-table-component";
 
-const NoticeTable = ({ notices = [], onEdit, onDelete }) => {
+const NoticeTable = ({ notices = [], onEdit, onDelete, filterText }) => {
+  const filteredNotices = notices.filter(
+    (notice) =>
+      notice.title.toLowerCase().includes(filterText.toLowerCase()) ||
+      notice.content.toLowerCase().includes(filterText.toLowerCase()) ||
+      notice.status.toLowerCase().includes(filterText.toLowerCase()),
+  );
+
   const columns = [
     {
       name: "Title",
       selector: (row) => row.title,
       sortable: true,
-      width: "130px",
+      width: "430px",
     },
     {
       name: "Content",
       selector: (row) => row.content,
       sortable: true,
-      width: "130px",
+      width: "280px",
     },
     {
       name: "Status",
       selector: (row) => row.status,
       sortable: true,
-      width: "130px",
+      width: "230px",
     },
     {
       name: "Created At",
@@ -57,7 +64,7 @@ const NoticeTable = ({ notices = [], onEdit, onDelete }) => {
     <div>
       <DataTable
         columns={columns}
-        data={notices} // Use filtered data here
+        data={filteredNotices} // Use filtered data here
         pagination
         dense
         highlightOnHover

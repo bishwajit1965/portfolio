@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { FaCloudUploadAlt } from "react-icons/fa";
+import { FaCloudUploadAlt, FaDatabase } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import TagTable from "./TagTable";
@@ -150,6 +150,7 @@ const ManageTags = () => {
         variant="success"
         buttonLabel="Add Tag"
         icon={<FaCloudUploadAlt size={20} />}
+        labelIcon={<FaDatabase />}
         searchBox={true}
         setFilterText={setFilterText}
         onButtonClick={handleAddCategoryFormToggle}

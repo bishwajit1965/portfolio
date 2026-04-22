@@ -5,6 +5,7 @@ import UpdateCommentsModal from "./UpdateCommentsModal";
 import apiRequest from "../utils/apiRequest";
 import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
 import { useNavigate } from "react-router-dom";
+import { FaDatabase } from "react-icons/fa";
 
 const ManageComments = () => {
   const [comments, setComments] = useState([]);
@@ -144,6 +145,7 @@ const ManageComments = () => {
         decoratedText="Management Table"
         dataLength={comments.length}
         searchBox={true}
+        labelIcon={<FaDatabase />}
         setFilterText={setFilterText}
         onButtonClick={handleAddCategoryFormToggle}
       />

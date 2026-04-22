@@ -28,33 +28,36 @@ const UpdateTagModal = ({ tag, onClose, onUpdate }) => {
     >
       <div
         style={styles.modalContent}
-        className="admin-dark:bg-gray-800 admin-dark:text-slate-300 space-y-4 rounded-lg shadow-lg p-6 w-full max-w-md"
+        className="admin-dark:bg-gray-800 bg-base-100 admin-dark:text-slate-300 space-y-4 rounded-lg shadow-lg p-6 w-full max-w-md"
       >
-        <h2 className="admin-dark:text-slate-300 text-slate-600 flex items-center gap-2">
+        <h2 className="admin-dark:text-slate-300 text-slate-700 font-bold lg:text-xl text-lg border-b-2 border-slate-3 pb-1 admin-dark:border-slate-600 flex items-center gap-2">
           <FaEdit />
           Update Tag
         </h2>
         <form onSubmit={handleSubmit}>
           <div style={styles.formGroup}>
-            <label htmlFor="TagName">Tag Name:</label>
+            <label
+              htmlFor="TagName"
+              className="text-slate-600 admin-dark:text-slate-400 font-semibold"
+            >
+              Tag Name:
+            </label>
             <input
               type="text"
               id="TagName"
               name="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              // style={styles.input}
               required
-              className="input input-bordered input-sm form-control max- w-full mb-2 admin-dark:bg-slate-700 admin-dark:text-slate-300"
+              className="input input-bordered input-sm form-control max- w-full mb-2 admin-dark:bg-slate-700 text-slate-700 admin-dark:text-slate-300"
             />
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-end gap-2">
             <MiniButton
               type="submit"
               variant="success"
               label="Update"
               icon={<FaEdit />}
-              // style={styles.buttonPrimary}
             />
 
             <MiniButton
@@ -63,7 +66,6 @@ const UpdateTagModal = ({ tag, onClose, onUpdate }) => {
               label="Cancel"
               icon={<FaTimes />}
               onClick={onClose}
-              // style={styles.buttonSecondary}
             />
           </div>
         </form>

@@ -1,13 +1,13 @@
-import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
-import { NavLink } from "react-router-dom";
 import Select from "react-select";
-import { FaPlusCircle } from "react-icons/fa";
+import { FaCloudUploadAlt, FaPlusCircle, FaTimesCircle } from "react-icons/fa";
 import { useState } from "react";
 import apiRequest from "../utils/apiRequest";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
+import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
+import Button from "../../components/buttons/Button";
 
-const AddSkills = () => {
+const AddSkills = ({ isDark, customStyles, onClose }) => {
   const [skillName, setSkillName] = useState("");
   const [level, setLevel] = useState("");
   const [experience, setExperience] = useState("");
@@ -16,6 +16,7 @@ const AddSkills = () => {
   const [selectedTools, setSelectedTools] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [errorMessages, setErrorMessages] = useState([]);
+
   const token = localStorage.getItem("token");
 
   // For clearing error messages
@@ -197,136 +198,291 @@ const AddSkills = () => {
     }
   };
   return (
-    <div className="p-2">
-      <SuperAdminPageTitle
-        title="Add"
-        decoratedText="Skills"
-        subtitle="Super admin only!"
-      />
-      <div className="flex lg:justify-start items-center justify-between lg:mb-2 bg-base-200 p-2 shadow-sm">
-        <NavLink to="/super-admin/manage-skills" className="m-0">
-          <button className="btn btn-xs btn-primary">
-            <FaPlusCircle />
-            Manage Skills
-          </button>
-        </NavLink>
-      </div>
-      <div className="lg:max-w-xl mx-auto mt-4">
-        {errorMessages?.length > 0 && (
-          <div className="alert alert-error text-white text-sm">
-            <div className="">
-              <div className="mb-2 border-b w-full">
-                <h2 className="text-md font-bold text-base-100 animate-bounce">
-                  Error(s) Encountered : Please follow the instructions.
-                </h2>
+    <div style={styles.modalOverlay} className="admin-dark:bg-slate-800">
+      <div className="bg-base-100 border rounded-xl border-slate-600 admin-dark:border-slate-600 admin-dark:bg-slate-800 admin-dark:text-slate-300">
+        <div className="admin-dark:bg-slate-800 admin-dark:text-slate-300 rounded-xl rounded-t-xl">
+          <div className="rounded-t-xl pt-2 z-10 bg-base-200 admin-dark:bg-slate-800">
+            <SuperAdminPageSubHeader
+              title="Add New"
+              decoratedText="Skills Form"
+              labelIcon={<FaCloudUploadAlt />}
+            />
+          </div>
+
+          {/* Validation errors */}
+          <div className="lg:max-w-xl mx-auto mt-4 rounded-xl lg:px-6 px-2">
+            {errorMessages?.length > 0 && (
+              <div className="alert alert-error text-white text-sm">
+                <div className="">
+                  <div className="mb-2 border-b w-full">
+                    <h2 className="text-md font-bold text-base-100 animate-bounce">
+                      Error(s) Encountered : Please follow the instructions.
+                    </h2>
+                  </div>
+
+                  <ul>
+                    {errorMessages.map((error, index) => (
+                      <li key={index}>
+                        {index + 1}
+                        {")"} {typeof error === "string" ? error : error?.msg}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-              <ul>
-                {errorMessages.map((error, index) => (
-                  <li key={index}>
-                    {index + 1}
-                    {")"} {typeof error === "string" ? error : error?.msg}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            )}
           </div>
-        )}
-      </div>
-      <div className="lg:max-w-xl flex mx-auto border rounded-xl shadow-md hover:shadow-lg p-10 my-8 bg-base-200">
-        <form onSubmit={handleSubmit} className="w-full">
-          <div className="">
-            <h2 className="lg:text-xl text-lg font-extrabold flex items-center gap-2 ">
-              <FaPlusCircle />
-              Add Skills
-            </h2>
+
+          <div className="lg:max-w-xl flex mx-auto shadow-md rounded-xl hover:shadow-lg lg:p-6 p-4 bg-base-100 admin-dark:bg-slate-800 admin-dark:text-slate-300 admin-dark:border-slate-600 text-slate-600 admin-dark:shadow-lg transition-shadow duration-300">
+            <form
+              onSubmit={handleSubmit}
+              className="w-full border lg:p-6 p-2 rounded-xl border-slate-300 admin-dark:border-slate-600"
+            >
+              <div className="w-full">
+                {message && (
+                  <p className="text-blue-800 font-bold">{message}</p>
+                )}
+              </div>
+              <label className="form-control w-full">
+                <div className="label">
+                  <span className="label-text admin-dark:text-slate-300">
+                    Skill name:
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  name="skillName"
+                  placeholder="Skill name..."
+                  value={skillName}
+                  onChange={(e) => setSkillName(e.target.value)}
+                  className="input input-bordered input-sm form-control max- w-full mb-2 admin-dark:bg-slate-700 admin-dark:text-slate-300"
+                />
+              </label>
+
+              <label className="form-control">
+                <div className="label">
+                  <span className="label-text admin-dark:text-slate-300">
+                    Skills level:
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  name="level"
+                  placeholder="Level..."
+                  value={level}
+                  onChange={(e) => setLevel(e.target.value)}
+                  className="input input-bordered input-sm form-control max- w-full mb-2 admin-dark:bg-slate-700 admin-dark:text-slate-300"
+                />
+              </label>
+
+              <label className="form-control w-full">
+                <div className="label">
+                  <span className="label-text admin-dark:text-slate-300">
+                    Experience:
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  name="experience"
+                  placeholder="Experience..."
+                  value={experience}
+                  onChange={(e) => setExperience(e.target.value)}
+                  className="input input-bordered input-sm form-control max- w-full mb-2 admin-dark:bg-slate-700 admin-dark:text-slate-300"
+                />
+              </label>
+
+              <label className="form-control">
+                <div className="label">
+                  <span className="label-text admin-dark:text-slate-300">
+                    Skill Tools:
+                  </span>
+                </div>
+
+                <Select
+                  name="tools"
+                  options={options}
+                  isMulti
+                  value={selectedTools}
+                  onChange={handleToolChange}
+                  styles={customStyles(isDark)}
+                  className="form-control py-1 px-2 rounded-md"
+                />
+              </label>
+              <label className="form-control">
+                <div className="label">
+                  <span className="label-text admin-dark:text-slate-300">
+                    Categories:
+                  </span>
+                </div>
+
+                <Select
+                  name="category"
+                  options={categoryOptions}
+                  isMulti
+                  value={selectedCategories}
+                  onChange={handleCategoryChange}
+                  styles={customStyles(isDark)}
+                  className="form-control py-1 px-2 rounded-md"
+                />
+              </label>
+
+              <div className="flex items-center gap-4 mt-4 dark:admin-dark dark:relative">
+                <Button
+                  type="submit"
+                  variant="success"
+                  size="sm"
+                  label={loading ? "Uploading..." : "Add Skill"}
+                  disabled={loading}
+                  icon={loading ? <FaCloudUploadAlt /> : <FaPlusCircle />}
+                />
+
+                <Button
+                  type="button"
+                  onClick={onClose}
+                  label="Close"
+                  variant="danger"
+                  size="sm"
+                  icon={<FaTimesCircle />}
+                />
+              </div>
+            </form>
           </div>
-          <div className="w-full">
-            {message && <p className="text-blue-800 font-bold">{message}</p>}
-          </div>
-          <label className="form-control w-full">
-            <div className="label">
-              <span className="label-text">Skill name:</span>
-            </div>
-            <input
-              type="text"
-              name="skillName"
-              placeholder="Skill name..."
-              value={skillName}
-              onChange={(e) => setSkillName(e.target.value)}
-              className="input input-sm input-bordered form-control w-full"
-            />
-          </label>
-
-          <label className="form-control">
-            <div className="label">
-              <span className="label-text">Skills level:</span>
-            </div>
-            <input
-              type="text"
-              name="level"
-              placeholder="Level..."
-              value={level}
-              onChange={(e) => setLevel(e.target.value)}
-              className="input input-sm input-bordered form-control w-full"
-            />
-          </label>
-
-          <label className="form-control w-full">
-            <div className="label">
-              <span className="label-text">Experience:</span>
-            </div>
-            <input
-              type="text"
-              name="experience"
-              placeholder="Experience..."
-              value={experience}
-              onChange={(e) => setExperience(e.target.value)}
-              className="input input-sm input-bordered form-control w-full"
-            />
-          </label>
-
-          <label className="form-control">
-            <div className="label">
-              <span className="label-text">Skill Tools:</span>
-            </div>
-            <Select
-              name="tools"
-              options={options}
-              isMulti
-              value={selectedTools}
-              onChange={handleToolChange}
-              className="form-control py-1 px-2 rounded-md"
-            />
-          </label>
-          <label className="form-control">
-            <div className="label">
-              <span className="label-text">Categories:</span>
-            </div>
-            <Select
-              name="category"
-              options={categoryOptions}
-              isMulti
-              value={selectedCategories}
-              onChange={handleCategoryChange}
-              className="form-control py-1 px-2 rounded-md"
-            />
-          </label>
-
-          <div className="lg:pt-4 px-2">
-            <button type="submit" className="btn btn-sm btn-primary">
-              {loading ? (
-                <span className="loading loading-spinner loading-xs"></span>
-              ) : (
-                <FaPlusCircle />
-              )}
-
-              {loading ? "Uploading..." : "Add Skill"}
-            </button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   );
 };
 
 export default AddSkills;
+// Simple inline styles for demonstration; consider using CSS or styled-components
+const styles = {
+  modalOverlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000,
+  },
+  modalContent: {
+    // backgroundColor: "#fff",
+    padding: "25px",
+    borderRadius: "8px",
+    width: "700px",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.26)",
+  },
+  formGroup: {
+    marginBottom: "5px",
+  },
+  input: {
+    width: "100%",
+    padding: "4px",
+    marginTop: "4px",
+    borderRadius: "4px",
+    border: "1px solid #ccc",
+  },
+  buttonGroup: {
+    display: "flex",
+    justifyContent: "flex-end",
+    paddingTop: "15px",
+    paddingBottom: "10px",
+  },
+  buttonPrimary: {
+    padding: "8px 16px",
+    backgroundColor: "#007bff",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    marginRight: "8px",
+    cursor: "pointer",
+  },
+  buttonSecondary: {
+    padding: "8px 16px",
+    backgroundColor: "#6c757d",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+  },
+  padding: {
+    paddingTop: "20px",
+    paddingBottom: "20px",
+  },
+};
+
+// const customStyles = (isDark) => ({
+//   control: (provided) => ({
+//     ...provided,
+//     backgroundColor: isDark ? "#1e293b" : "#ffffff",
+//     borderColor: isDark ? "#334155" : "#d1d5db",
+//     color: isDark ? "#e5e7eb" : "#111827",
+//   }),
+//   menu: (provided) => ({
+//     ...provided,
+//     backgroundColor: isDark ? "#1e293b" : "#ffffff",
+//   }),
+//   option: (provided, state) => ({
+//     ...provided,
+//     backgroundColor: state.isFocused
+//       ? isDark
+//         ? "#334155"
+//         : "#e5e7eb"
+//       : isDark
+//         ? "#1e293b"
+//         : "#ffffff",
+//     color: isDark ? "#e5e7eb" : "#111827",
+//     cursor: "pointer",
+//   }),
+// });
+
+// const customStyles = {
+//   control: (provided) => ({
+//     ...provided,
+//     backgroundColor: "#1e293b",
+//     borderColor: "#334155",
+//     color: "#e5e7eb",
+//   }),
+//   menu: (provided) => ({
+//     ...provided,
+//     backgroundColor: "#1e293b",
+//     color: "#e5e7eb",
+//   }),
+//   option: (provided, state) => ({
+//     ...provided,
+//     backgroundColor: state.isFocused ? "#334155" : "#1e293b",
+//     color: "#e5e7eb",
+//     cursor: "pointer",
+//   }),
+//   multiValue: (provided) => ({
+//     ...provided,
+//     backgroundColor: "#334155",
+//   }),
+//   multiValueLabel: (provided) => ({
+//     ...provided,
+//     color: "#e5e7eb",
+//   }),
+//   multiValueRemove: (provided) => ({
+//     ...provided,
+//     color: "#e5e7eb",
+//     ":hover": {
+//       backgroundColor: "#ef4444",
+//       color: "white",
+//     },
+//   }),
+//   input: (provided) => ({
+//     ...provided,
+//     color: "#e5e7eb",
+//   }),
+//   placeholder: (provided) => ({
+//     ...provided,
+//     color: "#94a3b8",
+//   }),
+//   singleValue: (provided) => ({
+//     ...provided,
+//     color: "#e5e7eb",
+//   }),
+// };

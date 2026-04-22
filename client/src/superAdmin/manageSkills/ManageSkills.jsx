@@ -1,10 +1,73 @@
-import { FaPlusCircle } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { FaCloudUploadAlt, FaDatabase } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import apiRequest from "../utils/apiRequest";
 import SkillsTable from "./SkillsTable";
 import UpdateSkillsModal from "./UpdateSkillsModal";
 import Swal from "sweetalert2";
+import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
+import AddSkills from "./AddSkills";
+
+/**=============================================
+ * For the toggling of React Multi Select fields
+ * @param {*} isDark
+ * @returns
+ *=============================================*/
+const customStyles = (isDark) => ({
+  control: (provided) => ({
+    ...provided,
+    backgroundColor: isDark ? "#1e293b" : "#ffffff",
+    borderColor: isDark ? "#334155" : "#d1d5db",
+    color: isDark ? "#e5e7eb" : "#111827",
+  }),
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: isDark ? "#1e293b" : "#ffffff",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isFocused
+      ? isDark
+        ? "#334155"
+        : "#e5e7eb"
+      : isDark
+        ? "#1e293b"
+        : "#ffffff",
+    color: isDark ? "#e5e7eb" : "#111827",
+    cursor: "pointer",
+  }),
+  multiValue: (provided) => ({
+    ...provided,
+    backgroundColor: isDark ? "#334155" : "#e5e7eb",
+  }),
+
+  multiValueLabel: (provided) => ({
+    ...provided,
+    color: isDark ? "#e5e7eb" : "#111827",
+  }),
+
+  multiValueRemove: (provided) => ({
+    ...provided,
+    color: isDark ? "#e5e7eb" : "#111827",
+    ":hover": {
+      backgroundColor: "#ef4444",
+      color: "white",
+    },
+  }),
+  input: (provided) => ({
+    ...provided,
+    color: isDark ? "#e5e7eb" : "#111827",
+  }),
+
+  placeholder: (provided) => ({
+    ...provided,
+    color: isDark ? "#94a3b8" : "#6b7280",
+  }),
+
+  singleValue: (provided) => ({
+    ...provided,
+    color: isDark ? "#e5e7eb" : "#111827",
+  }),
+});
 
 const ManageSkills = () => {
   const baseUrl =
@@ -13,6 +76,25 @@ const ManageSkills = () => {
   const [loading, setLoading] = useState(false);
   const [showSkillsUpdateModal, setShowSkillsUpdateModal] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState(null);
+  const [filterText, setFilterText] = useState("");
+  const [isAddSkillOpen, setIsAddSkillOpen] = useState(false);
+  const [isDark, setIsDark] = useState(
+    document.body.classList.contains("admin-dark"),
+  );
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDark(document.body.classList.contains("admin-dark"));
+    });
+
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     const fetchSkills = async () => {
       try {
@@ -42,6 +124,10 @@ const ManageSkills = () => {
     if (response.success) {
       setSkills(response?.data);
     }
+  };
+
+  const handleAddSkill = () => {
+    setIsAddSkillOpen((prev) => !prev);
   };
 
   const handleEditSkills = (skill) => {
@@ -130,20 +216,18 @@ const ManageSkills = () => {
 
   return (
     <div>
-      <div className="flex lg:justify-between items-center justify-between lg:mb-2 bg-base-200 text-slate-700 p-2 shadow-sm admin-dark:bg-slate-800 admin-dark:text-slate-300 border-b admin-dark:border-slate-600">
-        <NavLink to="/super-admin/add-skills" className="m-0">
-          <button className="btn btn-xs btn-primary">
-            <FaPlusCircle />
-            Add New Skill
-          </button>
-        </NavLink>
-
-        <div className="lg:col-span-4 col-span-12 flex lg:justify-center items-center">
-          <span className="text-xl font-bold">
-            Skills: {skills?.length > 0 ? skills?.length : 0}
-          </span>
-        </div>
-      </div>
+      <SuperAdminPageSubHeader
+        title="Skills"
+        decoratedText="Management Table"
+        dataLength={skills?.length}
+        variant="success"
+        buttonLabel="Add Skill"
+        icon={<FaCloudUploadAlt size={20} />}
+        labelIcon={<FaDatabase />}
+        searchBox={true}
+        setFilterText={setFilterText}
+        onButtonClick={handleAddSkill}
+      />
 
       {/* Pass skills to skills notice table */}
       {loading ? (
@@ -157,8 +241,19 @@ const ManageSkills = () => {
             onEdit={handleEditSkills}
             onUpdate={handleUpdateSkills}
             onDelete={handleDeleteSkills}
+            filterText={filterText}
+            isDark={isDark}
+            customStyles={customStyles}
           />
         </div>
+      )}
+
+      {isAddSkillOpen && (
+        <AddSkills
+          isDark={isDark}
+          customStyles={customStyles}
+          onClose={handleAddSkill}
+        />
       )}
 
       {showSkillsUpdateModal && selectedSkill && (
@@ -166,6 +261,8 @@ const ManageSkills = () => {
           skill={selectedSkill}
           onClose={() => setShowSkillsUpdateModal(false)}
           onUpdate={handleUpdateSkills}
+          isDark={isDark}
+          customStyles={customStyles}
         />
       )}
     </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaEdit, FaPlusCircle, FaTrashAlt } from "react-icons/fa";
+import { FaDatabase, FaEdit, FaPlusCircle, FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import DataTable from "react-data-table-component";
 import api from "../../services/api";
@@ -284,6 +284,7 @@ const ManageTestimonials = () => {
         variant="success"
         buttonLabel="Add Testimonial"
         icon={<FaPlusCircle />}
+        labelIcon={<FaDatabase />}
         onButtonClick={handleAddTestimonialFormToggle}
       />
 

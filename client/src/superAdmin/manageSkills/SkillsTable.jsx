@@ -1,37 +1,46 @@
 import DataTable from "react-data-table-component";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
-const SkillsTable = ({ skills = [], onEdit, onDelete }) => {
+const SkillsTable = ({ skills = [], onEdit, onDelete, filterText }) => {
+  // Filter skills based on skillName and category
+  const filteredSkills = skills.filter(
+    (skill) =>
+      (typeof skill.skillName === "string" &&
+        skill.skillName.toLowerCase().includes(filterText.toLowerCase())) ||
+      (typeof skill.category === "string" &&
+        skill.category.toLowerCase().includes(filterText.toLowerCase())),
+  );
+
   const columns = [
     {
       name: "Skill Name",
       selector: (row) => row.skillName,
       sortable: true,
-      width: "110px",
+      width: "190px",
     },
     {
       name: "Level",
       selector: (row) => row.level,
       sortable: true,
-      width: "110px",
+      width: "100px",
     },
     {
       name: "Experience",
       selector: (row) => row.experience,
       sortable: true,
-      width: "110px",
+      width: "230px",
     },
     {
       name: "Tools",
       selector: (row) => row.tools,
       sortable: true,
-      width: "110px",
+      width: "120px",
     },
     {
       name: "Category",
       selector: (row) => row.category,
       sortable: true,
-      width: "110px",
+      width: "90px",
     },
     {
       name: "Created At",
@@ -47,7 +56,7 @@ const SkillsTable = ({ skills = [], onEdit, onDelete }) => {
             })
           : "-",
       sortable: true,
-      width: "120px",
+      width: "180px",
     },
     {
       name: "Updated At",
@@ -60,7 +69,7 @@ const SkillsTable = ({ skills = [], onEdit, onDelete }) => {
             })
           : "Not updated",
       sortable: true,
-      width: "120px",
+      width: "180px",
     },
     {
       name: "Actions",
@@ -87,7 +96,7 @@ const SkillsTable = ({ skills = [], onEdit, onDelete }) => {
     <div className="mt-4">
       <DataTable
         columns={columns}
-        data={skills} // Use filtered data here
+        data={filteredSkills} // Use filtered data here
         pagination
         dense
         highlightOnHover

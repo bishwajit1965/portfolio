@@ -1,6 +1,7 @@
 import {
   FaArrowAltCircleDown,
   FaArrowAltCircleUp,
+  FaDatabase,
   FaPlusCircle,
 } from "react-icons/fa";
 import { useEffect, useState } from "react";
@@ -17,10 +18,10 @@ const ManageProjects = () => {
   const STEP = 3;
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState([]);
-  const [ visibleCount, setVisibleCount ] = useState( STEP ); // State to control the number of visible project
+  const [visibleCount, setVisibleCount] = useState(STEP); // State to control the number of visible project
   const navigate = useNavigate();
 
-   const handleAddProjectFormToggle = () => {
+  const handleAddProjectFormToggle = () => {
     navigate("/super-admin/add-project");
   };
 
@@ -88,18 +89,17 @@ const ManageProjects = () => {
         <title>Bishwajit.dev || Manage Projects</title>
       </Helmet>
 
-        <SuperAdminPageSubHeader
+      <SuperAdminPageSubHeader
         title="Projects"
         decoratedText="Management Table"
         dataLength={projects.length}
         variant="success"
         buttonLabel="Add Project"
         icon={<FaPlusCircle />}
+        labelIcon={<FaDatabase />}
         size="lg"
         onButtonClick={handleAddProjectFormToggle}
       />
-
-
 
       <div className="text-center">
         {loading && <span className="loading loading-ring loading-lg"></span>}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import BlogsTable from "./BlogsTable";
-import { FaCloudUploadAlt } from "react-icons/fa";
+import { FaCloudUploadAlt, FaDatabase } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
 import Swal from "sweetalert2";
@@ -271,12 +271,13 @@ const ManageBlogPosts = () => {
       </Helmet>
 
       <SuperAdminPageSubHeader
-        title="Blog Posts"
+        title="Blogs"
         decoratedText="Management Table"
         dataLength={blogPosts.length}
         variant="success"
         buttonLabel="Add Blog Post"
         icon={<FaCloudUploadAlt size={20} />}
+        labelIcon={<FaDatabase />}
         searchBox={true}
         setFilterText={setFilterText}
         onButtonClick={handleAddBlogPostFormToggle}

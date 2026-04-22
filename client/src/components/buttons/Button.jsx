@@ -4,6 +4,9 @@ const baseStyle =
 const variantStyles = {
   base: "bg-emerald-600 text-white hover:bg-emerald-700 justify-center flex dark:bg-slate-600 dark:text-gray-300 dark:shadow-lg dark:hover:bg-slate-900 dark:hover:text-base-100 admin-dark:bg-slate-600 admin-dark:text-gray-300 admin-dark:shadow-lg admin-dark:hover:bg-slate-900 admin-dark:hover:text-base-100",
 
+  primary:
+    "bg-blue-600 text-white hover:bg-blue-700 shadow-sm dark:bg-blue-600 dark:text-gray-300 dark:shadow-lg dark:hover:bg-blue-900 dark:hover:text-base-100 admin-dark:bg-blue-600 admin-dark:text-gray-300 admin-dark:shadow-lg admin-dark:hover:bg-blue-900 admin-dark:hover:text-base-100",
+
   success:
     "bg-green-600 text-white hover:text-base-300 hover:bg-green-700 shadow-sm dark:bg-green-600 dark:text-gray-300 dark:shadow-lg dark:hover:bg-green-700 dark:hover:text-base-100 admin-dark:bg-green-600 admin-dark:text-gray-300 admin-dark:shadow-lg admin-dark:hover:bg-green-700 admin-dark:hover:text-base-100",
 
@@ -20,6 +23,9 @@ const variantStyles = {
 
   rounded:
     "border border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white rounded-full dark:bg-slate-600 dark:text-gray-300 dark:shadow-lg dark:hover:bg-slate-900 dark:hover:text-base-100",
+
+  warning:
+    "bg-amber-600 text-base-100 hover:bg-amber-600 shadow-sm  admin-dark:bg-amber-500 admin-dark:text-base-100 admin-dark:shadow-lg admin-dark:hover:bg-amber-600 admin-dark:hover:text-base-100 dark:bg-amber-500 dark:text-gray-100 dark:shadow-lg dark:hover:bg-amber-600 dark:hover:text-base-100",
 };
 
 const SIZES = {

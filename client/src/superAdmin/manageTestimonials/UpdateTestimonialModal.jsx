@@ -132,7 +132,6 @@ const UpdateTestimonialModal = ({
                 value={formData?.name}
                 onChange={handleChange}
                 className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
-                // style={styles.input}
               />
               <input
                 type="text"
@@ -141,7 +140,6 @@ const UpdateTestimonialModal = ({
                 value={formData.designation}
                 onChange={handleChange}
                 className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
-                // style={styles.input}
               />
             </div>
 
@@ -153,7 +151,6 @@ const UpdateTestimonialModal = ({
                 value={formData.company}
                 onChange={handleChange}
                 className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
-                // style={styles.input}
               />
 
               <input
@@ -163,7 +160,6 @@ const UpdateTestimonialModal = ({
                 value={formData.projectName}
                 onChange={handleChange}
                 className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
-                // style={styles.input}
               />
             </div>
             <div className="lg:flex grid items-center justify-between gap-2">
@@ -174,7 +170,6 @@ const UpdateTestimonialModal = ({
                 value={formData.email}
                 onChange={handleChange}
                 className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
-                // style={styles.input}
               />
 
               <input
@@ -184,7 +179,6 @@ const UpdateTestimonialModal = ({
                 value={formData.location}
                 onChange={handleChange}
                 className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
-                // style={styles.input}
               />
             </div>
 
@@ -195,7 +189,6 @@ const UpdateTestimonialModal = ({
                 value={formData.date}
                 onChange={handleChange}
                 className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
-                // style={styles.input}
               />
               <input
                 type="number"
@@ -205,7 +198,6 @@ const UpdateTestimonialModal = ({
                 value={formData.rating}
                 onChange={handleChange}
                 className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
-                // style={styles.input}
               />
             </div>
 
@@ -217,7 +209,6 @@ const UpdateTestimonialModal = ({
                 value={formData.order}
                 onChange={handleChange}
                 className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
-                // style={styles.input}
               />
               <input
                 type="text"
@@ -226,7 +217,6 @@ const UpdateTestimonialModal = ({
                 value={formData.photo}
                 onChange={handleChange}
                 className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600"
-                // style={styles.input}
               />
             </div>
 
@@ -247,7 +237,6 @@ const UpdateTestimonialModal = ({
                   name="isVisible"
                   checked={formData.isVisible}
                   onChange={handleChange}
-                  // style={styles.input}
                 />
                 Visible
               </label>
@@ -268,9 +257,7 @@ const UpdateTestimonialModal = ({
                   onChange={(e) =>
                     updateArrayField("socialLinks", i, e.target.value)
                   }
-                  //   onChange={(e) => handleChange(e, i)}
                   className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600 mt-2"
-                  // style={styles.input}
                 />
               ))}
               <MiniButton
@@ -296,10 +283,8 @@ const UpdateTestimonialModal = ({
                   name="tags"
                   placeholder="Tag"
                   value={tag}
-                  //   onChange={(e) => handleChange(e, i, "tags")}
                   onChange={(e) => updateArrayField("tags", i, e.target.value)}
                   className="input input-bordered input-sm w-full col-span-2 bg-base-100 text-slate-700 admin-dark:bg-gray-800 admin-dark:text-slate-300 admin-dark:border-slate-600 mt-2"
-                  // style={styles.input}
                 />
               ))}
               <MiniButton

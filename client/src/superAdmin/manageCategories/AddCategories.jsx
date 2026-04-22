@@ -5,6 +5,8 @@ import { useState } from "react";
 import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
 
 const AddCategories = ({ onCategoryCreated }) => {
+  const apiURL =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -22,7 +24,7 @@ const AddCategories = ({ onCategoryCreated }) => {
     setErrorMessage("");
     setSuccessMessage("");
     try {
-      const response = await fetch("http://localhost:5000/api/categories", {
+      const response = await fetch(`${apiURL}/categories`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

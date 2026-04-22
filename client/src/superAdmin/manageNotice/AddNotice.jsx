@@ -1,7 +1,12 @@
-import { FaPlusCircle } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
-import SuperAdminPageTitle from "../superAdminPageTitle/SuperAdminPageTitle";
+import {
+  FaArrowAltCircleRight,
+  FaCloudUploadAlt,
+  FaPlusCircle,
+} from "react-icons/fa";
 import { useState } from "react";
+import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
+import { useNavigate } from "react-router-dom";
+import MiniButton from "../../components/buttons/MiniButton";
 
 const AddNotice = () => {
   const [title, setTitle] = useState("");
@@ -9,6 +14,13 @@ const AddNotice = () => {
   const [status, setStatus] = useState("draft"); // Default status is 'draft'
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const apiURL =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+  const navigate = useNavigate();
+
+  const handleRedirectNoticeFormToggle = () => {
+    navigate("/super-admin/manage-notices");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,7 +34,7 @@ const AddNotice = () => {
 
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/api/notices", {
+      const response = await fetch(`${apiURL}/notices`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,67 +63,61 @@ const AddNotice = () => {
 
   return (
     <div className="">
-      <SuperAdminPageTitle
-        title="Add"
-        decoratedText="Notice"
-        subtitle="Super admin only!"
-      />
-      <div className="flex lg:justify-start items-center justify-between lg:mb-2 bg-base-200 p-2 shadow-sm">
-        <NavLink to="/super-admin/manage-notices" className="m-0">
-          <button className="btn btn-xs btn-primary">
-            <FaPlusCircle />
-            Manage Notices
-          </button>
-        </NavLink>
+      <div className="mb-10">
+        <SuperAdminPageSubHeader
+          title="Add New"
+          decoratedText="Notice"
+          variant="success"
+          buttonLabel="Manage Notices"
+          icon={<FaArrowAltCircleRight />}
+          onButtonClick={handleRedirectNoticeFormToggle}
+        />
       </div>
-      <div className="lg:max-w-xl flex mx-auto border rounded-md shadow-sm p-4 mb-2 bg-base-200">
-        <form onSubmit={handleSubmit} className="w-full">
+
+      <div className="lg:max-w-xl flex mx-auto border rounded-xl shadow-lg p-6 bg-base-200 text-slate-700 admin-dark:text-slate-700 admin-dark:bg-slate-800 admin-dark:border-slate-600 ">
+        <form onSubmit={handleSubmit} className="w-full space-y-4">
           <div className="w-full">
-            {message && <p className="text-blue-800 font-bold">{message}</p>}
+            {message && (
+              <p className="text-blue-800 admin-dark:text-slate-300 font-bold">
+                {message}
+              </p>
+            )}
           </div>
-          <label className="form-control w-full">
-            <div className="label">
-              <span className="label-text">Title:</span>
-            </div>
-            <input
-              type="text"
-              placeholder="Notice title..."
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-              className="input input-sm input-bordered form-control w-full"
-            />
-          </label>
 
-          <label className="form-control">
-            <div className="label">
-              <span className="label-text">Notice Content:</span>
-            </div>
-            <textarea
-              className="textarea textarea-bordered h-24"
-              placeholder="Notice content..."
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              required
-            ></textarea>
-          </label>
+          <input
+            type="text"
+            placeholder="Notice title..."
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+            className="input input-bordered input-sm form-control max- w-full admin-dark:bg-slate-700 admin-dark:text-slate-300"
+          />
 
-          <label className="form-control">
-            <div className="label">
-              <span className="label-text">Status:</span>
-            </div>
-            <select
-              name="status"
-              value={status}
-              className="form-control py-1 px-2 rounded-md"
-              onChange={(e) => setStatus(e.target.value)}
+          <textarea
+            className="textarea textarea-bordered h-24 form-control max- w-full admin-dark:bg-slate-700 admin-dark:text-slate-300"
+            placeholder="Notice content..."
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            required
+          ></textarea>
+
+          <select
+            name="status"
+            value={status}
+            className="select select-sm rounded-md admin-dark:bg-slate-700 admin-dark:text-slate-300 admin-dark:border-slate-600 border w-full"
+            onChange={(e) => setStatus(e.target.value)}
+          >
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+          </select>
+
+          <div className="flex items-center justify-end gap-2">
+            <MiniButton
+              type="submit"
+              label="Add notice"
+              variant="success"
+              icon={<FaCloudUploadAlt />}
             >
-              <option value="draft">Draft</option>
-              <option value="published">Published</option>
-            </select>
-          </label>
-          <div className="lg:pt-4">
-            <button type="submit" className="btn btn-sm btn-primary">
               {loading ? (
                 <span className="loading loading-spinner loading-xs"></span>
               ) : (
@@ -119,7 +125,7 @@ const AddNotice = () => {
               )}
               {/* <FaPlusCircle /> Add */}
               {loading ? "Uploading..." : "Add notice"}
-            </button>
+            </MiniButton>
           </div>
         </form>
       </div>

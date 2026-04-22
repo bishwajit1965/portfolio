@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 
-import { FaPlusCircle } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { FaCloudUploadAlt, FaDatabase } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import NoticeTable from "./NoticeTable";
 import Swal from "sweetalert2";
 import UpdateNoticeModal from "./UpdateNoticeModal";
 import apiRequest from "../utils/apiRequest";
+import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
 
 const ManageNotice = () => {
   const [notices, setNotices] = useState([]);
@@ -13,6 +14,12 @@ const ManageNotice = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedNotice, setSelectedNotice] = useState(null);
+  const [filterText, setFilterText] = useState("");
+  const navigate = useNavigate();
+
+  const handleAddCategoryFormToggle = () => {
+    navigate("/super-admin/add-notice");
+  };
 
   // Fetch notices on component mount
   useEffect(() => {
@@ -130,23 +137,19 @@ const ManageNotice = () => {
 
   return (
     <div>
-      <div className="grid lg:grid-cols-12 lg:justify-between items-center justify-between lg:mb-4 bg-base-200 shadow-sm p-2">
-        <div className="lg:col-span-4 col-span-12">
-          <NavLink to="/super-admin/add-notice" className="m-0">
-            <button className="btn btn-xs btn-primary">
-              <FaPlusCircle />
-              Add Notice
-            </button>
-          </NavLink>
-        </div>
+      <SuperAdminPageSubHeader
+        title="Notices"
+        decoratedText="Management Table"
+        dataLength={notices?.length}
+        variant="success"
+        buttonLabel="Add Notice"
+        icon={<FaCloudUploadAlt size={20} />}
+        labelIcon={<FaDatabase />}
+        searchBox={true}
+        setFilterText={setFilterText}
+        onButtonClick={handleAddCategoryFormToggle}
+      />
 
-        <div className="lg:col-span-4 col-span-12 flex lg:justify-center items-center">
-          <h2 className="text-xl font-bold">
-            Notices List: {notices?.length > 0 ? notices?.length : 0}
-          </h2>
-        </div>
-        <div className="lg:col-span-4 col-span-12 flex lg:justify-center items-center"></div>
-      </div>
       {/* Pass notices to notice table */}
       <div className="p-2 shadow-sm w-full overflow-x-auto">
         {loading ? (
@@ -158,6 +161,7 @@ const ManageNotice = () => {
             notices={notices}
             onEdit={handleEditNotice}
             onDelete={handleDeleteNotice}
+            filterText={filterText}
           />
         )}
 

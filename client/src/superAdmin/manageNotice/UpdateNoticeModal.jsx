@@ -1,5 +1,6 @@
 import { FaEdit, FaTimes } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import MiniButton from "../../components/buttons/MiniButton";
 
 const UpdateNoticeModal = ({ notice, onClose, onUpdate }) => {
   const [status, setStatus] = useState("");
@@ -21,11 +22,20 @@ const UpdateNoticeModal = ({ notice, onClose, onUpdate }) => {
   };
 
   return (
-    <div style={styles.modalOverlay}>
-      <div style={styles.modalContent}>
+    <div style={styles.modalOverlay} className="admin-dark:bg-slate-800">
+      <div
+        style={styles.modalContent}
+        className="bg-base-100 text-slate-700 admin-dark:bg-slate-800 admin-dark:text-slate-300"
+      >
         <form onSubmit={handleSubmit}>
           <div style={styles.formGroup}>
-            <label htmlFor="Notice" className="font-bold">
+            <div className="border-b-2 border-base-300 admin-dark:border-slate-700 mb-4 pb-2">
+              <h2 className="lg:text-xl text-lg font-bold flex items-center gap-2">
+                <FaEdit />
+                Update Notice Status
+              </h2>
+            </div>
+            <label htmlFor="Notice" className="font-bold ">
               Notice status:
             </label>
             <div className="">
@@ -35,7 +45,7 @@ const UpdateNoticeModal = ({ notice, onClose, onUpdate }) => {
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
                 style={styles.select}
-                className="w-full border my-4 p-2"
+                className="w-full select select-sm rounded-md text-slate-700 admin-dark:text-slate-300 admin-dark:bg-slate-700 admin-dark:border-slate-600 border my-1"
                 required
               >
                 <option value="draft">Draft</option>
@@ -43,22 +53,27 @@ const UpdateNoticeModal = ({ notice, onClose, onUpdate }) => {
               </select>
             </div>
           </div>
-          <div style={styles.buttonGroup}>
-            <button
+          <div className="flex items-center justify-end gap-2">
+            <MiniButton
               type="submit"
-              className="btn btn-sm"
-              style={styles.buttonPrimary}
-            >
-              <FaEdit /> Update
-            </button>
-            <button
+              variant="success"
+              label="Update"
+              icon={<FaEdit />}
+              className=""
+              // style={styles.buttonPrimary}
+            />
+
+            <MiniButton
               type="button"
-              className="btn btn-sm"
+              variant="warning"
+              label="Cancel"
+              icon={<FaTimes />}
+              className=""
               onClick={onClose}
-              style={styles.buttonSecondary}
+              // style={styles.buttonSecondary}
             >
               <FaTimes /> Cancel
-            </button>
+            </MiniButton>
           </div>
         </form>
       </div>
@@ -80,7 +95,7 @@ const styles = {
     zIndex: 1000,
   },
   modalContent: {
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     padding: "24px",
     borderRadius: "8px",
     width: "400px",
