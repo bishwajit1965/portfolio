@@ -1,4 +1,4 @@
-import { FaSearch } from "react-icons/fa";
+import { FaRecycle, FaSearch } from "react-icons/fa";
 import MiniButton from "../../components/buttons/MiniButton";
 
 const SuperAdminPageSubHeader = ({
@@ -13,6 +13,10 @@ const SuperAdminPageSubHeader = ({
   searchBox = false,
   filterText,
   setFilterText,
+  refreshVariant = "rounded",
+  refreshButton = false,
+  refreshLabel,
+  onRefreshBtnClick,
 }) => {
   return (
     <div className="grid lg:grid-cols-12 grid-cols-1 justify-between lg:gap-2 gap-2 items-center lg:mb-2 mb-2 bg-base-200 p-2 shadow-sm admin-dark:bg-slate-800 admin-dark:text-slate-300 border-b border-slate-300 admin-dark:border-slate-600 w-full">
@@ -49,11 +53,11 @@ const SuperAdminPageSubHeader = ({
 
       {/* Optional empty state */}
       <div className="lg:col-span-3 col-span-12justify-end">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center justify-between gap-2">
           <div className="">
             {/* Search */}
             {searchBox && (
-              <div className="relative">
+              <div className="relative flex items-center gap-1">
                 <input
                   type="text"
                   placeholder=" Search text..."
@@ -63,6 +67,16 @@ const SuperAdminPageSubHeader = ({
                 />
                 <span>
                   <FaSearch className="absolute top-[9px] left-2 flex transition-all z-5 items-center text-base-content/30  admin-dark:text-slate-500" />
+                </span>
+                <span className="dark:admin-dark admin-dark dark:relative">
+                  {refreshButton && (
+                    <MiniButton
+                      icon={<FaRecycle />}
+                      variant={refreshVariant}
+                      label={refreshLabel}
+                      onClick={onRefreshBtnClick}
+                    />
+                  )}
                 </span>
               </div>
             )}
@@ -77,6 +91,7 @@ const SuperAdminPageSubHeader = ({
                     </span>
                   )}
                 </span>
+
                 <span className="text-center font-semibold text-base-content/70 admin-dark:text-slate-300 w-6 h-6 rounded-full border-2 border-base-content/25 admin-dark:border-slate-500 flex items-center justify-center text-xs">
                   {typeof dataLength === "number" &&
                     ` ${dataLength ? dataLength : "N/A"}`}{" "}

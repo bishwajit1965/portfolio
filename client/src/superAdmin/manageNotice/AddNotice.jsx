@@ -1,8 +1,4 @@
-import {
-  FaArrowAltCircleRight,
-  FaCloudUploadAlt,
-  FaPlusCircle,
-} from "react-icons/fa";
+import { FaArrowAltCircleRight, FaCloudUploadAlt } from "react-icons/fa";
 import { useState } from "react";
 import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
 import { useNavigate } from "react-router-dom";
@@ -114,18 +110,16 @@ const AddNotice = () => {
           <div className="flex items-center justify-end gap-2">
             <MiniButton
               type="submit"
-              label="Add notice"
+              label={loading ? "Uploading..." : "Add notice"}
               variant="success"
-              icon={<FaCloudUploadAlt />}
-            >
-              {loading ? (
-                <span className="loading loading-spinner loading-xs"></span>
-              ) : (
-                <FaPlusCircle />
-              )}
-              {/* <FaPlusCircle /> Add */}
-              {loading ? "Uploading..." : "Add notice"}
-            </MiniButton>
+              icon={
+                loading ? (
+                  <span className="loading loading-spinner loading-xs"></span>
+                ) : (
+                  <FaCloudUploadAlt />
+                )
+              }
+            />
           </div>
         </form>
       </div>

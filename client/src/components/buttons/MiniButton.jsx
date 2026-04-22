@@ -24,7 +24,7 @@ const variantStyles = {
   rounded: `
     border border-slate-600 text-slate-800
     hover:bg-slate-600 hover:text-white
-    rounded-full shadow-md dark:border-slate-400 dark:text-slate-300 dark:shadow-md dark:hover:bg-slate-900 dark:hover:text-base-100 admin-dark:border-slate-400 admin-dark:text-slate-300 admin-dark:shadow-md admin-dark:hover:bg-slate-900 admin-dark:hover:text-base-100
+    rounded-full shadow-md dark:border-slate-600 dark:text-slate-300 dark:shadow-md dark:hover:bg-slate-900 dark:hover:text-base-100 admin-dark:border-slate-600 admin-dark:text-slate-300 admin-dark:shadow-md admin-dark:hover:bg-slate-900 admin-dark:hover:text-base-100
   `,
   danger: `
     text-base-100 bg-red-500

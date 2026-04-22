@@ -21,6 +21,10 @@ const ManageNotice = () => {
     navigate("/super-admin/add-notice");
   };
 
+  const handleClearSearchText = () => {
+    setFilterText("");
+  };
+
   // Fetch notices on component mount
   useEffect(() => {
     const fetchNotices = async () => {
@@ -148,6 +152,10 @@ const ManageNotice = () => {
         searchBox={true}
         setFilterText={setFilterText}
         onButtonClick={handleAddCategoryFormToggle}
+        // For refreshing search input field
+        filterText={filterText} //important for clearing field
+        refreshButton={true}
+        onRefreshBtnClick={handleClearSearchText}
       />
 
       {/* Pass notices to notice table */}

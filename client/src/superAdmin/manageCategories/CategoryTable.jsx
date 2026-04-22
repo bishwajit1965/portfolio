@@ -15,13 +15,13 @@ const CategoryTable = ({ categories = [], onEdit, onDelete, filterText }) => {
       name: "Category Name",
       selector: (row) => row.name,
       sortable: true,
-      width: "180px",
+      width: "320px",
     },
     {
       name: "Created At",
       selector: (row) => new Date(row.createdAt).toLocaleDateString(),
       sortable: true,
-      width: "280px",
+      width: "380px",
     },
     {
       name: "Updated At",
@@ -30,7 +30,7 @@ const CategoryTable = ({ categories = [], onEdit, onDelete, filterText }) => {
           ? new Date(row.updatedAt).toLocaleDateString()
           : "Not updated",
       sortable: true,
-      width: "280px",
+      width: "380px",
     },
     {
       name: "Actions",
@@ -50,7 +50,7 @@ const CategoryTable = ({ categories = [], onEdit, onDelete, filterText }) => {
           </button>
         </>
       ),
-      width: "380px",
+      width: "180px",
     },
   ];
 

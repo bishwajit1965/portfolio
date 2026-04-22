@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import { FaCloudUploadAlt, FaDatabase } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -14,10 +13,16 @@ const ManageTags = () => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedTag, setSelectedTag] = useState(null);
   const [filterText, setFilterText] = useState("");
+  const apiURL =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
   const navigate = useNavigate();
 
   const handleAddCategoryFormToggle = () => {
     navigate("/super-admin/add-tag");
+  };
+
+  const handleClearSearchText = () => {
+    setFilterText("");
   };
 
   // Fetch tags on component mount
@@ -25,7 +30,7 @@ const ManageTags = () => {
     const fetchTags = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:5000/api/tags", {
+        const response = await fetch(`${apiURL}/tags`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -46,7 +51,7 @@ const ManageTags = () => {
       }
     };
     fetchTags();
-  }, []);
+  }, [apiURL]);
 
   // Handlers for edit and delete actions (to be implemented)
   const handleEditTag = (tag) => {
@@ -60,17 +65,14 @@ const ManageTags = () => {
     try {
       console.log("Updating tag ID:", updatedTag._id); // Debugging
 
-      const response = await fetch(
-        `http://localhost:5000/api/tags/${updatedTag._id}`,
-        {
-          method: "PATCH", // Ensure it's PATCH
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify(updatedTag),
+      const response = await fetch(`${apiURL}/tags/${updatedTag._id}`, {
+        method: "PATCH", // Ensure it's PATCH
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      );
+        body: JSON.stringify(updatedTag),
+      });
 
       if (response.ok) {
         // Show a success message with Swal
@@ -84,15 +86,12 @@ const ManageTags = () => {
         setShowUpdateModal(false); // Close modal
 
         // Force fetch all tags again to update the UI
-        const fetchTagsResponse = await fetch(
-          "http://localhost:5000/api/tags",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
+        const fetchTagsResponse = await fetch(`${apiURL}/tags`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        );
+        });
 
         if (fetchTagsResponse.ok) {
           const updatedTags = await fetchTagsResponse.json();
@@ -146,7 +145,7 @@ const ManageTags = () => {
       <SuperAdminPageSubHeader
         title="Tags"
         decoratedText="Management Table"
-        dataLength={tags.length}
+        dataLength={tags?.length}
         variant="success"
         buttonLabel="Add Tag"
         icon={<FaCloudUploadAlt size={20} />}
@@ -154,6 +153,10 @@ const ManageTags = () => {
         searchBox={true}
         setFilterText={setFilterText}
         onButtonClick={handleAddCategoryFormToggle}
+        // For refreshing search input field
+        filterText={filterText} //important for clearing field
+        refreshButton={true}
+        onRefreshBtnClick={handleClearSearchText}
       />
 
       <div className="p-2 shadow-sm">

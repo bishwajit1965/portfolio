@@ -1,8 +1,14 @@
-import { FaArrowAltCircleRight, FaPlusCircle } from "react-icons/fa";
+import {
+  FaArrowAltCircleRight,
+  FaCloudUploadAlt,
+  FaDatabase,
+  FaLayerGroup,
+} from "react-icons/fa";
 
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
+import MiniButton from "../../components/buttons/MiniButton";
 
 const AddCategories = ({ onCategoryCreated }) => {
   const apiURL =
@@ -69,10 +75,11 @@ const AddCategories = ({ onCategoryCreated }) => {
         variant="success"
         buttonLabel="Manage Categories"
         icon={<FaArrowAltCircleRight />}
+        labelIcon={<FaDatabase />}
         onButtonClick={handleRedirectCategoryFormToggle}
       />
 
-      <div className="my-2 max-w-md mx-auto">
+      <div className="my-2 max-w-md mx-auto border lg:mt-10 mt-2 border-slate-300 admin-dark:border-slate-600 rounded-xl shadow-md hover:shadow-2xl">
         <div className="">
           {/* Display error messages */}
           {errorMessage && (
@@ -84,28 +91,40 @@ const AddCategories = ({ onCategoryCreated }) => {
             <p className="text-sm text-green-500">{successMessage}</p>
           )}
         </div>
-        <form onSubmit={handleSubmit}>
-          <div className="label">
-            <span className="label-text font-bold">Category name:</span>
-          </div>
-          <input
-            type="text"
-            placeholder="Category name..."
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            className="input input-bordered input-sm form-control max- w-full mb-2 admin-dark:bg-slate-700 admin-dark:text-slate-300"
-          />
+        <div className="lg:p-6 p-2">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="">
+              <label
+                htmlFor="category"
+                className="text-slate-500 admin-dark:text-slate-400 font-bold text-sm flex items-center gap-1 pb-1"
+              >
+                <FaLayerGroup /> Category Name:{" "}
+              </label>
+              <input
+                type="text"
+                placeholder="Category name..."
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                className="input input-bordered input-sm form-control max- w-full mb-2 admin-dark:bg-slate-700 admin-dark:text-slate-300"
+              />
+            </div>
 
-          <button className="btn btn-sm btn-primary rounded-full shadow-md">
-            {loading ? (
-              <span className="loading loading-spinner loading-xs"></span>
-            ) : (
-              <FaPlusCircle />
-            )}
-            {loading ? " Uploading..." : " Add category"}
-          </button>
-        </form>
+            <MiniButton
+              type="submit"
+              size="sm"
+              variant="success"
+              icon={
+                loading ? (
+                  <span className="loading loading-spinner loading-xs"></span>
+                ) : (
+                  <FaCloudUploadAlt />
+                )
+              }
+              label={loading ? " Uploading..." : " Add category"}
+            />
+          </form>
+        </div>
       </div>
     </div>
   );

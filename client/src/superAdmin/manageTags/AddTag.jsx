@@ -114,6 +114,7 @@ const AddTag = () => {
                 type="button"
                 variant="warning"
                 size="sm"
+                onClick={handleAddTagFormToggle}
                 icon={<FaTimes />}
                 label="Cancel"
               />
