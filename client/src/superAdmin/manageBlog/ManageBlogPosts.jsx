@@ -358,7 +358,7 @@ const ManageBlogPosts = () => {
         searchBox={true}
         setFilterText={setFilterText}
         onButtonClick={handleAddBlogPostFormToggle}
-        // For refreshing search input field
+        //✅ For refreshing search input field
         filterText={filterText} //important for clearing field
         refreshButton={true}
         onRefreshBtnClick={handleClearSearchText}
