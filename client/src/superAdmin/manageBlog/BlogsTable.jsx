@@ -42,7 +42,7 @@ const BlogsTable = ({ blogPosts = [], onEdit, onDelete, filterText }) => {
       name: "Blog Title",
       selector: (row) => row.title,
       sortable: true,
-      width: "370px",
+      width: "350px",
     },
     {
       name: "Summary",

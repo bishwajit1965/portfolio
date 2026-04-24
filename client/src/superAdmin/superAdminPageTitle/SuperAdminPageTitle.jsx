@@ -17,8 +17,8 @@ const SuperAdminPageTitle = ({
   } = getSuperAdminPageTitle(location.pathname);
 
   return (
-    <div className="text-center border-b border-slate-300 admin-dark:border-slate-600 shadow-sm bg-base-300 text-slate-800 admin-dark:bg-gray-800 lg:py-4 py-2">
-      <h1 className="lg:text-xl text-medium font-extrabold admin-dark:text-slate-300 flex items-center justify-center gap-2">
+    <div className="text-center border-b border-slate-300 admin-dark:border-slate-700 shadow-sm bg-base-300 text-slate-800 admin-dark:bg-gray-800 lg:py-3.5 py-2">
+      <h1 className="lg:text-2xl text-medium font-extrabold admin-dark:text-slate-300 flex items-center justify-center gap-2">
         {Icon ? (
           <Icon className="text-amber-600" size={24} />
         ) : (

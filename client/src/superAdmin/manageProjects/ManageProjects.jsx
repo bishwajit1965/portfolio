@@ -18,11 +18,15 @@ const ManageProjects = () => {
   const STEP = 3;
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState([]);
+  const [filterText, setFilterText] = useState("");
   const [visibleCount, setVisibleCount] = useState(STEP); // State to control the number of visible project
   const navigate = useNavigate();
 
   const handleAddProjectFormToggle = () => {
     navigate("/super-admin/add-project");
+  };
+  const handleClearSearchText = () => {
+    setFilterText("");
   };
 
   useEffect(() => {
@@ -41,6 +45,12 @@ const ManageProjects = () => {
     fetchProjects();
   }, []);
 
+  // Filtered categories calculated directly from props and input
+  const filteredProjects = projects.filter(
+    (project) =>
+      typeof project.name === "string" &&
+      project.name.toLowerCase().includes(filterText.toLowerCase()),
+  );
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -92,13 +102,19 @@ const ManageProjects = () => {
       <SuperAdminPageSubHeader
         title="Projects"
         decoratedText="Management Table"
-        dataLength={projects.length}
+        dataLength={projects?.length}
         variant="success"
         buttonLabel="Add Project"
         icon={<FaPlusCircle />}
         labelIcon={<FaDatabase />}
         size="lg"
+        searchBox={true}
+        setFilterText={setFilterText}
         onButtonClick={handleAddProjectFormToggle}
+        // ✅ For refreshing search input field
+        filterText={filterText} //important for clearing field
+        refreshButton={true}
+        onRefreshBtnClick={handleClearSearchText}
       />
 
       <div className="text-center">
@@ -106,7 +122,7 @@ const ManageProjects = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-4 gap-2 justify-between p-4">
-        {projects.slice(0, visibleCount).map((project) => (
+        {filteredProjects.slice(0, visibleCount).map((project) => (
           <ProjectDisplayCard
             key={project._id}
             project={project}

@@ -38,9 +38,9 @@ const navLinks = [
 
 const SideNav = ({ user }) => {
   return (
-    <div className="h-screen sticky top-0 bg-base-200 admin-dark:bg-gray-800 text-slate-800 border-r border-slate-300 admin-dark:border-gray-700 shadow-sm admin-dark:text-slate-400">
+    <div className="h-screen sticky top-0 bg-base-200 admin-dark:bg-slate-800 text-slate-800 border-slate-300 admin-dark:border-slate-700 shadow-sm admin-dark:text-slate-400">
       {/* Header */}
-      <div className="grid lg:grid-cols-12 grid-cols-1 items-center border-b-2 border-slate-300 admin-dark:border-slate-600 text-slate-800 admin-dark:text-slate-300 py-[7px] p-2">
+      <div className="grid lg:grid-cols-12 grid-cols-1 items-center border-b border-slate-300 admin-dark:border-slate-700 text-slate-800 admin-dark:text-slate-300 py-[8px] px-2">
         <div className="lg:col-span-3 col-span-12">
           <img
             src={AdminImage}
@@ -62,7 +62,7 @@ const SideNav = ({ user }) => {
         </div>
       </div>
       {/* Super Admin Info */}
-      <div className="border-b-2 border-slate-300 admin-dark:border-slate-600 py-2 pl-2 admin-dark:bg-gray-800 text-slate-800 admin-dark:text-slate-300">
+      <div className="border-b border-slate-300 admin-dark:border-slate-700 py-2 pl-2 admin-dark:bg-slate-800 text-slate-800 admin-dark:text-slate-300">
         <h2 className="text-[15px] font-bold flex items-center gap-2">
           <FaTachometerAlt /> Super Admin
           <span className="text-amber-600 font-bold admin-dark:text-amber-400">
@@ -81,7 +81,7 @@ const SideNav = ({ user }) => {
 
       {/* Nav Items */}
       <div className="pl-2">
-        <ul className="divide-y divide-slate-300 admin-dark:divide-slate-600 rounded-b-lg max-h-[calc(100vh-162px)] overflow-y-auto">
+        <ul className="divide-y divide-slate-300 admin-dark:divide-slate-700 rounded-b-lg max-h-[calc(100vh-162px)] overflow-y-auto">
           {navLinks.map((item, index) => (
             <li key={index} className="list-none p-0">
               <NavLink

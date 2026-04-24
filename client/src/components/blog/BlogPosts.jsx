@@ -1,5 +1,5 @@
 import { getCategoryNames, getTagNames } from "../../helpers/blogHelpers";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import BlogPostCard from "./BlogPostCard";
 import BlogsCarousel from "../sections/blogsCarousel/BlogsCarousel";
 import { Helmet } from "react-helmet-async";
@@ -13,14 +13,89 @@ import useBlogData from "../../hooks/useBlogData";
 import usePagination from "../../hooks/usePagination";
 import RandomLatestPosts from "../sections/randomLatestsPosts/RandomLatestPosts";
 import SocialMediaLinks from "../shared/socialMedia/SocialMediaLinks";
-import { FaBlog } from "react-icons/fa";
+import { FaBlog, FaSearch } from "react-icons/fa";
 
+/**=============================================
+ * For the toggling of React Multi Select fields
+ * @param {*} isDark
+ * @returns
+ *=============================================*/
+const customStyles = (isDark) => ({
+  control: (provided) => ({
+    ...provided,
+    backgroundColor: isDark ? "#1e293b" : "#ffffff",
+    borderColor: isDark ? "#334155" : "#d1d5db",
+    color: isDark ? "#e5e7eb" : "#111827",
+  }),
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: isDark ? "#1e293b" : "#ffffff",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isFocused
+      ? isDark
+        ? "#334155"
+        : "#e5e7eb"
+      : isDark
+        ? "#1e293b"
+        : "#ffffff",
+    color: isDark ? "#e5e7eb" : "#111827",
+    cursor: "pointer",
+  }),
+  multiValue: (provided) => ({
+    ...provided,
+    backgroundColor: isDark ? "#334155" : "#e5e7eb",
+  }),
+
+  multiValueLabel: (provided) => ({
+    ...provided,
+    color: isDark ? "#e5e7eb" : "#111827",
+  }),
+
+  multiValueRemove: (provided) => ({
+    ...provided,
+    color: isDark ? "#e5e7eb" : "#111827",
+    ":hover": {
+      backgroundColor: "#ef4444",
+      color: "white",
+    },
+  }),
+  input: (provided) => ({
+    ...provided,
+    color: isDark ? "#e5e7eb" : "#111827",
+  }),
+
+  placeholder: (provided) => ({
+    ...provided,
+    color: isDark ? "#94a3b8" : "#6b7280",
+  }),
+
+  singleValue: (provided) => ({
+    ...provided,
+    color: isDark ? "#e5e7eb" : "#111827",
+  }),
+});
 const BlogPosts = () => {
   const { loading, posts, categories, tags, error } = useBlogData();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedTags, setSelectedTags] = useState([]);
   const postsPerPage = 9;
+  const [isDark, setIsDark] = useState(
+    document.body.classList.contains("dark"),
+  );
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDark(document.body.classList.contains("dark"));
+    });
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+    return () => observer.disconnect();
+  }, []);
 
   // Memoize filtered posts
   const filteredPosts = useMemo(() => {
@@ -66,13 +141,19 @@ const BlogPosts = () => {
       {/* Search and Filters */}
       <div className="lg:flex justify-between items-center p-2 bg-base-200 border lg:border-slate-200 lg:p-2 rounded-md shadow-sm lg:pt-2 lg:space-y-px space-y-2 dark:bg-slate-800 dark:border-none">
         {/* Search by title */}
-        <input
-          type="text"
-          className="input input-bordered lg:w-72 w-full input-sm lg:h-10"
-          placeholder="Search by title..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+        <div className="relative">
+          <input
+            type="text"
+            className="input input-bordered lg:w-72 w-full input-sm lg:h-10 dark:bg-slate-800 dark:border-slate-700 pl-8"
+            placeholder="Search by title..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <span className="absolute top-3.5 left-2">
+            <FaSearch className="text-slate-400 dark:text-slate-400" />
+          </span>
+        </div>
+
         {/* Search  by tags */}
         <Select
           isMulti
@@ -80,15 +161,18 @@ const BlogPosts = () => {
           value={selectedTags}
           onChange={setSelectedTags}
           placeholder="Filter by tags"
-          className="search-tags lg:w-auto w-full"
+          className="search-tags lg:w-72 w-full  "
+          styles={customStyles(isDark)}
         />
+
         <Select
           placeholder="Filter by category"
           value={selectedCategory}
           onChange={setSelectedCategory}
           options={categories}
           isClearable
-          className="lg:w-64 w-full"
+          className="lg:w-72 w-full"
+          styles={customStyles(isDark)}
         />
       </div>
 

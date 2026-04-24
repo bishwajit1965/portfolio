@@ -4,8 +4,20 @@ import Button from "../../buttons/Button";
 import { FaEnvelopesBulk } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import SocialMediaLinks from "../../shared/socialMedia/SocialMediaLinks";
+import { motion } from "framer-motion";
 
+import "react-quill/dist/quill.snow.css";
+import TextEditor from "../../../superAdmin/textEditor/TextEditor";
+import { FaCheckCircle } from "react-icons/fa";
 const ContactMeForm = () => {
+  const textVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: (i = 1) => ({
+      opacity: 1,
+      x: 0,
+      transition: { delay: i * 0.3, type: "spring", stiffness: 50 },
+    }),
+  };
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -87,7 +99,7 @@ const ContactMeForm = () => {
 
   return (
     <div className="lg:max-w-7xl mx-auto bg-base-200 rounded-md shadow-sm dark:bg-slate-800">
-      <div className="lg:max-w-5xl mx-auto p-4 rounded-lg shadow-md">
+      <div className="lg:max-w-5xl mx-auto rounded-lg shadow-md">
         <div className="lg:p-8">
           {error && (
             <p className="text-red-500 p-1 border border-red-800 rounded-md text-sm">
@@ -95,12 +107,63 @@ const ContactMeForm = () => {
             </p>
           )}
           {successMessage && <p className="text-green-500">{successMessage}</p>}
-          <h2 className="lg:text-3xl text-lg font-bold flex items-center gap-2 lg:mb-4 mb-2 text-slate-600 dark:text-slate-300">
-            <FaEnvelopesBulk size={25} />
-            Contact <span className="text-amber-600"> Me 24/7 </span>
-          </h2>
-          <form onSubmit={handleSubmit}>
-            <div className="lg:mb-4 mb-2">
+          <div className="space-y-2">
+            <motion.h1
+              className="lg:text-3xl text-lg font-bold flex items-center gap-2 text-slate-600 dark:text-slate-300"
+              custom={0}
+              initial="hidden"
+              animate="visible"
+              variants={textVariants}
+            >
+              <FaEnvelopesBulk size={25} />
+              Contact <span className="text-amber-600"> Me 24/7 </span>
+            </motion.h1>
+            <motion.h2
+              className="lg:text-xl text-lg font-bold"
+              custom={1}
+              initial="hidden"
+              animate="visible"
+              variants={textVariants}
+            >
+              Let’s Work Together
+            </motion.h2>
+
+            <motion.p
+              className="text-slate-500 flex items-center gap-2"
+              custom={2}
+              initial="hidden"
+              animate="visible"
+              variants={textVariants}
+            >
+              <FaCheckCircle className="text-emerald-500" /> I build scalable
+              web applications for businesses and startups.
+            </motion.p>
+
+            <motion.p
+              className="text-sm text-emerald-500 font-medium flex items-center gap-2"
+              custom={3}
+              initial="hidden"
+              animate="visible"
+              variants={textVariants}
+            >
+              <FaCheckCircle className="text-emerald-500" /> Available for
+              freelance projects
+            </motion.p>
+
+            <motion.p
+              className="text-sm text-slate-500 flex items-center gap-2"
+              custom={4}
+              initial="hidden"
+              animate="visible"
+              variants={textVariants}
+            >
+              <FaCheckCircle className="text-emerald-500" /> Response time:
+              within 24 hours - open to opportunities.
+            </motion.p>
+          </div>
+          <div className="h-[1px] bg-slate-300 dark:bg-slate-600 my-3"></div>
+          <form onSubmit={handleSubmit} className="space-y-2">
+            <div className="">
               <label className="block text-sm font-medium text-gray-700">
                 Name:
               </label>
@@ -111,13 +174,13 @@ const ContactMeForm = () => {
                 onChange={handleChange}
                 id=""
                 placeholder="Name..."
-                className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-700"
+                className="p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-700"
               />
               {errors.name && (
                 <p className="text-red-500 text-sm">{errors.name}</p>
               )}
             </div>
-            <div className="lg:mb-4 mb-2">
+            <div className="">
               <label className="block text-sm font-medium text-gray-700">
                 Email:
               </label>
@@ -128,29 +191,36 @@ const ContactMeForm = () => {
                 onChange={handleChange}
                 id=""
                 placeholder="Email..."
-                className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-700"
+                className="p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-700"
               />
               {errors.email && (
                 <p className="text-red-500 text-sm">{errors.email}</p>
               )}
             </div>
-            <div className="lg:mb-4 mb-2">
+            <div className="">
               <label className="block text-sm font-medium text-gray-700">
                 Message:
               </label>
-              <textarea
+              <TextEditor
+                name="message"
+                value={formData.message}
+                onChange={(value) =>
+                  setFormData({ ...formData, message: value })
+                }
+              />
+              {/* <textarea
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
                 rows="4"
                 placeholder="Message..."
                 className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-700"
-              ></textarea>
+              ></textarea> */}
               {errors.message && (
                 <p className="text-red-500 text-sm">{errors.message}</p>
               )}
             </div>
-            <div className="lg:flex grid items-center justify-between lg:pt-4 pt-2">
+            <div className="lg:flex grid items-center justify-between">
               <Button
                 type="submit"
                 icon={<FaEnvelopesBulk size={20} />}
@@ -158,7 +228,6 @@ const ContactMeForm = () => {
                 label={loading ? "Uploading..." : "Send Message"}
                 disabled={loading}
                 size="md"
-                className=""
               >
                 Send Mail
               </Button>

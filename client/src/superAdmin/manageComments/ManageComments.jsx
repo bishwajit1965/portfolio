@@ -143,7 +143,7 @@ const ManageComments = () => {
       <SuperAdminPageSubHeader
         title="Comments"
         decoratedText="Management Table"
-        dataLength={comments.length}
+        dataLength={comments?.length}
         searchBox={true}
         labelIcon={<FaDatabase />}
         setFilterText={setFilterText}

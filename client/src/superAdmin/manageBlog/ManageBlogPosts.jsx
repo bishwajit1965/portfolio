@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import BlogsTable from "./BlogsTable";
 import { FaCloudUploadAlt, FaDatabase } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
@@ -7,8 +6,69 @@ import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
 import Swal from "sweetalert2";
 import UpdateBlogModal from "./UpdateBlogModal";
 import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
-import { useNavigate } from "react-router-dom";
+import AddBlogPost from "./AddBlogPost";
 
+/**=============================================
+ * For the toggling of React Multi Select fields
+ * @param {*} isDark
+ * @returns
+ *=============================================*/
+const customStyles = (isDark) => ({
+  control: (provided) => ({
+    ...provided,
+    backgroundColor: isDark ? "#1e293b" : "#ffffff",
+    borderColor: isDark ? "#334155" : "#d1d5db",
+    color: isDark ? "#e5e7eb" : "#111827",
+  }),
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: isDark ? "#1e293b" : "#ffffff",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isFocused
+      ? isDark
+        ? "#334155"
+        : "#e5e7eb"
+      : isDark
+        ? "#1e293b"
+        : "#ffffff",
+    color: isDark ? "#e5e7eb" : "#111827",
+    cursor: "pointer",
+  }),
+  multiValue: (provided) => ({
+    ...provided,
+    backgroundColor: isDark ? "#334155" : "#e5e7eb",
+  }),
+
+  multiValueLabel: (provided) => ({
+    ...provided,
+    color: isDark ? "#e5e7eb" : "#111827",
+  }),
+
+  multiValueRemove: (provided) => ({
+    ...provided,
+    color: isDark ? "#e5e7eb" : "#111827",
+    ":hover": {
+      backgroundColor: "#ef4444",
+      color: "white",
+    },
+  }),
+  input: (provided) => ({
+    ...provided,
+    color: isDark ? "#e5e7eb" : "#111827",
+  }),
+
+  placeholder: (provided) => ({
+    ...provided,
+    color: isDark ? "#94a3b8" : "#6b7280",
+  }),
+
+  singleValue: (provided) => ({
+    ...provided,
+    color: isDark ? "#e5e7eb" : "#111827",
+  }),
+});
 const ManageBlogPosts = () => {
   const baseUrl =
     import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
@@ -21,15 +81,28 @@ const ManageBlogPosts = () => {
   const [selectedBlogPost, setSelectedBlogPost] = useState(null);
   const [filterText, setFilterText] = useState("");
   const [pageLoading, setPageLoading] = useState(false);
+  const [isAddBlogOpen, setIsAddBlogOpen] = useState(false);
+  const [isDark, setIsDark] = useState(
+    document.body.classList.contains("admin-dark"),
+  );
 
-  const navigate = useNavigate();
-
-  const handleAddBlogPostFormToggle = () => {
-    navigate("/super-admin/add-blog-post");
-  };
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDark(document.body.classList.contains("admin-dark"));
+    });
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+    return () => observer.disconnect();
+  }, []);
 
   const handleClearSearchText = () => {
     setFilterText("");
+  };
+
+  const handleAddBlogPostFormToggle = () => {
+    setIsAddBlogOpen((prev) => !prev);
   };
 
   useEffect(() => {
@@ -277,7 +350,7 @@ const ManageBlogPosts = () => {
       <SuperAdminPageSubHeader
         title="Blogs"
         decoratedText="Management Table"
-        dataLength={blogPosts.length}
+        dataLength={blogPosts?.length}
         variant="success"
         buttonLabel="Add Blog Post"
         icon={<FaCloudUploadAlt size={20} />}
@@ -290,6 +363,16 @@ const ManageBlogPosts = () => {
         refreshButton={true}
         onRefreshBtnClick={handleClearSearchText}
       />
+
+      <div className="">
+        {isAddBlogOpen && (
+          <AddBlogPost
+            isDark={isDark}
+            customStyles={customStyles}
+            onCancel={setIsAddBlogOpen}
+          />
+        )}
+      </div>
 
       <div className="">
         {/* Pass blog post to BlogPostTable */}
@@ -310,6 +393,8 @@ const ManageBlogPosts = () => {
             onClose={() => setShowUpdateModal(false)}
             onUpdate={handleUpdateBlogPost}
             loading={loading}
+            isDark={isDark}
+            customStyles={customStyles}
           />
         )}
       </div>

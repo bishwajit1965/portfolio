@@ -45,6 +45,9 @@ const CTAButton = ({
     amber:
       "bg-gradient-to-r from-amber-500 to-amber-600 text-white hover:from-amber-600 hover:to-amber-700 focus:ring-amber-400 rounded-md",
 
+    outline:
+      " border border-amber-500/70 text-amber-500 bg-transparent rounded-full hover:bg-amber-500/10 hover:border-amber-400 hover:text-amber-400 transition-all duration-300 focus:ring-2 focus:ring-amber-400/40",
+
     warning:
       "bg-gradient-to-r from-yellow-400 to-yellow-500 text-black hover:from-yellow-500 hover:to-yellow-600 focus:ring-yellow-400",
   };

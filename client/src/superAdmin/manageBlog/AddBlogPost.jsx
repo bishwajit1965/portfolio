@@ -1,20 +1,23 @@
-import { FaBlogger, FaUpload } from "react-icons/fa";
+import {
+  FaCloudUploadAlt,
+  FaDatabase,
+  FaRegTimesCircle,
+  FaTimesCircle,
+} from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 
 import CKEditorComponent from "../textEditor/CKEditorComponent";
 import { Helmet } from "react-helmet-async";
-import { NavLink } from "react-router-dom";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import apiRequest from "../utils/apiRequest";
 import categoryApi from "../utils/categoryApi";
 import tagApi from "../utils/tagApi";
+import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
+import Button from "../../components/buttons/Button";
+import { FaSpinner } from "react-icons/fa6";
 
-// import fetchWithAuth from "../utils/fetchWithAuth";
-
-// import CKEditorComponent from "../textEditor/CKEditorComponent";
-
-const AddBlogPost = () => {
+const AddBlogPost = ({ isDark, customStyles, onCancel }) => {
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [author, setAuthor] = useState("");
@@ -29,10 +32,12 @@ const AddBlogPost = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
   const fileInputRef = useRef(null);
-  // const baseUrl =
-  //   import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
-
   const token = localStorage.getItem("token");
+
+  const handleCancelUploadBlog = () => {
+    onCancel(false);
+  };
+
   // Fetching categories
   useEffect(() => {
     const fetchCategories = async () => {
@@ -232,94 +237,168 @@ const AddBlogPost = () => {
   };
 
   return (
-    <>
+    <div style={styles.modalOverlay} className="admin-dark:bg-slate-800">
       <Helmet>
         <title>Web-tech-services || Add Blog</title>
       </Helmet>
 
-      <div>
-        <div className="flex lg:justify-start items-center justify-between lg:mb-4 bg-base-200 p-2 shadow-sm">
-          <NavLink to="/super-admin/manage-blogs" className="m-0">
-            <button className="btn btn-xs btn-primary">
-              <FaBlogger />
-              Manage Blog Post
-            </button>
-          </NavLink>
-        </div>
-
-        <div className="mt-4">
-          <div className="lg:max-w-7xl mx-auto shadow-md">
-            {errorMessages.length > 0 && (
-              <div className="alert alert-error text-white text-sm">
-                <div className="">
-                  <div className="mb-2 border-b w-full">
-                    <h2 className="text-md font-bold text-base-100 animate-bounce">
-                      Error(s) Encountered : Please follow the instructions.
-                    </h2>
-                  </div>
-                  <ul>
-                    {errorMessages.map((error, index) => (
-                      <li key={index}>
-                        {index + 1}
-                        {")"} {typeof error === "string" ? error : error.msg}
-                      </li>
-                    ))}
-                  </ul>
+      <div
+        style={styles.modalContent}
+        className="bg-base-100 text-slate-700 admin-dark:bg-slate-800 admin-dark:text-slate-400 text-sm mb-1 max-h-[80vh] overflow-y-auto"
+      >
+        <SuperAdminPageSubHeader
+          title="Add"
+          decoratedText="Blog Posts"
+          buttonLabel="Cancel Upload"
+          variant="warning"
+          icon={<FaRegTimesCircle />}
+          labelIcon={<FaDatabase />}
+          onButtonClick={handleCancelUploadBlog}
+        />
+        <form
+          onSubmit={handleSubmit}
+          className="w-full space-y-4"
+          encType="multipart/form-data"
+        >
+          <div className="border lg:p-6 p-2 admin-dark:border-slate-700 rounded-lg mt-4 lg:space-y-4 space-y-2">
+            <div className="grid lg:grid-cols-12 gird-cols-1 gap-4 justify-between">
+              <div className="lg:col-span-8 col-span-12">
+                <div className="form-control">
+                  <label
+                    htmlFor="title"
+                    className="admin-dark:text-slate-400 text-sm mb-1"
+                  >
+                    Title:
+                  </label>
+                  <input
+                    type="text"
+                    name="title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    id=""
+                    placeholder="Title..."
+                    className="input input-sm input-bordered w-full admin-dark:text-slate-300 admin-dark:bg-slate-800/90 admin-dark:border-slate-700"
+                  />
                 </div>
               </div>
-            )}
-          </div>
-          <div className="lg:max-w-7xl w-full flex mx-auto border rounded-md p-4 shadow-sm">
-            <form
-              onSubmit={handleSubmit}
-              className="w-full space-y-2"
-              encType="multipart/form-data"
-            >
-              <h2 className="text-xl font-bold border-b pb-1">
-                Upload Blog Post
-              </h2>
-              <div className="form-control">
-                <label htmlFor="title">Title:</label>
-                <input
-                  type="text"
-                  name="title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  id=""
-                  className="input input-sm input-bordered w-full"
-                />
+              <div className="lg:col-span-4 col-span-12">
+                <div className="form-control">
+                  <label
+                    htmlFor="title"
+                    className="admin-dark:text-slate-400 text-sm mb-1"
+                  >
+                    Author:
+                  </label>
+                  <input
+                    type="text"
+                    name="author"
+                    value={author}
+                    onChange={(e) => setAuthor(e.target.value)}
+                    id=""
+                    placeholder="Author..."
+                    className="input input-sm input-bordered w-full admin-dark:text-slate-300 admin-dark:bg-slate-800/90 admin-dark:border-slate-700"
+                  />
+                </div>
               </div>
-              <div className="form-control">
-                <label htmlFor="title">Author:</label>
-                <input
-                  type="text"
-                  name="author"
-                  value={author}
-                  onChange={(e) => setAuthor(e.target.value)}
-                  id=""
-                  className="input input-sm input-bordered w-full"
-                />
+            </div>
+
+            <div className="grid grid-cols-12 justify-between items-center gap-2">
+              <div className="lg:col-span-6 col-span-12">
+                <div className="form-control">
+                  <label
+                    htmlFor="title"
+                    className="admin-dark:text-slate-400 text-sm mb-1"
+                  >
+                    Upload File:
+                  </label>
+                  <input
+                    type="file"
+                    name="imageUrl"
+                    accept="image/*"
+                    onChange={handleImageChange} // Use the new handler
+                    ref={fileInputRef}
+                    className="file-input file-input-sm file-input-bordered w-full admin-dark:text-slate-300 admin-dark:bg-slate-800/90 admin-dark:border-slate-700"
+                  />
+                </div>
               </div>
 
-              <div className="grid grid-cols-12 justify-between items-center gap-2">
-                <div className="lg:col-span-4 col-span-12">
-                  <div className="form-control">
-                    <label htmlFor="title">Upload File:</label>
-                    <input
-                      type="file"
-                      name="imageUrl"
-                      accept="image/*"
-                      onChange={handleImageChange} // Use the new handler
-                      ref={fileInputRef}
-                      className="file-input file-input-sm file-input-bordered w-full"
+              <div className="lg:col-span-6 col-span-12">
+                {/* New Field for Scheduling */}
+                <label
+                  htmlFor="status"
+                  className="admin-dark:text-slate-400 text-sm mb-1"
+                >
+                  Will publish at:
+                </label>
+                <input
+                  type="datetime-local"
+                  name="willPublishAt"
+                  value={willPublishAt}
+                  onChange={(e) => setWillPublishAt(e.target.value)}
+                  className="input input-sm w-full input-bordered admin-dark:text-slate-300 admin-dark:bg-slate-800/90 admin-dark:border-slate-700"
+                />
+              </div>
+            </div>
+            <div className="grid lg:grid-cols-12 grid-cols-1 gap-2 justify-between">
+              <div className="lg:col-span-4 col-span-12">
+                <div className="form-control">
+                  <label
+                    htmlFor="categories"
+                    className="admin-dark:text-slate-400 text-sm mb-1"
+                  >
+                    Categories:
+                  </label>
+                  {categories.length > 0 ? (
+                    <Select
+                      name="category"
+                      options={categories}
+                      isMulti
+                      value={selectedCategories}
+                      onChange={handleCategoryChange}
+                      placeholder="Select categories"
+                      styles={customStyles(isDark)}
+                      noOptionsMessage={() => "No categories available"}
                     />
-                  </div>
+                  ) : (
+                    <p>Loading categories...</p>
+                  )}
                 </div>
+              </div>
+              <div className="lg:col-span-4 col-span-12">
+                <div className="form-control">
+                  <label
+                    htmlFor="tags"
+                    className="admin-dark:text-slate-400 text-sm mb-1"
+                  >
+                    Tags:
+                  </label>
+                  {tags.length > 0 ? (
+                    <Select
+                      name="tag"
+                      options={tags}
+                      isMulti
+                      value={selectedTags}
+                      onChange={handleTagChange}
+                      placeholder="Select tags"
+                      noOptionsMessage={() => "No tags available"}
+                      styles={customStyles(isDark)}
+                    />
+                  ) : (
+                    <p>Loading tags...</p>
+                  )}
+                </div>
+              </div>
+              <div className="lg:col-span-4 col-span-12">
                 <div className="lg:col-span-4 col-span-12">
-                  <label htmlFor="status">Post Status</label>
+                  <label
+                    htmlFor="status"
+                    className="admin-dark:text-slate-400 text-sm mb-1"
+                  >
+                    Post Status
+                  </label>
                   <Select
                     name="status"
-                    className=""
+                    styles={customStyles(isDark)}
                     value={{
                       value: status,
                       label: status.charAt(0).toUpperCase() + status.slice(1),
@@ -332,102 +411,148 @@ const AddBlogPost = () => {
                     ]}
                   />
                 </div>
+              </div>
+            </div>
+            <div className="form-control">
+              <label
+                htmlFor="summary"
+                className="admin-dark:text-slate-400 text-sm mb-1"
+              >
+                Post Summary:
+              </label>
+              <textarea
+                className="textarea textarea-bordered h-16 w-full admin-dark:text-slate-300 admin-dark:bg-slate-800/90 admin-dark:border-slate-700"
+                placeholder="Post summary..."
+                type="text"
+                name="summary"
+                value={summary}
+                onChange={(e) => setSummary(e.target.value)}
+              ></textarea>
+            </div>
 
-                <div className="lg:col-span-4 col-span-12">
-                  {/* New Field for Scheduling */}
-                  <label htmlFor="status">Will publish at:</label>
-                  <input
-                    type="datetime-local"
-                    name="willPublishAt"
-                    value={willPublishAt}
-                    onChange={(e) => setWillPublishAt(e.target.value)}
-                    className="input input-sm w-full input-bordered"
-                  />
-                </div>
-              </div>
-              <div className="lg:grid grid-cols-12 gap-2 justify-between">
-                <div className="lg:col-span-6 col-span-12">
-                  <div className="form-control">
-                    <label>Categories:</label>
-                    {categories.length > 0 ? (
-                      <Select
-                        name="category"
-                        options={categories}
-                        isMulti
-                        value={selectedCategories}
-                        onChange={handleCategoryChange}
-                        placeholder="Select categories"
-                        noOptionsMessage={() => "No categories available"}
-                      />
-                    ) : (
-                      <p>Loading categories...</p>
-                    )}
+            <div className="form-control">
+              <label
+                htmlFor="content"
+                className="admin-dark:text-slate-400 text-sm mb-1"
+              >
+                Post Content:
+              </label>
+              <CKEditorComponent value={content} onChange={setContent} />
+              {/* <textarea
+                className="textarea textarea-bordered h-24"
+                placeholder="Post content..."
+                type="text"
+                id="editor"
+                name="content"
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                ></textarea> */}
+            </div>
+            <div className="lg:max-w- mx-auto shadow-md">
+              {errorMessages.length > 0 && (
+                <div className="alert alert-error text-white text-sm">
+                  <div className="">
+                    <div className="mb-2 border-b w-full">
+                      <h2 className="text-md font-bold text-base-100 animate-bounce">
+                        Error(s) Encountered : Please follow the instructions.
+                      </h2>
+                    </div>
+                    <ul>
+                      {errorMessages.map((error, index) => (
+                        <li key={index}>
+                          {index + 1}
+                          {")"} {typeof error === "string" ? error : error.msg}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
-                <div className="lg:col-span-6 col-span-12">
-                  <div className="form-control">
-                    <label>Tags:</label>
-                    {tags.length > 0 ? (
-                      <Select
-                        name="tag"
-                        options={tags}
-                        isMulti
-                        value={selectedTags}
-                        onChange={handleTagChange}
-                        placeholder="Select tags"
-                        noOptionsMessage={() => "No tags available"}
-                      />
-                    ) : (
-                      <p>Loading tags...</p>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <div className="form-control">
-                <label htmlFor="summary">Post Summary:</label>
-                <textarea
-                  className="textarea textarea-bordered h-16 w-full"
-                  placeholder="Post summary..."
-                  type="text"
-                  name="summary"
-                  value={summary}
-                  onChange={(e) => setSummary(e.target.value)}
-                ></textarea>
-              </div>
+              )}
+            </div>
 
-              <div className="">
-                <label className="form-control">
-                  <div className="label">
-                    <span className="label-text">Post Content:</span>
-                  </div>
-                  {/* <textarea
-                    className="textarea textarea-bordered h-24"
-                    placeholder="Post content..."
-                    type="text"
-                    id="editor"
-                    name="content"
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                  ></textarea> */}
-                  <CKEditorComponent value={content} onChange={setContent} />
-                </label>
-              </div>
-              <div className="form-control pt-3">
-                <button type="submit" className="btn btn-sm btn-primary">
-                  {loading ? (
-                    <span className="loading loading-spinner loading-xs"></span>
+            <div className="flex items-center gap-4 justify-end">
+              <Button
+                type="submit"
+                size="sm"
+                variant="primary"
+                disabled={loading}
+                icon={
+                  loading ? (
+                    <FaSpinner className="animate-spin" />
                   ) : (
-                    <FaUpload />
-                  )}
-                  {loading ? "Uploading..." : " Add Blog Post"}
-                </button>
-              </div>
-            </form>
+                    <FaCloudUploadAlt />
+                  )
+                }
+                label={loading ? "Uploading..." : "Add Blog Post"}
+              />
+
+              <Button
+                type="button"
+                onClick={handleCancelUploadBlog}
+                size="sm"
+                variant="warning"
+                label="Cancel Upload"
+                icon={<FaTimesCircle />}
+              />
+            </div>
           </div>
-        </div>
+        </form>
       </div>
-    </>
+    </div>
   );
 };
 
 export default AddBlogPost;
+// Simple inline styles for demonstration; consider using CSS or styled-components
+const styles = {
+  modalOverlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000,
+  },
+  modalContent: {
+    // backgroundColor: "#fff",
+    padding: "24px",
+    borderRadius: "8px",
+    width: "700px",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.26)",
+  },
+  formGroup: {
+    marginBottom: "16px",
+  },
+  input: {
+    width: "100%",
+    padding: "8px",
+    marginTop: "4px",
+    borderRadius: "4px",
+    border: "1px solid #ccc",
+  },
+  buttonGroup: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  buttonPrimary: {
+    padding: "8px 16px",
+    backgroundColor: "#007bff",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    marginRight: "8px",
+    cursor: "pointer",
+  },
+  buttonSecondary: {
+    padding: "8px 16px",
+    backgroundColor: "#6c757d",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+  },
+};

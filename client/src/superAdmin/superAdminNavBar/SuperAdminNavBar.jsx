@@ -31,7 +31,7 @@ const SuperAdminNavBar = ({
 
   return (
     <div
-      className={`navbar py-0 px-0 border-b-2 border-slate-300 admin-dark:border-slate-600 shadow-sm ${adminTheme === "admin-light" ? "bg-base-200 text-slate-800" : "bg-gray-800 text-slate-300"} sticky top-0 z-50`}
+      className={`navbar py-0 px-0 border-b border-base-300 admin-dark:border-slate-700 shadow-sm ${adminTheme === "admin-light" ? "bg-base-200 text-slate-800" : "bg-gray-800 text-slate-300 border-slate-700"} sticky top-0 z-50`}
     >
       <div className="flex-1 space-x-1 justify-between items-center">
         {isOpen ? (

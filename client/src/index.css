@@ -146,6 +146,93 @@ Admin panel light theme
 .ck-editor__editable_inline {
   min-height: 175px; /* or any height you want */
 }
+.ck-content{
+  color: #555;
+}
+/* CKEditor admin-dark mode optimization styles */
+.admin-dark .ck-editor__main {
+  background-color: #0f172a !important;
+}
+
+.admin-dark .ck-content {
+  background-color: #1e293b !important;
+  color: #e5e7eb !important;
+}
+.admin-dark .ck-toolbar {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+}
+.admin-dark .ck-button {
+  color: #e5e7eb !important;
+}
+.admin-dark .ck-button:hover {
+  background-color: #334155 !important;
+}
+.admin-dark .ck-editor__editable:focus {
+  border-color: #64748b !important;
+  box-shadow: 0 0 0 1px #64748b;
+}
+
+body.admin-dark .ck.ck-reset_all,
+body.admin-dark .ck.ck-reset_all * {
+  background-color: #1e293b !important;
+  color: #e5e7eb !important;
+}
+
+body.admin-dark .ck.ck-toolbar {
+  border-top: 1px solid #334155 !important;
+  box-shadow: none !important;
+}
+body.admin-dark .ck.ck-toolbar {
+  outline: 1px solid #334155 !important;
+  border-radius: 1px;
+}
+body.admin-dark .ck.ck-editor__main > .ck-editor__editable {
+  border: 1px solid #334155 !important;
+}
+
+.ck-content ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.ck-content ol {
+  list-style-type: decimal;
+  padding-left: 20px;
+}
+
+.ck-content ul, .ck-content ol {
+  padding-left: 40px;
+}
+
+
+/* React Quill Dark Mode styles */
+.dark .quill-dark .ql-toolbar {
+  background-color: #1e293b; /* slate-900 */
+  border: 1px solid #334155; /* slate-700 */
+}
+
+.dark .quill-dark .ql-container {
+  border: 1px solid #334155;
+  background-color: #1e293b;
+  color: #e2e8f0; /* slate-200 */
+}
+
+.dark .quill-dark .ql-editor {
+  color: #e2e8f0;
+}
+
+.dark .quill-dark .ql-stroke {
+  stroke: #cbd5e1; /* icons */
+}
+
+.dark .quill-dark .ql-fill {
+  fill: #cbd5e1;
+}
+
+.dark .quill-dark .ql-picker {
+  color: #e2e8f0;
+}
 
 /* Responsive breakpoints and devices to be targeted */
 

@@ -15,7 +15,7 @@ const PageUnderConstruction = ({
       <div className="max-w-xl w-full text-center bg-base-200 admin-dark:bg-slate-800 border border-base-300 admin-dark:border-slate-700 rounded-xl shadow-lg p-8 space-y-6">
         {/* Icon */}
         <div className="flex justify-center">
-          <div className="w-20 h-20 flex items-center justify-center rounded-full bg-blue-100 admin-dark:bg-amber-900">
+          <div className="w-20 h-20 flex items-center justify-center rounded-full bg-blue-100 admin-dark:bg-amber-900 shadow-lg">
             <FaTools className="text-4xl text-blue-600 admin-dark:text-amber-400 animate-pulse" />
           </div>
         </div>
@@ -31,7 +31,7 @@ const PageUnderConstruction = ({
         </p>
 
         {/* Divider */}
-        <div className="h-px bg-base-300 admin-dark:bg-slate-600 mx-auto w-2/3" />
+        <div className="h-px bg-slate-300 admin-dark:bg-slate-600 mx-auto w-2/3" />
 
         <div className="flex justify-center gap-6">
           <Button

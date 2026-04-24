@@ -1,8 +1,8 @@
 import { FaEdit, FaSpinner, FaTimesCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
-
 import Select from "react-select";
 import Button from "../../components/buttons/Button";
+import CKEditorComponent from "../textEditor/CKEditorComponent";
 
 const UpdateBlogModal = ({
   blog,
@@ -11,6 +11,8 @@ const UpdateBlogModal = ({
   onClose,
   onUpdate,
   loading,
+  isDark,
+  customStyles,
 }) => {
   // const apiUrl = import.meta.env.VITE_API_URL;
   const [selectedImage, setSelectedImage] = useState(null);
@@ -85,6 +87,13 @@ const UpdateBlogModal = ({
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const handleEditorChange = (value) => {
+    setFormData((prev) => ({
+      ...prev,
+      content: value,
+    }));
+  };
+
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -94,49 +103,61 @@ const UpdateBlogModal = ({
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
 
-    // Extract updated fields
     const updatedData = {
       _id: blog._id,
-      title: formData.get("title"),
-      summary: formData.get("summary"),
-      content: formData.get("content"),
-      author: formData.get("author"),
-      category: formData.getAll("category"),
-      tag: formData.getAll("tag"),
-      status: formData.get("status"),
+      title: formData.title,
+      summary: formData.summary,
+      content: formData.content, // 🔥 ONLY SOURCE
+      author: formData.author,
+      category: selectedCategories.map((c) => c.value),
+      tag: selectedTags.map((t) => t.value),
+      status: formData.status,
       updatedAt: new Date().toISOString(),
     };
 
-    const imageUrl = formData.get("imageUrl");
-    const hasImage = imageUrl && imageUrl.size > 0; // Check if an image is provided
+    const imageFile = selectedImage;
+
     try {
-      if (hasImage) {
-        // Include image along with categories and tags
-        formData.append("category", JSON.stringify(updatedData.category));
-        formData.append("tag", JSON.stringify(updatedData.tag));
-        await onUpdate(formData, true);
+      if (imageFile) {
+        const fd = new FormData();
+
+        Object.entries(updatedData).forEach(([key, value]) => {
+          if (key === "category" || key === "tag") {
+            fd.append(key, JSON.stringify(value));
+          } else {
+            fd.append(key, value);
+          }
+        });
+
+        fd.append("imageUrl", imageFile);
+
+        await onUpdate(fd, true);
       } else {
-        // Send the updated fields without image
         await onUpdate(updatedData, false);
       }
     } catch (error) {
-      console.error("Error updating blog post:", error);
+      console.error(error);
     }
   };
 
   return (
-    <div style={styles.modalOverlay}>
-      <div style={styles.modalContent}>
-        <h2 className="text-xl font-bold">Update Blog Post</h2>
+    <div style={styles.modalOverlay} className="admin-dark:bg-slate-800">
+      <div
+        style={styles.modalContent}
+        className="bg-base-100 text-slate-700 admin-dark:bg-slate-800 admin-dark:text-slate-400 max-h-[80vh] overflow-y-auto"
+      >
+        <h2 className="lg:text-xl text-lg font-bold flex items-center gap-2 border-b-2 border-slate-400 admin-dark:border-slate-600 mb-4">
+          <FaEdit /> Update Blog Post
+        </h2>
         <form
           onSubmit={handleSubmit}
           method="POST"
           encType="multipart/form-data"
+          className="space-y-2"
         >
           {/* Title */}
-          <div style={styles.formGroup}>
+          <div>
             <label htmlFor="title">Blog Title:</label>
             <input
               type="text"
@@ -144,14 +165,13 @@ const UpdateBlogModal = ({
               name="title"
               value={formData.title}
               onChange={handleInputChange}
-              style={styles.input}
               required
-              className="input-sm"
+              className="input input-sm input-bordered w-full admin-dark:bg-slate-800/90 admin-dark:border-slate-600"
             />
           </div>
 
           {/* Post summary */}
-          <div style={styles.formGroup}>
+          <div>
             <label htmlFor="summary">Summary:</label>
             <textarea
               type="text"
@@ -161,8 +181,7 @@ const UpdateBlogModal = ({
               name="summary"
               value={formData.summary}
               onChange={handleInputChange}
-              style={styles.textarea}
-              className="w-full border p-2 text-xs rounded-b-md mb-[-10px]"
+              className="textarea textarea-sm w-full admin-dark:bg-slate-800/90 admin-dark:border-slate-600 h-14"
               required
             ></textarea>
           </div>
@@ -170,7 +189,14 @@ const UpdateBlogModal = ({
           {/* Content */}
           <div style={styles.formGroup}>
             <label htmlFor="content">Content:</label>
-            <textarea
+            <CKEditorComponent
+              value={formData.content}
+              onChange={handleEditorChange}
+              id="content"
+              name="content"
+            />
+
+            {/* <textarea
               type="text"
               id="content"
               cols="56"
@@ -178,14 +204,14 @@ const UpdateBlogModal = ({
               name="content"
               value={formData.content}
               onChange={handleInputChange}
-              style={styles.textarea}
-              className="w-full border p-2 text-xs rounded-b-md mb-[-10px]"
+              // style={styles.textarea}
+              className="textarea textarea-sm w-full admin-dark:bg-slate-800/90 admin-dark:border-slate-600 h-14"
               required
-            ></textarea>
+            ></textarea> */}
           </div>
 
           {/* Author */}
-          <div style={styles.formGroup}>
+          <div>
             <label htmlFor="author">Author:</label>
             <input
               type="text"
@@ -193,14 +219,13 @@ const UpdateBlogModal = ({
               name="author"
               value={formData.author}
               onChange={handleInputChange}
-              style={styles.input}
               required
-              className="input-sm"
+              className="input input-sm input-bordered w-full admin-dark:bg-slate-800/90 admin-dark:border-slate-600"
             />
           </div>
 
           {/* Image */}
-          <div style={styles.formGroup}>
+          <div>
             <label htmlFor="image">Image:</label>
             <div className="lg:flex grid justify-between gap-4 items-center mb-4">
               <div className="">
@@ -219,13 +244,13 @@ const UpdateBlogModal = ({
                 name="imageUrl"
                 accept="image/*"
                 onChange={handleImageChange}
-                style={styles.input}
+                className="file-input file-input-sm file-input-neutral w-full admin-dark:bg-slate-800/90 admin-dark:border-slate-600"
               />
             </div>
           </div>
 
           {/* Categories Multi-Select */}
-          <div style={styles.formGroup}>
+          <div>
             <label htmlFor="categories">Categories:</label>
             <Select
               id="categories"
@@ -236,11 +261,12 @@ const UpdateBlogModal = ({
               onChange={setSelectedCategories}
               placeholder="Select categories"
               className="w-full"
+              styles={customStyles(isDark)}
             />
           </div>
 
           {/* Tags Multi-Select */}
-          <div style={styles.formGroup}>
+          <div>
             <label htmlFor="tag">Tags:</label>
             <Select
               id="tags"
@@ -251,10 +277,11 @@ const UpdateBlogModal = ({
               onChange={setSelectedTags}
               placeholder="Select tags"
               className="w-full"
+              styles={customStyles(isDark)}
             />
           </div>
 
-          <div style={styles.formGroup}>
+          <div>
             <label htmlFor="status">Post status:</label>
             <select
               name="status"
@@ -262,18 +289,18 @@ const UpdateBlogModal = ({
               onChange={(e) =>
                 setFormData({ ...formData, status: e.target.value })
               } // Update status on change
-              className="w-full p-[6px] border mb-2"
+              className="select select-sm select-bordered admin-dark:bg-slate-800 admin-dark:border-slate-600 w-full rounded-md"
             >
               <option value="published">Published</option>
               <option value="draft">Draft</option>
             </select>
           </div>
 
-          <div className="flex justify-end gap-4">
+          <div className="flex justify-end gap-4 pt-4">
             <Button
               className={loading ? "cursor-not-allowed" : ""}
               type="submit"
-              variant="base"
+              variant="success"
               size="sm"
               label={loading ? "Updating..." : "Update Post"}
               icon={
@@ -283,8 +310,7 @@ const UpdateBlogModal = ({
             />
 
             <Button
-              className=""
-              variant="outline"
+              variant="warning"
               size="sm"
               type="button"
               onClick={onClose}
@@ -313,7 +339,7 @@ const styles = {
     zIndex: 1000,
   },
   modalContent: {
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     padding: "20px",
     borderRadius: "8px",
     width: "700px",

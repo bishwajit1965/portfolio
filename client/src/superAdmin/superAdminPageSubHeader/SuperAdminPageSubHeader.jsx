@@ -13,13 +13,13 @@ const SuperAdminPageSubHeader = ({
   searchBox = false,
   filterText,
   setFilterText,
-  refreshVariant = "rounded",
+  refreshVariant = "refresh",
   refreshButton = false,
   refreshLabel,
   onRefreshBtnClick,
 }) => {
   return (
-    <div className="grid lg:grid-cols-12 grid-cols-1 justify-between lg:gap-2 gap-2 items-center lg:mb-2 mb-2 bg-base-200 p-2 shadow-sm admin-dark:bg-slate-800 admin-dark:text-slate-300 border-b border-slate-300 admin-dark:border-slate-600 w-full">
+    <div className="grid lg:grid-cols-12 grid-cols-1 justify-between lg:gap-2 gap-2 items-center lg:mb-2 mb-2 bg-base-200 p-2 shadow-sm admin-dark:bg-slate-800 admin-dark:text-slate-300 border-b border-slate-300 admin-dark:border-slate-700 w-full">
       {/* Top Bar */}
       <div className="lg:col-span-3 col-span-12">
         {/* Button */}
@@ -32,10 +32,11 @@ const SuperAdminPageSubHeader = ({
           />
         )}
       </div>
+
       <div className="lg:col-span-6 col-span-12">
         {/* Title + Count */}
         {title && (
-          <h2 className="lg:text-xl text-sm font-bold text-center lg:flex-1 flex-full text-base-content admin-dark:text-slate-300 gap-2 flex items-center justify-center">
+          <h2 className="lg:text-lg text-sm font-bold text-center lg:flex-1 flex-full text-base-content admin-dark:text-slate-300 gap-2 flex items-center justify-center">
             {labelIcon && (
               <span className="text-slate-600 admin-dark:text-slate-300">
                 {labelIcon}
@@ -69,7 +70,7 @@ const SuperAdminPageSubHeader = ({
                   <FaSearch className="absolute top-[9px] left-2 flex transition-all z-5 items-center text-base-content/30  admin-dark:text-slate-500" />
                 </span>
                 <span className="dark:admin-dark admin-dark dark:relative">
-                  {refreshButton && (
+                  {refreshButton && filterText && (
                     <MiniButton
                       icon={<FaRecycle />}
                       variant={refreshVariant}
@@ -81,6 +82,7 @@ const SuperAdminPageSubHeader = ({
               </div>
             )}
           </div>
+
           <div className="">
             {dataLength && (
               <div className="flex items-center gap-2">

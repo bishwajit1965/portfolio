@@ -6,6 +6,7 @@ import ProjectsSection from "../../components/projects/ProjectsSection";
 import ScrollTopButton from "../../components/scrollTopButton/ScrollTopButton";
 import SkillsPreview from "../../components/skillsPreview/SkillsPreview";
 import TestimonialSection from "../../components/sections/testimonials/TestimonialsSection";
+import ServicesSection from "../../components/sections/serviceSection/ServiceSection";
 
 const Home = () => {
   return (
@@ -16,6 +17,8 @@ const Home = () => {
 
       <div className="lg:space-y-12 space-y-4">
         <HeroSection />
+
+        <ServicesSection />
 
         <ProjectCarousel />
 

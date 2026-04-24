@@ -24,7 +24,9 @@ const variantStyles = {
   rounded: `
     border border-slate-600 text-slate-800
     hover:bg-slate-600 hover:text-white
-    rounded-full shadow-md dark:border-slate-600 dark:text-slate-300 dark:shadow-md dark:hover:bg-slate-900 dark:hover:text-base-100 admin-dark:border-slate-600 admin-dark:text-slate-300 admin-dark:shadow-md admin-dark:hover:bg-slate-900 admin-dark:hover:text-base-100
+    rounded-full shadow-md dark:border-slate-600
+    dark:text-slate-300 dark:shadow-md dark:hover:bg-slate-900 dark:hover:text-base-100 admin-dark:border-slate-600
+    admin-dark:text-slate-300 admin-dark:shadow-md admin-dark:hover:bg-slate-900 admin-dark:hover:text-base-100
   `,
   danger: `
     text-base-100 bg-red-500
@@ -39,6 +41,7 @@ const variantStyles = {
     text-base-100 bg-amber-600
     hover:bg-amber-700 shadow-sm
   `,
+  refresh: `bg-base-300 border border-slate-300 text-slate-800 admin-dark:bg-slate-600 admin-dark:text-slate-300 admin-dark:hover:bg-slate-900 admin-dark:hover:text-slate-300 admin-dark:border-slate-600 dark:bg-slate-600 dark:text-slate-300 transition:colors duration:300`,
 };
 
 const MiniButton = ({
@@ -96,7 +99,7 @@ const MiniButton = ({
       {...props}
     >
       {icon && iconPosition === "left" && (
-        <span className="flex items-center mr-1">{icon}</span>
+        <span className="flex items-center mx-1">{icon}</span>
       )}
       <span className="flex items-center gap-1">{label ?? children}</span>
     </button>

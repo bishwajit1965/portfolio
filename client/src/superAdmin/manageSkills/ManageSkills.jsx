@@ -82,16 +82,18 @@ const ManageSkills = () => {
     document.body.classList.contains("admin-dark"),
   );
 
+  const handleClearSearchText = () => {
+    setFilterText("");
+  };
+
   useEffect(() => {
     const observer = new MutationObserver(() => {
       setIsDark(document.body.classList.contains("admin-dark"));
     });
-
     observer.observe(document.body, {
       attributes: true,
       attributeFilter: ["class"],
     });
-
     return () => observer.disconnect();
   }, []);
 
@@ -227,6 +229,10 @@ const ManageSkills = () => {
         searchBox={true}
         setFilterText={setFilterText}
         onButtonClick={handleAddSkill}
+        // For refreshing search input field
+        filterText={filterText} //important for clearing field
+        refreshButton={true}
+        onRefreshBtnClick={handleClearSearchText}
       />
 
       {/* Pass skills to skills notice table */}
