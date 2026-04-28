@@ -81,25 +81,22 @@ const ContactMe = () => {
             <ContactMeForm />
 
             {/* Additional content can be added here if needed */}
-            <div className="mt-4 text-gray-700 dark:text-gray-300">
+            <div className="lg:mt-3 mt-2 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border border-slate-200 dark:border-slate-700 p-6 rounded-md shadow-md">
               <address>
-                <h2 className="text-lg font-bold text-amber-600">
+                <h2 className="font-bold text-amber-600">
                   <span className="text-gray-600 dark:text-amber-500">
                     Bishwajit Paul
                   </span>{" "}
-                  ➡️ Full-stack{" "}
-                  <span className="text-emerald-600 lg:text-xl dark:text-orange-300">
+                  • Full-stack{" "}
+                  <span className="text-emerald-600 dark:text-orange-300">
                     {" "}
                     MERN
                   </span>{" "}
                   Developer (Currently based in Bangladesh)
                 </h2>
                 <p>Available for freelance work and full-time positions</p>
-                <p>Email: bishwajitpaul123@gmail.com</p>
-                <p>
-                  KEYA MANZIL, 64/1 WAPDA Main Road, Nowapara, Abhaynagar,Phone:
-                  +8801763041234, Jashore, Dhaka, Bangladesh
-                </p>
+                <p>Email: paul.bishwajit09@gmail.com</p>
+                <p>Phone: +880 1712 80 92 79, Jashore, Bangladesh, Dhaka</p>
               </address>
             </div>
           </div>

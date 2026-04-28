@@ -20,15 +20,20 @@ const PageTitle = ({
   return (
     <div className="text-center lg:my-8 my-4 lg:space-y-4 space-y-2">
       {/* Title Row */}
-      <h1 className="flex flex-wrap justify-center items-center gap-2 text-2xl lg:text-3xl font-extrabold text-gray-900 dark:text-white">
+      <h1 className="flex flex-wrap justify-center items-center gap-2 text-lg lg:text-3xl font-extrabold text-gray-900 dark:text-white">
         {Icon && <Icon className="text-indigo-500" size={24} />}
-        {title || (dynamicTitle && <span>{title ? title : dynamicTitle}</span>)}
-        {decoratedText ||
-          (dynamicDecoratedText && (
-            <span className="text-indigo-500">
-              {decoratedText ? decoratedText : dynamicDecoratedText}
-            </span>
-          ))}
+        <span>
+          {title ||
+            (dynamicTitle && <span>{title ? title : dynamicTitle}</span>)}
+        </span>
+        <span>
+          {decoratedText ||
+            (dynamicDecoratedText && (
+              <span className="text-indigo-500">
+                {decoratedText ? decoratedText : dynamicDecoratedText}
+              </span>
+            ))}
+        </span>
         {typeof dataLength === "number" && (
           <span className="ml-2 w-6 h-6 lg:w-8 lg:h-8 flex items-center justify-center text-xs lg:text-sm rounded-full bg-indigo-500 text-white">
             {dataLength}
@@ -37,12 +42,14 @@ const PageTitle = ({
       </h1>
 
       {/* Subtitle */}
-      {subtitle ||
-        (dynamicSubtitle && (
-          <p className="text-sm lg:text-base text-gray-600 dark:text-gray-300 max-w-4xl mx-auto">
-            {subtitle ? subtitle : dynamicSubtitle}
-          </p>
-        ))}
+      <div className="max-w-5xls mx-auto">
+        {subtitle ||
+          (dynamicSubtitle && (
+            <p className="text-sm lg:text-base text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
+              {subtitle ? subtitle : dynamicSubtitle}
+            </p>
+          ))}
+      </div>
 
       {/* Accent Line */}
       <div className="w-20 h-[2px] mx-auto bg-indigo-500 rounded-full" />

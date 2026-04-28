@@ -503,6 +503,7 @@ const AddBlogPost = ({ isDark, customStyles, onCancel }) => {
 };
 
 export default AddBlogPost;
+
 // Simple inline styles for demonstration; consider using CSS or styled-components
 const styles = {
   modalOverlay: {

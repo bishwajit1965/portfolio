@@ -3,7 +3,13 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import Avatar from "/assets/Avatar-Profile-PNG-Photos.png";
 import DataTable from "react-data-table-component";
 
-const BlogsTable = ({ blogPosts = [], onEdit, onDelete, filterText }) => {
+const BlogsTable = ({
+  blogPosts = [],
+  onEdit,
+  onDelete,
+  filterText,
+  loading,
+}) => {
   // Optimize image source
   const getImageSrc = (img) => {
     if (!img) return "";
@@ -100,14 +106,20 @@ const BlogsTable = ({ blogPosts = [], onEdit, onDelete, filterText }) => {
   ];
   return (
     <div>
-      <DataTable
-        columns={columns}
-        data={filteredBlogPosts} // Use filtered data here
-        pagination
-        dense
-        highlightOnHover
-        pointerOnHover
-      />
+      {loading ? (
+        <div className="text-center">
+          <span className="loading loading-ring loading-lg admin-dark:text-slate-200"></span>
+        </div>
+      ) : (
+        <DataTable
+          columns={columns}
+          data={filteredBlogPosts} // Use filtered data here
+          pagination
+          dense
+          highlightOnHover
+          pointerOnHover
+        />
+      )}
     </div>
   );
 };

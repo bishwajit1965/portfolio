@@ -14,6 +14,7 @@ import Button from "../../components/buttons/Button";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
+import TextEditor from "../textEditor/TextEditor";
 
 const AddProjectForm = () => {
   const [formData, setFormData] = useState({
@@ -279,12 +280,20 @@ const AddProjectForm = () => {
                   placeholder={field}
                 />
               ) : (
-                <textarea
+                <TextEditor
+                  id="description"
+                  name="description"
                   value={formData.description}
-                  onChange={(e) => handleChange(field, e.target.value)}
-                  placeholder={field}
-                  className="mt-1 block w-full border p-2 rounded capitalize admin-dark:bg-slate-800 admin-dark:border-slate-700"
+                  onChange={(value) =>
+                    setFormData({ ...formData, description: value })
+                  }
                 />
+                // <textarea
+                //   value={formData.description}
+                //   onChange={(e) => handleChange(field, e.target.value)}
+                //   placeholder={field}
+                //   className="mt-1 block w-full border p-2 rounded capitalize admin-dark:bg-slate-800 admin-dark:border-slate-700"
+                // />
               )}
               {errors[field] && (
                 <p className="text-red-500 text-sm">{errors[field]}</p>

@@ -39,7 +39,7 @@ const ProjectDisplayCard = ({ project, handleDelete }) => {
   };
 
   return (
-    <div className="border admin-dark:border-slate-700 rounded-md shadow-md bg-base-100 admin-dark:bg-slate-800 admin-dark:text-slate-300 relative">
+    <div className="border admin-dark:border-slate-700 rounded-md shadow-md bg-base-100 text-slate-700 admin-dark:bg-slate-800 admin-dark:text-slate-300 relative">
       <div className="rounded-t-md">
         <img
           src={getImageSrc(image)}
@@ -73,18 +73,20 @@ const ProjectDisplayCard = ({ project, handleDelete }) => {
 
           {/* Tech stacks */}
           <div className="flex flex-wrap gap-2 items-center">
-            <span className="bg-gray-300 rounded-md flex items-center gap-1 text-sm font-medium admin-dark:bg-gray-800 border admin-dark:border-gray-700 text-slate-700 admin-dark:text-gray-400">
+            <span className="bg-slate-300 rounded-md flex items-center gap-1 text-sm font-medium admin-dark:bg-slate-800 border admin-dark:border-slate-700 text-slate-700 admin-dark:text-slate-400">
               <span className="bg-emerald-500 px-2 py-1 rounded-l-md">
                 <FaTools size={16} className="text-white" />{" "}
               </span>{" "}
-              <span className="pr-2 dark:text-gray-400">Tech Stacks</span>
+              <span className="pr-2 admin-dark:text-slate-400">
+                Tech Stacks
+              </span>
             </span>
             {techStacks?.length > 0 ? (
               techStacks.map((tech, idx) => (
                 <SkillBadge key={idx} label={tech} />
               ))
             ) : (
-              <p className="text-gray-500 dark:text-gray-400">
+              <p className="text-slate-500 dark:text-slate-400">
                 No tech stacks listed.
               </p>
             )}

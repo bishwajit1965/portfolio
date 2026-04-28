@@ -25,7 +25,7 @@ const CTAButton = ({
 }) => {
   // Define styles based on the variant prop
   const baseStyle =
-    "px-2 py-1.5 font-semibold rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-lg transform transition-transform duration-300 inline-block lg:block text-center";
+    "px-2 py-1.5 text-lg font-semibold rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-lg transform transition-transform duration-300 inline-block lg:block text-center hover:scale-105 hover:shadow-2xl transition-all duration-300 shadow-xl shadow-slate-300/30 dark:shadow-emerald-600/30";
 
   const variantStyles = {
     primary:

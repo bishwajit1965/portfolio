@@ -25,6 +25,7 @@ const ManageProjects = () => {
   const handleAddProjectFormToggle = () => {
     navigate("/super-admin/add-project");
   };
+
   const handleClearSearchText = () => {
     setFilterText("");
   };
@@ -118,7 +119,9 @@ const ManageProjects = () => {
       />
 
       <div className="text-center">
-        {loading && <span className="loading loading-ring loading-lg"></span>}
+        {loading && (
+          <span className="loading loading-ring loading-lg admin-dark:text-slate-200"></span>
+        )}
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-4 gap-2 justify-between p-4">

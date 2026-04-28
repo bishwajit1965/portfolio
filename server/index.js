@@ -60,6 +60,7 @@ const { connectDB, getDB } = require("./utils/database");
     const featuredProjectRoutes = require("./routes/featuredProjectRoutes");
     const journeyMilestonesRoutes = require("./routes/journeyMilestonesRoutes");
     const validateCopyrightMiddlewareRules = require("./routes/copyrightTextRoutes");
+    const systemPreferencesRoutes = require("./routes/systemPreferencesRoutes");
 
     /**Initialize your routes here
      *================================================= **/
@@ -90,6 +91,7 @@ const { connectDB, getDB } = require("./utils/database");
     app.use("/api/featured-projects", featuredProjectRoutes);
     app.use("/api/journey-milestones", journeyMilestonesRoutes);
     app.use("/api/copyright", validateCopyrightMiddlewareRules);
+    app.use("/api/system-settings", systemPreferencesRoutes);
 
     // Simple route to test server
     app.get("/", (req, res) => {

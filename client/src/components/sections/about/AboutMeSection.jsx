@@ -7,7 +7,7 @@ import {
 import SkillBadge from "../../skillBadge/SkillBadge";
 import { Link } from "react-router-dom";
 import Button from "../../buttons/Button";
-import { FaCheck, FaCloud } from "react-icons/fa6";
+import { FaCheck, FaCloud, FaProductHunt } from "react-icons/fa6";
 import JourneyMilestones from "../parallax/JourneyMilestones";
 import AnimatedBackground from "../animatedBackground/AnimateBackground";
 import PageTitle from "../../../pages/pageTitle/PageTitle";
@@ -42,11 +42,11 @@ const AboutMeSection = () => {
               />
 
               <h2 className="lg:text-3xl text-lg font-extrabold flex items-center gap-2">
-                Hi, I’m Bishwajit Paul
+                Hi, I’m Bishwajit — Full-Stack MERN Developer
               </h2>
 
-              <div className="absolute lg:top-5 -top-3 lg:left-36 left-20 border dark:border-green-700 px-3 py-1 rounded-full bg-green-500 dark:bg-green-500 text-base-100 text-sm shadow flex items-center gap-2">
-                <span className="w-4 h-4 rounded-full bg-red-500 animate-pulse"></span>{" "}
+              <div className="absolute lg:-top-0 -top-6 lg:left-36 left-12 border dark:border-green-700 px-3 py-1 rounded-full bg-green-500 dark:bg-green-500 text-base-100 text-sm shadow flex items-center gap-2">
+                <span className="w-4 h-4 rounded-full bg-orange-500 animate-pulse"></span>{" "}
                 Open to Opportunities
               </div>
             </div>
@@ -63,17 +63,19 @@ const AboutMeSection = () => {
             design APIs, and organize frontend architecture.
           </p>
 
-          <div className="my-8">
+          <div className="my-8 flex justify-start">
             <Button
+              href="/assets/cv-bishwajit-paul.pdf"
               label="Download CV"
               variant="outline"
               size="md"
               icon={<FaCloud />}
+              className="m-0 p-0"
             />
           </div>
         </div>
 
-        <div className="lg:col-span-5 bg-base-200 dark:bg-slate-800 dark:text-slate-400 rounded-xl p-6 shadow-md">
+        <div className="lg:col-span-5 bg-base-200 dark:bg-slate-800 dark:text-slate-400 rounded-xl lg:p-6 p-3 shadow-md">
           <div className="dark:text-base">
             <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
               <FaCode className="text-orange-500" /> Core Focus
@@ -126,12 +128,10 @@ const AboutMeSection = () => {
                   "Firebase Auth",
                   "Vite",
                 ].map((skill) => (
-                  <>
-                    <li key={skill} className="my-3 text-sm">
-                      ✅&nbsp;
-                      <SkillBadge label={skill} />
-                    </li>
-                  </>
+                  <li key={skill} className="my-3 text-sm">
+                    ✅&nbsp;
+                    <SkillBadge label={skill} />
+                  </li>
                 ))}
               </ul>
             </div>
@@ -150,12 +150,10 @@ const AboutMeSection = () => {
                   "REST API Design",
                   "Database Design",
                 ].map((skill) => (
-                  <>
-                    <li key={skill} className="my-3 text-sm">
-                      ✅&nbsp;
-                      <SkillBadge label={skill} />
-                    </li>
-                  </>
+                  <li key={skill} className="my-3 text-sm">
+                    ✅&nbsp;
+                    <SkillBadge label={skill} />
+                  </li>
                 ))}
               </ul>
             </div>
@@ -173,12 +171,10 @@ const AboutMeSection = () => {
                   "OAuth Integration",
                   "Debugging & Optimization",
                 ].map((skill) => (
-                  <>
-                    <li className="my-3 text-sm">
-                      ✅&nbsp;
-                      <SkillBadge key={skill} label={skill} />
-                    </li>
-                  </>
+                  <li key={skill} className="my-3 text-sm">
+                    ✅&nbsp;
+                    <SkillBadge key={skill} label={skill} />
+                  </li>
                 ))}
               </ul>
             </div>
@@ -231,6 +227,16 @@ dark:from-slate-800 dark:to-slate-700 rounded-xl lg:p-8 p-4 lg:mb-16 mb-8 shadow
             flow, permission handling, and scalable dashboard architecture.
           </p>
         </div>
+        <div className="flex items-center justify-center">
+          <Button
+            href="/portfolio-projects"
+            type="button"
+            variant="outline"
+            size="md"
+            icon={<FaProductHunt />}
+            label="View Projects"
+          />
+        </div>
       </div>
 
       {/* Closing */}
@@ -241,7 +247,9 @@ dark:from-slate-800 dark:to-slate-700 rounded-xl lg:p-8 p-4 lg:mb-16 mb-8 shadow
           continuously improving how applications are designed and maintained.
         </p>
 
-        <p className="font-semibold">Let’s build something meaningful.</p>
+        <p className="font-semibold">
+          Ready to build your next web application? Let’s talk.
+        </p>
       </div>
 
       {/* Journey Milestones */}

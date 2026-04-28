@@ -69,6 +69,7 @@ const customStyles = (isDark) => ({
     color: isDark ? "#e5e7eb" : "#111827",
   }),
 });
+
 const ManageBlogPosts = () => {
   const baseUrl =
     import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
@@ -183,6 +184,7 @@ const ManageBlogPosts = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
+        setLoading(true);
         const response = await fetch(`${baseUrl}/categories`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -201,6 +203,8 @@ const ManageBlogPosts = () => {
         }
       } catch (error) {
         console.error("Error fetching categories:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchCategories();
@@ -364,40 +368,37 @@ const ManageBlogPosts = () => {
         onRefreshBtnClick={handleClearSearchText}
       />
 
-      <div className="">
-        {isAddBlogOpen && (
-          <AddBlogPost
-            isDark={isDark}
-            customStyles={customStyles}
-            onCancel={setIsAddBlogOpen}
-          />
-        )}
-      </div>
+      {isAddBlogOpen && (
+        <AddBlogPost
+          isDark={isDark}
+          customStyles={customStyles}
+          onCancel={setIsAddBlogOpen}
+        />
+      )}
 
-      <div className="">
-        {/* Pass blog post to BlogPostTable */}
-        <BlogsTable
-          blogPosts={blogPosts}
+      {/* Pass blog post to BlogPostTable */}
+      <BlogsTable
+        blogPosts={blogPosts}
+        categories={categories}
+        tags={tags}
+        onEdit={handleEditBlogPost}
+        onDelete={handleDeleteBlogPost}
+        filterText={filterText}
+        loading={loading}
+      />
+
+      {showUpdateModal && selectedBlogPost && (
+        <UpdateBlogModal
+          blog={selectedBlogPost}
           categories={categories}
           tags={tags}
-          onEdit={handleEditBlogPost}
-          onDelete={handleDeleteBlogPost}
-          filterText={filterText}
+          onClose={() => setShowUpdateModal(false)}
+          onUpdate={handleUpdateBlogPost}
+          loading={loading}
+          isDark={isDark}
+          customStyles={customStyles}
         />
-
-        {showUpdateModal && selectedBlogPost && (
-          <UpdateBlogModal
-            blog={selectedBlogPost}
-            categories={categories}
-            tags={tags}
-            onClose={() => setShowUpdateModal(false)}
-            onUpdate={handleUpdateBlogPost}
-            loading={loading}
-            isDark={isDark}
-            customStyles={customStyles}
-          />
-        )}
-      </div>
+      )}
     </div>
   );
 };

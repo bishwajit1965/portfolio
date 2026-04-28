@@ -234,6 +234,34 @@ body.admin-dark .ck.ck-editor__main > .ck-editor__editable {
   color: #e2e8f0;
 }
 
+/* React Quill Dark Mode styles */
+.admin-dark .quill-dark .ql-toolbar {
+  background-color: #1e293b; /* slate-900 */
+  border: 1px solid #334155; /* slate-700 */
+}
+
+.admin-dark .quill-dark .ql-container {
+  border: 1px solid #334155;
+  background-color: #1e293b;
+  color: #e2e8f0; /* slate-200 */
+}
+
+.admin-dark .quill-dark .ql-editor {
+  color: #e2e8f0;
+}
+
+.admin-dark .quill-dark .ql-stroke {
+  stroke: #cbd5e1; /* icons */
+}
+
+.admin-dark .quill-dark .ql-fill {
+  fill: #cbd5e1;
+}
+
+.admin-dark .quill-dark .ql-picker {
+  color: #e2e8f0;
+}
+
 /* Responsive breakpoints and devices to be targeted */
 
 /* Extra small devices (phones, 320px and up) */

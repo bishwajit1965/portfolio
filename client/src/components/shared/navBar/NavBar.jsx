@@ -32,16 +32,17 @@ const NavBar = () => {
     { id: 3, route: "/contact-me", name: "Contact" },
     { id: 4, route: "/blog-posts", name: "Blogs" },
     { id: 5, route: "/portfolio-projects", name: "Projects" },
-    { id: 6, route: "/blog-coming-soon", name: "Blog Coming Soon" },
-    user ? { id: 7, route: "/bookmarked-posts", name: "Blogs Bookmarked" } : "",
-    { id: 8, route: "/rss", name: "Rss" },
+    { id: 6, route: "/faq", name: "Faq" },
+    { id: 7, route: "/blog-coming-soon", name: "Blog Coming Soon" },
+    user ? { id: 8, route: "/bookmarked-posts", name: "Blogs Bookmarked" } : "",
+    { id: 9, route: "/rss", name: "Rss" },
     {
-      id: 9,
+      id: 10,
       route: "/pdf",
       name: "Notice",
     },
     {
-      id: 10,
+      id: 11,
       isThemeToggle: true, // Differentiator key
     },
   ];

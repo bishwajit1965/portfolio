@@ -172,7 +172,7 @@ const ManageUsers = () => {
       <div className="table-container">
         {loading ? (
           <div className="text-center">
-            <span className="loading loading-ring loading-lg"></span>
+            <span className="loading loading-ring loading-lg admin-dark:text-slate-200"></span>
           </div>
         ) : (
           <DataTable

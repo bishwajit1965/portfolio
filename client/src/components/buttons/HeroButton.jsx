@@ -15,9 +15,9 @@ const HeroButton = ({
 
   const baseClasses = `
     inline-flex items-center justify-center
-    px-4
-    text-lg font-extrabold
-    rounded-full
+    px-2 py-1.5
+    text-lg font-semibold
+    rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2
     bg-gradient-to-r from-amber-500 to-orange-500
     text-white
     shadow-xl shadow-orange-500/30

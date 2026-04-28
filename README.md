@@ -1,29 +1,29 @@
 # 🚀 Bishwajit Paul | Developer Portfolio
 
-A **modern, full-stack developer portfolio + content platform** showcasing real-world projects, blogs, and system-level features.
-Built as a **solo MERN application** with focus on scalability, clean architecture, and production-style implementation.
+A modern full-stack developer portfolio and content platform showcasing real-world projects, blogs, and system-level features.
+Built as a solo MERN application with a focus on scalability, clean architecture, and production-grade implementation.
 
 ---
 
 ## ✨ Highlights
 
-- 🧑‍💻 **About / Bio section** – professional intro, journey, and milestones
-- 🛠️ **Skills & Tech Stack** – structured and categorized tech display
-- 📂 **Projects Showcase**
+- 🧑‍💻 About / Bio section – professional intro, journey, and milestones
+- 🛠️ Skills & Tech Stack – structured and categorized display
+- 📂 Projects Showcase
   - 🖼️ Multiple screenshots per project (category-based)
   - 💻 Tech stack per project
-  - 🔗 GitHub & Live demo links
+  - 🔗 GitHub & live demo links
   - 🔐 Admin-controlled visibility system
-- 📝 **Full Blog Platform**
+- 📝 Blog Platform
   - Category & tag-based filtering
-  - Blog detail pages with structured content
-- 🔖 **Bookmark System** – save & manage favorite blogs
-- 📡 **RSS Feed Integration** – external content consumption
-- 📢 **Notice System** – admin-controlled announcements
-- 🖼️ **Image Uploads** – multiple screenshots with captions
-- 📱 **Responsive Design** – mobile, tablet, desktop
-- 🌙 **Dark Mode** – user preference toggle
-- ⚡ **Smooth UX** – loaders, modals, toasts
+  - Detailed blog pages with structured content
+- 🔖 Bookmark System – save and manage favorite blogs
+- 📡 RSS Feed Integration – external content consumption
+- 📢 Notice System – admin-controlled announcements
+- 🖼️ Image Upload System – multiple screenshots with captions
+- 📱 Fully Responsive Design – mobile, tablet, desktop
+- 🌙 Dark Mode support
+- ⚡ Smooth UX – loaders, modals, toasts
 
 ---
 
@@ -40,38 +40,30 @@ Built as a **solo MERN application** with focus on scalability, clean architectu
 
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white)
-![Multer](https://img.shields.io/badge/Multer-FF2D20?style=flat-square&logoColor=white)
+![Multer](https://img.shields.io/badge/Multer-FF2D20?style=flat-square)
 
-- **React Query** – server state management & caching
+- React Query – server state management & caching
 
 ### Authentication
 
-- **JWT Authentication**
-  - Access Token + Refresh Token strategy
-  - Persistent login & session handling
+- JWT Authentication
+  - Access & Refresh token strategy
+  - Persistent login system
 
 ### System Architecture
 
 - Role-Based Access Control (RBAC)
-- Separation of **Public / User / Admin APIs**
+- Separation of Public / User / Admin APIs
 - Modular and scalable folder structure
 
 ### File Handling
 
-- **Multer** for image uploads
-- Planned migration to **cloud/CDN storage**
+- Multer for image uploads
+- Planned migration to cloud storage (Cloudinary / S3)
 
 ---
 
-### Others
-
-- REST API architecture
-- Modular component structure
-- Clean folder organization
-
----
-
-## 🗂️ Project Structure (Simplified)
+## 🧪 Project Structure
 
 ### Client
 
@@ -93,37 +85,38 @@ server/
 ├─ data/
 └─ index.js
 
+
 ---
 
 ## 📸 Projects & Screenshots
 
-- Supports **category-wise screenshots** (UI, Dashboard, Mobile)
-- Each screenshot includes:
-  - Image
-  - Caption
-  - Category
-  - Tech Stack
-  - Designed for **scalable project presentation**
-  - Clean and scalable presentation for each project
+- Category-based screenshot system (UI / Dashboard / Mobile)
+- Each project includes:
+  - Images with captions
+  - Category tags
+  - Tech stack details
+  - Clean presentation for scalability
 
 ---
 
 ## 🧠 Key Design Decisions
 
-- 📂 **Category-based screenshots** → scalable & organized
-- 👁️ **Visibility flags for projects** → soft delete / easy control
-- 🧑‍💻 **Solo-friendly architecture** → maintainable & extendable
-- 🎨 **UI-first mindset** → clarity and polished experience
-- 🔄 **Separation of concerns** → maintainable architecture
+- 📂 Category-based screenshots for scalability
+- 👁️ Visibility flags for admin control
+- 🧑‍💻 Solo-friendly architecture
+- 🎨 UI-first development approach
+- 🔄 Clean separation of concerns
+
+---
 
 ## 🚀 Future Enhancements
 
-- 🔍 SEO optimization (meta tags, OG tags)
-- ⚡ SSR (Server-side rendering) / pre-rendering
-- 📊 Analytics integration
-- ✉️ Contact form with email service
-- ☁️ Cloud image storage (Cloudinary / S3)
-- 👥 CMS-style role separation for admin users
+- SEO optimization (meta tags, OG tags)
+- SSR / pre-rendering
+- Analytics integration
+- Contact form with email service
+- Cloud image storage (Cloudinary / S3)
+- Advanced CMS-style admin system
 
 ---
 
@@ -142,10 +135,8 @@ npm install
 node index.js
 
 👤 Author
-
-### Bishwajit Paul
-
-- Built & maintained by a solo developer
-- End-to-end design, development, and integration handled independently.
-- on real-world application architecture and scalable systems
-- This project reflects practical development experience — including debugging, system design, and feature implementation — not tutorial-based code.
+Bishwajit Paul
+Solo full-stack developer
+Designed, developed, and deployed end-to-end
+Focused on real-world scalable application architecture
+Built with production-level thinking, not tutorial-based learning

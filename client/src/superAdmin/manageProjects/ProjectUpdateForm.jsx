@@ -13,6 +13,8 @@ import api from "../../services/api";
 import Button from "../../components/buttons/Button";
 import MiniButton from "../../components/buttons/MiniButton";
 import Swal from "sweetalert2";
+// import TextEditor from "../textEditor/TextEditor";
+import CKEditorComponent from "../textEditor/CKEditorComponent";
 
 const ProjectUpdateForm = () => {
   const apiURL = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -247,7 +249,7 @@ const ProjectUpdateForm = () => {
       <div className="lg:p-4 p-2 mt-2 dark:bg-slate-900 rounded-lg shadow-md space-y-6">
         {/* Header */}
         <div>
-          <h2 className="lg:text-2xl text-lg font-bold mb-2 flex items-center border-b pb-2">
+          <h2 className="lg:text-2xl text-lg font-bold mb-2 flex items-center border-b pb-2 admin-dark:text-slate-300 admin-dark:border-slate-700">
             <FaEdit className="mr-2" /> Update Project{" "}
             <span className="text-amber-600">&nbsp; {formData?.type} </span>
           </h2>
@@ -267,53 +269,78 @@ const ProjectUpdateForm = () => {
           <div className="grid lg:grid-cols-12 grid-cols-1 gap-4">
             <div className="lg:col-span-6 col-span-12 space-y-2">
               <div className="mb-3">
-                <label className="text-sm">Name</label>
+                <label className="text-sm text-slate-600 admin-dark:text-slate-400">
+                  Name
+                </label>
                 <input
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full p-2 border rounded-md dark:bg-slate-800"
+                  className="w-full p-2 border rounded-md text-slate-700 admin-dark:bg-slate-800 admin-dark:text-slate-300 admin-dark:border-slate-700"
                 />
               </div>
 
               <div className="mb-3">
-                <label className="text-sm">Type</label>
+                <label className="text-sm text-slate-600 admin-dark:text-slate-400">
+                  Type
+                </label>
                 <input
                   name="type"
                   value={formData.type}
                   onChange={handleChange}
-                  className="w-full p-2 border rounded-md dark:bg-slate-800"
+                  className="w-full p-2 border rounded-md text-slate-700 admin-dark:bg-slate-800 admin-dark:text-slate-300 admin-dark:border-slate-700"
                 />
               </div>
               <div className="mb-3">
-                <label className="text-sm">Project Label</label>
+                <label className="text-sm text-slate-600 admin-dark:text-slate-400">
+                  Project Label
+                </label>
                 <input
                   name="projectLabel"
                   value={formData.projectLabel}
                   onChange={handleChange}
-                  className="w-full p-2 border rounded-md dark:bg-slate-800"
+                  className="w-full p-2 border rounded-md text-slate-700 admin-dark:bg-slate-800 admin-dark:text-slate-300 admin-dark:border-slate-700"
                 />
               </div>
 
               <div className="mb-3">
-                <label className="text-sm">Description</label>
-                <textarea
+                <label className="text-sm text-slate-600 admin-dark:text-slate-400">
+                  Description
+                </label>
+                {/* All can work */}
+                <CKEditorComponent
+                  value={formData.description}
+                  onChange={(value) =>
+                    setFormData({ ...formData, description: value })
+                  }
+                  id="description"
+                  name="description"
+                />
+                {/* <TextEditor
+                  id="description"
+                  name="description"
+                  value={formData.description}
+                  onChange={(value) =>
+                    setFormData({ ...formData, description: value })
+                  }
+                /> */}
+                {/* <textarea
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
-                  className="w-full p-2 border rounded-md dark:bg-slate-800"
-                />
+                  className="w-full p-2 border rounded-md text-slate-700 admin-dark:bg-slate-800 admin-dark:text-slate-300 admin-dark:border-slate-700"
+                /> */}
               </div>
 
               {/* Screenshots */}
               <div className="mb-4">
-                <label className="text-sm font-bold">
+                <label className="text-sm font-bold admin-dark:text-slate-300">
                   Category Wise Screenshots
                 </label>
                 {formData.screenshots.map((cat, catIndex) => (
                   <div
                     key={cat.id}
-                    className="border-2 border-base-300 p-2 rounded-md mb-2 space-y-2"
+                    className="border-2 border-base-300 admin-dark:border-slate-700 p-2 rounded-md mb-2 space-y-2"
                   >
                     <div className="flex items-center gap-2">
                       <input
@@ -323,7 +350,7 @@ const ProjectUpdateForm = () => {
                         onChange={(e) =>
                           handleCategoryChange(catIndex, e.target.value)
                         }
-                        className="input input-sm input-bordered w-full dark:bg-slate-800"
+                        className="input input-sm input-bordered w-full text-slate-700 admin-dark:text-slate-300 admin-dark:bg-slate-800"
                       />
                       <MiniButton
                         type="button"
@@ -337,7 +364,7 @@ const ProjectUpdateForm = () => {
                     {cat.items.map((item, itemIndex) => (
                       <div
                         key={item.id}
-                        className="grid lg:grid-cols-12 grid-cols-1 gap-2 items-center justify-between mb-2 border border-base-300 shadow-sm p-2 rounded-md hover:border-slate-400"
+                        className="grid lg:grid-cols-12 grid-cols-1 gap-2 items-center justify-between mb-2 border border-base-300 admin-dark:border-slate-700 shadow-sm p-2 rounded-md hover:border-slate-400"
                       >
                         <div className="lg:col-span-4 col-span-12">
                           {(item.image || item.newImageFile) && (
@@ -366,7 +393,7 @@ const ProjectUpdateForm = () => {
                                 e.target.value,
                               )
                             }
-                            className="input input-sm w-full input-bordered dark:bg-slate-800"
+                            className="input input-sm w-full input-bordered admin-dark:bg-slate-800 text-slate-700 admin-dark:text-slate-300"
                           />
                           <input
                             type="file"
@@ -377,7 +404,7 @@ const ProjectUpdateForm = () => {
                                 e.target.files[0],
                               )
                             }
-                            className="file-input input-sm w-full input-bordered pl-0"
+                            className="file-input input-sm w-full input-bordered pl-0 file-input-neutral admin-dark:bg-slate-800 admin-dark:border-slate-700 text-slate-700 admin-dark:text-slate-300"
                           />
                           <div className="flex justify-end">
                             <MiniButton
@@ -420,39 +447,47 @@ const ProjectUpdateForm = () => {
             {/* Right column */}
             <div className="lg:col-span-6 col-span-12 space-y-2">
               <div className="mb-3">
-                <label className="text-sm">GitHub Link</label>
+                <label className="text-sm text-slate-600 admin-dark:text-slate-400">
+                  GitHub Link
+                </label>
                 <input
                   type="url"
                   name="githubLink"
                   value={formData.githubLink}
                   onChange={handleChange}
-                  className="w-full p-2 border rounded-md dark:bg-slate-800"
+                  className="w-full p-2 border rounded-md text-slate-700 admin-dark:bg-slate-800 admin-dark:text-slate-300 admin-dark:border-slate-700"
                 />
               </div>
 
               <div className="mb-3">
-                <label className="text-sm">Live Demo Link</label>
+                <label className="text-sm text-slate-600 admin-dark:text-slate-400">
+                  Live Demo Link
+                </label>
                 <input
                   type="url"
                   name="liveLink"
                   value={formData.liveLink}
                   onChange={handleChange}
-                  className="w-full p-2 border rounded-md dark:bg-slate-800"
+                  className="w-full p-2 border rounded-md text-slate-700 admin-dark:bg-slate-800 admin-dark:text-slate-300 admin-dark:border-slate-700"
                 />
               </div>
 
               <div className="mb-4">
-                <label className="text-sm">Main Image</label>
+                <label className="text-sm text-slate-600 admin-dark:text-slate-400">
+                  Main Image
+                </label>
                 <input
                   type="file"
                   onChange={handleMainImageChange}
-                  className="w-full p-2 border rounded-md dark:bg-slate-800"
+                  className="w-full p-2 border rounded-md text-slate-700 admin-dark:bg-slate-800 admin-dark:text-slate-300 admin-dark:border-slate-700 file-input file-input-neutral"
                 />
               </div>
 
               {/* Tech Stacks */}
               <div>
-                <label className="text-sm block mb-2">Tech Stack</label>
+                <label className="text-sm block mb-2 admin-dark:text-slate-300">
+                  Tech Stack
+                </label>
                 {formData.techStacks.map((tech, i) => (
                   <div key={i} className="flex gap-2 items-center w-full mb-2">
                     <input
@@ -463,7 +498,7 @@ const ProjectUpdateForm = () => {
                         updated[i] = e.target.value;
                         setFormData({ ...formData, techStacks: updated });
                       }}
-                      className="input input-sm input-bordered w-full"
+                      className="input input-sm input-bordered w-full admin-dark:bg-slate-800 admin-dark:text-slate-300 admin-dark:border-slate-700"
                     />
                     <MiniButton
                       type="button"
@@ -494,13 +529,14 @@ const ProjectUpdateForm = () => {
               </div>
             </div>
           </div>
-          <div className="divider">UPDATE FIELDS END</div>
+
+          <div className="h-[1px] bg-slate-400 admin-dark:bg-slate-700 my-4"></div>
 
           {/* Actions */}
           <div className="lg:flex grid gap-2 mt-4">
             <Button
               type="submit"
-              variant="base"
+              variant="primary"
               disabled={loading}
               icon={
                 loading ? <FaSpinner className="animate-spin" /> : <FaEdit />
@@ -522,7 +558,7 @@ const ProjectUpdateForm = () => {
             <Button
               href="/super-admin/add-project"
               label="Add Projects"
-              variant="outline"
+              variant="success"
               icon={<FaSave />}
               size="md"
               className="py-2"

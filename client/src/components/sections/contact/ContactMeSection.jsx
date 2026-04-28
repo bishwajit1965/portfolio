@@ -17,13 +17,13 @@ const ContactMeSection = () => {
       <div className="lg:max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-12 grid-cols-1 justify-between lg:gap-8 gap-4 items-center mt-6">
           <div className="lg:col-span-5 col-span-12">
-            <div className="space-y-2 text-gray-700 dark:text-gray-300 bg-base-200 dark:bg-slate-800 p-4 rounded-lg shadow-md relative">
+            <div className="space-y-2 text-slate-700 dark:text-gray-300 bg-base-200 dark:bg-slate-800 p-4 rounded-lg shadow-md relative">
               {/* You can add an image or illustration here if desired */}
               <figure>
                 <img
                   src={heroImage}
                   alt="Bishwajit Paul"
-                  className="rounded-xl border border-slate-400 dark:border-slate-600 shadow-md object-cover w-full relative"
+                  className="rounded-xl border border-slate-400 dark:border-slate-700 shadow-md object-cover w-full relative"
                 />
 
                 {/* <img
@@ -79,14 +79,14 @@ const ContactMeSection = () => {
             <ContactMeForm />
 
             {/* Additional content can be added here if needed */}
-            <div className="lg:mt-6 mt-3 text-gray-700 dark:text-gray-300">
+            <div className="lg:mt-3 mt-2 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border dark:border-slate-700 p-4 rounded-md shadow-md">
               <address>
-                <h2 className="text-lg font-bold text-amber-600">
-                  <span className="text-gray-600 dark:text-amber-500">
+                <h2 className="font-bold text-amber-600">
+                  <span className="text-slate-700 dark:text-amber-500">
                     Bishwajit Paul
                   </span>{" "}
                   ➡️ Full-stack{" "}
-                  <span className="text-emerald-600 lg:text-xl dark:text-orange-300">
+                  <span className="text-emerald-600 dark:text-orange-300">
                     {" "}
                     MERN
                   </span>{" "}

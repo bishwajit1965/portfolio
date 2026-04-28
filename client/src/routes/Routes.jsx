@@ -37,6 +37,8 @@ import ManageSkills from "../superAdmin/manageSkills/ManageSkills";
 import AddSkills from "../superAdmin/manageSkills/AddSkills";
 import PortfolioProjects from "../pages/portfolioProjects/PortfolioProjects";
 import AddTestimonialForm from "../superAdmin/manageTestimonials/AddTestimonialForm";
+import Faq from "../components/faq/Faq";
+import ManageSystemPreferences from "../superAdmin/manageSystemPreferences/ManageSystemPreferences";
 const baseURL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
 const router = createBrowserRouter([
@@ -56,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "/portfolio-projects",
         element: <PortfolioProjects />,
+      },
+      {
+        path: "/faq",
+        element: <Faq />,
       },
       {
         path: "/blog-coming-soon",
@@ -208,6 +214,10 @@ const router = createBrowserRouter([
       {
         path: "manage-skills",
         element: <ManageSkills />,
+      },
+      {
+        path: "manage-portfolio-preferences",
+        element: <ManageSystemPreferences />,
       },
       {
         path: "*",

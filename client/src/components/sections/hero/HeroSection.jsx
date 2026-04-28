@@ -1,11 +1,18 @@
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import CTAButton from "../../ctaButton/CTAButton";
-import { FaArrowRight, FaMailBulk } from "react-icons/fa";
 import SocialMediaLinks from "../../shared/socialMedia/SocialMediaLinks";
 import TypingEffect from "./TypeEffect";
 import HeroButton from "../../buttons/HeroButton";
 import heroImage from "../../../assets/hero-1.png";
+import { FaEye, FaRocket } from "react-icons/fa6";
+import { FaCheckCircle } from "react-icons/fa";
+
+const trustBuilders = [
+  { id: 1, label: "2+ production-grade MERN systems built" },
+  { id: 2, label: "Clean scalable backend architecture" },
+  { id: 3, label: "Deployment support included" },
+  { id: 4, label: "Post-launch support available" },
+];
 
 const HeroSection = () => {
   const textVariants = {
@@ -32,28 +39,17 @@ const HeroSection = () => {
     <section className="lg:min-h-[75vh] flex items-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 rounded-b-xl px-4 sm:px-6 lg:px-12 py-6 lg:py-12 overflow-hidden">
       <div className="max-w-7xl mx-auto grid lg:grid-cols-12 grid-cols-1 gap-6 lg:gap-12 items-center">
         {/* LEFT: Text Content */}
-        <div className="lg:col-span-8 text-center lg:text-left space-y-4 sm:space-y-6 lg:space-y-6">
+        <div className="lg:col-span-8 text-center lg:text-left space-y-4 lg:space-y-6">
           <motion.h1
-            className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold text-slate-800 dark:text-slate-100 leading-tight"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-800 dark:text-slate-100 leading-tight"
             custom={0}
             initial="hidden"
             animate="visible"
             variants={textVariants}
           >
             I build scalable web applications{" "}
-            <span className="text-amber-500">for businesses and startups</span>
+            <span className="text-amber-500">for businesses & startups.</span>
           </motion.h1>
-
-          <motion.h2
-            className="text-lg sm:text-xl md:text-2xl font-semibold text-slate-700 dark:text-slate-300"
-            custom={1}
-            initial="hidden"
-            animate="visible"
-            variants={textVariants}
-          >
-            Specialized in E-commerce systems, dashboards, and full-stack
-            platforms
-          </motion.h2>
 
           <motion.div
             className="text-lg sm:text-xl md:text-2xl font-semibold text-slate-700 dark:text-slate-300"
@@ -75,35 +71,51 @@ const HeroSection = () => {
               ]}
             />
           </motion.div>
-
+          {/* SHORT BIO */}
           <motion.p
-            className="max-w-xl mx-auto lg:mx-0 text-base sm:text-lg md:text-lg text-slate-600 dark:text-slate-400"
             custom={2}
+            initial="hidden"
+            animate="visible"
+            variants={textVariants}
+            className="text-slate-700 dark:text-slate-400"
+          >
+            I help startups and businesses turn ideas into scalable web
+            platforms with clean architecture and reliable backend systems.
+          </motion.p>
+          <motion.p
+            className="text-emerald-500 text-lg"
+            custom={3}
             initial="hidden"
             animate="visible"
             variants={textVariants}
           >
-            I design and build production-ready systems with clean architecture,
-            secure backend logic, and scalable frontend experiences.
-          </motion.p>
-          <motion.p
-            className="max-w-xl mx-auto lg:mx-0 text-base sm:text-lg md:text-lg text-slate-600 dark:text-slate-400"
-            custom={2}
-            initial="hidden"
-            animate="visible"
-            variants={textVariants}
-          ></motion.p>
-          <motion.p className="text-sm text-slate-500">
-            Built real-world projects with scalable architecture and clean
-            backend systems
+            Available for freelance projects
           </motion.p>
 
-          <p className="text-sm text-emerald-500 font-medium">
-            Available for freelance projects
-          </p>
+          {/* TRUST BUILDERS */}
+          <motion.div
+            custom={4}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2 }}
+          >
+            <div className="lg:px- px- lg:grid flex flex-wrap">
+              {trustBuilders.map((trustBuilder) => (
+                <p
+                  key={trustBuilder.id}
+                  className="lg:text-lg text-sm text-slate-700 dark:text-slate-400 flex items-center gap-2"
+                >
+                  <FaCheckCircle className="text-emerald-500" />{" "}
+                  {trustBuilder.label}
+                </p>
+              ))}
+            </div>
+          </motion.div>
+
           {/* CTA Buttons */}
           <motion.div
-            className="flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4 pt-4 sm:pt-6"
+            className="flex flex-wrap items-center justify-center lg:justify-self-start gap-3"
+            custom={5}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2 }}
@@ -111,20 +123,18 @@ const HeroSection = () => {
             {/* PRIMARY CTA */}
             <HeroButton
               href="/contact-me"
-              icon={<FaMailBulk />}
-              label="Start a Project"
-              className="w-44 sm:w-48 text-sm sm:text-base lg:text-lg bg-emerald-600 hover:bg-emerald-700"
+              icon={<FaRocket size={25} />}
+              label="Start Your Project"
+              className="lg:w-52 w-52 lg:text-lg text-sm"
             />
-
             {/* SECONDARY CTA */}
-            <Link to="/portfolio-projects">
-              <CTAButton
-                label="View My Work"
-                icon={<FaArrowRight size={18} />}
-                variant="outline"
-                className="w-44 sm:w-48 text-sm sm:text-base lg:text-lg"
-              />
-            </Link>
+            <CTAButton
+              href="/portfolio-projects"
+              icon={<FaEye size={25} />}
+              label="View My Work"
+              variant="success"
+              className="lg:w-52 w-44 lg:text-lg text-sm"
+            />
           </motion.div>
         </div>
 

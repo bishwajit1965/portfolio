@@ -100,7 +100,7 @@ const ContactMeForm = () => {
   return (
     <div className="lg:max-w-7xl mx-auto bg-base-200 rounded-md shadow-sm dark:bg-slate-800">
       <div className="lg:max-w-5xl mx-auto rounded-lg shadow-md">
-        <div className="lg:p-8">
+        <div className="lg:p-6 p-2">
           {error && (
             <p className="text-red-500 p-1 border border-red-800 rounded-md text-sm">
               {error}
@@ -135,8 +135,8 @@ const ContactMeForm = () => {
               animate="visible"
               variants={textVariants}
             >
-              <FaCheckCircle className="text-emerald-500" /> I build scalable
-              web applications for businesses and startups.
+              <FaCheckCircle className="text-sm text-emerald-500" /> I build
+              scalable web applications for businesses and startups.
             </motion.p>
 
             <motion.p
@@ -164,7 +164,7 @@ const ContactMeForm = () => {
           <div className="h-[1px] bg-slate-300 dark:bg-slate-600 my-3"></div>
           <form onSubmit={handleSubmit} className="space-y-2">
             <div className="">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-400">
                 Name:
               </label>
               <input
@@ -174,14 +174,14 @@ const ContactMeForm = () => {
                 onChange={handleChange}
                 id=""
                 placeholder="Name..."
-                className="p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-700"
+                className="p-2 block w-full border border-slate-300 rounded-md dark:bg-slate-800 text-slate-700 dark:text-slate-400 dark:border-slate-700"
               />
               {errors.name && (
                 <p className="text-red-500 text-sm">{errors.name}</p>
               )}
             </div>
             <div className="">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-400">
                 Email:
               </label>
               <input
@@ -198,7 +198,7 @@ const ContactMeForm = () => {
               )}
             </div>
             <div className="">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-400">
                 Message:
               </label>
               <TextEditor
@@ -220,23 +220,19 @@ const ContactMeForm = () => {
                 <p className="text-red-500 text-sm">{errors.message}</p>
               )}
             </div>
-            <div className="lg:flex grid items-center justify-between">
+            <div className="lg:flex grids items-center justify-between">
               <Button
                 type="submit"
-                icon={<FaEnvelopesBulk size={20} />}
+                icon={<FaEnvelopesBulk />}
                 variant="outline"
                 label={loading ? "Uploading..." : "Send Message"}
                 disabled={loading}
                 size="md"
-              >
-                Send Mail
-              </Button>
+              />
 
               {/* Social Media Links */}
               <div className="">
-                <div className="grid grid-flow-col sm:w-full">
-                  <SocialMediaLinks />
-                </div>
+                <SocialMediaLinks />
               </div>
             </div>
           </form>

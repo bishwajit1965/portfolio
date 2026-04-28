@@ -9,7 +9,7 @@ import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSu
 
 const ManageTestimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [totalRows, setTotalRows] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -19,6 +19,7 @@ const ManageTestimonials = () => {
   // Function to fetch users data from the backend with pagination
   const fetchTestimonials = async (page, limit) => {
     try {
+      setLoading(true);
       const response = await api.get("/testimonials", {
         params: {
           page,
@@ -97,7 +98,7 @@ const ManageTestimonials = () => {
       name: "Project Name",
       selector: (row) => row.projectName,
       sortable: true,
-      width: "124px",
+      width: "120px",
     },
     {
       name: "Testimonial",
@@ -115,7 +116,7 @@ const ManageTestimonials = () => {
       name: "Social Links",
       selector: (row) => row.socialLinks?.map((sl) => sl),
       sortable: true,
-      width: "90px",
+      width: "80px",
     },
     {
       name: "Tags",
@@ -291,7 +292,7 @@ const ManageTestimonials = () => {
       <div className="table-container">
         {loading ? (
           <div className="text-center">
-            <span className="loading loading-ring loading-lg"></span>
+            <span className="loading loading-ring loading-lg admin-dark:text-slate-200"></span>
           </div>
         ) : (
           <DataTable

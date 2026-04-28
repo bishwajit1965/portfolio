@@ -34,6 +34,10 @@ const navLinks = [
   { to: "/super-admin/manage-tags", label: "Tags" },
   { to: "/super-admin/manage-notices", label: "Notice" },
   { to: "/super-admin/manage-skills", label: "Skills" },
+  {
+    to: "/super-admin/manage-portfolio-preferences",
+    label: "System Preferences",
+  },
 ];
 
 const SideNav = ({ user }) => {

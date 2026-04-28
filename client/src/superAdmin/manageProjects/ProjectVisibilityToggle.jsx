@@ -55,7 +55,7 @@ const ProjectVisibilityToggle = ({ projectId, initialVisibility }) => {
       </div>
 
       {/* Select value */}
-      <di className="flex items-center mt-2 ml-[-8px] gap-2">
+      <div className="flex items-center mt-2 ml-[-8px] gap-2">
         <select
           className="select select-xs border admin-dark:border-slate-600 admin-dark:bg-gray-800 admin-dark:text-slate-300"
           name="visibility"
@@ -77,7 +77,7 @@ const ProjectVisibilityToggle = ({ projectId, initialVisibility }) => {
           icon={<FaEdit />}
           className=""
         />
-      </di>
+      </div>
     </div>
   );
 };
