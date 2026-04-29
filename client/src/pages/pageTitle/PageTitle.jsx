@@ -18,7 +18,7 @@ const PageTitle = ({
   } = getPageTitle(location.pathname);
 
   return (
-    <div className="text-center lg:my-8 my-4 lg:space-y-4 space-y-2">
+    <div className="text-center lg:my-8 my-4 lg:space-y-3 space-y-2">
       {/* Title Row */}
       <h1 className="flex flex-wrap justify-center items-center gap-2 text-lg lg:text-3xl font-extrabold text-gray-900 dark:text-white">
         {Icon && <Icon className="text-indigo-500" size={24} />}
@@ -45,7 +45,7 @@ const PageTitle = ({
       <div className="max-w-5xls mx-auto">
         {subtitle ||
           (dynamicSubtitle && (
-            <p className="text-sm lg:text-base text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
+            <p className="text-slate-700 dark:text-slate-400 max-w-xl mx-auto">
               {subtitle ? subtitle : dynamicSubtitle}
             </p>
           ))}

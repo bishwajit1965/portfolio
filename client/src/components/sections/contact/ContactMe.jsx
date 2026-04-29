@@ -81,7 +81,7 @@ const ContactMe = () => {
             <ContactMeForm />
 
             {/* Additional content can be added here if needed */}
-            <div className="lg:mt-3 mt-2 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border border-slate-200 dark:border-slate-700 p-6 rounded-md shadow-md">
+            <div className="lg:mt-3 mt-2 bg-base-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border border-slate-200 dark:border-slate-700 p-6 rounded-md shadow-md">
               <address>
                 <h2 className="font-bold text-amber-600">
                   <span className="text-gray-600 dark:text-amber-500">
