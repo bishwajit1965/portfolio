@@ -1,4 +1,4 @@
-# 🚀 Bishwajit Paul | Developer Portfolio
+# 🚀 Bishwajit.dev | Developer Portfolio
 
 A modern full-stack developer portfolio and content platform showcasing real-world projects, blogs, and system-level features.
 Built as a solo MERN application with a focus on scalability, clean architecture, and production-grade implementation.

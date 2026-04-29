@@ -1,5 +1,11 @@
 import { motion } from "framer-motion";
-import { FaShoppingCart, FaChartLine, FaBlog, FaCode } from "react-icons/fa";
+import {
+  FaShoppingCart,
+  FaChartLine,
+  FaBlog,
+  FaCode,
+  FaCheckCircle,
+} from "react-icons/fa";
 import { FaBriefcase } from "react-icons/fa6";
 import SectionTitle from "../../sectionTitle/SectionTitle";
 import Button from "../../buttons/Button";
@@ -89,11 +95,15 @@ const ServicesSection = () => {
                 <p className="text-slate-500 mt-2 text-lg leading-relaxed">
                   {service.description}
                 </p>
-                <div className="px-4">
+                <div className="px-">
                   {service.features.map((feature) => (
-                    <li key={feature.id} className="dark:text-slate-500">
+                    <p
+                      key={feature.id}
+                      className="dark:text-slate-500 text-slate-500 flex items-center gap-2"
+                    >
+                      <FaCheckCircle className="text-emerald-500" />{" "}
                       {feature.option}
-                    </li>
+                    </p>
                   ))}
                 </div>
               </div>
