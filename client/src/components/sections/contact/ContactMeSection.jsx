@@ -17,7 +17,7 @@ const ContactMeSection = () => {
       <div className="lg:max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-12 grid-cols-1 justify-between lg:gap-8 gap-4 items-center mt-6">
           <div className="lg:col-span-5 col-span-12">
-            <div className="space-y-2 text-slate-700 dark:text-gray-300 bg-base-200 dark:bg-slate-800 p-4 rounded-lg shadow-md relative">
+            <div className="space-y-2 text-slate-700 dark:text-gray-300 bg-base-200 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 lg:p-6 p-2 rounded-lg shadow-sm hover:shadow-xl relative">
               {/* You can add an image or illustration here if desired */}
               <figure>
                 <img
@@ -79,7 +79,7 @@ const ContactMeSection = () => {
             <ContactMeForm />
 
             {/* Additional content can be added here if needed */}
-            <div className="lg:mt-3 mt-2 bg-base-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border dark:border-slate-700 p-6 rounded-md shadow-md">
+            <div className="lg:mt-3 mt-2 bg-base-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border dark:border-slate-700 lg:p-6 p-2 rounded-md shadow-sm hover:shadow-xl">
               <address>
                 <h2 className="font-bold text-amber-600">
                   <span className="text-slate-700 dark:text-amber-500">

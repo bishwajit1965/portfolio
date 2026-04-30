@@ -45,7 +45,7 @@ const PageTitle = ({
       <div className="max-w-5xls mx-auto">
         {subtitle ||
           (dynamicSubtitle && (
-            <p className="text-slate-700 dark:text-slate-400 max-w-xl mx-auto">
+            <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
               {subtitle ? subtitle : dynamicSubtitle}
             </p>
           ))}

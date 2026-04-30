@@ -46,12 +46,31 @@ const ManageProjects = () => {
     fetchProjects();
   }, []);
 
+  console.log("Projects", projects);
   // Filtered categories calculated directly from props and input
-  const filteredProjects = projects.filter(
-    (project) =>
-      typeof project.name === "string" &&
-      project.name.toLowerCase().includes(filterText.toLowerCase()),
-  );
+  // const filteredProjects = projects.filter(
+  //   (project) =>
+  //     typeof project.name === "string" &&
+  //     project.name.toLowerCase().includes(filterText.toLowerCase()),
+  // );
+  const filteredProjects = projects.filter((project) => {
+    const query = filterText.toLowerCase().trim();
+
+    // Search by project name
+    const matchesName = project.name.toLowerCase().includes(query);
+
+    // Search by screenshot category
+    const matchesCategory = project.screenshots?.some((section) =>
+      section.category.toLowerCase().includes(query),
+    );
+
+    // Search by screenshot captions
+    const matchesCaption = project.screenshots?.some((section) =>
+      section.items?.some((item) => item.caption.toLowerCase().includes(query)),
+    );
+
+    return matchesName || matchesCategory || matchesCaption;
+  });
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "Are you sure?",

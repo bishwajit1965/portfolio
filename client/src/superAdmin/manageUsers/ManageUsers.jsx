@@ -28,7 +28,7 @@ const ManageUsers = () => {
 
       // Update the users and pagination state
       setUsers(response?.data?.data); // Use the data field from the backend response
-      setTotalRows(response?.data?.length); // Set total number of rows for pagination
+      setTotalRows(response?.data?.data); // Set total number of rows for pagination
     } catch (error) {
       Swal.fire("Error", "Failed to fetch users data", "error", error);
     } finally {

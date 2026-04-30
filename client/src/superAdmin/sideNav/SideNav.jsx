@@ -3,6 +3,7 @@ import {
   FaMailBulk,
   FaUser,
   FaTachometerAlt,
+  FaUserAlt,
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import AdminImage from "../../assets/bishwajit-1.jpg";
@@ -66,20 +67,20 @@ const SideNav = ({ user }) => {
         </div>
       </div>
       {/* Super Admin Info */}
-      <div className="border-b border-slate-300 admin-dark:border-slate-700 py-2 pl-2 admin-dark:bg-slate-800 text-slate-800 admin-dark:text-slate-300">
+      <div className="border-b border-slate-300 admin-dark:border-slate-700 py-[7px] pl-2 admin-dark:bg-slate-800 text-slate-800 admin-dark:text-slate-300 space-y-2">
         <h2 className="text-[15px] font-bold flex items-center gap-2">
-          <FaTachometerAlt /> Super Admin
+          <FaTachometerAlt size={16} /> Super Admin
           <span className="text-amber-600 font-bold admin-dark:text-amber-400">
             Dashboard
           </span>
         </h2>
 
         <p className="text-xs flex items-center gap-2">
-          <FaMailBulk />
-          {user?.email} ||
-          <span className="capitalize text-slate-900 font-bold admin-dark:text-amber-400">
-            {user?.role}
-          </span>
+          <FaMailBulk size={16} />
+          {user?.email}
+        </p>
+        <p className="capitalize text-slate-900 font-bold admin-dark:text-amber-400 flex items-center gap-2">
+          <FaUserAlt size={16} /> {user?.role}
         </p>
       </div>
 

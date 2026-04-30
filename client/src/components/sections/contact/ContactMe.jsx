@@ -21,7 +21,7 @@ const ContactMe = () => {
       <div className="lg:max-w-7xl mx-auto lg:p-0 p-2">
         <div className="grid lg:grid-cols-12 grid-cols-1 justify-between lg:gap-8 gap-4 items-center mt-6">
           <div className="lg:col-span-5 col-span-12">
-            <div className="space-y-2 text-gray-700 dark:text-gray-300 bg-base-200 dark:bg-gray-800 p-4 rounded-lg shadow-md relative">
+            <div className="space-y-2 text-slate-700 dark:text-slate-300 bg-base-200 dark:bg-slate-800 p-4 rounded-lg shadow-md relative">
               {/* You can add an image or illustration here if desired */}
               <figure>
                 <img
@@ -69,19 +69,19 @@ const ContactMe = () => {
                 />
               </a>
 
-              <div className="w-44 bg-slate-400 rounded-full absolute lg:left-[15px] lg:top-8px] p-1 top-[8px] right-[15px] flex items-center justify-center border border-slate-300 shadow-lg">
+              {/* <div className="w-44 bg-slate-400 rounded-full absolute lg:left-[15px] lg:top-8px] p-1 top-[8px] right-[15px] flex items-center justify-center border border-slate-300 shadow-lg">
                 <div className="w-44 rounded-full text-black bg-slate-300 shadow dark:text-slate border border-slate-400 flex items-center justify-center text-sm gap-1">
                   <span className="w-3 h-3 rounded-full bg-purple-500 animate-pulse text-black"></span>{" "}
                   Open to Opportunities
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="lg:col-span-7 col-span-12">
             <ContactMeForm />
 
             {/* Additional content can be added here if needed */}
-            <div className="lg:mt-3 mt-2 bg-base-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border border-slate-200 dark:border-slate-700 p-6 rounded-md shadow-md">
+            <div className="lg:mt-3 mt-2 bg-base-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border border-slate-200 dark:border-slate-700 p-6 rounded-md shadow-sm hover:shadow-xl">
               <address>
                 <h2 className="font-bold text-amber-600">
                   <span className="text-gray-600 dark:text-amber-500">
@@ -96,7 +96,7 @@ const ContactMe = () => {
                 </h2>
                 <p>Available for freelance work and full-time positions</p>
                 <p>Email: paul.bishwajit09@gmail.com</p>
-                <p>Phone: +880 1712 80 92 79, Jashore, Bangladesh, Dhaka</p>
+                <p>Phone: +880 1712 80 92 79, Bangladesh, Dhaka</p>
               </address>
             </div>
           </div>

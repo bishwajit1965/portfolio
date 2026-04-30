@@ -98,7 +98,7 @@ const ManageTestimonials = () => {
       name: "Project Name",
       selector: (row) => row.projectName,
       sortable: true,
-      width: "120px",
+      width: "110px",
     },
     {
       name: "Testimonial",

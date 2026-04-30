@@ -23,7 +23,7 @@ const BookmarkedPostCard = ({ post }) => {
         className="h-auto rounded-t-md w-full object-cover"
       />
 
-      <div className="p-2 py-4 space-y-2 lg:min-h-72 min-h-80">
+      <div className="p-2 py-4 space-y-2 lg:min-h-80 min-h-[21rem]">
         <h1 className="lg:text-xl text-lg font-semibold text-gray-600 dark:text-gray-400">
           {title.slice(0, 30)}
         </h1>{" "}

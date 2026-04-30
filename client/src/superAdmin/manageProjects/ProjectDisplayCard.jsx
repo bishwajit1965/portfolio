@@ -8,9 +8,9 @@ import {
 } from "react-icons/fa";
 import ProjectVisibilityToggle from "./ProjectVisibilityToggle";
 import { useNavigate } from "react-router-dom";
-import SkillBadge from "../../components/skillBadge/SkillBadge";
 import MiniButton from "../../components/buttons/MiniButton";
 import { useState } from "react";
+import SuperAdminSkillBadge from "../superAdminSkillBadge/superAdminSkillBadge";
 
 const ProjectDisplayCard = ({ project, handleDelete }) => {
   const {
@@ -83,7 +83,7 @@ const ProjectDisplayCard = ({ project, handleDelete }) => {
             </span>
             {techStacks?.length > 0 ? (
               techStacks.map((tech, idx) => (
-                <SkillBadge key={idx} label={tech} />
+                <SuperAdminSkillBadge key={idx} label={tech} />
               ))
             ) : (
               <p className="text-slate-500 dark:text-slate-400">

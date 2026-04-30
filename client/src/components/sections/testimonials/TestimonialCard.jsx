@@ -13,7 +13,7 @@ const TestimonialCard = ({ testimonialData }) => {
   } = testimonialData;
 
   return (
-    <div className="relative border border-base-300 dark:border-slate-700 bg-base-100 dark:bg-slate-900 shadow-md rounded-xl p-6 flex flex-col justify-between h-full transition-transform duration-300 hover:scale-105">
+    <div className="relative border border-base-300 dark:border-slate-700 bg-base-200 dark:bg-slate-800 shadow-md rounded-xl p-6 flex flex-col justify-between h-full transition-transform duration-300 hover:scale-105">
       {/* Quote icon */}
       <span className="absolute top-4 right-4 text-4xl text-blue-200 dark:text-slate-700">
         <FaQuoteLeft size={20} />

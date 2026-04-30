@@ -21,8 +21,8 @@ const ProjectCard = ({ project }) => {
   };
 
   return (
-    <div className="border dark:border-slate-700 rounded-md shadow-md dark:bg-slate-900 min-h-[37rem] hover:shadow-xl">
-      <div className="dark:text-gray-400">
+    <div className="border dark:border-slate-700 rounded-md shadow-md dark:bg-slate-800 min-h-[37rem] hover:shadow-xl">
+      <div className="dark:text-slate-400">
         <img
           src={getImageSrc(project.image)}
           alt={project.name}
@@ -31,9 +31,15 @@ const ProjectCard = ({ project }) => {
         <div className="lg:p-6 p-2 lg:space-y-4 space-y-2">
           <h2 className="font-bold">{name}</h2>
           <p>{type}</p>
-          <p>{description}</p>
-          <div className="lg:flex lg:flex-wrap grid items-center gap-2 dark:text-gray-400">
-            <h2 className="flex items-center gap-2 font-semibold bg-base-300 text-base-content rounded-md border border-gray-300 dark:border-slate-600 dark:bg-gray-600 dark:text-gray-400 pr-2">
+          <p
+            dangerouslySetInnerHTML={{
+              __html: description
+                ? description.slice(0, 120) + "..."
+                : "No content to display...",
+            }}
+          />
+          <div className="lg:flex lg:flex-wrap grid items-center gap-2 dark:text-slate-400">
+            <h2 className="flex items-center gap-2 font-semibold bg-base-300 text-base-content rounded-md border border-slate-300 dark:border-slate-600 dark:bg-slate-600 dark:text-slate-400 pr-2">
               <span className="bg-emerald-500 text-base-100 py-1.5 px-2 rounded-l-md">
                 <FaTools />
               </span>
@@ -44,7 +50,7 @@ const ProjectCard = ({ project }) => {
                 <SkillBadge key={i} label={techStack} />
               ))
             ) : (
-              <p className="text-center text-gray-600 font-bold dark:text-base-100">
+              <p className="text-center text-slate-600 font-bold dark:text-base-100">
                 No techStack !
               </p>
             )}

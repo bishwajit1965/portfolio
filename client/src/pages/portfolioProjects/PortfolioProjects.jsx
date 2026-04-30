@@ -279,9 +279,12 @@ const PortfolioProjects = () => {
                     {/* Project description & tech stack */}
                     <div className="mt-4 flex flex-col lg:flex-row lg:gap-4 gap-2 items-start">
                       {project.description && (
-                        <p className="text-gray-600 dark:text-gray-400">
-                          {project.description}
-                        </p>
+                        <p
+                          dangerouslySetInnerHTML={{
+                            __html: project.description,
+                          }}
+                          className="text-gray-600 dark:text-gray-400"
+                        />
                       )}
                     </div>
 

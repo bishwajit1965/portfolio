@@ -114,7 +114,7 @@ const NavBar = () => {
           <img src={Logo} alt="Logo" className="lg:w-10 lg:h-10 h-6 w-6" />
           <Link to="/" className="ml-0">
             <span className="xl:text-xl xl:w-48 md:w-32 lg:block xl:block lg:text-xs md:hidden md:ml-0 hidden lg:font-bold text-emerald-500">
-              Web-tech
+              Bishwajit.dev
             </span>
           </Link>
         </div>
@@ -151,18 +151,16 @@ const NavBar = () => {
               <div className="flex items-center lg:w- w-">
                 {user ? (
                   user.photoURL ? (
-                    <>
-                      <div className="flex items-center space-x-1">
-                        <span className="text-xs capitalize">
-                          {user ? user.displayName : " "}
-                        </span>
-                        <img
-                          src={user.photoURL}
-                          alt="Profile pic"
-                          className="lg:w-10 lg:h-10 w-8 h-8 p-1 border-2 border-slate-300 rounded-full shadow-lg"
-                        />
-                      </div>
-                    </>
+                    <div className="flex items-center space-x-1">
+                      <span className="text-[9px] capitalize dark:text-slate-300">
+                        {user ? user.displayName : " "}
+                      </span>
+                      <img
+                        src={user.photoURL}
+                        alt="Profile pic"
+                        className="lg:w-10 lg:h-10 w-8 h-8 p-0.5 border border-base-300 dark:border-slate-700 rounded-full shadow-lg"
+                      />
+                    </div>
                   ) : (
                     ""
                   )

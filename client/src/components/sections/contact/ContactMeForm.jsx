@@ -98,7 +98,7 @@ const ContactMeForm = () => {
   };
 
   return (
-    <div className="lg:max-w-7xl mx-auto bg-base-200 rounded-md shadow-sm dark:bg-slate-800">
+    <div className="lg:max-w-7xl mx-auto bg-base-200 rounded-md shadow-sm hover:shadow-xl border border-base-200 dark:bg-slate-800 dark:border-slate-700">
       <div className="lg:max-w-5xl mx-auto rounded-lg shadow-md">
         <div className="lg:p-6 p-2">
           {error && (
@@ -161,7 +161,7 @@ const ContactMeForm = () => {
               within 24 hours - open to opportunities.
             </motion.p>
           </div>
-          <div className="h-[1px] bg-slate-300 dark:bg-slate-600 my-3"></div>
+          <div className="h-[1px] bg-base-200 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 my-3"></div>
           <form onSubmit={handleSubmit} className="space-y-2">
             <div className="">
               <label className="block text-sm font-medium text-slate-700 dark:text-slate-400">

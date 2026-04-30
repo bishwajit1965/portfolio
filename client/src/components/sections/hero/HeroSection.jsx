@@ -6,6 +6,8 @@ import HeroButton from "../../buttons/HeroButton";
 import heroImage from "../../../assets/hero-1.png";
 import { FaEye, FaRocket } from "react-icons/fa6";
 import { FaCheckCircle } from "react-icons/fa";
+import { useContext } from "react";
+import { SuperAdminAuthContext } from "../../../superAdmin/context/SuperAdminAuthProvider";
 
 const trustBuilders = [
   { id: 1, label: "2+ production-grade MERN systems built" },
@@ -15,6 +17,13 @@ const trustBuilders = [
 ];
 
 const HeroSection = () => {
+  // Realtime presence checking data
+  const { loading, user } = useContext(SuperAdminAuthContext);
+  const isOnline =
+    !loading &&
+    user?.email === "webdevpro.66@gmail.com" &&
+    user?.role === "superAdmin";
+
   const textVariants = {
     hidden: { opacity: 0, x: -50 },
     visible: (i = 1) => ({
@@ -58,13 +67,13 @@ const HeroSection = () => {
             animate="visible"
             variants={textVariants}
           >
-            <p className="text-xl font-bold">
-              <span className="text-amber-500">I build:</span>
+            <p className="text-xl font-extrabold">
+              <span className="text-amber-500">I can develop for you:</span>
             </p>
 
             <TypingEffect
               words={[
-                "E-commerce Web Applications",
+                "E-Commerce Web Applications",
                 "Admin Dashboards",
                 "Full-Stack Platforms",
                 "Custom Business Solutions",
@@ -146,14 +155,7 @@ const HeroSection = () => {
           whileHover="hover"
           variants={imageVariants}
         >
-          <div className="relative w-64 sm:w-72 md:w-80 lg:w-96 bg-slate-300 dark:bg-slate-800 p-4 rounded-xl shadow-lg">
-            <motion.div className="w-44 z-10 bg-emerald-400 rounded-full absolute lg:left-0 lg:top-0 p-1 top-2 right-[15px] flex items-center justify-center border border-emerald-300 shadow-lg">
-              <div className="w-44 rounded-full text-black bg-emerald-300 shadow dark:text-slate border border-emerald-400 flex items-center justify-center text-sm gap-1">
-                <span className="w-3 h-3 rounded-full bg-purple-500 animate-pulse text-black"></span>{" "}
-                Open to Opportunities
-              </div>
-            </motion.div>
-
+          <div className="relative w-64 sm:w-72 md:w-80 lg:w-96 bg-slate-300 bg-gradient-to-r from-slate-100 to-slate-300 dark:bg-gradient-to dark:from-slate-600 dark:to-slate-700 p-4 rounded-xl shadow-lg hover:shadow-2xl">
             <figure>
               <img
                 src={heroImage}
@@ -166,13 +168,29 @@ const HeroSection = () => {
                 className="rounded-xl border border-slate-400 dark:border-slate-600 shadow-md object-cover w-full"
               /> */}
               <figcaption className="mt-3 text-center text-sm sm:text-base text-slate-600 dark:text-slate-400 gap-2">
+                <div className="flex items-center gap-2 px-2 py-1 rounded-full bg-white dark:bg-slate-800 shadow border dark:border-slate-800 bg-gradient-to-r dark:bg-gradient-to-r dark:from-slate-800 dark:to-slate-600">
+                  <span
+                    className={`w-3 h-3 rounded-full ${
+                      isOnline
+                        ? "bg-green-500 border-emerald-600 animate-pulse"
+                        : "bg-gray-400"
+                    }`}
+                  />
+                  <span className="text-sm font-medium">
+                    {isOnline ? "Online Now" : "Offline"}
+                  </span>{" "}
+                  •
+                  <span className="font-bold">
+                    Bishwajit Paul • Super Admin
+                  </span>
+                </div>
                 Full-Stack{" "}
                 <span className="text-gray-900 font-bold dark:text-amber-500">
                   MERN Developer
                 </span>
                 <span> building scalable business applications</span>
               </figcaption>
-              <div className="absolute lg:bottom-[5rem] bottom-[3.2rem] lg:right-4.5 right-5 h-9 w-9 bg-emerald-500 border-2 border-emerald-400 rounded-full flex items-center justify-center text-base-100 font-semibold">
+              <div className="absolute lg:bottom-[7.2rem] bottom-[5.8rem] lg:right-4.5 right-5 h-9 w-9 bg-emerald-500 border-2 border-emerald-400 rounded-full flex items-center justify-center text-base-100 font-semibold">
                 BP
               </div>
             </figure>

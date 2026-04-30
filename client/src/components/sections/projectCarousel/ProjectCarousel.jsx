@@ -70,7 +70,7 @@ const ProjectCarousel = () => {
                 <img
                   src={getImageSrc(activeProject.image)}
                   alt={activeProject.name}
-                  className="w-full lg:h-80 h-56 h-autos lg:object-cover object-fill border rounded-xl border-slate-300 dark:border-slate-700"
+                  className="w-full lg:h-80 h-56 h-autos lg:object-cover object-fill border rounded-xl bg-slate-800 border-slate-300 dark:border-slate-700"
                 />
 
                 {/* Gradient overlay */}
@@ -106,7 +106,7 @@ const ProjectCarousel = () => {
 
         {/* RIGHT: Supporting list */}
         <div className="col-span-12 lg:col-span-5">
-          <div className="h-80 rounded-xl border dark:border-gray-700 p-4 space-y-3 overflow-y-auto">
+          <div className="h-80 rounded-xl bg-base-200 dark:bg-slate-800 border dark:border-slate-700 p-4 space-y-3 overflow-y-auto">
             <h4 className="font-semibold text-lg dark:text-base-300">
               Other Projects
             </h4>
@@ -118,7 +118,7 @@ const ProjectCarousel = () => {
                 className={`block p-2 rounded-md transition m-0
                   ${
                     index === currentIndex
-                      ? "bg-base-200 dark:bg-gray-800 dark:text-base-300 font-semibold"
+                      ? "bg-base-300 dark:bg-gray-700 dark:text-base-300 font-semibold"
                       : "hover:bg-base-200/50"
                   }`}
               >

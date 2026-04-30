@@ -59,11 +59,11 @@ const SuperAdminNavBar = ({
             Bishwajit.dev • Portfolio
           </a>
         </div>
-        <div className="">
-          <span onClick={toggleAdminTheme} className=" ">
+        <div>
+          <span onClick={toggleAdminTheme}>
             {adminTheme === "admin-light" ? (
               <span className="text-md cursor-pointer">
-                <FaMoon />
+                <FaMoon className="" />
               </span>
             ) : (
               <span className="text-md cursor-pointer">
@@ -127,20 +127,20 @@ const SuperAdminNavBar = ({
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 admin-dark:bg-slate-700 admin-dark:text-slate-300 rounded-box z-[1] mt-3 w-52 p-2 shadow admin-dark:shadow-lg"
+            className="menu menu-sm dropdown-content bg-base-100 admin-dark:bg-slate-700 admin-dark:text-slate-300 rounded-box z-[1] mt-3 w-60 p-2 shadow admin-dark:shadow-lg"
           >
             <li>
-              <p>
+              <span className="m-0.5 p-0">
                 <FaUser /> {user.role}
-              </p>
+              </span>
             </li>
             <li>
-              <p className="flex items-center">
+              <span className="m-0.5 p-0">
                 <FaMailBulk /> {user.email}
-              </p>
+              </span>
             </li>
             <li>
-              <a onClick={handleLogOut} className="m-0">
+              <a onClick={handleLogOut} className="m-0.5 p-0">
                 <FaSignOutAlt /> Logout
               </a>
             </li>
