@@ -42,7 +42,7 @@ const PageTitle = ({
       </h1>
 
       {/* Subtitle */}
-      <div className="max-w-5xls mx-auto">
+      <div className="max-w-5xls mx-auto lg:px-0 px-2">
         {subtitle ||
           (dynamicSubtitle && (
             <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto">

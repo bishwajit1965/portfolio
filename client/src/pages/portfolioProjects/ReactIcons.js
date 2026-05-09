@@ -4,71 +4,42 @@ import {
   FaShoppingCart,
   FaFileAlt,
   FaCogs,
-  // FaBlogger,
   FaTachometerAlt,
+  FaShippingFast,
+  FaCog,
 } from "react-icons/fa";
-import { FaListCheck } from "react-icons/fa6";
-
-// form database(Categories)
-// [
-//   "All",
-//   "Portfolio Home Page",
-//   "Portfolio Admin Panel",
-//   "Portfolio Blogs",
-//   "Portfolio Pages",
-//   "Nova Amin Dashboard",
-//   "Nova Cart E-Commerce",
-//   "Blog Mongoose Project",
-//   "Test debug successful",
-//   "Tested validation",
-// ];
-// export const ICONS = {
-//   all: FaHome,
-//   portablehomepage: FaHome,
-//   portableadminpanel: FaCogs,
-//   portableblogs: FaBlog,
-//   portablepages: FaFileAlt,
-//   novaadmindashboard: FaCogs,
-//   novacartecommerce: FaShoppingCart,
-//   blogmongooseproject: FaBlog,
-//   default: FaListCheck,
-// };
-
-[
-  "All",
-  "Portfolio Home Page",
-  "Portfolio Admin Panel",
-  "Portfolio Blogs",
-  "Portfolio Pages",
-  "Nova Amin Dashboard",
-  "Nova Cart E-Commerce",
-  "Blog Mongoose Project",
-  "Test debug successful",
-  "Tested validation",
-];
-
-[
-  "All",
-  "Portfolio System",
-  "Portfolio Admin Panel",
-  "Portfolio Blogs",
-  "Portfolio Pages",
-  "Nova Admin Dashboard",
-  "E-Commerce Platform",
-  "Blog Platform",
-];
+import { FaChartColumn, FaListCheck } from "react-icons/fa6";
 
 export const ICONS = {
   all: FaHome,
+
+  // Portfolio categories
   portfoliosystem: FaTachometerAlt,
   portfolioadminpanel: FaCogs,
   portfolioblogs: FaBlog,
   portfoliopages: FaFileAlt,
+
+  // Nova dashboard categories
   novadashboardhome: FaTachometerAlt,
   novaadminpanel: FaCogs,
   novadashboardpages: FaFileAlt,
-  ecommerceplatform: FaShoppingCart,
-  blogplatform: FaBlog,
+
+  // Nova cart categories
+  ecommerceplatform: FaTachometerAlt,
+  cartandcheckout: FaShoppingCart,
+  userdashboard: FaCogs,
+  adminproducts: FaListCheck,
+  adminorders: FaShippingFast,
+  analytics: FaChartColumn,
+  pages: FaFileAlt,
+
+  // Blogging platform categories
+  blogplatform: FaTachometerAlt,
+  blogadmindashboard: FaCog,
+  blogplatformadminpanel: FaCogs,
+  blogplatformpages: FaFileAlt,
+
+  // Default category
   default: FaListCheck,
 };
 

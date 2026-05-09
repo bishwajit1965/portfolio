@@ -155,7 +155,7 @@ const HeroSection = () => {
           whileHover="hover"
           variants={imageVariants}
         >
-          <div className="relative w-64 sm:w-72 md:w-80 lg:w-96 bg-slate-300 bg-gradient-to-r from-slate-100 to-slate-300 dark:bg-gradient-to dark:from-slate-600 dark:to-slate-700 p-4 rounded-xl shadow-lg hover:shadow-2xl">
+          <div className="relative w-64 sm:w-72 md:w-80 lg:w-96 bg-gradient-to-r from-slate-100 to-slate-300 dark:bg-gradient-to dark:from-slate-600 dark:to-slate-700 p-4 rounded-xl shadow-lg hover:shadow-2xl">
             <figure>
               <img
                 src={heroImage}

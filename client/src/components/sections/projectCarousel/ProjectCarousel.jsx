@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import SectionTitle from "../../sectionTitle/SectionTitle";
 import Button from "../../buttons/Button";
 import { FaAlignCenter } from "react-icons/fa";
-import { FaEye } from "react-icons/fa6";
+import { FaEye, FaRocket } from "react-icons/fa6";
 
 const ProjectCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -58,7 +58,7 @@ const ProjectCarousel = () => {
       <div className="grid grid-cols-12 lg:gap-6 gap-4 mt-8">
         {/* LEFT: Featured Project */}
         <div className="col-span-12 lg:col-span-7">
-          <div className="relative lg:h-80 h-56 rounded-xl overflow-hidden shadow-md group">
+          <div className="relative lg:h-auto h-auto rounded-xl overflow-hidden shadow-md group">
             {loading && (
               <div className="flex items-center justify-center h-full text-sm opacity-70">
                 Loading featured projects…
@@ -66,15 +66,15 @@ const ProjectCarousel = () => {
             )}
 
             {!loading && activeProject && (
-              <>
+              <div className="border rounded-xl dark:border-slate-700">
                 <img
                   src={getImageSrc(activeProject.image)}
                   alt={activeProject.name}
-                  className="w-full lg:h-80 h-56 h-autos lg:object-cover object-fill border rounded-xl bg-slate-800 border-slate-300 dark:border-slate-700"
+                  className="w-full lg:h-auto lg:object-cover object-fill border rounded-xl bg-slate-800 border-slate-300 dark:border-slate-700"
                 />
 
                 {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
 
                 {/* Project info */}
                 <div className="absolute bottom-4 left-4 right-4 text-white space-y-2">
@@ -93,7 +93,7 @@ const ProjectCarousel = () => {
                     variant="outline"
                   />
                 </div>
-              </>
+              </div>
             )}
 
             {!loading && projects.length === 0 && (
@@ -106,9 +106,9 @@ const ProjectCarousel = () => {
 
         {/* RIGHT: Supporting list */}
         <div className="col-span-12 lg:col-span-5">
-          <div className="h-80 rounded-xl bg-base-200 dark:bg-slate-800 border dark:border-slate-700 p-4 space-y-3 overflow-y-auto">
-            <h4 className="font-semibold text-lg dark:text-base-300">
-              Other Projects
+          <div className="rounded-xl bg-base-200 dark:bg-slate-800 border dark:border-slate-700 lg:p-5 p-2 lg:space-y-6 space-y-2 overflow-y-auto">
+            <h4 className="font-semibold text-lg dark:text-base-300 flex items-center gap-2">
+              <FaRocket /> Other Projects
             </h4>
 
             {projects.slice(0, 8).map((project, index) => (

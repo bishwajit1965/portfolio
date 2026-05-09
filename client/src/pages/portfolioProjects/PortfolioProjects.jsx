@@ -63,7 +63,7 @@ const PortfolioProjects = () => {
   }, []);
 
   useEffect(() => {
-    if (projects.length > 0) {
+    if (projects?.length > 0) {
       const cats = [
         "All",
         ...new Set(
@@ -144,7 +144,7 @@ const PortfolioProjects = () => {
               </h3>
             </div>
 
-            <div className="px- py-2">
+            <div className="py-2">
               {/* ALL */}
               <div className="px-2 mt-2">
                 <button
@@ -161,7 +161,7 @@ const PortfolioProjects = () => {
                 </button>
               </div>
 
-              <div className="px-3">
+              <div className="px-2">
                 {projects && projects.length > 0 ? (
                   Object.entries(
                     projects.reduce((acc, project) => {
@@ -194,10 +194,10 @@ const PortfolioProjects = () => {
                           return (
                             <button
                               key={cat}
-                              className={`w-full p-0 text-left py-1.5 px-2 rounded mb-1 font-medium flex items-center gap-1.5 ${
+                              className={`w-full p-0 text-left py-1 px-2 rounded mb-1 font-medium flex items-center gap-1.5 ${
                                 activeCategory === cat
                                   ? "bg-emerald-600 text-white border-l-4 border-emerald-300 text-sm"
-                                  : "hover:bg-emerald-100 dark:hover:text-gray-800 text-gray-700 dark:text-gray-400"
+                                  : "hover:bg-emerald-100 dark:hover:text-gray-800 text-gray-700 dark:text-gray-400 text-sm"
                               }`}
                               onClick={() => {
                                 setActiveCategory(cat);
@@ -352,7 +352,7 @@ const PortfolioProjects = () => {
           id="modal"
           className="fixed inset-0 z-50 flex items-center justify-center bg-black dark:bg-opacity-100 bg-opacity-50"
         >
-          <div className="bg-white dark:bg-gray-800 max-w-3xl w-full rounded-md lg:p-8 p-4 space-y-4 max-h-screen overflow-y-auto">
+          <div className="bg-white dark:bg-gray-800 max-w-6xl w-full rounded-md lg:p-8 p-4 space-y-4 max-h-[90vh] overflow-y-auto">
             <h2 className="lg:text-xl text-lg font-bold text-gray-700 dark:text-gray-400 flex items-center gap-2">
               <FaCircleRight className="text-amber-500" /> {modalProject?.name}
             </h2>
@@ -371,9 +371,10 @@ const PortfolioProjects = () => {
             </figure>
 
             {modalProject?.description && (
-              <p className="text-gray-700 dark:text-gray-400">
-                {modalProject.description}
-              </p>
+              <p
+                dangerouslySetInnerHTML={{ __html: modalProject.description }}
+                className="text-gray-700 dark:text-gray-400"
+              />
             )}
 
             <div className="flex flex-wrap items-center gap-2">
