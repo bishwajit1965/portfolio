@@ -40,7 +40,7 @@ import AddTestimonialForm from "../superAdmin/manageTestimonials/AddTestimonialF
 import Faq from "../components/faq/Faq";
 import ManageSystemPreferences from "../superAdmin/manageSystemPreferences/ManageSystemPreferences";
 const baseURL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
 const router = createBrowserRouter([
   {
     path: "/",
