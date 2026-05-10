@@ -31,6 +31,7 @@ const ErrorPage = ({
             {/* Heading */}
             <h1 className="lg:flex grid gap-2 items-center justify-center lg:text-3xl text-2xl font-extrabold text-base-content dark:text-slate-300">
               <span>{title}</span>
+              <span>•</span>
               <span>{error}</span>
             </h1>
 
