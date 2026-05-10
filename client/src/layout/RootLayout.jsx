@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 const RootLayout = () => {
   return (
-    <div>
+    <div className="min-h-screen">
       <div className="w-full mx-auto sticky top-0 z-50">
         <NavBar />
       </div>
