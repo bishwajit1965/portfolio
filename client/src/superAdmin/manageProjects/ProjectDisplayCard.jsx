@@ -10,8 +10,7 @@ import ProjectVisibilityToggle from "./ProjectVisibilityToggle";
 import { useNavigate } from "react-router-dom";
 import MiniButton from "../../components/buttons/MiniButton";
 import { useState } from "react";
-import SuperAdminSkillBadge from "../superAdminSkillBadge/superAdminSkillBadge";
-
+import SuperAdminSkillBadge from "../superAdminSkillBadge/SuperAdminSkillBadge";
 const ProjectDisplayCard = ({ project, handleDelete }) => {
   const {
     _id,

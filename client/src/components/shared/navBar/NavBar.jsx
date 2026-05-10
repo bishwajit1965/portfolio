@@ -13,7 +13,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 
 import { AuthContext } from "../../../providers/AuthProvider";
-import Logo from "../../assets/favicon/webDevProF.png";
+import Logo from "../../../assets/webDevProF.png";
 import { ThemeContext } from "../../../providers/ThemeProvider";
 
 const NavBar = () => {

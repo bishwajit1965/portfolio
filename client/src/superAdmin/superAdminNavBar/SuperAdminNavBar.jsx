@@ -1,4 +1,4 @@
-import Logo from "../../assets/favicon/webDevProF.png";
+import Logo from "../../assets/webDevProF.png";
 import SuperAdImage from "../../assets/bishwajit-1.jpg";
 import { SuperAdminAuthContext } from "../context/SuperAdminAuthProvider";
 import { useContext } from "react";
