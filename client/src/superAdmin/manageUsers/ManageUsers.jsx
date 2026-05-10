@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Avatar from "/assets/Avatar-Profile-PNG-Photos.png";
+import Avatar from "../../assets/Avatar-Profile-PNG-Photos.png";
 import DataTable from "react-data-table-component";
 import { FaUserCog } from "react-icons/fa";
 import Swal from "sweetalert2";

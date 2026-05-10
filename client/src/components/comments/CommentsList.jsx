@@ -1,4 +1,4 @@
-import Avatar from "/assets/Avatar-Profile-PNG-Photos.png";
+import Avatar from "../../assets/Avatar-Profile-PNG-Photos.png";
 
 const CommentsList = ({ comments }) => {
   // Ensure comments is always an array

@@ -1,5 +1,5 @@
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
-import Avatar from "/assets/Avatar-Profile-PNG-Photos.png";
+import Avatar from "../../assets/Avatar-Profile-PNG-Photos.png";
 import DataTable from "react-data-table-component";
 
 const CommentsTable = ({ comments = [], onEdit, onDelete, filterText }) => {
