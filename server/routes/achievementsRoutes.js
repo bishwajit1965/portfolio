@@ -11,7 +11,7 @@ const {
   getAchievements,
   updateAchievementById,
   deleteAchievementById,
-} = require("../controllers/AchievementsController");
+} = require("../controllers/achievementsController");
 
 const router = express.Router();
 
@@ -22,7 +22,7 @@ router.patch(
   "/:id",
   validateAchievementsData,
   validateAchievementsById,
-  updateAchievementById
+  updateAchievementById,
 );
 router.delete("/:id", validateAchievementsById, deleteAchievementById);
 
