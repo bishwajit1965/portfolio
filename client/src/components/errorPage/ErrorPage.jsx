@@ -29,10 +29,8 @@ const ErrorPage = ({
             </div>
 
             {/* Heading */}
-            <h1 className="flex justify-center lg:text-3xl text-2xl font-extrabold text-base-content admin-dark:text-slate-300">
+            <h1 className="lg:flex grid gap-2 items-center justify-center lg:text-3xl text-2xl font-extrabold text-base-content admin-dark:text-slate-300">
               {title}
-            </h1>
-            <h1 className="flex justify-center lg:text-3xl text-2xl font-extrabold text-red-400 dark:text-red-400">
               {error}
             </h1>
 
