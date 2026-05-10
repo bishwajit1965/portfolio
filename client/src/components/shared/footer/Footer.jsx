@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import CopyrightText from "../copyright/CopyrightText";
 import Logo from "../../../assets/webDevProF.png";
-import RssImage from "/assets/rss.png";
+import RssImage from "../../../assets/rss.png";
 import SocialMediaLinks from "../socialMedia/SocialMediaLinks";
 
 const Footer = () => {
