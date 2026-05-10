@@ -64,9 +64,11 @@ const ErrorPage = ({
               />
             </div>
             {/* Status */}
-            <div className="flex items-center justify-center gap-2 text-sm font-medium text-base-content/80 admin-dark:text-slate-400">
+            <div className="flex items-center justify-center gap-2 text-sm font-medium text-base-content/80 dark:text-slate-300">
               <FaRocket className="text-green-600 admin-dark:text-green-400" />
-              <span>Sorry for the inconvenience. Check back later.</span>
+              <span className="dark:text-slate-300">
+                Sorry for the inconvenience. Check back later.
+              </span>
             </div>
           </div>
         </div>
