@@ -23,7 +23,7 @@ const ErrorPage = ({
           <div className="max-w-3xl w-full text-center bg-base-200s dark:bg-slate-800 border border-base-300 dark:border-slate-700 rounded-xl shadow-lg lg:p-8 p-6 lg:space-y-6 space-y-4">
             {/* Icon */}
             <div className="flex justify-center">
-              <div className="lg:w-20 lg:h-20 w-12 h-12  flex items-center justify-center rounded-full bg-blue-100 dark:bg-gray-800">
+              <div className="lg:w-20 lg:h-20 flex items-center justify-center rounded-full bg-blue-100 dark:bg-gray-800">
                 <FaTools className="lg:text-4xl text-2xl text-blue-600 admin-dark:text-amber-400 animate-pulse" />
               </div>
             </div>
