@@ -29,7 +29,7 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
     category,
     tag,
     createdAt,
-  } = post;
+  } = post || {};
 
   // Blog post summary
   const generateSummary = (content) => {
@@ -129,14 +129,16 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
               initialBookmarked={false}
             />
 
-            <Button
-              href={`/single-blog-post/${_id}`}
-              variant="outline"
-              label="Read More"
-              size="md"
-              className="py-1.5"
-              icon={<FaArrowCircleRight />}
-            />
+            <Link to={`/single-blog-post/${_id}`}>
+              <Button
+                // href={`/single-blog-post/${post?._id}`}
+                variant="outline"
+                label="Read More"
+                size="md"
+                className="py-1.5"
+                icon={<FaArrowCircleRight />}
+              />
+            </Link>
           </div>
         </div>
       </div>

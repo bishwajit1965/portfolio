@@ -15,6 +15,8 @@ import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { app } from "../firebase/firebase.config.js";
 
+import { API_BASE_URL } from "../utils/api.js";
+
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
 
@@ -26,7 +28,9 @@ const AuthProvider = ({ children }) => {
   // Newly modified for JWT on 29.09.2024
   // const API_URL = "http://localhost:5000/api/auth"; //Adjust based on backend URI
   // const API_URL = import.meta.env.VITE_API_BASE_URL + "/auth";
-  const API_URL = `${import.meta.env.VITE_API_BASE_URL}/auth`;
+  // const API_URL = `${import.meta.env.VITE_API_BASE_URL}/auth`;
+
+  const API_URL = `${API_BASE_URL}/auth`;
   // Create user
   const createUser = async (email, password, name, photoUrl) => {
     setLoading(true);
