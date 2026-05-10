@@ -147,43 +147,83 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     setFirebasePersistence();
   }, []);
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      setUser(currentUser);
-      if (currentUser) {
-        setLoading(true);
+      if (!currentUser) {
+        setUser(null);
+        localStorage.removeItem("jwt");
+        setLoading(false);
+        return;
+      }
 
-        const token = await currentUser.getIdToken(); // Get Firebase ID token
-        console.log("Token=>");
-        // Store the token in localStorage if it's not there (on page reload)
+      setLoading(true);
+
+      try {
+        const token = await currentUser.getIdToken();
+
         if (!localStorage.getItem("jwt")) {
           localStorage.setItem("jwt", token);
         }
 
-        try {
-          // Fetch user role and other data from the backend using the JWT in localStorage
-          const response = await axios.get(`${API_URL}/currentUser`, {
-            headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
-          });
+        const response = await axios.get(`${API_URL}/currentUser`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-          // Set user in state with role fetched from backend
-          setUser({
-            ...currentUser,
-            role: response.data.role,
-          });
-        } catch (error) {
-          console.error("Error fetching user role:", error);
-        }
-      } else {
-        setUser(null); // Clear user if not logged in
-        localStorage.removeItem("jwt"); // Remove JWT from localStorage
+        setUser({
+          ...currentUser,
+          role: response.data.role,
+        });
+      } catch (error) {
+        console.error("Auth error:", error);
+
+        // fallback (IMPORTANT)
+        setUser(currentUser);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false); // Stop the loading indicator
     });
 
     return () => unsubscribe();
   }, [API_URL]);
+
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+  //     setUser(currentUser);
+  //     if (currentUser) {
+  //       setLoading(true);
+
+  //       const token = await currentUser.getIdToken(); // Get Firebase ID token
+  //       console.log("Token=>");
+  //       // Store the token in localStorage if it's not there (on page reload)
+  //       if (!localStorage.getItem("jwt")) {
+  //         localStorage.setItem("jwt", token);
+  //       }
+
+  //       try {
+  //         // Fetch user role and other data from the backend using the JWT in localStorage
+  //         const response = await axios.get(`${API_URL}/currentUser`, {
+  //           headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+  //         });
+
+  //         // Set user in state with role fetched from backend
+  //         setUser({
+  //           ...currentUser,
+  //           role: response.data.role,
+  //         });
+  //       } catch (error) {
+  //         console.error("Error fetching user role:", error);
+  //       }
+  //     } else {
+  //       setUser(null); // Clear user if not logged in
+  //       localStorage.removeItem("jwt"); // Remove JWT from localStorage
+  //     }
+  //     setLoading(false); // Stop the loading indicator
+  //   });
+
+  //   return () => unsubscribe();
+  // }, [API_URL]);
 
   const authInfo = {
     user,
