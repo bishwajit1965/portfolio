@@ -41,7 +41,7 @@ import Faq from "../components/faq/Faq";
 import ManageSystemPreferences from "../superAdmin/manageSystemPreferences/ManageSystemPreferences";
 // const baseURL =
 //   import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
-const API = import.meta.env.VITE_API_BASE_URL;
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -72,12 +72,15 @@ const router = createBrowserRouter([
         path: "/single-blog-post/:postId",
         element: <SingleBlogPost />,
         loader: async ({ params }) => {
+          const API = import.meta.env.VITE_API_BASE_URL;
+
+          if (!API) {
+            throw new Error("Missing VITE_API_BASE_URL in environment");
+          }
+
           const postResponse = await fetch(
             `${import.meta.env.VITE_API_BASE_URL}/blogPosts/${params.postId}`,
           );
-          if (!API) {
-            throw new Response("Post not found", { status: 404 });
-          }
           const post = await postResponse.json();
           return { post };
         },
