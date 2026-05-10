@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../buttons/Button";
 
 const ErrorPage = ({
-  title = "Page Not Founds",
+  title = "Page Not Found",
   subtitle = "The page you are looking for does not exist, perhaps you have the wrong address.",
   error = "404 • Error !!!",
 }) => {
@@ -20,7 +20,7 @@ const ErrorPage = ({
       </Helmet>
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="flex justify-center items-center">
-          <div className="max-w-3xl w-full text-center bg-base-200s dark:bg-slate-800 dark:text-slate-200 border border-base-300 dark:border-slate-700 rounded-xl shadow-lg lg:p-8 p-6 lg:space-y-6 space-y-4">
+          <div className="max-w-3xl w-full text-center bg-base-200 dark:bg-slate-800 dark:text-slate-300 border border-base-300 dark:border-slate-700 rounded-xl shadow-lg lg:p-8 p-6 lg:space-y-6 space-y-4">
             {/* Icon */}
             <div className="flex justify-center">
               <div className="lg:w-20 lg:h-20 flex items-center justify-center rounded-full bg-blue-100 dark:bg-gray-800">
@@ -35,12 +35,12 @@ const ErrorPage = ({
             </h1>
 
             {/* Subtitle */}
-            <p className="text-base text-base-content/70 admin-dark:text-slate-400">
+            <p className="text-base text-base-content/70 dark:text-slate-400">
               {subtitle}
             </p>
 
             {/* Divider */}
-            <div className="h-[1px] bg-base-content/15 admin-dark:bg-slate-600 w-2/3 flex mx-auto" />
+            <div className="h-[1px] bg-base-content/15 dark:bg-slate-300 w-2/3 flex mx-auto" />
 
             <div className="lg:flex grid justify-center lg:gap-6 gap-4">
               <Button
