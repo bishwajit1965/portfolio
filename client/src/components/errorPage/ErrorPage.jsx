@@ -20,7 +20,7 @@ const ErrorPage = ({
       </Helmet>
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="flex justify-center items-center">
-          <div className="max-w-3xl w-full text-center bg-base-200s dark:bg-slate-800 border border-base-300 dark:border-slate-700 rounded-xl shadow-lg lg:p-8 p-6 lg:space-y-6 space-y-4">
+          <div className="max-w-3xl w-full text-center bg-base-200s dark:bg-slate-800 dark:text-slate-200 border border-base-300 dark:border-slate-700 rounded-xl shadow-lg lg:p-8 p-6 lg:space-y-6 space-y-4">
             {/* Icon */}
             <div className="flex justify-center">
               <div className="lg:w-20 lg:h-20 flex items-center justify-center rounded-full bg-blue-100 dark:bg-gray-800">
@@ -29,9 +29,9 @@ const ErrorPage = ({
             </div>
 
             {/* Heading */}
-            <h1 className="lg:flex grid gap-2 items-center justify-center lg:text-3xl text-2xl font-extrabold text-base-content admin-dark:text-slate-300">
-              {title}
-              {error}
+            <h1 className="lg:flex grid gap-2 items-center justify-center lg:text-3xl text-2xl font-extrabold text-base-content dark:text-slate-300">
+              <span>{title}</span>
+              <span>{error}</span>
             </h1>
 
             {/* Subtitle */}
