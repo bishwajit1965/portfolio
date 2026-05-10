@@ -1,34 +1,47 @@
-# Ignore node_modules in client
+# =========================
+# Dependencies
+# =========================
+node_modules/
+server/node_modules/
 client/node_modules/
 
+# =========================
+# Build outputs
+# =========================
+dist/
+build/
 
-# Ignore build files in client
-client/.vscode/
+# =========================
+# IDE / Editor files
+# =========================
+.vscode/
+.idea/
 
-
-# Ignore public folder in client
-# client/public/
-
+# =========================
 # Ignore assets folder in client
+# =========================
 client/assets/
 
-# Ignore firebase folder in client (Commented out for deployment)
-# client/src/firebase/
-
-# Ignore TODO.js file in client
-# client/TODO.js/
-
-# Ignore .env files in client and server
-client/.env.local
-server/.env
 # =========================
 # Environment variables (VERY IMPORTANT)
 # =========================
 .env
-.env.*
-# Ignore folders in server
+.env.local
+.env.development
+.env.production
+.env.test
+
+# =========================
+# Logs
+# =========================
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+# Server-specific
+# =========================
 server/config/
 server/uploads/
 server/mongoose/
 server/.vscode/
-server/node_modules/
