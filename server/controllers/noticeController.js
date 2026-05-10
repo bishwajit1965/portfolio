@@ -107,14 +107,14 @@ async function generateNoticePdf(req, res) {
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename=notice-${noticeId}.pdf`
+      `attachment; filename=notice-${noticeId}.pdf`,
     );
 
     doc.pipe(res);
     // Add logo
     const logoPath = path.join(
       __dirname,
-      "../../client/public/assets/favicon/webDevProF.png"
+      "../../client/public/assets/favicon/webDevProF.png",
     ); // Adjust path as needed
 
     const logoLeftMargin = 72 * 1.1; // 1.2 inches

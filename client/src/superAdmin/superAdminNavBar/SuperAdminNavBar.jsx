@@ -1,5 +1,5 @@
-import Logo from "/assets/favicon/webDevProF.png";
-import SuperAdImage from "/assets/bishwajit-1.jpg";
+import Logo from "../../assets/favicon/webDevProF.png";
+import SuperAdImage from "../../assets/bishwajit-1.jpg";
 import { SuperAdminAuthContext } from "../context/SuperAdminAuthProvider";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
