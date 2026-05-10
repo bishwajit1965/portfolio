@@ -29,7 +29,7 @@ const ErrorPage = ({
             </div>
 
             {/* Heading */}
-            <h1 className="text-2xl lg:text-3xl font-extrabold text-base-content admin-dark:text-slate-300 flex items-center justify-center gap-2">
+            <h1 className="lg:text-3xl text-xl font-extrabold text-base-content admin-dark:text-slate-300 flex items-center justify-center gap-2">
               {title}{" "}
               <span className="text-3xl font-extrabold text-red-400 admin-dark:text-red-400">
                 {error}
