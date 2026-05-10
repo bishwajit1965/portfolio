@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../buttons/Button";
 
 const ErrorPage = ({
-  title = "Page Not Found",
+  title = "Page Not Founds",
   subtitle = "The page you are looking for does not exist, perhaps you have the wrong address.",
   error = "404 • Error !!!",
 }) => {
