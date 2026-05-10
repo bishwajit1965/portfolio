@@ -183,7 +183,7 @@ const AuthProvider = ({ children }) => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [API_URL]);
 
   const authInfo = {
     user,
