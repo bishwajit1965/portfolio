@@ -288,14 +288,14 @@ const SingleBlogPost = () => {
               {post?.tag ? getTagNames(post.tag) : "No tags"}
             </span>
           </div>
-          <p
+          {/* <p
             dangerouslySetInnerHTML={{
               __html: post?.content
                 ? post?.content
                 : "No content to display...",
             }}
             className="text-slate-500 dark:text-slate-400"
-          ></p>
+          ></p> */}
           <div className="lg:flex grid items-center lg:space-x-4 space-x-0 gap-2 lg:py-8 py-4">
             <Link to="/blog-posts" className="p-0 m-0">
               <Button
