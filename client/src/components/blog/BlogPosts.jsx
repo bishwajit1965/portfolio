@@ -183,15 +183,15 @@ const BlogPosts = () => {
             <span className="loading-spinner loading-lg text-success mt-10"></span>
           ) : error ? (
             <p>Error loading posts: {error}</p>
-          ) : currentPosts.length > 0 ? (
-            currentPosts.map((post) => (
+          ) : currentPosts?.length > 0 ? (
+            currentPosts?.map((post) => (
               <BlogPostCard
-                key={post._id}
+                key={post?._id}
                 post={post}
                 getCategoryNames={() =>
-                  getCategoryNames(post.category, categories)
+                  getCategoryNames(post?.category, categories)
                 }
-                getTagNames={() => getTagNames(post.tag, tags)}
+                getTagNames={() => getTagNames(post?.tag, tags)}
               />
             ))
           ) : (

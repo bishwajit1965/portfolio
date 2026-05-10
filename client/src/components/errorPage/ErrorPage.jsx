@@ -20,18 +20,22 @@ const ErrorPage = ({
       </Helmet>
       <div className="min-h-[70vh] flex items-center justify-center px-4">
         <div className="flex justify-center items-center">
-          <div className="max-w-3xl w-full text-center bg-base-200 admin-dark:bg-slate-800 border border-base-300 admin-dark:border-slate-700 rounded-xl shadow-lg p-8 space-y-6">
+          <div className="max-w-3xl w-full text-center bg-base-200 admin-dark:bg-slate-800 border border-base-300 admin-dark:border-slate-700 rounded-xl shadow-lg lg:p-8 p-2 lg:space-y-6 space-y-4">
             {/* Icon */}
             <div className="flex justify-center">
-              <div className="w-20 h-20 flex items-center justify-center rounded-full bg-blue-100 admin-dark:bg-amber-900">
-                <FaTools className="text-4xl text-blue-600 admin-dark:text-amber-400 animate-pulse" />
+              <div className="lg:w-20 lg:h-20 flex items-center justify-center rounded-full bg-blue-100 admin-dark:bg-amber-900">
+                <FaTools className="lg:text-4xl text-2xl text-blue-600 admin-dark:text-amber-400 animate-pulse" />
               </div>
             </div>
 
             {/* Heading */}
-            <h1 className="lg:text-3xl text-xl font-extrabold text-base-content admin-dark:text-slate-300 flex items-center justify-center gap-2">
-              {title}{" "}
-              <span className="text-3xl font-extrabold text-red-400 admin-dark:text-red-400">
+            <h1 className="flex flex-wrap items-center justify-center gap-2">
+              <span className="lg:text-3xl text-lg font-extrabold text-base-content admin-dark:text-slate-300">
+                {title}
+              </span>{" "}
+            </h1>
+            <h1 className="flex flex-wrap items-center justify-center gap-2">
+              <span className="lg:text-3xl text-lg font-extrabold text-red-400 admin-dark:text-red-400">
                 {error}
               </span>{" "}
             </h1>

@@ -236,10 +236,10 @@ const SingleBlogPost = () => {
       <div className="grid lg:grid-cols-12 justify-between gap-4 mb-8">
         <div className="lg:col-span-12 col-span-12">
           <Link to="/blog-posts" className="m-0">
-            {post.imageUrl && post.imageUrl.trim() !== "" && (
+            {post?.imageUrl && post?.imageUrl.trim() !== "" && (
               <LazyLoad height={480} offset={300} once>
                 <img
-                  src={getImageSrc(post.imageUrl)}
+                  src={getImageSrc(post?.imageUrl)}
                   alt={post.title}
                   className={`rounded-md shadow-md w-full object-fill h-auto  object-center ${
                     loaded ? "loaded" : ""
@@ -255,7 +255,7 @@ const SingleBlogPost = () => {
             {post?.title}
           </h2>
           <p className="italic text-slate-500 dark:text-slate-400 font-bold inline-flex items-center gap-2 mr-4">
-            <FaUser /> Author: {post.author}
+            <FaUser /> Author: {post?.author}
           </p>
 
           <p className="italic text-slate-500 dark:text-slate-400 font-bold inline-flex items-center gap-2">
@@ -285,7 +285,7 @@ const SingleBlogPost = () => {
               <FaTags /> &nbsp;
             </span>{" "}
             <span className="font-bold lg:flex grid items-center text-slate-500 dark:text-slate-400 capitalize">
-              {post.tag ? getTagNames(post.tag) : "No tags"}
+              {post?.tag ? getTagNames(post.tag) : "No tags"}
             </span>
           </div>
           <p
