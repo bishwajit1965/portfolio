@@ -21,7 +21,11 @@ client/assets/
 # Ignore .env files in client and server
 client/.env.local
 server/.env
-
+# =========================
+# Environment variables (VERY IMPORTANT)
+# =========================
+.env
+.env.*
 # Ignore folders in server
 server/config/
 server/uploads/
