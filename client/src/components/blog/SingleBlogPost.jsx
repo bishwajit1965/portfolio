@@ -24,9 +24,10 @@ import Button from "../buttons/Button";
 import LazyLoad from "react-lazyload";
 
 const SingleBlogPost = () => {
-  const baseUrl =
-    import.meta.env.VITE_API_BASE_URL ||
-    "https://portfolio-wcsw.onrender.com/api";
+  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  // const baseUrl =
+  //   import.meta.env.VITE_API_BASE_URL ||
+  //   "https://portfolio-wcsw.onrender.com/api";
   const { postId } = useParams();
   const { post } = useLoaderData();
   const [categories, setCategories] = useState([]);
@@ -43,6 +44,7 @@ const SingleBlogPost = () => {
   const [token, setToken] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentCategoryIds, setCurrentCategoryIds] = useState([]);
+
   const getImageSrc = (img) => {
     if (!img) return "";
     if (typeof img === "string" && img.startsWith("http")) return img;
@@ -64,7 +66,7 @@ const SingleBlogPost = () => {
 
     const fetchData = async () => {
       try {
-        const categoryResponse = await fetch(`${baseUrl}/categories`);
+        const categoryResponse = await fetch(`${baseURL}/categories`);
         if (!categoryResponse.ok) {
           throw new Error(`HTTP error! Status: ${categoryResponse.status}`);
         }
@@ -91,7 +93,7 @@ const SingleBlogPost = () => {
     return () => {
       isMounted = false; //Clean up function to set the flag to false on unmount
     };
-  }, [baseUrl]);
+  }, [baseURL]);
 
   // Fetch tags when the component mounts
   useEffect(() => {
@@ -100,7 +102,7 @@ const SingleBlogPost = () => {
 
     const fetchData = async () => {
       try {
-        const tagResponse = await fetch(`${baseUrl}/tags`);
+        const tagResponse = await fetch(`${baseURL}/tags`);
         if (!tagResponse.ok) {
           throw new Error(`HTTP error! Status: ${tagResponse.status}`);
         }
@@ -127,7 +129,7 @@ const SingleBlogPost = () => {
     return () => {
       isMounted = false; //Clean up function to set the flag to false on unmount
     };
-  }, [baseUrl]);
+  }, [baseURL]);
 
   // Fetch existing comments when component mounts
   useEffect(() => {
