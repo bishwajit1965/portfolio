@@ -78,9 +78,7 @@ const router = createBrowserRouter([
             throw new Error("Missing VITE_API_BASE_URL in environment");
           }
 
-          const postResponse = await fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/blogPosts/${params.postId}`,
-          );
+          const postResponse = await fetch(`${API}/blogPosts/${params.postId}`);
           const post = await postResponse.json();
           return { post };
         },
