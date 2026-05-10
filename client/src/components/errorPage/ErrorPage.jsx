@@ -24,7 +24,7 @@ const ErrorPage = ({
             {/* Icon */}
             <div className="flex justify-center">
               <div className="lg:w-20 lg:h-20 flex items-center justify-center rounded-full bg-blue-100 dark:bg-gray-800">
-                <FaTools className="lg:text-4xl text-2xl text-blue-600 admin-dark:text-amber-400 animate-pulse" />
+                <FaTools className="lg:text-4xl text-2xl text-blue-600 dark:bg-slate-600 dark:text-amber-400 animate-pulse" />
               </div>
             </div>
 
@@ -41,7 +41,7 @@ const ErrorPage = ({
             </p>
 
             {/* Divider */}
-            <div className="h-[1px] bg-base-content/15 dark:bg-slate-400 w-2/3 flex mx-auto" />
+            <div className="h-[1px] bg-base-content/15 dark:bg-slate-500 w-2/3 flex mx-auto" />
 
             <div className="lg:flex grid justify-center lg:gap-6 gap-4">
               <Button
