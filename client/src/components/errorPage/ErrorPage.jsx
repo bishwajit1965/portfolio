@@ -44,7 +44,7 @@ const ErrorPage = ({
             {/* Divider */}
             <div className="h-[1px] bg-base-content/15 admin-dark:bg-slate-600 w-2/3 flex mx-auto" />
 
-            <div className="lg:flex grig justify-center lg:gap-6 gap-4">
+            <div className="lg:flex grid justify-center lg:gap-6 gap-4">
               <Button
                 variant="success"
                 label="Where Am I ?"
