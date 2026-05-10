@@ -29,15 +29,11 @@ const ErrorPage = ({
             </div>
 
             {/* Heading */}
-            <h1 className="flex flex-wrap items-center justify-center gap-2">
-              <span className="lg:text-3xl text-lg font-extrabold text-base-content admin-dark:text-slate-300">
-                {title}
-              </span>{" "}
+            <h1 className="flex flex-wrap items-center justify-center gap-2 lg:text-3xl text-lg font-extrabold text-base-content admin-dark:text-slate-300">
+              {title}
             </h1>
-            <h1 className="flex flex-wrap items-center justify-center gap-2">
-              <span className="lg:text-3xl text-lg font-extrabold text-red-400 admin-dark:text-red-400">
-                {error}
-              </span>{" "}
+            <h1 className="flex flex-wrap items-center justify-center gap-2 lg:text-3xl text-lg font-extrabold text-red-400 admin-dark:text-red-400">
+              {error}
             </h1>
 
             {/* Subtitle */}
