@@ -129,16 +129,14 @@ const BlogPostCard = ({ post, getCategoryNames, getTagNames }) => {
               initialBookmarked={false}
             />
 
-            <Link to={`/single-blog-post/${_id}`}>
-              <Button
-                // href={`/single-blog-post/${post?._id}`}
-                variant="outline"
-                label="Read More"
-                size="md"
-                className="py-1.5"
-                icon={<FaArrowCircleRight />}
-              />
-            </Link>
+            <Button
+              href={`/single-blog-post/${_id}`}
+              variant="outline"
+              label="Read More"
+              size="md"
+              className="py-1.5"
+              icon={<FaArrowCircleRight />}
+            />
           </div>
         </div>
       </div>
