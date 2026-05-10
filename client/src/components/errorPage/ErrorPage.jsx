@@ -41,7 +41,7 @@ const ErrorPage = ({
             </p>
 
             {/* Divider */}
-            <div className="h-[1px] bg-base-content/15 dark:bg-slate-300 w-2/3 flex mx-auto" />
+            <div className="h-[1px] bg-base-content/15 dark:bg-slate-400 w-2/3 flex mx-auto" />
 
             <div className="lg:flex grid justify-center lg:gap-6 gap-4">
               <Button
