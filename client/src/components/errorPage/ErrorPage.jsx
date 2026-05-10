@@ -18,7 +18,7 @@ const ErrorPage = ({
       <Helmet>
         <title>Bishwajit.dev || Error Page</title>
       </Helmet>
-      <div className="min-h-[70vh] flex items-center justify-center px-4">
+      <div className="min-h-screen flex items-center justify-center px-4">
         <div className="flex justify-center items-center">
           <div className="max-w-3xl w-full text-center bg-base-200 admin-dark:bg-slate-800 border border-base-300 admin-dark:border-slate-700 rounded-xl shadow-lg lg:p-8 p-6 lg:space-y-6 space-y-4">
             {/* Icon */}
