@@ -39,8 +39,9 @@ import PortfolioProjects from "../pages/portfolioProjects/PortfolioProjects";
 import AddTestimonialForm from "../superAdmin/manageTestimonials/AddTestimonialForm";
 import Faq from "../components/faq/Faq";
 import ManageSystemPreferences from "../superAdmin/manageSystemPreferences/ManageSystemPreferences";
-const baseURL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+// const baseURL =
+//   import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -72,7 +73,7 @@ const router = createBrowserRouter([
         element: <SingleBlogPost />,
         loader: async ({ params }) => {
           const postResponse = await fetch(
-            `${baseURL}/blogPosts/${params.postId}`,
+            `${import.meta.env.VITE_API_BASE_URL}/blogPosts/${params.postId}`,
           );
           const post = await postResponse.json();
           return { post };
