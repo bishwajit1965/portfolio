@@ -24,7 +24,7 @@ const HeroSection = () => {
   //   user?.email === "webdevpro.66@gmail.com" &&
   //   user?.role === "superAdmin";
   const isOnline =
-    !loading && user?.email?.toLowerCase() === "webdevpro.66@gmail.com";
+    !loading && user?.email?.toLowerCase() === "paul.bishwajit09@gmail.com";
 
   const textVariants = {
     hidden: { opacity: 0, x: -50 },
