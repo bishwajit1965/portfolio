@@ -47,7 +47,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="lg:min-h-[75vh] flex items-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 rounded-b-xl px-4 sm:px-6 lg:px-12 py-6 lg:py-12 overflow-hidden">
+    <section className="lg:min-h-[75vh] flex items-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 rounded-b-xl px-2 sm:px-6 lg:px-12 py-6 lg:py-12 overflow-hidden">
       <div className="max-w-7xl mx-auto grid lg:grid-cols-12 grid-cols-1 gap-6 lg:gap-12 items-center">
         {/* LEFT: Text Content */}
         <div className="lg:col-span-8 text-center lg:text-left space-y-4 lg:space-y-6">
@@ -157,7 +157,7 @@ const HeroSection = () => {
           whileHover="hover"
           variants={imageVariants}
         >
-          <div className="relative w-64 sm:w-72 md:w-80 lg:w-96 bg-gradient-to-r from-slate-100 to-slate-300 dark:bg-gradient-to dark:from-slate-600 dark:to-slate-700 p-4 rounded-xl shadow-lg hover:shadow-2xl">
+          <div className="relative w-full sm:w-80 md:w-80 lg:w-96 bg-gradient-to-r from-slate-100 to-slate-300 dark:bg-gradient-to dark:from-slate-600 dark:to-slate-700 lg:p-4 p-2 rounded-xl shadow-lg hover:shadow-2xl">
             <figure>
               <img
                 src={heroImage}
@@ -179,12 +179,9 @@ const HeroSection = () => {
                     }`}
                   />
                   <span className="text-sm font-medium">
-                    {isOnline ? "Online Now" : "Offline"}
-                  </span>{" "}
-                  •
-                  <span className="font-bold">
-                    Bishwajit Paul • Super Admin
+                    {isOnline ? "Online" : "Offline"}
                   </span>
+                  •<span className="font-bold">Bishwajit Paul • Admin</span>
                 </div>
                 Full-Stack{" "}
                 <span className="text-gray-900 font-bold dark:text-amber-500">
@@ -192,7 +189,7 @@ const HeroSection = () => {
                 </span>
                 <span> building scalable business applications</span>
               </figcaption>
-              <div className="absolute lg:bottom-[7.2rem] bottom-[5.8rem] lg:right-4.5 right-5 h-9 w-9 bg-emerald-500 border-2 border-emerald-400 rounded-full flex items-center justify-center text-base-100 font-semibold">
+              <div className="absolute lg:bottom-[7.2rem] bottom-[5.8rem] lg:right-4.5 right-3 h-9 w-9 bg-emerald-500 border-2 border-emerald-400 rounded-full flex items-center justify-center text-base-100 font-semibold">
                 BP
               </div>
             </figure>
