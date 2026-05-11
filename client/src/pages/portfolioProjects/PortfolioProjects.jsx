@@ -332,10 +332,10 @@ const PortfolioProjects = () => {
                             href={project.liveLink}
                             target="_blank"
                             rel="noreferrer"
-                            className="m-0"
+                            className="m-0 lg:text-lg text-sm"
                           >
                             <Button variant="base" icon={<FaExternalLinkAlt />}>
-                              Live Demo Coming Soon
+                              Live Demo Coming
                             </Button>
                           </a>
                         )}
