@@ -162,7 +162,7 @@ const PortfolioProjects = () => {
               </div>
 
               <div className="px-2">
-                {projects && projects.length > 0 ? (
+                {projects && projects?.length > 0 ? (
                   Object.entries(
                     projects.reduce((acc, project) => {
                       const label = project.projectLabel || "Other";

@@ -18,7 +18,7 @@ const ErrorPage = ({
       <Helmet>
         <title>Bishwajit.dev || Error Page</title>
       </Helmet>
-      <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="min-h-[calc(100vh-80px)] flex items-center justify-center px-4">
         <div className="flex justify-center items-center">
           <div className="max-w-3xl w-full text-center bg-base-200 dark:bg-slate-800 dark:text-slate-300 border border-base-300 dark:border-slate-700 rounded-xl shadow-lg lg:p-8 p-6 lg:space-y-6 space-y-4">
             {/* Icon */}
@@ -32,7 +32,7 @@ const ErrorPage = ({
             <h1 className="lg:flex grid gap-2 items-center justify-center lg:text-3xl text-2xl font-extrabold text-base-content dark:text-slate-300">
               <span className="dark:text-slate-300">{title}</span>
               <span className="dark:text-slate-300">•</span>
-              <span className="text-red-500">{error}</span>
+              <span className="text-red-500 dark:text-amber-400">{error}</span>
             </h1>
 
             {/* Subtitle */}
@@ -41,7 +41,7 @@ const ErrorPage = ({
             </p>
 
             {/* Divider */}
-            <div className="h-[1px] bg-base-content/15 dark:bg-slate-500 w-2/3 flex mx-auto" />
+            <div className="h-[1px] bg-base-content/15 dark:bg-slate-700 w-2/3 flex mx-auto" />
 
             <div className="lg:flex grid justify-center lg:gap-6 gap-4">
               <Button

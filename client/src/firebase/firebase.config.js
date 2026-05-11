@@ -15,5 +15,9 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_appId,
 };
 
+if (!firebaseConfig.apiKey) {
+  console.error("Firebase env missing!");
+}
+
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
