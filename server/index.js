@@ -10,7 +10,6 @@ const { ensureUniqueSlugIndex } = require("./models/blogPostModel");
 ensureUniqueSlugIndex;
 
 // Middlewares
-// app.use(cors());
 app.use(
   cors({
     origin: ["http://localhost:5173", "https://portfolio-h5k5.vercel.app"],

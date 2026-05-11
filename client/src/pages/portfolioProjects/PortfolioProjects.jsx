@@ -333,7 +333,7 @@ const PortfolioProjects = () => {
                           className="m-0"
                         >
                           <Button variant="base" icon={<FaExternalLinkAlt />}>
-                            Live Demo
+                            Live Demo Coming Soon
                           </Button>
                         </a>
                       )}
