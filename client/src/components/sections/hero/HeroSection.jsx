@@ -19,10 +19,12 @@ const trustBuilders = [
 const HeroSection = () => {
   // Realtime presence checking data
   const { loading, user } = useContext(SuperAdminAuthContext);
+  // const isOnline =
+  //   !loading &&
+  //   user?.email === "webdevpro.66@gmail.com" &&
+  //   user?.role === "superAdmin";
   const isOnline =
-    !loading &&
-    user?.email === "webdevpro.66@gmail.com" &&
-    user?.role === "superAdmin";
+    !loading && user?.email?.toLowerCase() === "webdevpro.66@gmail.com";
 
   const textVariants = {
     hidden: { opacity: 0, x: -50 },
