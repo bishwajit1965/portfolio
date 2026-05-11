@@ -325,18 +325,20 @@ const PortfolioProjects = () => {
                           </Button>
                         </a>
                       )}
-                      {project.liveLink && (
-                        <a
-                          href={project.liveLink}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="m-0"
-                        >
-                          <Button variant="base" icon={<FaExternalLinkAlt />}>
-                            Live Demo Coming Soon
-                          </Button>
-                        </a>
-                      )}
+                      {project.liveLink &&
+                        project.liveLink.startsWith("http") &&
+                        !project.liveLink.includes("github.com") && (
+                          <a
+                            href={project.liveLink}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="m-0"
+                          >
+                            <Button variant="base" icon={<FaExternalLinkAlt />}>
+                              Live Demo Coming Soon
+                            </Button>
+                          </a>
+                        )}
                     </div>
                   </div>
                 ))}

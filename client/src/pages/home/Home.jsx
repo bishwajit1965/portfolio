@@ -7,6 +7,7 @@ import ScrollTopButton from "../../components/scrollTopButton/ScrollTopButton";
 import SkillsPreview from "../../components/skillsPreview/SkillsPreview";
 import TestimonialSection from "../../components/sections/testimonials/TestimonialsSection";
 import ServicesSection from "../../components/sections/serviceSection/ServiceSection";
+import HomeNoticePreview from "../../components/homeNoticePreview/HomeNoticePreview";
 
 const Home = () => {
   return (
@@ -27,6 +28,8 @@ const Home = () => {
         <ProjectsSection />
 
         <TestimonialSection />
+
+        <HomeNoticePreview />
 
         <ContactMeSection />
 

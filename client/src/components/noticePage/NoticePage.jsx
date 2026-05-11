@@ -71,6 +71,7 @@ const NoticePage = () => {
                 <th className="lg:col-span-1">#</th>
                 <th className="lg:col-span-10">Notice Title:</th>
                 <th className="lg:col-span-10">Notice Date:</th>
+                <th className="lg:col-span-10">Notice Updated:</th>
                 <th className="lg:col-span-1 flex justify-end">Action</th>
               </tr>
             </thead>
@@ -81,6 +82,13 @@ const NoticePage = () => {
                   <td className="lg:col-span-10">{notice.title}</td>
                   <td className="lg:col-span-10">
                     {new Date(notice.createdAt).toLocaleDateString("en-GB", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </td>
+                  <td className="lg:col-span-10">
+                    {new Date(notice.updatedAt).toLocaleDateString("en-GB", {
                       day: "numeric",
                       month: "long",
                       year: "numeric",

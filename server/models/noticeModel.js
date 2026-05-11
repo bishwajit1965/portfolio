@@ -5,7 +5,13 @@ async function createNotice(notice) {
   try {
     const db = getDB();
     const noticeCollection = db.collection("notice");
-    const result = await noticeCollection.insertOne(notice);
+    const newNotice = {
+      ...notice,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    const result = await noticeCollection.insertOne(newNotice);
     return result;
   } catch (error) {
     throw new Error("Error in creating notice.", error);
@@ -40,7 +46,7 @@ async function updateNotice(id, updatedNotice) {
     const noticeCollection = db.collection("notice");
     const result = await noticeCollection.updateOne(
       { _id: new ObjectId(id) },
-      { $set: updatedNotice }
+      { $set: { ...updatedNotice, updatedAt: new Date() } },
     );
     return result;
   } catch (error) {
