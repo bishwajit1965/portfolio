@@ -312,7 +312,7 @@ const PortfolioProjects = () => {
                     </div>
 
                     {/* Links */}
-                    <div className="flex lg:gap-4 gap-2 mt-2">
+                    <div className="flex lg:gap-4 gap-2 m7-4">
                       {project.githubLink && (
                         <a
                           href={project.githubLink}
