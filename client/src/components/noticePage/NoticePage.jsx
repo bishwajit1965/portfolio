@@ -7,12 +7,12 @@ import PageTitle from "../../pages/pageTitle/PageTitle";
 import api from "../../services/api";
 import Button from "../buttons/Button";
 import { FaMessage } from "react-icons/fa6";
+import { API_BASE_URL } from "../../utils/api";
 
 const NoticePage = () => {
   const [notices, setNotices] = useState([]);
   const [loading, setLoading] = useState(false);
-  const baseUrl =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+
   useEffect(() => {
     const fetchNotices = async () => {
       try {
@@ -36,7 +36,7 @@ const NoticePage = () => {
   // if (!notices) return <div className="text-center">Loading...</div>;
 
   const handleDownloadPdf = (noticeId) => {
-    window.open(`${baseUrl}/notices/generate-pdf/${noticeId}`, "_blank");
+    window.open(`${API_BASE_URL}/notices/generate-pdf/${noticeId}`, "_blank");
   };
 
   let serial = 1;

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API_BASE_URL } from "../../utils/api";
 
 const UpdateBlogPost = ({ postId }) => {
   const [postData, setPostData] = useState({
@@ -15,7 +16,7 @@ const UpdateBlogPost = ({ postId }) => {
   useEffect(() => {
     // Fetch current post data
     const fetchPostData = async () => {
-      const response = await fetch(`http"//localhost:5000/api/posts/${postId}`);
+      const response = await fetch(`${API_BASE_URL}/posts/${postId}`);
       const data = await response.json();
       setPostData(data);
     };
@@ -31,7 +32,7 @@ const UpdateBlogPost = ({ postId }) => {
     formData.append("category", JSON.stringify(postData.category));
     if (image) formData.append("image", image);
 
-    const response = await fetch(`http://localhost:5000/api/posts/${postId}`, {
+    const response = await fetch(`${API_BASE_URL}/posts/${postId}`, {
       method: "PATCH",
       body: formData,
     });

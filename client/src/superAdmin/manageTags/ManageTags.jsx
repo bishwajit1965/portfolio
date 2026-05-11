@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import TagTable from "./TagTable";
 import UpdateTagModal from "./UpdateTagModal";
 import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
+import { API_BASE_URL } from "../../utils/api";
 
 const ManageTags = () => {
   const [tags, setTags] = useState([]);
@@ -13,8 +14,7 @@ const ManageTags = () => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedTag, setSelectedTag] = useState(null);
   const [filterText, setFilterText] = useState("");
-  const apiURL =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+  const apiURL = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
 
   const handleAddCategoryFormToggle = () => {
@@ -123,7 +123,7 @@ const ManageTags = () => {
     );
     if (confirmed) {
       try {
-        await fetch(`http://localhost:5000/api/tags/${tagId}`, {
+        await fetch(`${API_BASE_URL}/tags/${tagId}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

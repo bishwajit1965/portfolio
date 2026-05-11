@@ -1,6 +1,7 @@
 import axios from "axios";
+import { API_BASE_URL } from "../../utils/api";
 
-const baseURL = "http://localhost:5000/api/super-admin"; // Change if your API URL is different
+const baseURL = `${API_BASE_URL}/super-admin`; // Change if your API URL is different
 const superAdminApi = {
   login: async (email, password) => {
     try {

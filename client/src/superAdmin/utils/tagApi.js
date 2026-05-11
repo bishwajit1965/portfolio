@@ -1,6 +1,7 @@
+import { API_BASE_URL } from "../../utils/api";
 import fetchWithAuth from "./fetchWithAuth";
 
-const apiUrl = "http://localhost:5000/api/tags";
+const apiUrl = `${API_BASE_URL}/tags`;
 
 const tagApi = {
   async getAllTags() {

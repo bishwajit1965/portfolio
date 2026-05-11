@@ -63,7 +63,7 @@ const ProjectUpdateForm = () => {
      Preview
   ---------------------------------- */
   const mainImagePreview = formData.image
-    ? `http://localhost:5000/uploads/${formData.image}`
+    ? `${import.meta.env.VITE_API_URL}/uploads/${formData.image}`
     : null;
 
   /* ----------------------------------

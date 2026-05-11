@@ -9,8 +9,7 @@ const BookmarksPage = () => {
   const [bookmarks, setBookmarks] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const baseUrl =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchBookmarks = async () => {

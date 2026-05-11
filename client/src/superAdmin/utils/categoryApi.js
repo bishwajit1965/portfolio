@@ -1,6 +1,7 @@
+import { API_BASE_URL } from "../../utils/api";
 import fetchWithAuth from "./fetchWithAuth";
 
-const apiUrl = "http://localhost:5000/api/categories";
+const apiUrl = `${API_BASE_URL}/categories`;
 
 const categoryApi = {
   async getAllCategories() {

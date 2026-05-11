@@ -5,10 +5,9 @@ const apiRequest = async (
   method = "GET",
   data = null,
   token = null,
-  options = {}
+  options = {},
 ) => {
-  const baseUrl =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   const headers = {
     ...(token && { Authorization: `Bearer ${token}` }),

@@ -6,9 +6,8 @@ const BlogsCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slides, setSlides] = useState([]);
 
-  const baseUrl =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
-  // const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
   const getImageSrc = (img) => {
     if (!img) return "";
     if (typeof img === "string" && img.startsWith("http")) return img;

@@ -32,7 +32,7 @@ const PortfolioProjects = () => {
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
   const [modalProject, setModalProject] = useState(null);
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const apiUrl = import.meta.env.VITE_API_URL;
   const baseURL = `${apiUrl}/uploads/`;
 
   // Manage Images

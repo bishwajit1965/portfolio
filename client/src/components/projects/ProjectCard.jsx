@@ -4,7 +4,7 @@ import SkillBadge from "../skillBadge/SkillBadge";
 import MiniButton from "../buttons/MiniButton";
 
 const ProjectCard = ({ project }) => {
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const apiUrl = import.meta.env.VITE_API_URL;
   const baseURL = `${apiUrl}/uploads/`;
   // const imageUrl = `${baseURL}${project.image}`;
   const { _id, name, type, description } = project;

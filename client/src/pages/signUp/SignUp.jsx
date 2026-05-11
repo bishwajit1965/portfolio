@@ -7,6 +7,7 @@ import SocialLogIn from "../../components/shared/socialLogin/SocialLogin";
 import Swal from "sweetalert2";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { API_BASE_URL } from "../../utils/api";
 
 const SignUp = () => {
   const { createUser, updateUserProfile } = useContext(AuthContext);
@@ -30,7 +31,7 @@ const SignUp = () => {
               email: data.email,
             };
 
-            fetch("http://localhost:5000/api/auth/register", {
+            fetch(`${API_BASE_URL}/auth/register`, {
               method: "POST",
               headers: { "content-type": "application/json" },
               body: JSON.stringify(saveUser),

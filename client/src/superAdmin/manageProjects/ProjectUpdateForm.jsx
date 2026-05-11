@@ -17,7 +17,7 @@ import Swal from "sweetalert2";
 import CKEditorComponent from "../textEditor/CKEditorComponent";
 
 const ProjectUpdateForm = () => {
-  const apiURL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const apiURL = import.meta.env.VITE_API_URL;
   const baseURL = `${apiURL}/uploads/`;
   const { projectId } = useParams();
 

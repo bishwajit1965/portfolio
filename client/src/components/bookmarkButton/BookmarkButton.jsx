@@ -2,8 +2,7 @@ import { FaBookmark, FaTrash } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import Button from "../buttons/Button";
 import Swal from "sweetalert2";
-const baseUrl =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+import { API_BASE_URL } from "../../utils/api";
 
 const BookmarkButton = ({ postId, userId, initialBookmarked }) => {
   const [bookmarked, setBookmarked] = useState(initialBookmarked || false);
@@ -17,8 +16,8 @@ const BookmarkButton = ({ postId, userId, initialBookmarked }) => {
 
   const toggleBookmark = async () => {
     const endpoint = bookmarked
-      ? `${baseUrl}/blog/remove-bookmark`
-      : `${baseUrl}/blog/bookmark`;
+      ? `${API_BASE_URL}/blog/remove-bookmark`
+      : `${API_BASE_URL}/blog/bookmark`;
 
     try {
       const response = await fetch(endpoint, {

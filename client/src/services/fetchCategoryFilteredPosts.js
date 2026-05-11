@@ -1,6 +1,5 @@
 const fetchCategoryFilteredPosts = async (categoryIds) => {
-  const baseUrl =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   if (!categoryIds || categoryIds.length === 0) {
     console.warn("No categories provided for filtering.");
@@ -11,7 +10,7 @@ const fetchCategoryFilteredPosts = async (categoryIds) => {
 
   try {
     const response = await fetch(
-      `${baseUrl}/blogPosts/filter?category=${query}`
+      `${baseUrl}/blogPosts/filter?category=${query}`,
     );
 
     if (!response.ok) {

@@ -1,7 +1,6 @@
 import fetchWithAuth from "./fetchWithAuth";
 
-const baseURL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const supAdminDashboardStatusApi = {
   // Get all blog post

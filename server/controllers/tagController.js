@@ -39,7 +39,7 @@ const getTags = async (req, res) => {
     res.status(200).json(tags);
   } catch (error) {
     console.error(error);
-    (res, status(500).json({ message: "Error in fetching tags." }));
+    res.status(500).json({ message: "Error in fetching tags." });
   }
 };
 

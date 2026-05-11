@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import CommentsForm from "./CommentsForm";
 import CommentsList from "./CommentsList";
 import { fetchComments } from "../../services/manageComments";
+import { API_BASE_URL } from "../../utils/api";
 
 const CommentsSection = ({ postId }) => {
   const [loading, setLoading] = useState(false);
@@ -23,7 +24,7 @@ const CommentsSection = ({ postId }) => {
 
   const handleAddComment = async (newComment) => {
     const token = localStorage.getItem("jwt");
-    const response = await fetch("http://localhost:5000/api/comments", {
+    const response = await fetch(`${API_BASE_URL}/api/comments`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

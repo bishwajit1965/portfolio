@@ -1,6 +1,7 @@
+import { API_BASE_URL } from "../../utils/api";
 import fetchWithAuth from "./fetchWithAuth";
 
-const apiUrl = "http://localhost:5000/api/blogPost";
+const apiUrl = `${API_BASE_URL}/blogPost`;
 
 const blogPostApi = {
   // Create blog post

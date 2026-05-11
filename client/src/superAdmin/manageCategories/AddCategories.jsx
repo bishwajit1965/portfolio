@@ -11,8 +11,7 @@ import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSu
 import MiniButton from "../../components/buttons/MiniButton";
 
 const AddCategories = ({ onCategoryCreated }) => {
-  const apiURL =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+  const apiURL = import.meta.env.VITE_API_BASE_URL;
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");

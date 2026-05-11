@@ -5,8 +5,7 @@ import SectionTitle from "../../sectionTitle/SectionTitle";
 import { FaBlog } from "react-icons/fa6";
 
 const RandomLatestPosts = () => {
-  const baseUrl =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   const [posts, setPosts] = useState([]);
 

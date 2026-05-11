@@ -12,8 +12,7 @@ const ProjectVisibilityToggle = ({ projectId, initialVisibility }) => {
     initialVisibility === "visible" ? "visible" : "invisible",
   );
   console.log("dropdown value", dropdownValue);
-  const baseURL =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+  const baseURL = import.meta.env.VITE_API_BASE_URL;
   const handleVisibilitySubmit = async () => {
     setLoading(true);
     const newVisibility = dropdownValue; // Determine new visibility status

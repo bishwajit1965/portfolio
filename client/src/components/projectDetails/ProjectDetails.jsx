@@ -27,7 +27,7 @@ const ProjectDetails = () => {
   const [modalData, setModalData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isExtended, setIsExtended] = useState(false);
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const apiUrl = import.meta.env.VITE_API_URL;
   const baseURL = `${apiUrl}/uploads/`;
   const getImageSrc = (img) => {
     if (!img) return "";

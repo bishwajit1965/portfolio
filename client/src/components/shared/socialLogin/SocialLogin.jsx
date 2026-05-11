@@ -4,6 +4,7 @@ import { AuthContext } from "../../../providers/AuthProvider";
 import { FaGoogle } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { useContext } from "react";
+import { API_BASE_URL } from "../../../utils/api";
 
 const SocialLogIn = () => {
   const { signInWithGoogle } = useContext(AuthContext);
@@ -31,7 +32,7 @@ const SocialLogIn = () => {
           email: loggedInUser.email,
         };
         // Send user data to the backend
-        await fetch("http://localhost:5000/users", {
+        await fetch(`${API_BASE_URL}/users`, {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify(saveUser),

@@ -10,8 +10,7 @@ const AddNotice = () => {
   const [status, setStatus] = useState("draft"); // Default status is 'draft'
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const apiURL =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+  const apiURL = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
 
   const handleRedirectNoticeFormToggle = () => {

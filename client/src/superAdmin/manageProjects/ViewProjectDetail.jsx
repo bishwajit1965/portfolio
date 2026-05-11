@@ -11,7 +11,7 @@ import {
 import api from "../../services/api";
 import Button from "../../components/buttons/Button";
 import SuperAdminPageSubHeader from "../superAdminPageSubHeader/SuperAdminPageSubHeader";
-const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const apiUrl = import.meta.env.VITE_API_URL;
 const baseURL = `${apiUrl}/uploads/`;
 
 const ViewProjectDetails = () => {

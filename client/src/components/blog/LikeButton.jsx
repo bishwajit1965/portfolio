@@ -2,6 +2,7 @@ import { FaThumbsDown, FaThumbsUp } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 
 import Loader from "../loader/Loader";
+import { API_BASE_URL } from "../../utils/api";
 
 const LikeButton = ({ postId, token }) => {
   const [liked, setLiked] = useState(false);
@@ -15,7 +16,7 @@ const LikeButton = ({ postId, token }) => {
       setMessage("");
       try {
         const response = await fetch(
-          `http://localhost:5000/api/likes/posts/${postId}/likes`,
+          `${API_BASE_URL}/api/likes/posts/${postId}/likes`,
           { method: "GET" },
         );
         if (response.ok) {
@@ -39,7 +40,7 @@ const LikeButton = ({ postId, token }) => {
   }, [postId]);
 
   const handleLikeToggle = async () => {
-    const url = `http://localhost:5000/api/likes/posts/${postId}/like`;
+    const url = `${API_BASE_URL}/api/likes/posts/${postId}/like`;
     const options = {
       method: liked ? "DELETE" : "POST",
       headers: {

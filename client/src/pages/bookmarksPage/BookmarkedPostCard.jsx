@@ -6,7 +6,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 
 const BookmarkedPostCard = ({ post }) => {
   const { title, content, author, summary, imageUrl, updatedAt, _id } = post;
-  // const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
   const { user } = useContext(AuthContext);
   const loggedInUserId = user ? user.uid : null;
 

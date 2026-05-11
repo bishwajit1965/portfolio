@@ -25,11 +25,6 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
 
-  // Newly modified for JWT on 29.09.2024
-  // const API_URL = "http://localhost:5000/api/auth"; //Adjust based on backend URI
-  // const API_URL = import.meta.env.VITE_API_BASE_URL + "/auth";
-  // const API_URL = `${import.meta.env.VITE_API_BASE_URL}/auth`;
-
   const API_URL = `${API_BASE_URL}/auth`;
   // Create user
   const createUser = async (email, password, name, photoUrl) => {

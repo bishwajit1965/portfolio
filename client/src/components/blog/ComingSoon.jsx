@@ -4,18 +4,16 @@ import { Helmet } from "react-helmet-async";
 import Loader from "../loader/Loader";
 import PageTitle from "../../pages/pageTitle/PageTitle";
 import NoComingSoon from "../NoComingSoon/NoComingSoon";
+import { API_BASE_URL } from "../../utils/api";
 
 const ComingSoon = () => {
-  const baseUrl =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
-
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const now = new Date().toISOString();
 
   // Fetch "Coming Soon" posts
   useEffect(() => {
-    fetch(`${baseUrl}/coming-soon/blogPosts/coming-soon`)
+    fetch(`${API_BASE_URL}/coming-soon/blogPosts/coming-soon`)
       .then((response) => response.json())
       .then((data) => {
         const publishedPosts = data.filter(
@@ -27,7 +25,7 @@ const ComingSoon = () => {
         console.error("Error fetching coming soon posts:", error),
       )
       .finally(() => setLoading(false));
-  }, [baseUrl, now]);
+  }, [now]);
 
   return (
     <div className="lg:max-w-7xl mx-auto lg:p-0 p-2 mb-10">

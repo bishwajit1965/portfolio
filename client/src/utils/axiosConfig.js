@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseUrl: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api",
+  baseUrl: import.meta.env.VITE_API_BASE_URL,
 });
 
 axiosInstance.interceptors.response.use(
@@ -13,5 +13,5 @@ axiosInstance.interceptors.response.use(
       window.location.href = "/login?error=tokenExpired";
     }
     return Promise.reject(error);
-  }
+  },
 );

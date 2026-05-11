@@ -5,8 +5,7 @@ import Loader from "../../components/loader/Loader";
 import PageTitle from "../pageTitle/PageTitle";
 import RssPostCard from "./RssPostCard";
 import { FaRss } from "react-icons/fa";
-const baseUrl =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 const RssPage = () => {
   const [rssPosts, setRssPosts] = useState([]);
   const [loading, setLoading] = useState(false);
