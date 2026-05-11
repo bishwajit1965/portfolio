@@ -272,7 +272,7 @@ const ProjectDetails = () => {
           id="modal"
           className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 dark:bg-opacity-100 z-50 p-4"
         >
-          <div className="bg-white dark:bg-gray-800 rounded-md shadow-lg max-w-3xl w-full p-6 space-y-4">
+          <div className="bg-white dark:bg-gray-800 rounded-md shadow-lg max-w-3xl w-full p-6 space-y-4 lg:max-h[80vh] max-h-[85vh] overflow-y-auto">
             <h2 className="lg:text-2xl font-bold text-gray-800 dark:text-gray-400 ">
               {modalData.caption}
             </h2>
@@ -281,9 +281,12 @@ const ProjectDetails = () => {
               alt={modalData.caption}
               className="w-full h-auto object-cover rounded-md shadow border border-base-300 dark:border-gray-700 hover:border-4 hover:shadow-md transition-all"
             />
-            <p className="text-gray-700 dark:text-gray-300">
-              {project.description}
-            </p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: project.description,
+              }}
+              className="text-gray-700 dark:text-gray-300"
+            ></p>
 
             {/* Tech stacks */}
             <div className="flex flex-wrap gap-2 items-center">

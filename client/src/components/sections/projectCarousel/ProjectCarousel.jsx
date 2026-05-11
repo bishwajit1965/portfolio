@@ -73,11 +73,11 @@ const ProjectCarousel = () => {
                 />
 
                 {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/60 to-transparent" />
 
                 {/* Project info */}
                 <div className="absolute bottom-4 left-4 right-4 text-white space-y-2">
-                  <h3 className="lg:text-xl text-sm font-bold">
+                  <h3 className="lg:text-xl text-sm font-bold dark:text-slate-300">
                     {activeProject.name}
                   </h3>
                   <p className="text-sm opacity-80">
@@ -90,6 +90,7 @@ const ProjectCarousel = () => {
                     icon={<FaEye />}
                     size="sm"
                     variant="outline"
+                    className="m-0"
                   />
                 </div>
               </div>

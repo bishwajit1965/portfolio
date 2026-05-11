@@ -354,7 +354,7 @@ const PortfolioProjects = () => {
           id="modal"
           className="fixed inset-0 z-50 flex items-center justify-center bg-black dark:bg-opacity-100 bg-opacity-50"
         >
-          <div className="bg-white dark:bg-gray-800 max-w-6xl w-full rounded-md lg:p-8 p-4 space-y-4 max-h-[90vh] overflow-y-auto">
+          <div className="bg-white dark:bg-gray-800 max-w-6xl w-full rounded-md lg:p-8 p-4 space-y-4 lg:max-h-[90vh] max-h-[85vh] overflow-y-auto">
             <h2 className="lg:text-xl text-lg font-bold text-gray-700 dark:text-gray-400 flex items-center gap-2">
               <FaCircleRight className="text-amber-500" /> {modalProject?.name}
             </h2>
@@ -374,7 +374,9 @@ const PortfolioProjects = () => {
 
             {modalProject?.description && (
               <p
-                dangerouslySetInnerHTML={{ __html: modalProject.description }}
+                dangerouslySetInnerHTML={{
+                  __html: modalData.description,
+                }}
                 className="text-gray-700 dark:text-gray-400"
               />
             )}
