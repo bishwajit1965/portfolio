@@ -23,6 +23,7 @@ const NoComingSoon = () => {
     { id: 3, title: "We are now actively working on it for you." },
     { id: 4, title: "Hope you will get a coming soon post message soon." },
   ];
+
   const navigate = useNavigate();
   const handleRedirect = () => {
     navigate("/");
