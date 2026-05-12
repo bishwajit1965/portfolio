@@ -1,4 +1,5 @@
 import {
+  FaCheckCircle,
   FaCode,
   FaLayerGroup,
   FaProjectDiagram,
@@ -7,13 +8,33 @@ import {
 import SkillBadge from "../../skillBadge/SkillBadge";
 import { Link } from "react-router-dom";
 import Button from "../../buttons/Button";
-import { FaCheck, FaCloud, FaProductHunt } from "react-icons/fa6";
+import { FaCloud, FaProductHunt } from "react-icons/fa6";
 import JourneyMilestones from "../parallax/JourneyMilestones";
 import AnimatedBackground from "../animatedBackground/AnimateBackground";
 import PageTitle from "../../../pages/pageTitle/PageTitle";
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
+
+const coreFocus = [
+  { id: 1, focus: "Clean architecture & predictable data flow" },
+  { id: 2, focus: "Role‑based systems & authentication" },
+  { id: 3, focus: "Reusable, scalable React components" },
+  { id: 4, focus: "Backend APIs designed for real production use" },
+  { id: 5, focus: "Performance optimization & best practices" },
+  { id: 6, focus: "Thorough testing & error handling" },
+  { id: 7, focus: "Clear, maintainable code" },
+  { id: 8, focus: "Responsive modern design" },
+];
 
 const AboutMeSection = () => {
+  const textVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: (i = 1) => ({
+      opacity: 1,
+      x: 0,
+      transition: { delay: i * 0.3, type: "spring", stiffness: 50 },
+    }),
+  };
   return (
     <section className="max-w-7xl mx-auto lg:px-0 px-2 dark:text-slate-400 lg:space-y-12">
       <Helmet>
@@ -75,35 +96,30 @@ const AboutMeSection = () => {
           </div>
         </div>
 
+        {/* Core focus */}
         <div className="lg:col-span-5 bg-base-200 dark:bg-slate-800 dark:text-slate-400 rounded-xl lg:p-6 p-3 shadow-md">
           <div className="dark:text-base">
-            <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+            <h3 className="text-xl font-bold mb- flex items-center gap-2">
               <FaCode className="text-orange-500" /> Core Focus
             </h3>
-            <ul className="text-base lg:space-y-4 space-y-2">
-              <li className="flex items-center gap-2">
-                <FaCheck size={16} /> Clean architecture & predictable data flow
-              </li>
-              <li className="flex items-center gap-2">
-                <FaCheck size={16} /> Role‑based systems & authentication
-              </li>
-              <li className="flex items-center gap-2">
-                <FaCheck size={16} /> Reusable, scalable React components
-              </li>
-              <li className="flex items-center gap-2">
-                <FaCheck size={16} /> Backend APIs designed for real production
-                use
-              </li>
-              <li className="flex items-center gap-2">
-                <FaCheck size={16} /> Performance optimization & best practices
-              </li>
-              <li className="flex items-center gap-2">
-                <FaCheck size={16} /> Thorough testing & error handling
-              </li>
-              <li className="flex items-center gap-2">
-                <FaCheck size={16} /> Clear, maintainable code
-              </li>
-            </ul>
+
+            <div className="divider dark:divider-neutral"></div>
+
+            {coreFocus?.map((foc) => (
+              <motion.div
+                key={foc.id}
+                custom={foc.id}
+                initial="hidden"
+                animate="visible"
+                variants={textVariants}
+                className="space-y-4 mb-4"
+              >
+                <span className="flex items-center gap-2 space-y-4 ">
+                  <FaCheckCircle size={16} className="text-emerald-400" />
+                  {foc?.focus}{" "}
+                </span>
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>
