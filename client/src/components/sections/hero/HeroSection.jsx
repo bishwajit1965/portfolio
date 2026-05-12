@@ -136,7 +136,7 @@ const HeroSection = () => {
               href="/contact-me"
               icon={<FaRocket size={25} />}
               label="Start Your Project"
-              className="lg:w-52 w-52 lg:text-lg text-sm"
+              className="lg:w-52 w-52 lg:text-lg text-sm m-0"
             />
             {/* SECONDARY CTA */}
             <CTAButton
@@ -144,7 +144,7 @@ const HeroSection = () => {
               icon={<FaEye size={25} />}
               label="View My Work"
               variant="success"
-              className="lg:w-52 w-44 lg:text-lg text-sm"
+              className="lg:w-52 w-44 lg:text-lg text-sm m-0"
             />
           </motion.div>
         </div>

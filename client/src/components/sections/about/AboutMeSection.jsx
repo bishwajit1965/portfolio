@@ -201,7 +201,7 @@ const AboutMeSection = () => {
       {/* Project Highlight */}
       <div
         className="bg-gradient-to-br from-orange-100 to-orange-200
-dark:from-slate-900 dark:via-slate-700  dark:to-slate-700 rounded-xl lg:p-8 p-4 lg:mb-16 mb-8 shadow-lg lg:space-y-6 space-y-3"
+dark:from-slate-900 dark:via-slate-800  dark:to-slate-800 rounded-xl lg:p-8 p-4 lg:mb-16 mb-8 shadow-lg lg:space-y-6 space-y-3"
       >
         <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
           <FaProjectDiagram className="text-orange-500" /> Featured Projects
