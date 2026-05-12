@@ -208,14 +208,6 @@ const ContactMeForm = () => {
                   setFormData({ ...formData, message: value })
                 }
               />
-              {/* <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                rows="4"
-                placeholder="Message..."
-                className="mt-1 p-2 block w-full border border-gray-300 rounded-md dark:bg-slate-800 dark:border-slate-700"
-              ></textarea> */}
               {errors.message && (
                 <p className="text-red-500 text-sm">{errors.message}</p>
               )}

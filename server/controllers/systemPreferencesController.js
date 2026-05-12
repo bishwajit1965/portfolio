@@ -67,54 +67,7 @@ const insertSystemPreferences = async (req, res) => {
     });
   }
 };
-// const insertSystemPreferences = async (req, res) => {
-//   try {
-//     const { appName } = req.body;
-//     if (!appName)
-//       return res
-//         .status(400)
-//         .json({ success: false, message: "App name is required!" });
 
-//     const now = new Date();
-//     const systemPreferencesData = {
-//       ...req.body,
-//       createdAt: now,
-//       updatedAt: now,
-//     };
-
-//     console.log("REQ>>>BODY", systemPreferencesData);
-
-//     if (req.file) {
-//       const uploaded = await uploadImage(req.file, appLogoPath);
-//       systemPreferencesData.imageUrl = uploaded.url;
-//       systemPreferencesData.publicId = uploaded.public_id;
-//     }
-
-//     const newPortfolioPreference = await addSystemPreferences(
-//       systemPreferencesData,
-//     );
-//     console.log("New Preferences", newPortfolioPreference);
-//     return res.status(201).json({
-//       success: true,
-//       message: "Portfolio preferences created successfully",
-//       data: newPortfolioPreference,
-//     });
-//   } catch (error) {
-//     if (error.message === "System preferences already exist.") {
-//       return res.status(409).json({
-//         success: false,
-//         message: error.message,
-//       });
-//     }
-
-//     return res.status(500).json({
-//       success: false,
-//       message: error.message || "Internal server error!",
-//     });
-//   }
-// };
-
-// Fetches all system preferences for super-admin dashboard
 const fetchSystemPreferences = async (req, res) => {
   try {
     console.log("✅ Blog post for admin is hit:");

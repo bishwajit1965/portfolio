@@ -164,11 +164,7 @@ const HeroSection = () => {
                 alt="Bishwajit Paul"
                 className="rounded-xl border border-slate-400 dark:border-slate-600 shadow-md object-cover w-full relative"
               />
-              {/* <img
-                src="https://i.ibb.co.com/Gv6zHk5d/Gemini-Generated-Image-7h0z6s7h0z6s7h0z.png"
-                alt="Bishwajit Paul"
-                className="rounded-xl border border-slate-400 dark:border-slate-600 shadow-md object-cover w-full"
-              /> */}
+
               <figcaption className="mt-3 text-center text-sm sm:text-base text-slate-600 dark:text-slate-400 gap-2">
                 <div className="flex items-center gap-2 px-2 py-1 rounded-full bg-white dark:bg-slate-800 shadow border dark:border-slate-800 bg-gradient-to-r dark:bg-gradient-to-r dark:from-slate-800 dark:to-slate-600">
                   <span
