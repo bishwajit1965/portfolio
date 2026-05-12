@@ -17,7 +17,6 @@ const ensureUniqueSlugIndex = async () => {
   try {
     const db = getDB();
     await db.collection("blogPosts").createIndex({ slug: 1 }, { unique: true });
-    console.log("Unique index on 'slug' field created successfully.");
   } catch (error) {
     console.error("Error creating unique index on 'slug':", error.message);
   }
@@ -40,19 +39,15 @@ const createBlogPost = async (blogPostData) => {
     } = blogPostData;
 
     let slug = generateSlug(title);
-
     // Ensure unique slug by adding a number suffix if needed
     while (await db.collection("blogPosts").findOne({ slug })) {
       slug = `${slug}-${Date.now()}`;
     }
-
     const parsedCategories =
       typeof category === "string" ? JSON.parse(category) : category;
 
     const parsedTags = typeof tag === "string" ? JSON.parse(tag) : tag;
-
     const now = new Date();
-
     const isPublished =
       status === "published" &&
       (!willPublishAt || new Date(willPublishAt) <= now);
@@ -114,13 +109,11 @@ const randomPosts = async () => {
 const getBlogPostsForAdmin = async () => {
   try {
     const db = getDB();
-    console.log("Blog post for admin is hit:");
     const adminBlogPosts = await db
       .collection("blogPosts")
       .find({})
       .sort({ createdAt: -1 })
       .toArray();
-    console.log("Response for admin blog posts:", adminBlogPosts);
     return adminBlogPosts;
   } catch (error) {
     throw new Error("Database query failed: " + error.message);
@@ -131,14 +124,11 @@ const getBlogPostsForAdmin = async () => {
 const getPublishedBlogPosts = async () => {
   try {
     const db = getDB();
-    console.log("Blog post for users is hit:");
     const publishedBlogPosts = await db
       .collection("blogPosts")
       .find({})
       .sort({ createdAt: -1 })
       .toArray();
-    console.log("Response for users blog posts:", publishedBlogPosts);
-
     return publishedBlogPosts;
   } catch (error) {
     throw new Error("Database query failed: " + error.message);
@@ -156,13 +146,10 @@ const updateBlogPost = async (id, updateData) => {
   const existingBlogPost = await db
     .collection("blogPosts")
     .findOne({ _id: objectId });
-
   if (!existingBlogPost) {
     throw new Error("Blog post not found.");
   }
-
   const { imageUrl: newImage, _id, ...updateFields } = updateData;
-
   // Handle image replacement logic
   if (newImage && existingBlogPost.imageUrl) {
     const oldImagePath = path.join(
@@ -182,7 +169,6 @@ const updateBlogPost = async (id, updateData) => {
     ...updateFields,
     ...(newImage ? { imageUrl: newImage } : {}),
   };
-  console.log("Updated payload:", updatePayload);
 
   const result = await db
     .collection("blogPosts")
@@ -193,8 +179,6 @@ const updateBlogPost = async (id, updateData) => {
 
 // Get category related blog post
 const getRelatedPosts = async (categoryIds) => {
-  console.log("Received category IDs:", categoryIds);
-
   const db = getDB();
   const postsCollection = db.collection("blogPosts");
 
@@ -205,7 +189,6 @@ const getRelatedPosts = async (categoryIds) => {
       .limit(8) // Using string IDs directly
       .toArray();
 
-    console.log("Found related posts:", relatedPosts);
     return relatedPosts;
   } catch (error) {
     console.error("Error fetching related posts:", error);
@@ -215,7 +198,6 @@ const getRelatedPosts = async (categoryIds) => {
 
 // Blog post coming soon
 const comingSoon = async (req, res) => {
-  console.log("🚀 Coming soon route is hit");
   try {
     const db = getDB();
     const blogsCollection = db.collection("blogPosts");
@@ -269,8 +251,6 @@ const fetchBookmarkedPosts = async (id) => {
   const userCollection = db.collection("users");
 
   const user = await userCollection.findOne({ _id: new ObjectId(id) });
-
-  console.log("User found:", user);
 
   if (!user || !user.bookmarkedPosts || user.bookmarkedPosts.length === 0) {
     return [];

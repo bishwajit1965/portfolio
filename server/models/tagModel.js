@@ -40,17 +40,13 @@ const updateTag = async (id, updatedCategoryData) => {
     const objectId = new ObjectId(id);
     const { _id, ...updatedCategory } = updatedCategoryData;
 
-    console.log("Updating tag with ObjectId:", objectId);
-    console.log("Update data:", updatedCategory);
-
     const result = await db
       .collection("tags")
       .updateOne(
         { _id: objectId },
-        { $set: { name: updatedCategory.name, updatedAt: new Date() } }
+        { $set: { name: updatedCategory.name, updatedAt: new Date() } },
       );
 
-    console.log("MongoDB update result:", result);
     return result;
   } catch (error) {
     throw new Error("Error in updating tag: " + error.message);

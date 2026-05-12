@@ -5,6 +5,7 @@ const {
   updateSkills,
   deleteSkills,
 } = require("../models/skillsModel");
+
 const createSkills = async (req, res) => {
   try {
     let { skillName, level, experience, tools, category } = req.body;

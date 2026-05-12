@@ -18,7 +18,6 @@ const NoticePage = () => {
       try {
         setLoading(true);
         const response = await api.get("/notices");
-        console.log("Response:", response.data);
         const visibleNotices = response.data.filter(
           (notice) => notice.status === "published",
         );
