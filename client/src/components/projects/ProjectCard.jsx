@@ -38,23 +38,26 @@ const ProjectCard = ({ project }) => {
                 : "No content to display...",
             }}
           />
-          <div className="lg:flex lg:flex-wrap grid items-center gap-2 dark:text-slate-400">
-            <h2 className="flex items-center gap-2 font-semibold bg-base-300 text-base-content rounded-md border border-slate-300 dark:border-slate-600 dark:bg-slate-600 dark:text-slate-400 pr-2">
-              <span className="bg-emerald-500 text-base-100 py-1.5 px-2 rounded-l-md">
-                <FaTools />
-              </span>
-              Tech Stacks
-            </h2>
-            {project && project?.techStacks?.length > 0 ? (
-              project?.techStacks?.map((techStack, i) => (
-                <SkillBadge key={i} label={techStack} />
-              ))
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="flex items-center gap-2 font-bold bg-base-100 text-base-content rounded-md border dark:border-slate-600 dark:bg-gray-600 dark:text-base-100">
+              <span className="bg-base-300 flex items-center gap-2 rounded-md shadow-sm dark:bg-gray-700 text-base-content">
+                <span className="bg-emerald-500 py-1 px-2 rounded-l-md text-white">
+                  <FaTools size={20} />
+                </span>
+                <span className="px-1 text-base-content dark:text-gray-400">
+                  Tech Stacks
+                </span>
+              </span>{" "}
+            </div>
+            {project.techStacks && project.techStacks.length > 0 ? (
+              project.techStacks.map((t, i) => <SkillBadge key={i} label={t} />)
             ) : (
-              <p className="text-center text-slate-600 font-bold dark:text-base-100">
-                No techStack !
+              <p className="text-gray-600 dark:text-base-100">
+                No techStack mentioned!
               </p>
             )}
           </div>
+
           <div className="">
             <MiniButton
               type="submit"
