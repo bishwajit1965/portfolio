@@ -6,8 +6,6 @@ import HeroButton from "../../buttons/HeroButton";
 import heroImage from "../../../assets/hero-1.png";
 import { FaEye, FaRocket } from "react-icons/fa6";
 import { FaCheckCircle } from "react-icons/fa";
-import { useContext } from "react";
-import { SuperAdminAuthContext } from "../../../superAdmin/context/SuperAdminAuthProvider";
 
 const trustBuilders = [
   { id: 1, label: "2+ production-grade MERN systems built" },
@@ -17,15 +15,6 @@ const trustBuilders = [
 ];
 
 const HeroSection = () => {
-  // Realtime presence checking data
-  const { loading, user } = useContext(SuperAdminAuthContext);
-  // const isOnline =
-  //   !loading &&
-  //   user?.email === "webdevpro.66@gmail.com" &&
-  //   user?.role === "superAdmin";
-  const isOnline =
-    !loading && user?.email?.toLowerCase() === "webdevpro.66@gmail.com";
-
   const textVariants = {
     hidden: { opacity: 0, x: -50 },
     visible: (i = 1) => ({
@@ -165,25 +154,17 @@ const HeroSection = () => {
                 className="rounded-xl border border-slate-400 dark:border-slate-600 shadow-md object-cover w-full relative"
               />
 
-              <figcaption className="mt-3 text-center text-sm sm:text-base text-slate-600 dark:text-slate-400 gap-2">
-                <div className="flex items-center gap-2 px-2 py-1 rounded-full bg-white dark:bg-slate-800 shadow border dark:border-slate-800 bg-gradient-to-r dark:bg-gradient-to-r dark:from-slate-800 dark:to-slate-600">
-                  <span
-                    className={`w-3 h-3 rounded-full ${
-                      isOnline
-                        ? "bg-green-500 border-emerald-600 animate-pulse"
-                        : "bg-gray-400"
-                    }`}
-                  />
-                  <span className="text-sm font-medium">
-                    {isOnline ? "Online" : "Offline"}
+              <figcaption className="mt-3 text-center text-sm sm:text-base text-slate-600 dark:text-slate-300 gap-2">
+                <div className="flex items-center gap-2 px-2 py-1 rounded-full bg-white dark:bg-slate-800 shadow border dark:border-slate-700 bg-gradient-to-r dark:bg-gradient-to-r dark:from-slate-800 dark:to-slate-700">
+                  <span className="font-bold flex mx-auto">
+                    Bishwajit Paul • Admin
                   </span>
-                  •<span className="font-bold">Bishwajit Paul • Admin</span>
                 </div>
                 Full-Stack{" "}
                 <span className="text-gray-900 font-bold dark:text-amber-500">
                   MERN Developer
                 </span>
-                <span> building scalable business applications</span>
+                <span> building scalable business applications.</span>
               </figcaption>
               <div className="absolute lg:bottom-[7.2rem] bottom-[5.8rem] lg:right-4.5 right-3 h-9 w-9 bg-emerald-500 border-2 border-emerald-400 rounded-full flex items-center justify-center text-base-100 font-semibold">
                 BP
