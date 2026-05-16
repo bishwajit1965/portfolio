@@ -36,7 +36,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="lg:min-h-[75vh] flex items-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 rounded-b-xl px-2 sm:px-6 lg:px-12 py-6 lg:py-12 overflow-hidden">
+    <section className="lg:min-h-[75vh] flex items-center bg-gradient-to-r from-slate-100 to-slate-200 dark:bg-gradient-to-r dark:from-slate-950 dark:to-slate-800 rounded-b-xl px-2 sm:px-6 lg:px-12 py-6 lg:py-12 overflow-hidden">
       <div className="max-w-7xl mx-auto grid lg:grid-cols-12 grid-cols-1 gap-6 lg:gap-12 items-center">
         {/* LEFT: Text Content */}
         <div className="lg:col-span-8 text-center lg:text-left space-y-4 lg:space-y-6">
@@ -156,7 +156,7 @@ const HeroSection = () => {
 
               <figcaption className="mt-3 text-center text-sm sm:text-base text-slate-600 dark:text-slate-300 gap-2">
                 <div className="flex items-center gap-2 px-2 py-1 rounded-full bg-white dark:bg-slate-800 shadow border dark:border-slate-700 bg-gradient-to-r dark:bg-gradient-to-r dark:from-slate-800 dark:to-slate-700">
-                  <span className="font-bold flex mx-auto">
+                  <span className="text-xl font-bold flex mx-auto">
                     Bishwajit Paul • Admin
                   </span>
                 </div>
@@ -166,7 +166,7 @@ const HeroSection = () => {
                 </span>
                 <span> building scalable business applications.</span>
               </figcaption>
-              <div className="absolute lg:bottom-[7.2rem] bottom-[5.8rem] lg:right-4.5 right-3 h-9 w-9 bg-emerald-500 border-2 border-emerald-400 rounded-full flex items-center justify-center text-base-100 font-semibold">
+              <div className="absolute lg:bottom-[7.5rem] bottom-[6.4rem] lg:right-5 right-3 h-9 w-9 bg-emerald-500 border-2 border-emerald-400 rounded-full flex items-center justify-center text-base-100 font-semibold">
                 BP
               </div>
             </figure>
