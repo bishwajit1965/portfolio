@@ -98,7 +98,7 @@ const PortfolioProjects = () => {
       {loading && <Loader />}
 
       {/* Sidebar toggle for mobile */}
-      <div className="lg:hidden fixed top-[4.3rem] z-50 ml-2 w-full rounded-md">
+      <div className="lg:hidden fixed top-[4.3rem] z-40 ml-2 w-full rounded-md">
         <Button
           icon={<FaBars />}
           label="Categories"
